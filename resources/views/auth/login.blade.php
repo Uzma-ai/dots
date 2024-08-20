@@ -53,6 +53,7 @@
                             class="absolute border tooltip border-c-yellow z-20 top-0 -right-12 bg-white px-3 py-1 text-xs rounded-md">
                             Login</div>
                     </button>
+                    <button id="ChangeUsername">Click to Change Username</button>
                 </div>
             </div>
         </div>
@@ -331,10 +332,18 @@
     var support_facelogin = false;
 
     $(document).ready(function() {
+        $.cookie.raw = true;
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $(document).on('click', '#ChangeUsername', function() {
+            if ($.cookie("dotsusername") != undefined) {
+                $.removeCookie('dotsusername');
+            }
+            location.reload();
         });
 
         var username = getParameterByName('username');
