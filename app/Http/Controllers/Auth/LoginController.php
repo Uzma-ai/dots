@@ -54,10 +54,10 @@ class LoginController extends Controller
                 $browser = $agent->browser();
                 $browserVersion = $agent->version($browser);
                 $systemVersion = $agent->version($system);
-                
+
                 LoginLog::create([
                     'user_id' => $user->id,
-                    'user_image' => $user->avatar, 
+                    'user_image' => $user->avatar,
                     'login_time' => now(),
                     'system' => $system,
                     'system_version' => $systemVersion,
@@ -65,11 +65,11 @@ class LoginController extends Controller
                     'browser' => "{$browser} {$browserVersion}",
                     'browser_image' => $this->getBrowserImage($browser),
                     'login_address' => $localIP,
-                ]); 
+                ]);
                 $user->last_seen = 1;
                 $user->save();
                 ActivityHelper::log('Log In',  'c:/xampp/htdocs/folder', 'India');
-                
+
                 Auth::login($user);
                 //check face register
                 if ($user->is_support_face == 1 && $user->is_facedata == 0) {
@@ -229,11 +229,19 @@ class LoginController extends Controller
         $image3 = $request->file('photo3');
         $imageContents3 = file_get_contents($image3->getPathName());
         $encodedImage3 = base64_encode($imageContents3);
+        $audio2 = $request->file('audio1');
+        $audioContents2 = file_get_contents($audio2->getPathName());
+        $encodedAudio2 = base64_encode($audioContents2);
+        $audio3 = $request->file('audio2');
+        $audioContents3 = file_get_contents($audio3->getPathName());
+        $encodedAudio3 = base64_encode($audioContents3);
         $payload = [
             "image1" => $encodedImage,
-            "audio" => $encodedAudio,
+            "audio1" => $encodedAudio,
             "image2" => $encodedImage2,
+            "audio2" => $encodedAudio2,
             "image3" => $encodedImage3,
+            "audio3" => $encodedAudio3,
         ];
         $curl = curl_init();
         curl_setopt_array($curl, array(

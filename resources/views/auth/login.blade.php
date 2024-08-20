@@ -299,7 +299,8 @@
                                                 Hi <span id="SpanUsername"></span>
                                             </h1>
                                             <img src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
-                                                alt="Profile" class="w-24 h-24 rounded-full object-cover" id="LoginImage"/>
+                                                alt="Profile" class="w-24 h-24 rounded-full object-cover"
+                                                id="LoginImage" />
                                             <h1 class="text-c-green text-base">
                                                 Welcome To Dots
                                             </h1>
@@ -892,8 +893,14 @@
                         if (recorderNumber === 1) {
                             $("#previewContainer1").append(preview);
                             recorders[1].count++;
-                            if (recorders[1].count >= 1) {
-                                $('#VoiceInfo').html("Good job, Listen or click submit.");
+                            if (recorders[1].count == 1) {
+                                $('#VoiceInfo').html("Good say, Hii how are you today.");
+                            }
+                            if (recorders[1].count == 2) {
+                                $('#VoiceInfo').html("Excellent say, I am happy to join");
+                            }
+                            if (recorders[1].count >= 3) {
+                                $('#VoiceInfo').html("Good job, Scroll and click submit.");
                                 $("#recordButton1").prop("disabled", true);
                                 // $(`.voice${recorderNumber}`).find("#voice-error").removeClass("hidden");
                                 $('#SubmitRegister').removeClass('hidden');
@@ -975,14 +982,9 @@
         currentStream.getAudioTracks()[0].stop();
         recorders[recorderNumber].recorder = null;
         recorders[recorderNumber].stream = null;
-        const micContainer = $(`.mic-wrapper${recorderNumber}`)
-            .find(".circle")
-            .first();
+        const micContainer = $(`.mic-wrapper${recorderNumber}`).find(".circle").first();
         micContainer.removeClass("active");
-        $(`.mic-wrapper${recorderNumber}`)
-            .find(".mic")
-            .removeClass("ri-mic-line")
-            .addClass("ri-user-voice-fill")
+        $(`.mic-wrapper${recorderNumber}`).find(".mic").removeClass("ri-mic-line").addClass("ri-user-voice-fill")
             .removeClass("ri-voiceprint-line");
         $(`.mic-wrapper${recorderNumber}`).find("#voice-retake").html("Retry");
         $(`.voice${recorderNumber}`).find("#next-login").removeClass("hidden");
