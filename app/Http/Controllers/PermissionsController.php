@@ -32,7 +32,7 @@ class PermissionsController extends Controller
 
     public function permissions()
     {
-        $permissions = Permissions::paginate(5);
+        $permissions = Permissions::paginate(10);
         return view('permissions.permissions')->with('permissions',$permissions);
     }
 
@@ -41,9 +41,9 @@ class PermissionsController extends Controller
         $input = $request->all();
         if($input['searchTerm']){
             $search = $input['searchTerm'];
-            $permissions = Permissions::where('name', $search)->get();
+            $permissions = Permissions::where('name','LIKE','%'.$search.'%')->get();
         }else{
-        $permissions = Permissions::paginate(5);
+        $permissions = Permissions::paginate(10);
         }
         $permission = view('appendview.permissionlist')->with('permissions',$permissions)->render();
         return response()->json($permission);

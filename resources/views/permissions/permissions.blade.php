@@ -8,7 +8,7 @@
           <div class="px-2 lg:px-5 py-6">
             <div class="flex items-center gap-4">
               <i class="ri-settings-3-fill ri-xl"></i>
-              <span class="text-lg text-c-black font-normal">System settings</span>
+              <span class="text-lg text-c-black font-normal">User Management</span>
             </div>
           </div>
 
@@ -19,7 +19,8 @@
             <div class="w-full md:w-1/2">
               <div class="flex items-center gap-2">
                 <span class="text-c-light-black font-normal flex-responsive -space-y-1">
-                  <span>Admin</span> <span>&amp;</span><span> Users</span>
+                  <!-- <span>Admin</span> <span>&amp;</span><span> Users</span> -->
+                  User Management
                 </span>
                 <i class="ri-arrow-right-line ri-lg" style="color: #4d4d4d"></i>
                 <span class="font-semibold text-c-black">
@@ -605,11 +606,10 @@ function populateTable(term='') {
     $('.alert').hide();                          
     });
 
-  $('#search').on('click', function (e) {
+ $("#searchterm").keypress(function(){
     var term = $('#searchterm').val();
-    
      populateTable(term);
-    });
+  });
 
 });
 </script>

@@ -7,7 +7,7 @@
             <div class="px-2 lg:px-5 py-6">
               <div class="flex items-center gap-4">
                 <i class="ri-settings-3-fill ri-xl"></i>
-                <span class="text-lg text-c-black font-normal">System settings</span>
+                <span class="text-lg text-c-black font-normal">User Management</span>
               </div>
             </div>
             <!-- topTaskbar in desktop -->
@@ -17,7 +17,7 @@
               <div class="w-full md:w-6/12 xl:w-8/12">
                 <div class="flex items-center gap-1 sm:gap-2">
                   <span class="text-c-light-black whitespace-nowrap font-normal">
-                    Admin &amp; Users
+                    User Management
                   </span>
                   <i class="ri-arrow-right-line ri-lg text-c-light-black"></i>
                   <span class="font-semibold text-c-black">
@@ -35,7 +35,7 @@
                   <input
                     type="text"
                     class="search pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none outline-none font-size-14 w-3/12"
-                    placeholder="Search users, groups..." id="searchterm"
+                    placeholder="Search users" id="searchterm"
                   />
                   <div
                     class="searchicon pt-3 pb-3 pr-4 flex items-center justify-center"
@@ -47,7 +47,7 @@
                   <i
                     class="ri-add-circle-fill ri-xl"
                     onclick="toggleModal('newUserModal')"
-                  ></i>
+                  >Add User</i>
                 </button>
                 <div
                   class="absolute py-1 px-2 text-start text-xs tooltip -bottom-8 right-5 z-10 bg-white border rounded-md border-c-yellow z-0 font-normal"
@@ -55,7 +55,7 @@
                   Add user
                 </div>
                 <button>
-                  <i class="ri-file-excel-2-fill ri-xl" id="showimport-upload-popup"></i>
+                  <i class="ri-file-excel-2-fill ri-xl" id="showimport-upload-popup">Import Users</i>
                 </button>
               </div>
             </div>
@@ -106,7 +106,7 @@
                     <button
                       class="border rounded px-6 py-1 custom-safety-btn custom-outline hover:border-yellow-300"
                     >
-                      <span class="mr-1">Groups</span>
+                      <span class="mr-1">Group Function</span>
                       <i class="ri-arrow-down-s-fill"></i>
                     </button>
                     <ul
@@ -565,10 +565,10 @@ function populateTable(term='') {
     $('.alert').hide();                          
     });
 
-  $('#search').on('click', function (e) {
+   $("#searchterm").keypress(function(){
     var term = $('#searchterm').val();
      populateTable(term);
-    });
+  });
 
 });
 

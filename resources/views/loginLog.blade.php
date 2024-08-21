@@ -7,7 +7,7 @@
             <div class="flex w-full h-full flex-col content">
                 <div class=" px-2 lg:px-5 py-6">
                     <div class="flex items-center gap-4 text-light-gray">
-                        <i class="ri-settings-3-fill text-2xl"></i> <span class="text-lg">System settings</span>
+                        <i class="ri-settings-3-fill text-2xl"></i> <span class="text-lg">Safety Control</span>
                     </div>
                 </div>
 

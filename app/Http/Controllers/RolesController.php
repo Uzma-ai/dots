@@ -44,7 +44,7 @@ class RolesController extends Controller
         $input = $request->all();
         if($input['searchTerm']){
             $search = $input['searchTerm'];
-            $roles = Roles::where('name', $search)->get();
+            $roles = Roles::where('name','LIKE','%'.$search.'%')->get();
         }else{
         $roles = Roles::paginate(10);
         }

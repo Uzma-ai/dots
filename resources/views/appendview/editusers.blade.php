@@ -85,7 +85,7 @@
                         class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
                         type="password"
                         placeholder="Please enter password"
-                        name="password" value="{{ $user->password }}" required
+                        name="password" value="" required
                       />
                       <div
                         class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3 pt-1"
