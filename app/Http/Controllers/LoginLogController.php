@@ -24,7 +24,7 @@ class LoginLogController extends Controller
    public function index()
    {
 
-    $log = LoginLog::with('user')->orderBy('created_at', 'desc')->paginate(13);
+    $log = LoginLog::with('user')->orderBy('created_at', 'desc')->paginate(10);
     $roles = Roles::get();
 //
     return view('loginLog',compact('log', 'roles'));

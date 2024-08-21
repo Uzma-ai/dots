@@ -109,7 +109,7 @@
 </div>
 
 
-<select class="custom-safety-btn rounded px-6 py-1.5 mr-1 hover:border-yellow-300 rounded px-6 py-2 mr-2 hover:border-yellow-300  form-control roles_filter" id="sel1" name="roleID" id="roleID">
+<select class="custom-safety-btn rounded px-6 py-1.5 mr-1 hover:border-yellow-300 rounded px-6 py-2 mr-2 hover:border-yellow-300  form-control roles_filter" id="sel1" name="roleID" id="roleID" style="padding:7px!important">
     <option value="">Please Select</option>
     @foreach($roles as $role)
     <option data-role-ID = "{{ $role->id }}" value="{{ $role->id }}">{{ $role->name }}</option>
@@ -224,8 +224,12 @@
                 @endforeach
             </tbody>
         </table>
-        <!-- Pagination Links -->
+
+        <div class="p-5">
+                                  <!-- Pagination Links -->
         {{ $log->links() }}
+                            </div>
+      
     </div>
 </div>
 
