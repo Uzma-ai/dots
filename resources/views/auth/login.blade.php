@@ -32,7 +32,7 @@
                         <img class="h-24 has-tooltip" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
                             alt="Logo" />
                     </button>
-                    <h1 class="text-2xl font-normal">Welcome to Dots</h1>
+                    <h1 class="text-2xl font-normal">Welcome to Dots.</h1>
                     <div class="right-container flex flex-col gap-7">
                         <input class="userinput" type="text" placeholder="Username" id="InputUsername" required />
                         <button class="rounded-full" id="login-btn" name="next" style="padding: 7px 0px"
@@ -44,7 +44,7 @@
         <div class="right-background w-1/2 h-full bg-no-repeat bg-cover bg-center" id="DivButton">
             <div class="login-container">
                 <div class="user-login flex flex-col items-center justify-center w-full h-full gap-3">
-                    <h1 class="text-2xl font-normal">Welcome To Dots</h1>
+                    <h1 class="text-2xl font-normal">Welcome To Dots.</h1>
                     <button onclick="showModal('#login')"
                         class="transform transition duration-500 hover:scale-110 relative" id="BtnLogoDirectLogin">
                         <img class="h-32 has-tooltip" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
@@ -53,7 +53,8 @@
                             class="absolute border tooltip border-c-yellow z-20 top-0 -right-12 bg-white px-3 py-1 text-xs rounded-md">
                             Login</div>
                     </button>
-                    <button id="ChangeUsername">Click to Change Username</button>
+                    <h1>Click Above Icon To Login </h1>
+                    <button id="ChangeUsername">Click here to change username</button>
                 </div>
             </div>
         </div>
@@ -165,11 +166,11 @@
                                                     alt="Profile" class="w-24 h-24 rounded-full object-cover"
                                                     id="RegisterImage" />
                                                 <h1 class="text-c-green text-base ">
-                                                    Welcome To Dots
+                                                    Welcome To Dots.
                                                 </h1>
                                                 <a href="{{ route('dashboard') }}"
                                                     class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 text-sm cursor-pointer">Go
-                                                    to Dashboard</a>
+                                                    to desktop</a>
                                             </div>
                                         </fieldset>
                                     </div>
@@ -303,11 +304,11 @@
                                                 alt="Profile" class="w-24 h-24 rounded-full object-cover"
                                                 id="LoginImage" />
                                             <h1 class="text-c-green text-base">
-                                                Welcome To Dots
+                                                Welcome To Dots.
                                             </h1>
                                             <a href="{{ route('dashboard') }}"
                                                 class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 text-sm mt-5 cursor-pointer">Go
-                                                to Dashboard</a>
+                                                to desktop</a>
                                         </div>
                                     </fieldset>
                                 </form>
@@ -905,7 +906,7 @@
                         .removeClass(
                             "ri-mic-line");
                     $(`.mic-wrapper${recorderNumber}`).find("#voice-retake").html("Recording");
-                }, 1000);
+                }, 300);
 
                 // Handle data available event to create audio preview
                 newRecorder.ondataavailable = function(e) {
