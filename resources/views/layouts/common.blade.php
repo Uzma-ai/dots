@@ -762,19 +762,16 @@
         
             // Minimize button functionality
             $(document).on('click', '#alliframelist .minimizeiframe-btn', function() {
-                var iframeId = $(this).data('iframe-id');
-                var iframePopup = $('#alliframelist #iframepopup' + iframeId);
-                const iframe = $('#alliframelist #iframepopup'+iframeId);
-                if (!iframe.hasClass('minimized')) {
-                    iframe.addClass("minimized");
-                    iframe.removeClass("fall-down");
-                    minimized = true;
-                    setTimeout(() => {
-                    //    iframe.addClass("hidden");
-                    }, 600);
-                }
-                
-            });
+            var iframeId = $(this).data('iframe-id');
+            var iframePopup = $('#alliframelist #iframepopup' + iframeId);
+            if (!iframePopup.hasClass('minimized')) {
+                iframePopup.addClass("minimized");
+                iframePopup.removeClass("fall-down");
+                setTimeout(() => {
+                    iframePopup.addClass("hidden");
+                }, 600); 
+            }
+        });
             
             /// click iframe icon 
              $(document).on('click', '#iframeheaders .iframemainheadericon', function() {

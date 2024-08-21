@@ -98,7 +98,7 @@ body {
 
 /* sidebar */
 .sidebar {
-    background: url('/images/sidebar-bg.svg');
+    background: url('/public/images/sidebar-bg.svg');
     background-size: cover;
     background-position: center;
     width: 0;
