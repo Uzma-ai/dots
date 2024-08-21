@@ -115,7 +115,7 @@
             <p class="my-2 flex items-center gap-2 sm:text-left">
                 <i class="font-bold text-sm ">Thank you for
                     choosing</i>
-                <img src="{{ asset($constants['IMAGEFILEPATH'] . 'dot2.png') }}" alt="lgo">
+                <img src="{{ asset($constants['IMAGEFILEPATH'] . 'dot2.png') }}" style="height: 30px" alt="lgo">
                 <i class="font-bold text-sm ">We look forward to
                     working with you!</i>
             </p>
