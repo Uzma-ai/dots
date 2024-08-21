@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name', 255)->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
             $table->text('parentpath')->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
             $table->text('path')->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
-            $table->foreignId('openwith')->nullable()->constrained('')->nullOnDelete();
+            $table->integer('openwith')->nullable();
             $table->integer('sort_order')->default(0);
             $table->tinyInteger('status');
             $table->tinyInteger('is_root')->default(0);

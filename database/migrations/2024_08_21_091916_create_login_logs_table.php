@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('login_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id ')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('user_image')->nullable();
             $table->timestamp('login_time')->useCurrent();
             $table->string('system')->nullable();

@@ -1,3 +1,11 @@
 *
 !public/
 !.gitignore
+
+# Ignore everything in the public directory
+public/*
+
+# Except these files
+!public/newfile.docx
+!public/newfile.pptx
+!public/newfile.xlsx
