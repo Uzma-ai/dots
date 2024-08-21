@@ -248,7 +248,7 @@
                         <div class="text-sm p-1 text-c-black"> Document log <span class="text-gray-400"><!-- (14 Records) --></span>
                         </div>
                         <div class="h-72 overflow-y-auto">
-                            @foreach($activity->items() as $logs) @if(($logs['action'] != 'Log In') && ($logs['action'] != 'Log Out'))
+                            @foreach($activity as $logs) @if(($logs['action'] != 'Log In') && ($logs['action'] != 'Log Out'))
                             <div class="flex items-center space-x-3 mt-3 text-c-black">
                                 <div class="relative flex items-center">
                                     <div class="absolute top-1/2 left-6 transform -translate-y-1/2 h-0.5 bg-c-light-white w-1/2"></div>

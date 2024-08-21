@@ -24,7 +24,7 @@ class OperationLogController extends Controller
      public function index()
     {
     	
-        $log = Activity::with('user')->orderBy('created_at', 'desc')->paginate(8);
+        $log = Activity::with('user')->orderBy('created_at', 'desc')->paginate(13);
         $roles = Roles::get();
 
         return view('operationLog',compact('log', 'roles'));
