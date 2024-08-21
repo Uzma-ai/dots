@@ -10,6 +10,14 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-
+        $this->call([
+            PermissionSeeder::class,
+            GroupsSeeder::class,
+            RolesSeeder::class,
+            UsersSeeder::class,
+            AppsSeeder::class,
+            LightAppCategoriesSeeder::class,
+            LightAppsSeeder::class
+        ]);
     }
 }

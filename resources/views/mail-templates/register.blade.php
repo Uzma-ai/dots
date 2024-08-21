@@ -14,7 +14,7 @@
         }
 
         .email-container {
-            background: url({{ asset($constants['IMAGEFILEPATH'] . 'bg-image.svg') }});
+            background: url({{ asset($constants['IMAGEFILEPATH'] . 'bg-image.png') }});
             background-size: cover;
             background-position: center;
             max-width: 700px;
@@ -115,7 +115,7 @@
             <p class="my-2 flex items-center gap-2 sm:text-left">
                 <i class="font-bold text-sm ">Thank you for
                     choosing</i>
-                <img src="{{ asset($constants['IMAGEFILEPATH'] . 'dot2.svg') }}" alt="lgo">
+                <img src="{{ asset($constants['IMAGEFILEPATH'] . 'dot2.png') }}" alt="lgo">
                 <i class="font-bold text-sm ">We look forward to
                     working with you!</i>
             </p>
