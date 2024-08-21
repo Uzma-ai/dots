@@ -6,32 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('folders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 255)->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
-            $table->string('extension', 100)->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
+            $table->text('parentpath')->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
             $table->text('path')->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
-            $table->bigInteger('folder')->unsigned()->nullable()->default(null);
+            $table->integer('openwith')->nullable();
             $table->integer('sort_order')->default(0);
             $table->tinyInteger('status');
-            $table->bigInteger('created_by')->unsigned()->nullable()->default(null);
+            $table->tinyInteger('is_root')->default(0);
+            $table->tinyInteger('is_share')->default(0);
+            $table->foreignId('created_by')->nullable()->constrained('users')->cascadeOnDelete();
             $table->timestamps();
-
-            // Add foreign key constraint to folder
-            $table->foreign('folder')->references('id')->on('folders')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('folders');
     }
 };

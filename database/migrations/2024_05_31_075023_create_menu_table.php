@@ -6,22 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('menu', function (Blueprint $table) {
-            $table->id(); // auto-increment primary key
+            $table->id();
             $table->string('name');
+            $table->integer('sort_order')->default(0);
             $table->boolean('status');
-            $table->timestamps(); // created_at and updated_at columns
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('menu');

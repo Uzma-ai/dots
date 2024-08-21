@@ -71,7 +71,7 @@
                       class="w-full px-6 py-3 flex justify-between items-center"
                       href="#"
                     >
-                      <span class="font-normal"> System Settings </span>
+                      <span class="font-normal"> System Settings (WIP)</span>
                       <i
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
                       ></i>
@@ -134,7 +134,7 @@
                       class="w-full px-6 py-3 flex justify-between items-center"
                       href="#"
                     >
-                      <span class="font-normal"> Users &amp; Groups </span>
+                      <span class="font-normal">User Management</span>
                       <i
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
                       ></i>
@@ -187,6 +187,47 @@
                     </ul>
                   </div>
                 </li>
+                                <li>
+                  <div
+                    role="button"
+                    onclick="toggleDropMenu(this)"
+                    class="drop-menu cursor-pointer rounded-r-lg"
+                  >
+                    <div
+                      class="w-full px-6 py-3 flex justify-between items-center"
+                      href="#"
+                    >
+                      <span class="font-normal">Saftey Control</span>
+                      <i
+                        class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
+                      ></i>
+                    </div>
+                    <ul class="drop-list text-sm space-y-1">
+                      <li>
+                        <a
+                          href="{{ route('logs') }}"
+                          class="block py-2 px-8 rounded-r-md w-full flex justify-between items-center"
+                        >
+                          <span class="font-normal">Login Log</span>
+                          <i
+                            class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl"
+                          ></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="{{ route('operation_logs') }}"
+                          class="block py-2 px-8 rounded-r-md w-full flex justify-between items-center"
+                        >
+                          <span class="font-normal">Operation Log</span>
+                          <i
+                            class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl"
+                          ></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
                 <li>
                   <div
                     role="button"
@@ -197,7 +238,7 @@
                       class="w-full px-6 py-3 flex justify-between items-center"
                       href="#"
                     >
-                      <span class="font-normal">Storage/file</span>
+                      <span class="font-normal">Storage/file (WIP)</span>
                       <i
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
                       ></i>
@@ -277,70 +318,18 @@
                     class="w-full px-6 py-3 rounded-r-lg block flex justify-between items-center"
                     href="settings-plugin.html"
                   >
-                    <span class="font-normal">Plugin Center</span>
+                    <span class="font-normal">Plugin Center (WIP)</span>
                     <i
                       class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl"
                     ></i>
                   </a>
                 </li>
                 <li>
-                  <div
-                    role="button"
-                    onclick="toggleDropMenu(this)"
-                    class="drop-menu cursor-pointer rounded-r-lg"
-                  >
-                    <div
-                      class="w-full px-6 py-3 flex justify-between items-center"
-                      href="#"
-                    >
-                      <span class="font-normal">Saftey Control</span>
-                      <i
-                        class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
-                      ></i>
-                    </div>
-                    <ul class="drop-list text-sm space-y-1">
-                      <li>
-                        <a
-                          href="#"
-                          class="block py-2 px-8 rounded-r-md w-full flex justify-between items-center"
-                        >
-                          <span class="font-normal">Message Warning</span>
-                          <i
-                            class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl"
-                          ></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="{{ route('logs') }}"
-                          class="block py-2 px-8 rounded-r-md w-full flex justify-between items-center"
-                        >
-                          <span class="font-normal">Login Log</span>
-                          <i
-                            class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl"
-                          ></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="{{ route('operation_logs') }}"
-                          class="block py-2 px-8 rounded-r-md w-full flex justify-between items-center"
-                        >
-                          <span class="font-normal">Operation Log</span>
-                          <i
-                            class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl"
-                          ></i>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-                <li>
                   <a
                     class="w-full px-6 py-3 rounded-r-lg block flex justify-between items-center"
                     href="settings-server-scheduled-tasks.html"
                   >
-                    <span class="font-normal">Scheduled Tasks</span>
+                    <span class="font-normal">Scheduled Tasks (WIP)</span>
                     <i
                       class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl"
                     ></i>

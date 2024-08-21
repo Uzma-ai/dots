@@ -7,7 +7,7 @@
             <div class=" px-2 lg:px-5 py-6">
                <div class="flex items-center gap-4">
                 <i class="ri-settings-3-fill ri-xl"></i>
-                <span class="text-lg text-c-black">System settings</span>
+                <span class="text-lg text-c-black">User Management</span>
               </div>
             </div>
 
@@ -15,7 +15,7 @@
             <div class=" taskbar bg-no-repeat bg-cover bg-center flex items-center justify-between px-3 sm:px-6 py-3">
                <div class="flex items-center gap-4 w-full md:w-1/2">
                         <div class="flex gap-1 sm:gap-2 items-center">
-                            <span class="text-c-light-black">Admin & User</span> <i class="ri-arrow-right-line ri-lg" style="color: #4D4D4D;"></i><span
+                            <span class="text-c-light-black">User Management</span> <i class="ri-arrow-right-line ri-lg" style="color: #4D4D4D;"></i><span
                                 class="font-semibold text-c-black">Role</span>
                         </div>
                </div>
@@ -821,11 +821,10 @@ function populateTable(term='') {
     $('.alert').hide();                          
     });
 
-  $('#search').on('click', function (e) {
+  $("#searchterm").keypress(function(){
     var term = $('#searchterm').val();
-    
      populateTable(term);
-    });
+  });
   $('#okdelete').on('click', function (e) {
      toastr.success("Roles Deleted");                          
     });

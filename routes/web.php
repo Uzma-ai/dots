@@ -36,12 +36,9 @@ Route::post('voicelogin', [LoginController::class, 'VoiceLogin'])->name('VoiceLo
 Route::get('checkfacedata', [LoginController::class, 'CheckFaceData'])->name('CheckFaceData');
 Route::post('registerfacedata', [LoginController::class, 'RegisterFacedata'])->name('RegisterFacedata');
 
-// Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
+Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
 
 // routes/web.php
-
-
-Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 //search
     Route::get('/search', [SearchController::class, 'search'])->name('search');
@@ -89,7 +86,7 @@ Route::get('/export-operation', [OperationLogController::class, 'export'])->name
 // Auth::routes();
 
 // Light app start
- 
+
     Route::get('lightapp', [LightAppController::class, 'index'])->name('lightapp');
     Route::post('createlightapp', [LightAppController::class, 'createLightApp'])->name('createlightapp');
     Route::post('updatelightapp', [LightAppController::class, 'updateLightApp'])->name('updatelightapp');
@@ -97,7 +94,7 @@ Route::get('/export-operation', [OperationLogController::class, 'export'])->name
     Route::get('desktopapp', [LightAppController::class, 'alladdedapps'])->name('desktopapp');
     //Route::get('list', [LightAppController::class, 'index']);
     //Route::get('add-form', [LightAppController::class, 'add_form']);
-   
+
     Route::post('submit', [LightAppController::class, 'add_data']);
     Route::get('app_role_list/{type}', [LightAppController::class, 'AppRoleList']);
     Route::post('apps-update/{id}', [LightAppController::class, 'update']);
@@ -185,7 +182,7 @@ Route::get('/copyfile', [FileManagerController::class, 'copyFile'])->name('copyf
 Route::get('/pastefile', [FileManagerController::class, 'pasteFile'])->name('pastefile');
 
 
-/// get fileurl 
+/// get fileurl
 Route::get('/files/{filename}', function ($filename) {
     $path = storage_path('app/root/' . $filename);
 

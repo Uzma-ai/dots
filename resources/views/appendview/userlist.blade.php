@@ -26,7 +26,7 @@
                           class="bg-c-light-black1 h-2 mb-2 rounded-lg overflow-hidden w-5/12"
                         >
                           <div
-                            class="bg-c-yellow h-full rounded-r-full w-1/4"
+                            class="bg-c-yellow h-full rounded-r-full w-2/3"
                           ></div>
                         </div>
                         <span class="whitespace-nowrap"> {{$user->sizeMax}} GB </span>

@@ -198,9 +198,17 @@ class LoginController extends Controller
 
     public function destroy(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        if (Auth::user()) {
+
+            ActivityHelper::log('Log Out',  'From Desktop', 'India');
+            $user = Auth::user();
+            $user->last_seen = 0;
+            $user->save();
+
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
         return redirect('/');
     }
 

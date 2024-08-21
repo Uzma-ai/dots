@@ -61,7 +61,7 @@ class UserController extends Controller
         $input = $request->all();
         if($input['searchTerm']){
             $search = $input['searchTerm'];
-            $users = User::where('name', $search)->get();
+            $users = User::where('name','LIKE','%'.$search.'%')->get();
         }else{
         $users = User::paginate(10);
         } 
