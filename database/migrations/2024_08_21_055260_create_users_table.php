@@ -18,6 +18,20 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->double('sizeMax')->nullable();
+            $table->double('sizeUse')->nullable();
+            $table->string('phone', 20)->nullable();
+            $table->string('nickName', 50)->nullable();
+            $table->string('avatar')->nullable();
+            $table->foreignId('roleID')->nullable()->constrained('roles')->nullOnDelete();
+            $table->foreignId('groupID')->nullable()->constrained('groups')->nullOnDelete();
+            $table->string('sex', 10)->nullable();
+            $table->string('ip_address')->nullable();
+            $table->tinyInteger('is_facedata')->default(0)->nullable();
+            $table->tinyInteger('is_support_face')->default(0)->nullable();
+            $table->tinyInteger('status')->default(1)->nullable();
+            $table->tinyInteger('lastLogin')->nullable();
+            $table->integer('last_seen')->nullable();
             $table->timestamps();
         });
 

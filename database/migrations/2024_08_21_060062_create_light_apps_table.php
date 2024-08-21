@@ -6,14 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('light_apps', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('group')->nullable();
+            $table->foreignId('group')->nullable()->constrained('light_app_categories')->cascadeOnDelete();
             $table->string('name')->nullable();
             $table->string('link')->nullable();
             $table->string('description')->nullable();
@@ -25,15 +22,9 @@ return new class extends Migration
             $table->tinyInteger('status')->default(1);
             $table->integer('add_app')->default(0);
             $table->timestamps();
-
-            // Foreign key constraint
-            $table->foreign('group')->references('id')->on('light_app_categories')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('light_apps');

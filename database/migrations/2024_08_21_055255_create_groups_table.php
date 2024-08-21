@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('groups', function (Blueprint $table) {
@@ -20,14 +17,11 @@ return new class extends Migration
             $table->integer('sort')->nullable();
             $table->double('sizeMax')->nullable();
             $table->integer('sizeUse')->nullable();
-            $table->integer('permissionID')->nullable();
+            $table->foreignId('permissionID')->nullable()->constrained('permissions')->nullOnDelete();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('groups');

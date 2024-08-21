@@ -324,6 +324,12 @@
         <div class="loader ease-linear rounded-full border-4 border-t-4 h-8 w-8"></div>
         <h2 class="text-center text-white text-xl font-normal">Loading...</h2>
     </div>
+    @php
+        $randomNumber = rand(1, 3);
+    @endphp
+    <div class="hidden">
+        <audio src="{{ asset($constants['IMAGEFILEPATH'] . $randomNumber . '.mp3') }}" id="WelcomeAudio"></audio>
+    </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -339,11 +345,21 @@
             }
         });
 
+        //for change username
         $(document).on('click', '#ChangeUsername', function() {
             if ($.cookie("dotsusername") != undefined) {
                 $.removeCookie('dotsusername');
             }
             location.reload();
+        });
+
+        //for audio playing
+        var is_played = 0;
+        $(document).on('click', '#nextButton', function() {
+            if (is_played == 0) {
+                $("#WelcomeAudio")[0].play();
+                is_played = 1;
+            }
         });
 
         var username = getParameterByName('username');
