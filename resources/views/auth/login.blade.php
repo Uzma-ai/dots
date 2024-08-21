@@ -351,7 +351,7 @@
             if ($.cookie("dotsusername") != undefined) {
                 $.removeCookie('dotsusername');
             }
-            location.reload();
+            location.reload(true);
         });
 
         //for audio playing
