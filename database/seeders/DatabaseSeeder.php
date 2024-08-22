@@ -17,7 +17,9 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             AppsSeeder::class,
             LightAppCategoriesSeeder::class,
-            LightAppsSeeder::class
+            LightAppsSeeder::class,
+            ContextTypesTableSeeder::class,
+            ContextOptionsTableSeeder::class
         ]);
     }
 }
