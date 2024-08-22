@@ -116,11 +116,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
-@yield('scripts')
 
 <script src="{{ asset($constants['JSFILEPATH'].'animation.js') }}" ></script>
 
 <script src="{{ asset($constants['JSFILEPATH'].'common.js') }}" ></script>
+@yield('scripts')
 
 <!-- <script src="{{ asset($constants['JSFILEPATH'].'taskbar.js') }}" ></script> -->
 
