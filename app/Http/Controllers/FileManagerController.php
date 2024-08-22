@@ -432,9 +432,11 @@ class FileManagerController extends Controller
                 $destinationPath = Storage::disk('root')->path($destination);
                 $sourcePath = Storage::disk('root')->path($file->parentpath);
                 $fileExtension = pathinfo($destinationPath, PATHINFO_EXTENSION);
-                if(rename($destinationPath, $sourcePath.'/'.$newName.'.'.$fileExtension)) {
-                    $file->name = $newName.'.'.$fileExtension;
-                    $file->path = $file->parentpath.'/'.$newName.'.'.$fileExtension;
+                $newfileextension  = pathinfo($newName, PATHINFO_EXTENSION);
+                $finalname = ($newfileextension) ? $newName : $newName.'.'.$fileExtension;
+                if(rename($destinationPath, $sourcePath.'/'. $finalname)) {
+                    $file->name = $finalname;
+                    $file->path = $file->parentpath.'/'.$finalname;
                     $file->save();
                 }
             }

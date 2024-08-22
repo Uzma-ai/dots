@@ -350,34 +350,51 @@ $(document).ready(function () {
          // rename 
          $(document).on('click', '.context-menu .renameFunction', function (e) {
             e.preventDefault();
-                    const filekey = $('.selectedfile').attr('data-filekey');
-                    const filetype = $('.selectedfile').attr('data-filetype');
-                    /// rename
-                    const inputWrapper = $('#inputWrapper'+filetype+filekey);
-                    const inputField = $('#inputField'+filetype+filekey);
-                    $('#inputField'+filetype+filekey).removeClass('text-white');
-                    $('#inputField'+filetype+filekey).addClass('text-black');
-                    inputField.removeAttr('disabled');
-                    inputField.removeClass('appinputtext');
+            const filekey = $('.selectedfile').attr('data-filekey');
+            const filetype = $('.selectedfile').attr('data-filetype');
+            
+            // Target the input elements based on filekey and filetype
+            const inputWrapper = $('#inputWrapper' + filetype + filekey);
+            const inputField = $('#inputField' + filetype + filekey);
+            
+            // Modify the input field for renaming
+            inputField.removeClass('text-white').addClass('text-black');
+            inputField.removeAttr('disabled').removeClass('appinputtext').show().focus();
+        
+            // Handle click outside the input to finalize renaming
+            $(document).one('click', function(event) {
+                if (!inputWrapper.is(event.target) && inputWrapper.has(event.target).length === 0) {
+                    // Disable the input field and add the necessary classes back
+                    inputField.attr('disabled', true).addClass('appinputtext');
+                    $('.selectapp').removeClass('selectedfile');
                     
-                    inputField.show().focus();
-                    
-                
-                        $(document).one('click', function(event) {
-                        if (!inputWrapper.is(event.target) && inputWrapper.has(event.target).length === 0) {
-                            inputField.attr('disabled'," ");
-                            inputField.addClass('appinputtext');
-                            $('.selectapp').removeClass('.selectedfile');
-                            renameFunction(filekey,filetype,inputField.val()); 
-                             
-                            // Update text display with input value
-                        }
-                    });
-                   
-                    
+                    // Call the rename function with the new name
+                    renameFunction(filekey, filetype, inputField.val()); 
+                }
+            });
+        
+            // Stop the propagation to avoid immediate closing
+            inputWrapper.on('click', function(event) {
+                event.stopPropagation();
+            });
         });
+        
 
-
+        // $(document).one('click', function(event) {
+        //     const filekey = $('.selectedfile').attr('data-filekey');
+        //     const filetype = $('.selectedfile').attr('data-filetype');
+        //             /// rename
+        //     const inputWrapper = $('#inputWrapper'+filetype+filekey);
+        //     const inputField = $('#inputField'+filetype+filekey);
+        //     if (!inputWrapper.is(event.target) && inputWrapper.has(event.target).length === 0) {
+        //         inputField.attr('disabled'," ");
+        //         inputField.addClass('appinputtext');
+        //         $('.selectapp').removeClass('.selectedfile');
+        //         renameFunction(filekey,filetype,inputField.val()); 
+                 
+        //         // Update text display with input value
+        //     }
+        // });
         //// cut copy paste 
         
         $(document).on('click', '.context-menulist .copyFunction', function (e) {
