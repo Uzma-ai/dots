@@ -10,11 +10,12 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 255)->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
-            $table->string('extension', 100)->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
+            $table->bigInteger('folder')->default(0);
+            $table->string('name', 255)->nullable();
+            $table->string('extension', 100)->nullable();
             $table->text('filetype')->nullable();
             $table->text('parentpath')->nullable();
-            $table->text('path')->charset('utf8mb4')->collation('utf8mb4_unicode_ci')->nullable();
+            $table->text('path')->nullable();
             $table->integer('openwith')->nullable();
             $table->integer('sort_order')->default(0);
             $table->tinyInteger('is_root')->default(0);

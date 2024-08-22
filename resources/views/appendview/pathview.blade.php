@@ -63,7 +63,7 @@
            <!--       <video class="w-16 icondisplay" alt="{{ $file->name }}"/><source src="{{ $file->path }}" type="video/mp4"></video>-->
            <!--     </a>-->
            <!--@else -->
-                  <img class="w-16 icondisplay " src="{{ asset($constants['FILEICONPATH'].$file->extension.$constants['ICONEXTENSION'])}}" alt="{{ $file->name }}"/>
+                  <img class="w-16 icondisplay " src="{{ asset($constants['FILEICONPATH'].($file->extension ?? 'default').$constants['ICONEXTENSION'])}}" alt="{{ $file->name }}"/>
                 
             <!-- @endif -->
             <div class="input-wrapper" id="inputWrapperdocument{{ base64UrlEncode($file->id) }}">

@@ -19,7 +19,7 @@
                         @foreach ($contextType->contextOptions as $option)
                                 <a href="#" class="clickmenu {{ $contextType->function }} {{ session()->has($contextType->conditional) ? '' : 'hidden' }}" data-type="{{ $option->function }}">
                                     <li class="flex items-center px-5 py-2 gap-2">
-                                    <img  class="w-4" src="{{ asset($constants['FILEICONPATH'].$option->image.$constants['ICONEXTENSION'])}}" alt="{{ $option->name }}" />
+                                    <img  class="w-4" src="{{ asset($constants['FILEICONPATH'].($option->image ?? 'default').$constants['ICONEXTENSION'])}}" alt="{{ $option->name }}" />
                                     <p class="text-c-black text-sm">{{ $option->name }}</p>
                                     </li>
                                 </a>

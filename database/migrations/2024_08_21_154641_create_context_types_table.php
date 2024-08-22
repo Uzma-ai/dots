@@ -20,6 +20,7 @@ class CreateContextTypesTable extends Migration
             $table->text('function')->nullable();
             $table->boolean('is_options')->default(false);
             $table->enum('show_on', ['app', 'rightclick', 'file', 'recyclebin', 'all'])->default('all');
+            $table->text('conditional')->nullable();
             $table->text('shortcut')->nullable();
             $table->boolean('display_header')->default(true);
             $table->unsignedSmallInteger('sort_order')->default(1);

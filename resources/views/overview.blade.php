@@ -51,7 +51,11 @@
 
                         <!-- <i class="ri-download-line border px-3 hover-bg-c-black hover-text-c-yellow text-sm text-black py-1 rounded border-gray-600">&nbsp;<a href="{{ url('export-overview') }}" class="btn btn-success" target="_blank">Export</a></i> -->
                         <!-- Example button for printing -->
-                        <button id="printButton" class="ri-download-line border px-3 hover-bg-c-black hover-text-c-yellow text-sm text-black py-1 rounded border-gray-600">Print</button>
+                       <button id="printButton" 
+              type="button"
+              class="border px-3 hover-bg-c-black hover-text-c-yellow text-sm text-black py-1 rounded border-gray-600 export"
+            >
+              <i class="ri-printer-line"></i>&nbsp;Print</button>
                         <script>
                             document.getElementById('printButton').addEventListener('click', function() {
                                 window.print();
@@ -60,7 +64,8 @@
 
                       
 
-                        <button id="printButton1" class="ri-download-line border px-3 hover-bg-c-black hover-text-c-yellow text-sm text-black py-1 rounded border-gray-600">  <a href="{{ url('export-overview') }}" class="btn btn-success" id="my_export" target="_blank">Export to Excel</a></button>
+                        <button id="printButton1" class="ri-download-2-line border px-3 hover-bg-c-black hover-text-c-yellow text-sm text-black py-1 rounded border-gray-600 " >  <a href="{{ url('export-overview') }}" class="btn btn-success" id="my_export" target="_blank" style="
+  font-family: Roboto, sans-serif;">Export</a></button>
                     </div>
 
                 </div>
@@ -70,7 +75,7 @@
             <!-- overview content -->
             <div class="p-4 space-y-2">
                 <!-- info cards -->
-                <div class="flex gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+                <div class="flex gap-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2">
                     <div class="bg-white border p-4 flex flex-col h-full rounded-md">
                         <div class="border-b pb-1 flex">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -353,9 +358,12 @@
                                         </tbody>
 
                                     </table>
-                                    <!-- Pagination Links -->
+                                    
+ <div class="p-5">
+                                 
+ <!-- Pagination Links -->
                                     {{ $Users->links() }}
-
+                            </div>
                                 </div>
                             </div>
                             <div class="tab-content donut-space" id="group-space-tab">
