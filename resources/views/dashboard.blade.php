@@ -162,7 +162,7 @@
 @endsection
 @section('scripts')
 @php 
-$path = base64UrlEncode('/Desktop');
+$path = base64UrlEncode('Desktop');
 @endphp 
 <script>
      let path = @json($path);

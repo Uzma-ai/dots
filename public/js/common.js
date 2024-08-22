@@ -362,6 +362,7 @@ $(document).ready(function () {
          // rename 
          $(document).on('click', '.context-menulist .renameFunction', function (e) {
             e.preventDefault();
+            e.stopPropagation();
             const filekey = $('.selectedfile').attr('data-filekey');
             const filetype = $('.selectedfile').attr('data-filetype');
             

@@ -39,7 +39,7 @@ class LightAppController extends Controller
     }
     public function alladdedapps(Request $request){
          // Get the updated app list HTML
-        $parentPath = '/Desktop';// Adjust this path as needed
+        $parentPath = 'Desktop';// Adjust this path as needed
         $sortby= !empty($request->input('sort_by')) ? $request->input('sort_by') : 'id';
         $sortorder= !empty($request->input('sort_order')) ? $request->input('sort_order') : 'asc';
         $files = FileModel::where('parentpath', $parentPath)->where('status', 1)->where('created_by', auth()->id())->orderBy($sortby, $sortorder)->get();
