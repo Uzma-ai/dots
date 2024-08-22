@@ -1,5 +1,6 @@
- <!-- Sidebar -->
-      <aside class="h-full relative">
+
+<!-- sidebar -->
+<aside class="h-full relative">
         <input type="checkbox" class="hidden" id="sidebar-toggle" />
         <label
           for="sidebar-toggle"
@@ -10,13 +11,13 @@
         <div class="h-full sidebar">
           <div class="sidebar-container">
             <div class="p-4">
-              <a href="index.html" class="flex w-20"
-                ><img class="w-20" src="/images/logo.png" alt="Dots Logo"
+              <a href="{{ route('dashboard') }}" class="flex w-20"
+                ><img class="w-20" src="{{ asset($constants['IMAGEFILEPATH'].'logo.png') }}" alt="Dots Logo"
               /></a>
             </div>
             <div class="sidebar-content">
               <ul class="space-y-1">
-                <li>
+                <li class="position">
                   <div
                     role="button"
                     onclick="toggleDropMenu(this)"
@@ -32,7 +33,7 @@
                       ></i>
                     </a>
                     <ul class="drop-list text-sm space-y-1">
-                      <li>
+                      <li class="starred">
                         <a
                           id="starred-link"
                           class="block py-1 px-8 rounded-r-md w-full flex justify-between items-center subdrop"

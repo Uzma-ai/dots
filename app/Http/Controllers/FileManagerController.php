@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Auth;
 use App\Models\File as FileModel ;
-use App\Models\Folder;
 use App\Models\User;
 use App\Models\LightApp;
+use App\Models\ContextType;
 use App\Models\App;
 use App\Models\RecycleBin;
 use Illuminate\Support\Facades\DB;
@@ -31,8 +31,29 @@ class FileManagerController extends Controller
     public function index($path=null)
     {
         //$path = $path ? base64UrlDecode($path) : '/';
+        $contextTypes = ContextType::with(['contextOptions' => function($query) {
+            $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
+        }])
+        ->where('display_header', 1)
+        ->where('function','createFileFunction')
+        ->orderBy('sort_order', 'asc') // Sort context types by sort_order
+        ->get();
+        $resizecontextTypes = ContextType::with(['contextOptions' => function($query) {
+            $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
+        }])
+        ->where('display_header', 1)
+        ->where('function','resizeFunction')
+        ->orderBy('sort_order', 'asc') // Sort context types by sort_order
+        ->get();
+        $sortcontextTypes = ContextType::with(['contextOptions' => function($query) {
+            $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
+        }])
+        ->where('display_header', 1)
+        ->where('function','sortFunction')
+        ->orderBy('sort_order', 'asc') // Sort context types by sort_order
+        ->get();
         $path = $path ? $path : '/';
-        return view('filemanager',compact('path'));
+        return view('filemanager',compact('path','contextTypes','resizecontextTypes','sortcontextTypes'));
     }
     
     public function recyclebin($path=null)
@@ -44,104 +65,57 @@ class FileManagerController extends Controller
     }
     public function editfile($fileid){
         $file = FileModel::find(base64UrlDecode($fileid));
-        $secretKey = env('SECRETKEYJWT'); // Replace with your secret key
         $options = [];
         if($file){
         $fileExt = $file->extension;
         $fileName = $file->name;
-        $fileUrl = URL::to('/files/' . base64UrlEncode($file->path));
-        $token = $fileid;
-        $user = User::find(auth()->id()); 
+       // $callbackUrl = route('savedocument');
+        $fileUrl = url(Storage::url('app/root/'.$file->path));
+        $token = $fileid.base64UrlEncode($file->extension);
+        $user = User::find(auth()->id());
         $userName = "admin";
         if ($user) {
-            $userName = $user->name; 
+            $userName = $user->name;
         }
-        
-            $payload = [
-                'document' => [
-                    'fileType' => $this->fileTypeAlias($fileExt),
-                    'key' => $token,
-                    'title' => $fileName,
-                    // 'url' => $fileUrl,
-                    'url'=>'https://desktop2.sizaf.com/stroage/app/root/Desktop/New File(1).docx',
 
-                    'permissions' => [
-                        'download' => true,
-                        'edit' => true,
-                        'print' => true,
-                    ],
-                    'version' => true,
+        $options = [
+            'document' => [
+                'fileType' => $this->fileTypeAlias($fileExt),
+                'key' => $token,
+                'title' => $fileName,
+                'url' => $fileUrl,
+                'permissions' => [
+                    'download' => true,
+                    'edit' => true,
+                    'print' => true,
                 ],
-                'documentType' => $this->getDocumentType($fileExt),
-                'type' => 'desktop',
-                'editorConfig' => [
-                    'callbackUrl' => "",
-                    'lang' => "en",
-                    'mode' => 'edit',
-                    'user' => [
-                        'id' => auth()->id(),
-                        'name' => $userName,
-                    ],
-                    'customization' => [
-                        'autosave' => true,
-                        'chat' => true,
-                        'commentAuthorOnly' => true,
-                        'comments' => true,
-                        'compactHeader' => false,
-                        'compactToolbar' => false,
-                        'help' => false,
-                        'toolbarNoTabs' => true,
-                        'hideRightMenu' => true,
-                    ],
+                'version' => true,
+            ],
+            'documentType' => $this->getDocumentType($fileExt),
+            'type' => 'desktop',
+            'editorConfig' => [
+                'callbackUrl' => '',
+                'lang' =>"en",
+                'mode' => 'edit',
+                'user' => [
+                    'id' => auth()->id(),
+                    'name' => $userName,
                 ],
-                'height' => "100%",
-                'width' => "100%",
-                'iat' => time(), // Issued at time
-                'exp' => time() + 3600 // Expiration time
-            ];
-            
-            $jwt = JWT::encode($payload, $secretKey,'HS256');
-            
-            $options = [
-                'document' => [
-                    'fileType' => $this->fileTypeAlias($fileExt),
-                    'key' => $token,
-                    'title' => $fileName,
-                    // 'url' => $fileUrl,
-                    'url'=>'https://desktop2.sizaf.com/stroage/app/root/Desktop/New File(1).docx',
-                    'permissions' => [
-                        'download' => true,
-                        'edit' => true,
-                        'print' => true,
-                    ],
-                    'version' => true,
+                'customization' => [
+                    'autosave' => true,
+                    'chat' =>  true,
+                    'commentAuthorOnly' => true,
+                    'comments' =>  true,
+                    'compactHeader' => false,
+                    'compactToolbar' => false,
+                    'help' =>  false,
+                    'toolbarNoTabs' => true,
+                    'hideRightMenu' => true,
                 ],
-                'documentType' => $this->getDocumentType($fileExt),
-                'type' => 'desktop',
-                'editorConfig' => [
-                    'callbackUrl' => "",
-                    'lang' => "en",
-                    'mode' => 'edit',
-                    'user' => [
-                        'id' => auth()->id(),
-                        'name' => $userName,
-                    ],
-                    'customization' => [
-                        'autosave' => true,
-                        'chat' => true,
-                        'commentAuthorOnly' => true,
-                        'comments' => true,
-                        'compactHeader' => false,
-                        'compactToolbar' => false,
-                        'help' => false,
-                        'toolbarNoTabs' => true,
-                        'hideRightMenu' => true,
-                    ],
-                ],
-                'height' => "100%",
-                'width' => "100%",
-                'token' => $jwt // Include the generated JWT token here
-            ];
+            ],
+            'height' => "100%",
+            'width' => "100%"
+        ];
         
         }
         return view('editor',compact('options'));
@@ -168,7 +142,9 @@ class FileManagerController extends Controller
         }
     
         
-        $newFolder = new Folder();
+        $newFolder = new FileModel();
+        $newFolder->folder = 1;
+        $newFolder->extension = 'folder';
         $newFolder->name = basename($childFolderPath);
         $newFolder->parentpath = $parentFolder;
         $newFolder->path = $actualpath;
@@ -238,24 +214,23 @@ class FileManagerController extends Controller
             $filepath = base64UrlDecode($request->input('path'));
             $parentPath = empty($filepath) ? '/' : $filepath ; // Adjust this path as needed
             $defaultfolders = array();
-            $folders = array();
             $files = array();
+            $sortby= !empty($request->input('sort_by')) ? $request->input('sort_by') : 'id';
+            $sortorder= !empty($request->input('sort_order')) ? $request->input('sort_order') : 'asc';
             if($filepath != 'RecycleBin'){
                 $defaultfolders = App::where('parentpath',$parentPath)->where('filemanager_display', 1)->where('status', 1)->orderBy('name')->get();
-                $folders = Folder::where('parentpath', $parentPath)->where('status', 1)->where('created_by', auth()->id())->get();
-                $files = FileModel::where('parentpath', $parentPath)->where('status', 1)->where('created_by', auth()->id())->get();
+                $files = FileModel::where('parentpath', $parentPath)->where('status', 1)->where('created_by', auth()->id())->orderBy($sortby, $sortorder)->get();
             }else{
-                $folders = RecycleBin::where('tablename', 'folder')->where('file_created_by', auth()->id())->get();
                 $files = RecycleBin::where('tablename', 'file')->where('file_created_by', auth()->id())->get();
             }
-            $html = view('appendview.pathview')->with('folders', $folders)->with('defaultfolders', $defaultfolders)->with('files', $files)->render();
+            $html = view('appendview.pathview')->with('defaultfolders', $defaultfolders)->with('files', $files)->render();
         return response()->json(['html' => $html]);
 
     }
     
    public function upload(Request $request)
     {
-        $uploadDirectorypath = $request->header('Upload-Directory');
+        $uploadDirectorypath = base64UrlDecode($request->header('Upload-Directory'));
 
         $uploadedFiles = [];
         $uploadDirectory =  Storage::disk('root')->path($uploadDirectorypath); // Directory to store uploaded files
@@ -286,19 +261,20 @@ class FileManagerController extends Controller
                 if (move_uploaded_file($file->getPathname(), $filePath)) {
                     $filetype = $this->getFiletype($filePath);
                     $newFile = new FileModel();
-                    $newFile->folder = $uploadDirectorypath;
                     $newFile->name = $originalName;
                     $newFile->extension = $fileExtension;
                     $newFile->filetype = $filetype;
                     $newFile->parentpath = $uploadDirectorypath;
                     $newFile->path = $actualpath;
+                    $newFile->size = $file->getSize();
                     $newFile->status = 1; // Assuming 1 means active
                     $newFile->created_by = auth()->id(); // Assuming you want to save the ID of the authenticated user
                     if ($newFile->save()) {
                     
                         $uploadedFiles[] = [
                             'name' => $originalName,
-                            'size' => $file->getSize()
+                            'size' => $file->getSize(),
+                            'path' => $actualpath
                         ];
                     }
                 }
@@ -345,7 +321,7 @@ class FileManagerController extends Controller
                                 $count++;
                             }
                             if($activefiletype !='folder'){
-                                $newFileName = '.'.File::extension($filename);
+                                $newFileName = $newFileName.'.'.File::extension($filename);
                                 $copyfiles = Storage::disk('root')->copy($sourcepath, $destinationfile);
                             }else{
                                 $newFileName = $newFileName;
@@ -377,7 +353,9 @@ class FileManagerController extends Controller
                                     $newFile->save();
                                  }else{
                                         $filemanager = App::where('name','Filmanager')->where('status',1)->first();
-                                        $newFolder = new Folder();
+                                        $newFolder = new FileModel();
+                                        $newFolder->folder = 1;
+                                        $newFolder->extension = 'folder';
                                         $newFolder->name = $newFileName;
                                         $newFolder->parentpath = $destination;
                                         $newFolder->path = $destination.'/'.$newFileName;
@@ -407,18 +385,12 @@ class FileManagerController extends Controller
                             }
                         }else{
                             
-                            if(rename($sourcePath, $destinationPath)) {
-                                if($activefiletype !='folder'){
+                            if(rename($sourcePath, $destinationPath.'/'.basename($sourcePath))) {
                                     FileModel::where('id', $id)->update([
                                         'path' => $destination.'/'.basename($sourcePath),
                                         'parentpath' => $destination,
                                     ]);
-                                }else{
-                                    Folder::where('id', $id)->update([
-                                        'path' => $destination.'/'.basename($sourcePath),
-                                        'parentpath' => $destination,
-                                    ]);
-                                }
+                                
                                 return response()->json(['message'=>'Pasted Successfully','status' => true]);
                             }
                         }
@@ -441,8 +413,6 @@ class FileManagerController extends Controller
     }
     
     public function renameFile(Request $request){
-         
-
         $type = $request->input('filetype');
        
         $id = base64UrlDecode($request->input('filekey'));
@@ -451,7 +421,6 @@ class FileManagerController extends Controller
              return response()->json(['message' => 'Please enter something to rename.','status'=>false]);
         }else{
 
-        if ($type != 'folder') {
             $exists = FileModel::where('name', $newName)->exists();
             if ($exists) {
                 return response()->json(['message' => 'A file with this name already exists.','status'=>false]);
@@ -469,22 +438,6 @@ class FileManagerController extends Controller
                     $file->save();
                 }
             }
-        } else{
-            $exists = Folder::where('name', $newName)->exists();
-            if ($exists) {
-                return response()->json(['message' => 'A folder with this name already exists.','status'=>false]);
-            }
-
-             $folder = Folder::findOrFail($id);
-             $destination = $folder->path;
-             $destinationPath = Storage::disk('root')->path($destination);
-             $sourcePath = Storage::disk('root')->path($folder->parentpath);
-             if(rename($destinationPath, $sourcePath.'/'.$newName)) {
-                $folder->name = $newName;
-                $folder->path = $folder->parentpath.'/'.$newName;
-                $folder->save();
-             }
-        }
     }
 
         return response()->json(['message' => 'Renamed successfully.','status'=>true]);
@@ -497,7 +450,6 @@ class FileManagerController extends Controller
          // Assume the condition value is passed as a request parameter
         $type = $request->input('filetype');
         $id = base64UrlDecode($request->input('filekey')); 
-        if ($type != 'folder') {
             $file = FileModel::where('id', $id)->get();
             if($file){
                 $transformedData = $file->map(function ($item) {
@@ -517,33 +469,11 @@ class FileManagerController extends Controller
                     ];
                 });
             }
-        }else{
-            
-             $file = Folder::where('id', $id)->get();
-            if($file){
-                $transformedData = $file->map(function ($item) {
-                    return [
-                        'name' => $item->name,
-                        'parentpath' => $item->parentpath,
-                        'path' => $item->path,
-                        'openwith' => $item->openwith,
-                        'tablename' => 'folder',
-                        'file_created_by' => $item->created_by,
-                        'created_by' => auth()->id(),
-                        'file_created_at' => $item->created_at,
-                        'file_updated_at' => $item->updated_at,
-                    ];
-                });
-              }
-            }
-
+    
         $deleteddata = RecycleBin::insert($transformedData->toArray());
         if($deleteddata){
-            if($type!="folder"){
                 FileModel::where('id', $id)->delete();
-            }else{
-                Folder::where('id', $id)->delete();
-            }
+            
             return response()->json(['message' => 'File deleted Successfully','status'=>true]);
 
         }else{
@@ -632,6 +562,27 @@ class FileManagerController extends Controller
             $size += $file->getSize();
         }
         return $size;
+    }
+
+    public function contextMenu(Request $request){
+        $clicktype = $request->input('type');
+        if($clicktype=='rightclick'){
+        $contextTypes = ContextType::with(['contextOptions' => function($query) {
+            $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
+        }])
+        ->where('show_on', 'rightclick')
+        ->orderBy('sort_order', 'asc') // Sort context types by sort_order
+        ->get();
+        }else{
+            $contextTypes = ContextType::with(['contextOptions' => function($query) {
+                $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
+            }])
+            ->whereIn('show_on', [$clicktype, 'all'])
+            ->orderBy('sort_order', 'asc') // Sort context types by sort_order
+            ->get();
+        }
+        $html = view('appendview.clickoption')->with('contextTypes', $contextTypes)->with('type',$clicktype)->render();
+        return response()->json(['html' => $html]);
     }
     
 }

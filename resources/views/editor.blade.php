@@ -6,7 +6,7 @@
 </head>
 <body style="height: 100%; margin: 0;">
     <div id="docplaceholder" style="height: 100%"></div>
-    <script type="text/javascript" src="https://essentiels.in/web-apps/apps/api/documents/api.js"></script>
+    <script type="text/javascript" src="https://snappy.sizaf.com/web-apps/apps/api/documents/api.js"></script>
 
     <script type="text/javascript">
     

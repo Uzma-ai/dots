@@ -180,24 +180,8 @@ Route::get('/renamefile', [FileManagerController::class, 'renameFile'])->name('r
 Route::get('/deletefile', [FileManagerController::class, 'deleteFile'])->name('deletefile');
 Route::get('/copyfile', [FileManagerController::class, 'copyFile'])->name('copyfile');
 Route::get('/pastefile', [FileManagerController::class, 'pasteFile'])->name('pastefile');
+Route::get('contextmenu', [FileManagerController::class, 'contextMenu'])->name('contextmenu');
 
-
-/// get fileurl
-Route::get('/files/{filename}', function ($filename) {
-    $path = storage_path('app/root/' . $filename);
-
-    if (!File::exists($path)) {
-        abort(404);
-    }
-
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-})->where('filename', '.*');
 
 
 
