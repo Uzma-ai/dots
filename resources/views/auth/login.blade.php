@@ -5,18 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; media-src 'self' blob: data: https:;">
+    <meta http-equiv="Content-Security-Policy" content="worker-src 'self' blob: https:; default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
+    <!-- <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; media-src 'self' blob: data: https:;"> -->
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'cs.css') }}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-    <style>
-        .photos {
-            width: 5.5rem;
-        }
-    </style>
 </head>
 
 <body class="login">
@@ -28,14 +24,17 @@
         <div class="right-background w-1/2 h-full bg-no-repeat bg-cover bg-center hidden" id="DivUsername">
             <div class="login-container">
                 <div class="user-login flex flex-col items-center justify-center w-full h-full gap-5">
-                    <button class="transform transition duration-500 hover:scale-110 relative">
-                        <img class="h-24 has-tooltip" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
-                            alt="Logo" />
-                    </button>
-                    <h1 class="text-2xl font-normal">Welcome to Dots.</h1>
+                    <img class="h-24" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}" alt="Logo" />
+                    <div class="flex items-center justify-center gap-1 text-2xl">
+                        <p>Welcome to</p>
+                        <div class="flex flex-col mt-0.5">
+                            <p>Dots.</p>
+                            <hr class="border-t-4 -mt-1 border-c-yellow rounded-full"/>
+                        </div>
+                    </div> 
                     <div class="right-container flex flex-col gap-7">
                         <input class="userinput" type="text" placeholder="Username" id="InputUsername" required />
-                        <button class="rounded-full" id="login-btn" name="next" style="padding: 7px 0px"
+                        <button class="rounded-full bg-c-black text-white px-24 py-2" name="next" style="padding: 8px 0px"
                             onclick="setUsername()">Submit</button>
                     </div>
                 </div>
@@ -44,25 +43,30 @@
         <div class="right-background w-1/2 h-full bg-no-repeat bg-cover bg-center" id="DivButton">
             <div class="login-container">
                 <div class="user-login flex flex-col items-center justify-center w-full h-full gap-3">
-                    <h1 class="text-2xl font-normal">Welcome To Dots.</h1>
-                    <button onclick="showModal('#login')"
-                        class="transform transition duration-500 hover:scale-110 relative" id="BtnLogoDirectLogin">
-                        <img class="h-32 has-tooltip" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
-                            alt="Logo" />
-                        <div
-                            class="absolute border tooltip border-c-yellow z-20 top-0 -right-12 bg-white px-3 py-1 text-xs rounded-md">
-                            Login</div>
-                    </button>
-                    <h1>Click Above Icon To Login </h1>
-                    <button id="ChangeUsername">Click here to change username</button>
+                    <div class="flex items-center justify-center gap-1 text-2xl">
+                        <p>Welcome to</p>
+                        <div class="flex flex-col mt-0.5">
+                            <p>Dots.</p>
+                            <hr class="border-t-4 -mt-1 border-c-yellow rounded-full"/>
+                        </div>
+                    </div>                        
+                    <img class="h-24" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}" alt="Logo" />        
+                    <div class="flex flex-col items-center justify-center gap-6 mt-2">
+                        <button class="bg-c-black text-white rounded-full px-24 py-2" type="submit" onclick="showModal('#login')" id="BtnLogoDirectLogin">
+                        Login
+                        </button>
+                        <button class="text-c-black px-12 py-2 rounded-full"  style="background: rgba(0, 0, 0, 0.16);box-shadow: var(--box-shadow);" id="ChangeUsername">
+                        Change username
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- register voice and camera popup -->
         <div id="register" role="dialog"
-            class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-md w-full bg-c-lighten-gray modal-content">
+            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-10 hidden">
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-md w-full modal-content">
                 <!-- Sticky header -->
                 <div
                     class="sticky top-0 flex py-2 px-5 justify-between items-center border-b border-gray-3 bg-white z-10 text-c-black">
@@ -80,45 +84,44 @@
                                     @csrf
                                     <div class="sticky top-0 bg-white z-20">
                                         <ul id="progressbar" class="flex justify-between">
-                                            <li class="active" id="camera">
-                                                <strong>Camera</strong>
+                                            <li class="active" id="camera">Camera
                                             </li>
-                                            <li id="voice"><strong>Voice</strong></li>
-                                            <li id="confirm"><strong>Finish</strong></li>
+                                            <li id="voice">Voice</li>
+                                            <li id="confirm">Finish</li>
                                         </ul>
                                     </div>
                                     <div class="relative overflow-y-auto scroll" style="max-height: 24rem">
                                         <!-- First Step: Camera -->
                                         <fieldset>
                                             <div id="camera-error"
-                                                class="flex gap-2 mb-4 text-red-600 justify-center items-center hidden">
+                                                class="flex gap-2 mb-4 mt-5 text-red-600 justify-center items-center hidden">
                                                 <i class="ri-error-warning-fill ri-xl"></i>
                                                 <p>Failed to capture photo</p>
                                             </div>
                                             <div
-                                                class="form-card flex flex-col sm:flex-row mx-auto space-x-4 gap-2 sm:gap-0">
-                                                <div class="relative w-11/12 sm:w-8/12 mx-auto sm:mx-0 sm:ml-6">
+                                                class="form-card flex flex-col sm:flex-row mx-auto sm:space-x-4 gap-2 mt-5 sm:gap-0">
+                                                <div class="relative w-8/12 h-48 sm:h-56 mx-auto sm:mx-0 sm:ml-6">
                                                     <video id="cam" autoplay muted playsinline class="rounded-lg">
                                                         Not available
                                                     </video>
                                                     <div
                                                         class="panel absolute flex bottom-0 top-0 left-0 right-0 my-auto space-x-4 p-4 items-end justify-center hidden">
                                                         <button
-                                                            class="flex items-center justify-center w-9 h-9 md:w-12 md:h-12 bg-red-500 text-white rounded-full hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+                                                            class="flex items-center justify-center w-12 h-12 bg-red-500 text-white rounded-full hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
                                                             onclick="clickphoto('#register')">
-                                                            <i class="ri-camera-3-fill text-sm md:text-xl"></i>
+                                                            <i class="ri-camera-3-fill text-xl"></i>
                                                         </button>
                                                     </div>
                                                 </div>
                                                 <canvas id="canvas" class="hidden"></canvas>
                                                 <div
-                                                    class="photos-container flex justify-center items-center sm:items-start sm:justify-start flex-row sm:flex-col space-y-0 gap-1 sm:gap-0 sm:space-y-3">
+                                                    class="photos-container flex justify-center items-center sm:items-start sm:justify-start flex-row sm:flex-col space-y-0 gap-2 sm:gap-0 sm:space-y-3">
                                                     <img id="photo1" alt="Photo 1"
-                                                        class="photos rounded-lg hidden" />
+                                                        class="photos rounded-lg object-cover mt-0 sm:mt-1 h-16 hidden" />
                                                     <img id="photo2" alt="Photo 2"
-                                                        class="photos rounded-lg hidden" />
+                                                        class="photos rounded-lg object-cover h-16 hidden" />
                                                     <img id="photo3" alt="Photo 3"
-                                                        class="photos rounded-lg hidden" />
+                                                        class="photos rounded-lg object-cover h-16 hidden" />
                                                 </div>
                                             </div>
                                             <input type="button" name="next" id="nextButton"
@@ -129,7 +132,7 @@
                                         <fieldset>
                                             <div class="form-card voice1 space-y-5">
                                                 <div id="voice-error"
-                                                    class="flex gap-2 text-red-600 justify-center items-center hidden">
+                                                    class="flex gap-2 text-red-600 justify-center items-center mt-5 hidden">
                                                     <i class="ri-error-warning-fill ri-xl"></i>
                                                     <p>Failed to record voice</p>
                                                 </div>
@@ -151,26 +154,21 @@
                                             </div>
 
                                             <input type="button" name="previous"
-                                                class="previous bg-c-black hover-bg-c-black text-white rounded-full w-3/12 py-2 text-sm mt-5 mr-5 cursor-pointer"
+                                                class="previous bg-white text-c-yellow border border-c-yellow rounded-full w-3/12 py-2 text-sm mt-5 mr-5 cursor-pointer"
                                                 value="Previous" />
                                             <button type="button"
                                                 class="bg-c-black hover-bg-c-black text-white rounded-full w-3/12 py-2 text-sm mt-5 cursor-pointer hidden"
                                                 id="SubmitRegister">Submit</button>
                                         </fieldset>
                                         <fieldset>
-                                            <div class="flex flex-col items-center justify-center gap-3">
-                                                <h1 class="text-c-green text-base">
-                                                    You have successfully registered.
-                                                </h1>
+                                            <div class="flex flex-col items-center justify-center mt-3">
+                                                <h1 class="text-c-green text-2xl">Congratulations!<i class="ri-checkbox-circle-fill text-c-green"></i></h1>
+                                                <h1 class="text-c-green text-xl">You have successfully registered.</h1>
                                                 <img src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
-                                                    alt="Profile" class="w-24 h-24 rounded-full object-cover"
+                                                    alt="Profile" class="w-24 h-24 rounded-full object-cover mt-5"
                                                     id="RegisterImage" />
-                                                <h1 class="text-c-green text-base ">
-                                                    Welcome To Dots.
-                                                </h1>
                                                 <a href="{{ route('dashboard') }}"
-                                                    class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 text-sm cursor-pointer">Go
-                                                    to desktop</a>
+                                                    class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 mt-5 text-sm cursor-pointer">Get Started >></a>
                                             </div>
                                         </fieldset>
                                     </div>
@@ -184,7 +182,7 @@
 
         <!-- login voice and camera popup -->
         <div id="login" role="dialog"
-            class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
+            class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-60 z-10">
             <div
                 class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-md w-full bg-c-lighten-gray modal-content">
                 <div
@@ -209,8 +207,8 @@
                                                 <i class="ri-error-warning-fill ri-xl"></i>
                                                 <p id="CamError">Failed to capture photo</p>
                                             </div>
-                                            <div class="relative flex justify-center items-center mx-auto w-8/12">
-                                                <video id="cam" autoplay muted playsinline class="rounded-lg">
+                                            <div class="relative flex justify-center items-center mx-auto w-10/12 h-96 sm:h-56 sm:w-8/12">
+                                                <video id="cam" autoplay muted playsinline class="rounded-lg w-full h-full object-cover">
                                                     Not available
                                                 </video>
                                                 <div id="countdown-overlay"
@@ -220,7 +218,7 @@
                                                 </div>
                                                 <canvas id="canvas" class="hidden"></canvas>
                                                 <img id="photo1" alt="The screen capture will appear in this box."
-                                                    class="rounded-lg absolute right-0 hidden" />
+                                                    class="rounded-lg absolute right-0 h-full w-full object-fit hidden" />
                                             </div>
                                         </div>
                                         <input id="retake" type="button"
@@ -297,18 +295,19 @@
                                     <!-- Fourth Step: Confirmation -->
                                     <fieldset>
                                         <div class="flex flex-col items-center justify-center gap-3">
-                                            <h1 class="text-c-green text-base">
+                                            <h1 class="text-xl">
                                                 Hi <span id="SpanUsername"></span>
                                             </h1>
-                                            <img src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
-                                                alt="Profile" class="w-24 h-24 rounded-full object-cover"
-                                                id="LoginImage" />
-                                            <h1 class="text-c-green text-base">
-                                                Welcome To Dots.
-                                            </h1>
+                                            <img src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}" alt="Profile" class="w-24 h-24 rounded-full object-cover" id="LoginImage" />
+                                            <div class="flex items-center justify-center gap-1 font-semibold text-2xl">
+                                                <p>Welcome to</p>
+                                                <div class="flex flex-col mt-0.5">
+                                                    <p>Dots</p>
+                                                    <hr class="border-t-4 -mt-1 border-c-yellow rounded-full"/>
+                                                </div>
+                                            </div>
                                             <a href="{{ route('dashboard') }}"
-                                                class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 text-sm mt-5 cursor-pointer">Go
-                                                to desktop</a>
+                                                class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 text-sm mt-2 cursor-pointer">Get Started >></a>
                                         </div>
                                     </fieldset>
                                 </form>
@@ -533,7 +532,7 @@
         });
     });
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
 <script defer>
     var RegisterFormdata = new FormData();
     // showModal - Show the modal by removing the hidden class and switch to user camera if the modal is login
@@ -1054,6 +1053,8 @@
                     }
                     $('#register').find("fieldset").hide();
                     $('#register').find("fieldset").eq(2).show();
+                    $('#confirm').addClass('active');
+                    showConfetti();
                 } else {
                     toastr.error(response.msg);
                 }
@@ -1063,6 +1064,32 @@
             }
         });
     });
-</script>
 
+    // Trigger confetti when the Register successfull
+    function showConfetti() {
+    // Trigger confetti from both edges
+    var duration = 5 * 1000; // 5 seconds duration for confetti
+    var end = Date.now() + duration;
+
+    (function frame() {
+        confetti({
+        particleCount: 7,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        });
+        confetti({
+        particleCount: 7,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        });
+
+        if (Date.now() < end) {
+        requestAnimationFrame(frame);
+        }
+    })();
+    }
+
+</script>
 </html>

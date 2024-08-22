@@ -281,7 +281,7 @@
     border-radius: 5px;
 }
 
-.context-menu ul li:hover>.submenu {
+.context-menu ul li:hover > .submenu {
     display: block;
 }
 
@@ -607,7 +607,6 @@ input[type="search"]::-webkit-search-cancel-button {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
 .login .blur-popup-container {
     background: rgba(217, 217, 217, 0.41);
     border-radius: 50px;
@@ -615,8 +614,7 @@ input[type="search"]::-webkit-search-cancel-button {
     backdrop-filter: blur(2px);
     box-shadow: var(--box-shadow) inset;
 }
-
-.userinput::placeholder {
+.login .userinput::placeholder {
     font-weight: 400 !important;
     color: #646464 !important;
 }
@@ -647,12 +645,7 @@ input[type="search"]::-webkit-search-cancel-button {
     color: var(--color-white);
 }
 
-.cs .userinput::placeholder {
-    color: var(--color-pure-black);
-}
-
 @media (max-width: 768px) {
-
     .login .blur-container,
     .login .blur-popup-container,
     .login .login-container {
@@ -678,7 +671,6 @@ input[type="search"]::-webkit-search-cancel-button {
     }
 
     .login .right-container {
-        width: 100%;
         padding: 10px;
     }
 
@@ -692,7 +684,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 @media (max-width: 480px) {
-
     .login .blur-container,
     .login .blur-popup-container,
     .login .login-container {
@@ -702,12 +693,7 @@ input[type="search"]::-webkit-search-cancel-button {
     .login .left-container {
         margin-bottom: 20px;
     }
-
-    .login .right-container .userinput {
-        height: 40px;
-    }
 }
-
 /* ********************** This CSS for LightApp Page ***************************** */
 
 .lightapp .all-tab {
@@ -1271,13 +1257,13 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .login #progressbar {
-    margin-bottom: 30px;
     overflow: hidden;
     color: lightgrey;
 }
 
 .login #progressbar .active {
     color: var(--color-dark-yellow);
+    font-weight: 600;
 }
 
 .login #progressbar li {
@@ -1294,12 +1280,10 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .login #progressbar #voice:before {
-    font-family: FontAwesome;
     content: "2";
 }
 
 .login #progressbar #confirm:before {
-    font-family: FontAwesome;
     content: "3";
 }
 
@@ -1424,4 +1408,15 @@ input[type="search"]::-webkit-search-cancel-button {
     100% {
         transform: scale(1.3);
     }
+}
+
+/********* Remove highlight color when click on any button in project ********/
+button,
+input[type="button"] {
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight color */
+}
+
+button:focus,
+input[type="button"]:focus {
+    outline: none; /* Remove the focus outline */
 }
