@@ -104,10 +104,10 @@ class RolesController extends Controller
         $role = Roles::find($id);
 
         if ($updated) {
-            return redirect()->route('rolesadmin')->with('success', 'Roles updated successfully!');;
+            return redirect()->route('rolesadmin')->with('success-update', 'Roles updated successfully!');;
         } else {
             // Handle update failure (e.g., log the error or return a specific error message)
-            return redirect()->route('rolesadmin')->with('error', 'Roles updated failed!');;
+            return redirect()->route('rolesadmin')->with('error', 'Roles updated failed!');
         }
     }
 

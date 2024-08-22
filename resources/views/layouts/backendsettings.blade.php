@@ -342,7 +342,6 @@
       </aside>
 
        <!-- Main Content -->
-       @include('layouts.flashmessages')
        @yield('content')
        <!-- Main Content end --> 
       

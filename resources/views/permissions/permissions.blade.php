@@ -325,7 +325,7 @@
                       >User & Groups:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-3">
+                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-create">
                     <p class="text-c-black">Create</p>
@@ -338,7 +338,7 @@
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-view">
                     <p class="text-c-black">View/Preview</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-40 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-delete">
                     <p class="text-c-black">Delete</p>
                   </div>
@@ -374,7 +374,7 @@
                       >Roles:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-3">
+                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
                      <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-create">
                     <p class="text-c-black">Create</p>
@@ -387,7 +387,7 @@
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-view">
                     <p class="text-c-black">View/Preview</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-40 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-delete">
                     <p class="text-c-black">Delete</p>
                   </div>
@@ -422,7 +422,7 @@
                       >Groups:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-3">
+                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
                      <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-create">
                     <p class="text-c-black">Create</p>
@@ -435,7 +435,7 @@
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-view">
                     <p class="text-c-black">View/Preview</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-40 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-delete">
                     <p class="text-c-black">Delete</p>
                   </div>
@@ -470,7 +470,7 @@
                       >Backend:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-3">
+                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="notice">
                     <p class="text-c-black">Notice</p>
@@ -483,7 +483,7 @@
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="backups">
                     <p class="text-c-black">Backup</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-40 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="logs">
                     <p class="text-c-black">Logs</p>
                   </div>
@@ -500,7 +500,7 @@
                   name="options"
                   value="admin"
                 />
-                <span class="text-c-black mt-0.5 font-normal">Select All / Cancel </span>
+                <span class="text-c-black mt-0.5 font-normal" id="checkall">Select All / Cancel </span>
               </div>
             </div>
 
@@ -610,6 +610,17 @@ function populateTable(term='') {
     var term = $('#searchterm').val();
      populateTable(term);
   });
+
+
+ @if (Session::has('success'))
+   toastr.success("Permission Added successfully");
+ @endif
+ @if (Session::has('success-update'))
+   toastr.success("Permission Updated successfully");
+ @endif
+ @if (Session::has('delete'))
+   toastr.success("Permission delete successfully");
+ @endif
 
 });
 </script>

@@ -570,6 +570,28 @@ function populateTable(term='') {
      populateTable(term);
   });
 
+ @if (Session::has('success'))
+   toastr.success("User Added successfully");
+ @endif
+ @if (Session::has('success-update'))
+   toastr.success("User Updated successfully");
+ @endif
+ @if (Session::has('success-suspend'))
+   toastr.success("User supended successfully");
+ @endif
+ @if (Session::has('success-active'))
+   toastr.success("User activated successfully");
+ @endif
+@if (Session::has('user-exist'))
+   toastr.error("User email already exist!!");
+   alert('working');
+ @endif
+  @if (Session::has('success-group'))
+   toastr.success("Group Added successfully");
+ @endif
+ @if (Session::has('group-update'))
+   toastr.success("Group Updated successfully");
+ @endif
 });
 
   // DeletetModal Open Functionality

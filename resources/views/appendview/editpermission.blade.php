@@ -221,7 +221,7 @@
                       >User & Groups:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-3">
+                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-create"  @php echo in_array('user-create', $permission->permissions) ? 'checked' : ''  @endphp>
                     <p class="text-c-black">Create</p>
@@ -234,7 +234,7 @@
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-view"  @php echo in_array('user-view', $permission->permissions) ? 'checked' : ''  @endphp>
                     <p class="text-c-black">View/Preview</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-40 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-delete"  @php echo in_array('user-delete', $permission->permissions) ? 'checked' : ''  @endphp>
                     <p class="text-c-black">Delete</p>
                   </div>
@@ -270,7 +270,7 @@
                       >Roles:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-3">
+                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
                      <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-create"  @php echo in_array('role-create', $permission->permissions) ? 'checked' : ''  @endphp>
                     <p class="text-c-black">Create</p>
@@ -283,7 +283,7 @@
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-view"  @php echo in_array('role-view', $permission->permissions) ? 'checked' : ''  @endphp>
                     <p class="text-c-black">View/Preview</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-40 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-delete"  @php echo in_array('role-delete', $permission->permissions) ? 'checked' : ''  @endphp>
                     <p class="text-c-black">Delete</p>
                   </div>
@@ -318,7 +318,7 @@
                       >Groups:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-3">
+                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
                      <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-create"  
                     @php echo in_array('group-create', $permission->permissions) ? 'checked' : ''  @endphp>
@@ -332,7 +332,7 @@
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-view"  @php echo in_array('group-view', $permission->permissions) ? 'checked' : ''  @endphp>
                     <p class="text-c-black">View/Preview</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-40 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-delete"  
                     @php echo in_array('group-delete', $permission->permissions) ? 'checked' : ''  @endphp>
                     <p class="text-c-black">Delete</p>
@@ -370,7 +370,7 @@
                       >Backend:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-3">
+                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="notice"  @php echo in_array('notice', $permission->permissions) ? 'checked' : ''  @endphp>
                     <p class="text-c-black">Notice</p>
@@ -383,7 +383,7 @@
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="backups"  @php echo in_array('backups', $permission->permissions) ? 'checked' : ''  @endphp>
                     <p class="text-c-black">Backup</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-40 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="logs"  @php echo in_array('logs', $permission->permissions) ? 'checked' : ''  @endphp>
                     <p class="text-c-black">Logs</p>
                   </div>
