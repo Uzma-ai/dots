@@ -175,7 +175,7 @@
                       @foreach ($contextType->contextOptions as $option)
                         <div class="hover-bg-c-yellow rounded-t-lg">
                           <a href="#" class="flex block p-2 pl-4 dropdown-item clickmenu {{ $contextType->function }} " data-type="{{ $option->function }}">
-                            <img src="{{ asset($constants['FILEICONPATH'].$option->image.$constants['ICONEXTENSION'])}}" alt="{{ $option->name }}" class="pr-4 w-11" /><span
+                            <img src="{{ asset($constants['FILEICONPATH'].($option->image ?? 'default').$constants['ICONEXTENSION'])}}" alt="{{ $option->name }}" class="pr-4 w-11" /><span
                               >{{ $option->name }}</span
                             >
                           </a>
