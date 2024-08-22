@@ -194,7 +194,7 @@
                     Permissions
                   </button>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-10">
+                <div class="grid grid-cols-1 gap-4 mt-10">
                   <div class="md:col-span-2 flex items-start">
                     <h3 class="block font-bold text-c-black">Assign Permission:</h3>
                   </div>
@@ -828,6 +828,13 @@ function populateTable(term='') {
   $('#okdelete').on('click', function (e) {
      toastr.success("Roles Deleted");                          
     });
+
+   @if (Session::has('success'))
+   toastr.success("Role Added successfully");
+ @endif
+ @if (Session::has('success-update'))
+   toastr.success("Role Updated successfully");
+ @endif
 
 });
 </script>
