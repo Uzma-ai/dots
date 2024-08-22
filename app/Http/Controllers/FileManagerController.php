@@ -224,7 +224,7 @@ class FileManagerController extends Controller
                 $files = RecycleBin::where('tablename', 'file')->where('file_created_by', auth()->id())->get();
             }
             $html = view('appendview.pathview')->with('defaultfolders', $defaultfolders)->with('files', $files)->render();
-        return response()->json(['html' => $html]);
+        return response()->json(['html' => $html,'parentPath'=>$parentPath]);
 
     }
     
@@ -305,6 +305,8 @@ class FileManagerController extends Controller
               $sourcepath = base64UrlDecode($sessionarr['filepath']);
               $destinationPath = Storage::disk('root')->path($destination);
               $sourcePath = Storage::disk('root')->path($sourcepath);
+              $renamesource = storage_path('root/'.$sourcepath);
+              $renamedestination = storage_path('root/'.$destination);
               //print_r($sourcepath);exit;
               if (file_exists($sourcePath)) {
                   $filename = pathinfo($sourcePath, PATHINFO_BASENAME);
@@ -385,13 +387,15 @@ class FileManagerController extends Controller
                             }
                         }else{
                             
-                            if(rename($sourcePath, $destinationPath.'/'.basename($sourcePath))) {
+                            if(rename($renamesource, $renamedestination.'/'.basename($sourcePath))) {
                                     FileModel::where('id', $id)->update([
                                         'path' => $destination.'/'.basename($sourcePath),
                                         'parentpath' => $destination,
                                     ]);
                                 
                                 return response()->json(['message'=>'Pasted Successfully','status' => true]);
+                            }else{
+                                return response()->json(['message'=>'Access Denied','status' => false]);
                             }
                         }
                   

@@ -161,12 +161,33 @@
     </div>
 @endsection
 @section('scripts')
-    @php
-        $path = base64UrlEncode('Desktop');
-    @endphp
-    <script src="{{ asset($constants['JSFILEPATH'] . 'dashboard.js') }}"></script>
+@php 
+$path = base64UrlEncode('/Desktop');
+@endphp 
+<script>
+     let path = @json($path);
+     let navbar = true;
+</script>
+<script src="{{ asset($constants['JSFILEPATH'].'dashboard.js') }}" ></script>
 
-    <script>
+
+<!-- <script>
+      const desktopapp = @json(route('desktopapp'));
+      const createFolderRoute = @json(route('createfolder'));
+      const createFileRoute = @json(route('createfile'));
+      const showFileDetail = @json(route('showpathdetail'));
+
+      let path = @json($path);
+      let navbar = true;
+
+</script>
+<script>
+    $(document).ready(function () {
+        if($('.navbarhead').hasClass('taskbar-slide')){
+          $('.navbarhead').removeClass('taskbar-slide');
+
+        }
+        
         $('#searchInput').on('input', function() {
             $('#searchsuggestions').html('');
             let searchQuery = $(this).val().trim(); // Get the search query from the input field

@@ -9,7 +9,7 @@
               <i class="ri-arrow-drop-down-fill ri-xl text-black"></i>
           <!-- </div> -->
         </div>
-       <div class="text-center flex flex-col items-center px-1 pt-5 showappoptions">
+       <div class="text-center flex flex-col items-center px-1 pt-5 imagewraper">
               <img class="showappoptions w-16 icondisplay" src="{{ asset($constants['APPFILEPATH'].$lightApp->icon) }}" alt="{{ $lightApp->name }}"/>
             
             <div class="input-wrapper w-16" id="inputWrapperlightapp{{ base64UrlEncode($lightApp->id) }}">
@@ -24,14 +24,14 @@
 @foreach ($files as $file)
   @if($file->folder==1)
   <div class="app maindesktopapp w-20 h-32 cursor-pointer relative" data-option="file">
-      <a href="{{ url('/filemanager',['path'=>base64UrlEncode($file->path)]);}}" data-path =" {{ base64UrlEncode($file->path) }}" class="folders selectapp" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="App" data-isfile="1"> 
+      <a href="{{ url('/filemanager',['path'=>base64UrlEncode($file->path)]);}}" data-path =" {{ base64UrlEncode($file->path) }}" class="folders openiframe selectapp" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="App" data-isfile="1"> 
         <div class="app-tools absolute top-0 left-1 flex items-center justify-between gap-8 py-0.5 px-1 invisible showappoptions">
             <input type="checkbox" name="option" class="appcheckbox" id="checkboxfolder{{ base64UrlEncode($file->id) }}">
           <div class="ml-auto -mt-1">
               <i class="ri-arrow-drop-down-fill ri-xl text-black"></i>
           </div>
         </div>
-       <div class="text-center flex flex-col items-center px-1 pt-5">
+       <div class="text-center flex flex-col items-center px-1 pt-5 imagewraper">
               <img class="w-16 icondisplay" src="{{ asset($constants['FILEICONPATH'].'folder.png')}}" alt="{{ $file->name }}"/>
             
             <div class="input-wrapper w-16" id="inputWrapperfolder{{ base64UrlEncode($file->id) }}">
@@ -49,7 +49,7 @@
                 <i class="ri-arrow-drop-down-fill ri-xl text-black"></i>
             </div>
             </div>
-        <div class="text-center flex flex-col items-center px-1 pt-5">
+        <div class="text-center flex flex-col items-center px-1 pt-5 imagewraper">
             
             <!--@if($file->filetype=='image')-->
             <!--     <a href="#" class="files openiframe selectapp" data-ext = "{{ $file->extension }}" data-image="{{ $file->path }}" data-title="{{ $file->name }}"  data-url="{{ $file->path }}"> -->
