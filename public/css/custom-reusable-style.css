@@ -209,9 +209,7 @@ border-bottom: 2px solid var(--color-dark-yellow);
 }
 
 /* js tab controlled */
-.tab-control {
-  border-bottom: 2px solid transparent;
-}
+
 .tab-control.active {
   border-color: var(--color-dark-yellow);
 }

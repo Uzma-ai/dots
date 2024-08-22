@@ -58,7 +58,9 @@
                             });
                         </script>
 
-                        <a href="{{ url('export-overview') }}" class="btn btn-success" id="my_export" target="_blank">Export to Excel</a>
+                      
+
+                        <button id="printButton1" class="ri-download-line border px-3 hover-bg-c-black hover-text-c-yellow text-sm text-black py-1 rounded border-gray-600">  <a href="{{ url('export-overview') }}" class="btn btn-success" id="my_export" target="_blank">Export to Excel</a></button>
                     </div>
 
                 </div>
@@ -95,7 +97,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white border p-4 flex flex-col h-full rounded-md">
+                 <!--  123  <div class="bg-white border p-4 flex flex-col h-full rounded-md">
                         <div class="border-b pb-1">
                             <i class="ri-folder-4-line"></i>&nbsp;<span class="font-semibold">File</span>
                         </div>
@@ -119,7 +121,7 @@
                                 <span>Today: 0B</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="bg-white border p-4 flex flex-col h-full rounded-md">
                         <div class="border-b flex pb-1">
@@ -182,7 +184,7 @@
 
 
 
-                    <div class="bg-white border p-4 flex flex-col h-full rounded-md">
+                   <!--123  <div class="bg-white border p-4 flex flex-col h-full rounded-md">
                         <div class="border-b pb-1">
                             <i class="ri-macbook-line"></i>&nbsp;<span class="font-semibold">System</span>
                         </div>
@@ -192,8 +194,8 @@
                                 <span class="absolute right-0 -top-4 text-xs text-c-green">90%</span>
                                 <div class="bg-c-green h-1.5 rounded-full" style="width: 90%"></div>
                             </div>
-                        </div>
-                        <div class="text-xs py-2 space-y-1">
+                        </div> -->
+                        <!-- <div class="text-xs py-2 space-y-1">
                             <div class="flex gap-2 items-center">
                                 <span class="w-1/3">Disk</span>
                                 <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
@@ -233,7 +235,7 @@
                                     Task Manager
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
@@ -248,7 +250,7 @@
                         <div class="text-sm p-1 text-c-black"> Document log <span class="text-gray-400"><!-- (14 Records) --></span>
                         </div>
                         <div class="h-72 overflow-y-auto">
-                            @foreach($activity->items() as $logs) @if(($logs['action'] != 'Log In') && ($logs['action'] != 'Log Out'))
+                            @foreach($activity as $logs) @if(($logs['action'] != 'Log In') && ($logs['action'] != 'Log Out'))
                             <div class="flex items-center space-x-3 mt-3 text-c-black">
                                 <div class="relative flex items-center">
                                     <div class="absolute top-1/2 left-6 transform -translate-y-1/2 h-0.5 bg-c-light-white w-1/2"></div>
@@ -372,7 +374,7 @@
                                             @foreach($UsersGroup as $UserGroup)
                                             <tr class="text-sm border-t">
                                                 <td class="py-2 pl-3">
-                                                    <input type="checkbox" class="c-checkboxa g-usage" data-user-id="{{ $UserGroup->id }}" data-user-group-name="{{ $UserGroup->name }}">
+                                                    <input type="checkbox" class="c-checkbox g-usage" data-user-id="{{ $UserGroup->id }}" data-user-group-name="{{ $UserGroup->name }}">
                                                 </td>
                                                 <td class="py-2 pl-3">{{ $UserGroup->name }}</td>
                                                 <td class="py-2 pl-3">{{ $UserGroup->sizeUse }}</td>
@@ -399,10 +401,10 @@
                             <canvas id="usage-ratio-donut"></canvas>
                             <div class="border-t p-1 mt-1 flex text-xs">
                                 <div class="text-center w-full">
-                                    Total: 1.4 MB
+                                    <!-- Total: 1.4 MB -->
                                 </div>
                                 <div class="text-center w-full">
-                                    Files: 442
+                                    <!-- Files: 442 -->
                                 </div>
                             </div>
                         </div>

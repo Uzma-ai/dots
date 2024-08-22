@@ -200,7 +200,7 @@ class OverviewController extends Controller
 //------------------------ends------------
 
       $Users = User::orderBy('created_at', 'desc')->paginate(8);
-      $activity = Activity::orderBy('created_at', 'asc')->paginate();
+      $activity = Activity::orderBy('created_at', 'asc')->get();
 
       $UsersGroup = Group::orderBy('created_at', 'desc')->paginate(8);
       $file = File::first();

@@ -353,9 +353,7 @@
 }
 
 /* tab css used in storage-file page */
-.fm .tab-control {
-  border-top: 2px solid transparent;
-}
+
 
 .fm .tab-control.active {
   border-color: var(--color-dark-yellow);

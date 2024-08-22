@@ -380,9 +380,7 @@ body.cs {
 }
 
 /* js tab controlled */
-.tab-control {
-    border-bottom: 2px solid transparent;
-}
+
 
 .tab-control.active {
     border-color: var(--color-dark-yellow);

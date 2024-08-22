@@ -30,7 +30,7 @@
             </div>
           
         </div>
-      <main class="flex w-full h-full cs plugin fm">
+      <main class="flex w-full h-full cs plugin fm role">
 
         <!-- Sidebar -->
           <aside class="h-full relative">
