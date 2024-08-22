@@ -22,6 +22,7 @@ appDiv.on("click", (event) => {
 
 // Right Click Functionality
 $(document).ready(function () {
+    
  const appContextMenu = $("#app-contextmenu");
  const dashboardContextMenu = $("#context-menu");
  const dashboard = $(".allapplist .dashboard");
@@ -181,7 +182,15 @@ $(document).ready(function () {
    });
 
  
- $(document).on("click", function () {
+ $(document).on("click", function (e) {
+    if (!$(e.target).closest('.selectapp').length) {
+        // Hide the filemanagertool
+        $('.fimanagertoolpanel').addClass('disabledicon');
+        
+        // Remove the selectedfile class and other related classes
+        $('.allapplist .app .selectapp').removeClass('selectedfile');
+        $('.allapplist .app').removeClass('desktopapp-clicked');
+    }
    closeAllContainers();
  });
 });
@@ -356,6 +365,19 @@ $(document).ready(function () {
             }
         });
 
+
+        // open app by click
+        $(document).on('click', '.allapplist .selectapp', function (e) {
+            e.preventDefault();
+            if($(this).hasClass('openiframe')){
+                $('.allapplist .app .selectapp').removeClass("selectedfile");
+                $('.allapplist .app').removeClass("desktopapp-clicked");
+                $('.fimanagertoolpanel').removeClass('disabledicon');
+                $(this).addClass('selectedfile');
+                $(this).closest('.app').addClass('desktopapp-clicked')
+            }
+               
+        });
 
 
         // cut file 

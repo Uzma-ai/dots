@@ -211,9 +211,9 @@
               <!-- <button class="share" onclick="togglePopup('sharePopup');">
                 <i class="ri-share-fill ri-lg"></i>
               </button> -->
-              <button class="delete">
+              <a href="#" class="clickmenu deleteFunction disabledicon fimanagertoolpanel"><button class="delete">
                 <i class="ri-delete-bin-line ri-lg"></i>
-              </button>
+              </button></a>
               <div class="relative flex items-center sort">
                 <button class="flex gap-x-2">
                   <i class="ri-arrow-up-down-line ri-lg mt-1"></i>
