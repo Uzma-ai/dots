@@ -135,7 +135,7 @@ $(document).ready(function () {
 
 // select app 
    let thisApp = target.closest('.allapplist .app');
-   let selectapp = target.closest(".allapplist .app").find('.openiframe');
+   let selectapp = target.closest(".allapplist .app .openiframe");
    $('.allapplist .app .selectapp').removeClass("selectedfile");
    $('.allapplist .app').removeClass("desktopapp-clicked");
    $('.allapplist .app .app-tools').addClass("invisible");
@@ -295,6 +295,18 @@ $(document).ready(function () {
             showapathdetail(path,filetypearr[0],filetypearr[1]);
         });
 
+        $(document).on('click', '.context-menulist .resizeFunction', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            let filetype = $(this).data('type');
+            let sizeclasses = ['tiny','small','big','medium','oversize'];
+            sizeclasses.forEach(element => {
+                $('.allapplist .app').removeClass(element+'-wraper');
+                $('.allapplist .app .imagewraper').removeClass(element);
+            });
+            $('.allapplist .app').addClass(filetype+'-wraper');
+            $('.allapplist .app .imagewraper').addClass(filetype);
+        });
 
 
         // app menus
@@ -348,7 +360,7 @@ $(document).ready(function () {
 
         // cut file 
          // rename 
-         $(document).on('click', '.context-menu .renameFunction', function (e) {
+         $(document).on('click', '.context-menulist .renameFunction', function (e) {
             e.preventDefault();
             const filekey = $('.selectedfile').attr('data-filekey');
             const filetype = $('.selectedfile').attr('data-filetype');
@@ -366,7 +378,7 @@ $(document).ready(function () {
                 if (!inputWrapper.is(event.target) && inputWrapper.has(event.target).length === 0) {
                     // Disable the input field and add the necessary classes back
                     inputField.attr('disabled', true).addClass('appinputtext');
-                    $('.selectapp').removeClass('selectedfile');
+                    $('.openiframe').removeClass('selectedfile');
                     
                     // Call the rename function with the new name
                     renameFunction(filekey, filetype, inputField.val()); 

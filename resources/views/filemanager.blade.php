@@ -72,8 +72,8 @@ if(empty($updatedPath)){
       // const createFolderRoute = @json(route('createfolder'));
       // const createFileRoute = @json(route('createfile'));
       // const showFileDetail = @json(route('showpathdetail'));
-      //let path = @json($path);
-      //let navbar = false;
+      let path = @json($path);
+      let navbar = false;
 
 </script>
     <script>

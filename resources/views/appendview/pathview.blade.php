@@ -2,7 +2,7 @@
 
 @foreach ($defaultfolders as $dfolder)
 
-    <div class="app maindesktopapp w-21 h-28 cursor-pointer relative">
+    <div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="all">
       <a href="{{ url('/filemanager/'.base64UrlEncode($dfolder->path))}}" class="systemapp selectapp showappoptions" data-appkey="{{ base64UrlEncode($dfolder->id) }}" data-filekey="{{ base64UrlEncode($dfolder->id) }}" data-filetype="systemapp" data-apptype="App" data-isfile="1"> 
 
         <div class="fixed w-full app-tools absolute flex item-center gap-8 px-2 invisible showappoptions">
@@ -11,7 +11,7 @@
               <i class="ri-arrow-drop-down-fill ri-xl text-black"></i>
           </div>
         </div>
-       <div class="flex flex-col items-center">
+       <div class="flex flex-col items-center imagewraper">
               <img class="w-16 icondisplay" src="{{ asset($constants['APPFILEPATH'].$dfolder->icon) }}" alt="{{ $dfolder->name }}"/>
             
            <div class="input-wrapper" id="inputWrappersystemapp{{ base64UrlEncode($dfolder->id) }}">
@@ -24,8 +24,8 @@
 
 @foreach ($files as $file)
 @if($file->folder==1)
-<div class="app maindesktopapp w-21 h-28 cursor-pointer relative">
-    <a href="{{url('/filemanager/'.base64UrlEncode($file->path))}}" class="folders selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="App" data-isfile="1"> 
+<div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="file">
+    <a href="{{url('/filemanager/'.base64UrlEncode($file->path))}}" class="folders openiframe selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="App" data-isfile="1"> 
 
    <div class="fixed w-full app-tools absolute flex item-center gap-8 px-2 invisible showappoptions">
           <input type="checkbox" class="appcheckbox" id="checkboxfolder{{ base64UrlEncode($file->id) }}">
@@ -33,7 +33,7 @@
               <i class="ri-arrow-drop-down-fill ri-xl text-black"></i>
           </div>
         </div>
-       <div class="flex flex-col items-center">
+       <div class="flex flex-col items-center imagewraper">
               <img class="w-16 icondisplay" src="{{ asset($constants['FILEICONPATH'].'folder.png')}}" alt="{{ $file->name }}"/>
             
             <div class="input-wrapper" id="inputWrapperfolder{{ base64UrlEncode($file->id) }}">
@@ -43,7 +43,7 @@
      </a>
 </div>
 @else
-<div class="app maindesktopapp w-21 h-28 cursor-pointer relative">
+<div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="file">
   <a href="#" class="files openiframe selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="document" data-apptype="LightApp" data-isfile="1"> 
 
    <div class="fixed w-full app-tools absolute flex item-center gap-8 px-2 invisible showappoptions">
@@ -52,7 +52,7 @@
               <i class="ri-arrow-drop-down-fill ri-xl text-black"></i>
           </div>
         </div>
-       <div class="flex flex-col items-center">
+       <div class="flex flex-col items-center imagewraper">
           
            <!-- @if($file->filetype=='image')
                <a href="#" class="files openiframe selectapp" data-ext = "{{ $file->extension }}" data-image="{{ $file->path }}" data-title="{{ $file->name }}"  data-url="{{ $file->path }}">

@@ -161,9 +161,14 @@
 @endsection
 @section('scripts')
 @php 
-$path = base64UrlEncode('Desktop');
+$path = base64UrlEncode('/Desktop');
 @endphp 
+<script>
+     let path = @json($path);
+     let navbar = true;
+</script>
 <script src="{{ asset($constants['JSFILEPATH'].'dashboard.js') }}" ></script>
+
 
 <!-- <script>
       const desktopapp = @json(route('desktopapp'));
