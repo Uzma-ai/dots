@@ -279,7 +279,7 @@ class LoginController extends Controller
             $user->save();
             return response()->json(['status' => true, 'msg' => "Facedata and Voicedata register successfully.", 'user' => $user]);
         } else {
-            return response()->json(['status' => false, 'msg' => $response]);
+            return response()->json(['status' => false, 'msg' => $res->message]);
         }
     }
     private function getSystemImage($system)
