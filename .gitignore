@@ -5,3 +5,8 @@ public/storage
 composer.lock
 error_log
 package-lock.json
+storage/app/root/Desktop/*
+storage/app/root/Documents/*
+storage/app/root/Downloads/*
+storage/app/root/Gallery/*
+storage/app/root/Recyclebin/*
