@@ -53,7 +53,7 @@
                         <!-- Example button for printing -->
                        <button id="printButton" 
               type="button"
-              class="border px-3 hover-bg-c-black hover-text-c-yellow text-sm text-black py-1 rounded border-gray-600 export"
+              class="border px-3 hover-bg-c-black hover-text-c-yellow text-sm text-black py-1 rounded border-c-light-gray export"
             >
               <i class="ri-printer-line"></i>&nbsp;Print</button>
                         <script>
@@ -64,7 +64,7 @@
 
                       
 
-                        <button id="printButton1" class="ri-download-2-line border px-3 hover-bg-c-black hover-text-c-yellow text-sm text-black py-1 rounded border-gray-600 " >  <a href="{{ url('export-overview') }}" class="btn btn-success" id="my_export" target="_blank" style="
+                        <button id="printButton1" class="ri-download-2-line border px-3 hover-bg-c-black hover-text-c-yellow text-sm text-black py-1 rounded border-c-light-gray " >  <a href="{{ url('export-overview') }}" class="btn btn-success" id="my_export" target="_blank" style="
   font-family: Roboto, sans-serif;">Export</a></button>
                     </div>
 
@@ -166,13 +166,13 @@
                             <div class="flex justify-between items-end">
                                 <div>
                                     <div>
-                                        <span>Request: 01</span>
+                                        <span>Request: 00</span>
                                     </div>
                                     <div>
-                                        <span>Users: 01</span>
+                                        <span>Users: {{ $totalUsers }}</span>
                                     </div>
                                 </div>
-                                <div class="relative placeholder-gray-400 flex items-end">
+                             <!--    <div class="relative placeholder-gray-400 flex items-end">
                                     <button type="button" class="has-tooltip">
                                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M13.125 4.6875H1.875C1.62636 4.6875 1.3879 4.78627 1.21209 4.96209C1.03627 5.1379 0.9375 5.37636 0.9375 5.625V9.375C0.9375 9.62364 1.03627 9.8621 1.21209 10.0379C1.3879 10.2137 1.62636 10.3125 1.875 10.3125H13.125C13.3736 10.3125 13.6121 10.2137 13.7879 10.0379C13.9637 9.8621 14.0625 9.62364 14.0625 9.375V5.625C14.0625 5.37636 13.9637 5.1379 13.7879 4.96209C13.6121 4.78627 13.3736 4.6875 13.125 4.6875ZM3.51562 8.20312C3.37656 8.20312 3.24062 8.16189 3.12499 8.08463C3.00936 8.00737 2.91924 7.89755 2.86602 7.76907C2.8128 7.64059 2.79888 7.49922 2.82601 7.36283C2.85314 7.22643 2.92011 7.10115 3.01844 7.00282C3.11677 6.90448 3.24206 6.83752 3.37845 6.81039C3.51485 6.78326 3.65622 6.79718 3.7847 6.8504C3.91318 6.90361 4.02299 6.99374 4.10025 7.10936C4.17751 7.22499 4.21875 7.36093 4.21875 7.5C4.21875 7.68648 4.14467 7.86532 4.01281 7.99718C3.88095 8.12905 3.70211 8.20312 3.51562 8.20312ZM7.5 8.20312C7.36094 8.20312 7.22499 8.16189 7.10936 8.08463C6.99374 8.00737 6.90361 7.89755 6.8504 7.76907C6.79718 7.64059 6.78326 7.49922 6.81039 7.36283C6.83752 7.22643 6.90448 7.10115 7.00282 7.00282C7.10115 6.90448 7.22643 6.83752 7.36283 6.81039C7.49922 6.78326 7.64059 6.79718 7.76907 6.8504C7.89755 6.90361 8.00737 6.99374 8.08463 7.10936C8.16189 7.22499 8.20312 7.36093 8.20312 7.5C8.20312 7.68648 8.12905 7.86532 7.99718 7.99718C7.86532 8.12905 7.68648 8.20312 7.5 8.20312ZM11.4844 8.20312C11.3453 8.20312 11.2094 8.16189 11.0937 8.08463C10.9781 8.00737 10.888 7.89755 10.8348 7.76907C10.7816 7.64059 10.7676 7.49922 10.7948 7.36283C10.8219 7.22643 10.8889 7.10115 10.9872 7.00282C11.0855 6.90448 11.2108 6.83752 11.3472 6.81039C11.4836 6.78326 11.625 6.79718 11.7534 6.8504C11.8819 6.90361 11.9917 6.99374 12.069 7.10936C12.1463 7.22499 12.1875 7.36093 12.1875 7.5C12.1875 7.68648 12.1134 7.86532 11.9816 7.99718C11.8497 8.12905 11.6709 8.20312 11.4844 8.20312Z"
@@ -182,7 +182,7 @@
                                     <div class="absolute text-xs tooltip -bottom-8 -left-8 px-2 py-1 text-center z-10 min-w-full bg-white border rounded-md">
                                         Details
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
