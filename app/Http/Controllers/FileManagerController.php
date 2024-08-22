@@ -305,7 +305,7 @@ class FileManagerController extends Controller
               $sourcepath = base64UrlDecode($sessionarr['filepath']);
               $destinationPath = Storage::disk('root')->path($destination);
               $sourcePath = Storage::disk('root')->path($sourcepath);
-              $renamesource = storage_path('root/'.$sourcepath);
+              $renamesource = storage_path('root/'.$destination);
               $renamedestination = storage_path('root/'.$destination);
               //print_r($sourcepath);exit;
               if (file_exists($sourcePath)) {
@@ -324,7 +324,7 @@ class FileManagerController extends Controller
                             }
                             if($activefiletype !='folder'){
                                 $newFileName = $newFileName.'.'.File::extension($filename);
-                                $copyfiles = Storage::disk('root')->copy($sourcepath, $destinationfile);
+                                $copyfiles = Storage::disk('root')->copy($sourcepath, $destinationfile.'.'.pathinfo($sourcepath, PATHINFO_EXTENSION));
                             }else{
                                 $newFileName = $newFileName;
                                 $copyfiles = File::copyDirectory($sourcePath, $destinationPath);
@@ -387,15 +387,13 @@ class FileManagerController extends Controller
                             }
                         }else{
                             
-                            if(rename($renamesource, $renamedestination.'/'.basename($sourcePath))) {
+                            if(rename($sourcePath, $destinationPath.'/'.basename($sourcePath))) {
                                     FileModel::where('id', $id)->update([
                                         'path' => $destination.'/'.basename($sourcePath),
                                         'parentpath' => $destination,
                                     ]);
                                 
                                 return response()->json(['message'=>'Pasted Successfully','status' => true]);
-                            }else{
-                                return response()->json(['message'=>'Access Denied','status' => false]);
                             }
                         }
                   
@@ -435,13 +433,21 @@ class FileManagerController extends Controller
                 $destination = $file->path;
                 $destinationPath = Storage::disk('root')->path($destination);
                 $sourcePath = Storage::disk('root')->path($file->parentpath);
-                $fileExtension = pathinfo($destinationPath, PATHINFO_EXTENSION);
-                $newfileextension  = pathinfo($newName, PATHINFO_EXTENSION);
-                $finalname = ($newfileextension) ? $newName : $newName.'.'.$fileExtension;
-                if(rename($destinationPath, $sourcePath.'/'. $finalname)) {
-                    $file->name = $finalname;
-                    $file->path = $file->parentpath.'/'.$finalname;
-                    $file->save();
+                if($type != 'folder') {
+                    $fileExtension = pathinfo($destinationPath, PATHINFO_EXTENSION);
+                    $newfileextension  = pathinfo($newName, PATHINFO_EXTENSION);
+                    $finalname = ($newfileextension) ? $newName : $newName.'.'.$fileExtension;
+                    if(rename($destinationPath, $sourcePath.'/'. $finalname)) {
+                        $file->name = $finalname;
+                        $file->path = $file->parentpath.'/'.$finalname;
+                        $file->save();
+                    }
+                }else{
+                    if(rename($destinationPath, $sourcePath.'/'.$newName)) {
+                        $file->name = $newName;
+                        $file->path = $file->parentpath.'/'.$newName;
+                        $file->save();
+                     }
                 }
             }
     }
