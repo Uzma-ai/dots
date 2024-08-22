@@ -32,8 +32,8 @@ class UsersImport
                 if ($existingUser) {
 
                     $existingUser->update([
-                        'name' => $row['username'],
-                        'email' => $row['email'],
+                        //'name' => $row['username'],
+                        //'email' => $row['email'],
                         // 'password' => Hash::make($row['password']),
                         'roleID' => $role->id,
                         'nickName' => $row['name'],
@@ -61,25 +61,13 @@ class UsersImport
                         $message->to($email);
                         $message->subject('Welcome to Dots');
                     });
-                    //     $username = $row['username'];
-
-                    //     if (!File::exists(storage_path('app/root/'.base64UrlDecode($username)))) {
-                    //         File::makeDirectory(storage_path('app/root/'.base64UrlDecode($username)), 0755, true);
-                    //     }
-                    //     $basePath = storage_path('app/root/'.base64UrlDecode($username));
-                    //     $folders = ['Desktop', 'Documents', 'Downloads', 'Gallery', 'Recyclebin'];
-
-                    //     // Create the folders
-                    //     foreach ($folders as $folder) {
-                    //         $folderPath = $basePath . '/' . $folder;
-                    //         if (!File::exists($folderPath)) {
-                    //             File::makeDirectory($folderPath, 0755, true);
-                    //         }
-                    //     }
 
                 }
+                return true;
+            }else{
+                return false;
             }
         }
-        return true;
+        return false;
     }
 }

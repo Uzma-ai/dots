@@ -49,11 +49,11 @@
                     onclick="toggleModal('newUserModal')"
                   >Add User</i>
                 </button>
-                <div
+                <!-- <div
                   class="absolute py-1 px-2 text-start text-xs tooltip -bottom-8 right-5 z-10 bg-white border rounded-md border-c-yellow z-0 font-normal"
                 >
                   Add user
-                </div>
+                </div> -->
                 <button>
                   <i class="ri-file-excel-2-fill ri-xl" id="showimport-upload-popup">Import Users</i>
                 </button>
@@ -241,7 +241,7 @@
                         class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
                         type="number"
                         placeholder="3"
-                        name="sizeUse"
+                        name="sizeUse" min="0" max="500"
                       />
                       <div
                         class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray-3 w-12 rounded-r-xl pl-3"
@@ -388,7 +388,7 @@
                         class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
                         type="number"
                         placeholder="Please enter space size"
-                        name="sizeMax"
+                        name="sizeMax" min="0" max="500"
                       />
                       <div
                         class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray-3 w-12 rounded-r-xl pl-3"
@@ -583,8 +583,8 @@ function populateTable(term='') {
    toastr.success("User activated successfully");
  @endif
 @if (Session::has('user-exist'))
+   console.log('testing');
    toastr.error("User email already exist!!");
-   alert('working');
  @endif
   @if (Session::has('success-group'))
    toastr.success("Group Added successfully");
@@ -726,19 +726,30 @@ function populateTable(term='') {
                 success: function (response) {
                     
                     fileList.empty();
-                    $.each(response.files, function (index, file) {
-                        fileList.append(
+                    if(response.success){
+                           $.each(response.files, function (index, file) {
+                            fileList.append(
+                                `<div class="flex justify-between items-center border-b border-gray-300 p-2">
+                                    <div class="flex items-center">
+                                        <i class="ri-check-line text-green-500 mr-2"></i>
+                                        <span>Upload Successful</span>
+                                    </div>
+                                    <div class="flex-grow text-right">
+                                        <span class="text-blue-500">${file.name}</span> (${(file.size / 1024).toFixed(2)} KB)
+                                    </div>
+                                </div>`
+                            );
+                        });
+                    }else{
+                          fileList.append(
                             `<div class="flex justify-between items-center border-b border-gray-300 p-2">
-                                <div class="flex items-center">
-                                    <i class="ri-check-line text-green-500 mr-2"></i>
-                                    <span>Upload Successful</span>
-                                </div>
-                                <div class="flex-grow text-right">
-                                    <span class="text-blue-500">${file.name}</span> (${(file.size / 1024).toFixed(2)} KB)
-                                </div>
-                            </div>`
-                        );
-                    });
+                                    <div class="flex items-center">
+                                        <i class="ri-close-circle-fill text-red-500 mr-2"></i>
+                                        <span>Upload Failed (`+response.message+`)</span>
+                                    </div>
+                                </div>`
+                            )
+                    }
                     // document.getElementById('popup').style.display = 'none';
                     // fileList.empty();
                     populateTable();

@@ -78,21 +78,21 @@ class UserController extends Controller
 
      public function create(Request $request)
     {
+         $duplicate = User::where('email', $request->email)->exists();
+        if($duplicate == 1){
+              return  redirect()->route('useradmin')->with('user-exist', 'test');
+        }
+
         try {
             DB::beginTransaction();
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                'email' => 'required',
+                'email' => 'required|email',
                 'password' => 'required',
             ]);
 
             if ($validator->fails()) {
                 return $this->sendError('Validation Error.', $validator->errors());
-            }
-
-             $duplicate = User::where('email', $request->email)->exists();
-            if($duplicate == 1){
-              return  redirect()->route('useradmin')->with('user-exist', '');
             }
 
             $input = $request->all();
@@ -202,8 +202,13 @@ class UserController extends Controller
                     ];
                 }
             }
+
+            if($test){
+                return response()->json(['success' => true, 'files' => $uploadedFiles,'test'=>$test]);
+            }else{
+                 return response()->json(['success' => false, 'message' => 'Roles / Group not found!!!']);
+            }
     
-            return response()->json(['success' => true, 'files' => $uploadedFiles,'test'=>$test]);
         } catch (\Exception $e) {
             // Log the error for debugging purposes
             //\Log::error('Error importing users: ' . $e->getMessage());
