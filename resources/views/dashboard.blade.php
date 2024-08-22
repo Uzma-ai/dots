@@ -17,7 +17,7 @@
         </div> -->
         <!--w-min :- giving issue || removed by: laxmi || date: 15-aug-24 -->
         <div class="desktopapps-div w-full overflow-x-auto">
-            <div id="desktopapps" class="desktop-apps allapplist p-2 pt-3 h-full flex flex-col gap-1 flex-wrap">
+          <div id="desktopapps" class="desktop-apps  content-start allapplist gap-4 p-2 pt-3 h-full flex flex-col  flex-wrap">
                
             </div>
         </div>
@@ -70,7 +70,7 @@
           <div class="row">
               <i class="ri-search-line search-icon absolute"></i>
                <input type="search" id="searchInput" placeholder="Search">
-            <i class="ri-close-line cross-icon absolute"></i>
+            <i class="ri-close-line cross-icon absolute" onclick=""></i>
           </div>
             <div id="searchsuggestions" class="searchdata hidden px-3 py-3 max-h-96">
             </div>
@@ -84,18 +84,23 @@
         </div>
 
 <!-- Administrator -->
-     <div id="administrator" class="Administrator h-max absolute right-5 sm:right-28 bottom-20 hidden">
-          <div class="flex items-center gap-5 pl-10 py-5">
+    <div id="administrator" class="Administrator h-max absolute right-5 sm:right-28 bottom-16 hidden">
+      <div class="flex items-center gap-5 pl-10 pt-5">
             <div class="logo">
-              <img class="w-16" src="{{ asset($constants['IMAGEFILEPATH'].'profile.png') }}" alt="user image" />
+                @if (Auth::user()->avatar != null)
+                    <img class="w-16 h-16 rounded-full object-cover" src="{{ url('/') }}/{{ Auth::user()->avatar }}" alt="user image" />
+                @else
+                    <img class="w-16" src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
+                        alt="user image" />
+                @endif
             </div>
             <div class="user-info">
-              <h1 class="text-lg font-normal underline underline-offset-8 decoration-1">
-                Administrator
-              </h1>
-              <h4 class="text-sm">Username</h4>
+                <h1 class="text-lg font-normal underline underline-offset-8 decoration-1">
+                    {{ ucfirst(Auth::user()->roles->name) }}
+                </h1>
+                <h4 class="text-sm">{{ ucfirst(Auth::user()->name) }}</h4>
             </div>
-          </div>
+        </div>
           <div class="bottom border-t-2 border-gray-500">
             <div class="features-list py-5 px-16">
               <ul>
@@ -133,7 +138,9 @@
 <!-- Administrator end -->
 
          <!-- Footer -->
-        <div class="absolute bottom-4 right-4 px-5">
+
+         <!-- Footer -->
+        <div class="absolute bottom-4 right-4 px-5 has-tooltip">
             <img
               id="footer-logo"
               class="w-10 h-10"
@@ -141,6 +148,12 @@
               alt="Logo"
             />
         </div>
+         <!-- <div
+                class="absolute py-1 px-2 text-start text-xs tooltip bottom-2 right-20 z-10 bg-white border rounded-md border-c-yellow font-normal"
+              >
+                Administrator
+              </div> -->
+        
 
      
      
@@ -150,7 +163,9 @@
 @php 
 $path = base64UrlEncode('Desktop');
 @endphp 
-<script>
+<script src="{{ asset($constants['JSFILEPATH'].'dashboard.js') }}" ></script>
+
+<!-- <script>
       const desktopapp = @json(route('desktopapp'));
       const createFolderRoute = @json(route('createfolder'));
       const createFileRoute = @json(route('createfile'));
@@ -203,9 +218,9 @@ $path = base64UrlEncode('Desktop');
     });
 
 
-</script>
+</script> -->
 
-    <script src="{{ asset($constants['JSFILEPATH'].'dashboard.js') }}"></script>
+    <!-- <script src="{{ asset($constants['JSFILEPATH'].'dashboard.js') }}"></script> -->
 @endsection
 
  
