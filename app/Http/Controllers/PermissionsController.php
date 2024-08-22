@@ -96,7 +96,7 @@ class PermissionsController extends Controller
         $role = Permissions::find($id);
 
         if ($updated) {
-            return redirect()->route('permissionsadmin')->with('success', 'Permission updated successfully!');
+            return redirect()->route('permissionsadmin')->with('success-update', 'Permission updated successfully!');
         } else {
             // Handle update failure (e.g., log the error or return a specific error message)
             return redirect()->route('permissionsadmin')->with('error', 'Permission update failed!');
@@ -107,7 +107,7 @@ class PermissionsController extends Controller
     {
         
         Permissions::where('id', $id)->delete();
-        return redirect()->route('permissionsadmin')->with('success', 'Permission deleted successfully!');
+        return redirect()->route('permissionsadmin')->with('delete', 'Permission deleted successfully!');
     
     }
 }

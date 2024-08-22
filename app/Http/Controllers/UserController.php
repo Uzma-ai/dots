@@ -90,6 +90,11 @@ class UserController extends Controller
                 return $this->sendError('Validation Error.', $validator->errors());
             }
 
+             $duplicate = User::where('email', $request->email)->exists();
+            if($duplicate == 1){
+              return  redirect()->route('useradmin')->with('user-exist', '');
+            }
+
             $input = $request->all();
             $input['ip_address'] =  $request->ip();
             $input['password'] = Hash::make($request->password);
@@ -119,7 +124,7 @@ class UserController extends Controller
                 }
             }
             DB::commit();
-            return redirect()->route('useradmin')->with('success', 'User created successfully!');
+            return redirect()->route('useradmin')->with('success', '');
         } catch (\Throwable $th) {
             DB::rollback();
             throw $th;
@@ -147,10 +152,13 @@ class UserController extends Controller
           $input = request()->except(['_token']);
           if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
+           }else{
+            unset($input['password']);
            }
+           
         $updated = User::where('id', $id)->update($input);
 
-         return redirect()->route('useradmin')->with('success', 'User updated successfully!');
+         return redirect()->route('useradmin')->with('success-update', 'User updated successfully!');
     
     }
 
@@ -169,11 +177,11 @@ class UserController extends Controller
         if($user->status == 1){
                 $update = array('status' => 0);
                 User::where('id', $id)->update($update);
-                return redirect('useradmin')->with('success', 'User suspended successfully!');
+                return redirect('useradmin')->with('success-suspend', 'User suspended successfully!');
         }else{
                $update = array('status' => 1);
                 User::where('id', $id)->update($update);
-                return redirect()->route('useradmin')->with('success', 'User activated successfully!');;
+                return redirect()->route('useradmin')->with('success-active', 'User activated successfully!');;
         }
     
     }

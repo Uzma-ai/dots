@@ -50,7 +50,7 @@ class GroupController extends Controller
 
         $input = $request->all();
         $role = Group::create($input);
-        return redirect()->route('useradmin')->with('success', 'Group created successfully!');  
+        return redirect()->route('useradmin')->with('success-group', 'Group created successfully!');  
     }
 
     public function edit(Request $request)
@@ -70,7 +70,7 @@ class GroupController extends Controller
         $role = Group::find($id);
 
         if ($updated) {
-            return redirect()->route('useradmin')->with('success', 'Group updated successfully!');
+            return redirect()->route('useradmin')->with('group-update', 'Group updated successfully!');
         } else {
             // Handle update failure (e.g., log the error or return a specific error message)
             return redirect()->route('useradmin')->with('error', 'Group update failed!!');
