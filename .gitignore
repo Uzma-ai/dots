@@ -4,3 +4,4 @@ vendor
 public/storage
 composer.lock
 error_log
+package-lock.json
