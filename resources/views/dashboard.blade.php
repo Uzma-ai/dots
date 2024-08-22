@@ -1,187 +1,172 @@
 @extends('layouts.common')
 @section('title', 'Dashboard')
 @section('styles')
-<link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'dashbord.css') }}">
-    <!-- <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'filemanager.css') }}"> -->
+    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'dashbord.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'filemanager.css') }}"> -->
 
 @endsection
 @section('content')
 
     <div class="w-full h-full dashboard cs pt-20">
 
-      <!-- Desktop apps   -->
-       <!-- <div class="desktopapps-div w-full overflow-x-auto">
-            <div id="desktopapps" class="desktop-apps allapplist p-2 pt-3 w-min h-full flex flex-col gap-1 flex-wrap">
-               
-            </div>
-        </div> -->
+        <!-- Desktop apps   -->
+        <!-- <div class="desktopapps-div w-full overflow-x-auto">
+                            <div id="desktopapps" class="desktop-apps allapplist p-2 pt-3 w-min h-full flex flex-col gap-1 flex-wrap">
+
+                            </div>
+                        </div> -->
         <!--w-min :- giving issue || removed by: laxmi || date: 15-aug-24 -->
         <div class="desktopapps-div w-full overflow-x-auto">
-          <div id="desktopapps" class="desktop-apps  content-start allapplist gap-4 p-2 pt-3 h-full flex flex-col  flex-wrap">
-               
+            <div id="desktopapps"
+                class="desktop-apps  content-start allapplist gap-4 p-2 pt-3 h-full flex flex-col  flex-wrap">
+
             </div>
         </div>
 
         <!-- Clock -->
-       <div class="clock flex flex-col items-center gap-2" id="clock"></div>
+        <div class="clock flex flex-col items-center gap-2" id="clock"></div>
 
         <!-- Notification -->
         <div id="notification" class="Notification h-80 absolute right-5 sm:right-20 top-16 hidden overflow-hidden">
-          <div class="h-16 border-b-2 border-c-gray py-4 px-4 flex items-center justify-between">
-            <h1 class="text-sm sm:text-lg text-c-black font-normal">Notification Center</h1>
-            <h1 class="text-sm sm:text-lg text-c-yellow font-medium cursor-pointer">Mark all as read</h1>
-          </div>
-          <div class="scrollbar-div overflow-y-auto" style="height: calc(100% - 64px);">
-            <!-- <ul>
-              <li class="border-b-2 border-c-gray px-4 py-2.5">
-                <div class="flex items-start justify-between gap-20">
-                  <p class="text-sm text-c-black font-normal">Sara Martin mentioned you in a React for dark and light mode </p>
-                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
-                </div>
-                <span class="text-c-time font-normal text-sm">5 min ago</span>
-              </li>
-               <li class="border-b-2 border-c-gray px-4 py-2.5">
-                <div class="flex items-start justify-between gap-20">
-                  <p class="text-sm text-c-black font-normal">Ralph Edwards completed Improve workflow mode</p>
-                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
-                </div>
-                <span class="text-c-time font-normal text-sm">2 min ago</span>
-              </li>
-               <li class="border-b-2 border-c-gray px-4 py-2.5">
-                <div class="flex items-start justify-between gap-20">
-                  <p class="text-sm text-c-black font-normal">Arjun Mathur has sent you a request on facebook</p>
-                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
-                </div>
-                <span class="text-c-time font-normal text-sm">Just now</span>
-              </li>
-               <li class="border-b-2 border-c-gray px-4 py-2.5">
-                <div class="flex items-start justify-between gap-20">
-                  <p class="text-sm text-c-black font-normal">Robert Fox completed Create new components</p>
-                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
-                </div>
-                <span class="text-c-time font-normal text-sm">2 hours ago</span>
-              </li>
-            </ul> -->
-          </div>
+            <div class="h-16 border-b-2 border-c-gray py-4 px-4 flex items-center justify-between">
+                <h1 class="text-sm sm:text-lg text-c-black font-normal">Notification Center</h1>
+                <h1 class="text-sm sm:text-lg text-c-yellow font-medium cursor-pointer">Mark all as read</h1>
+            </div>
+            <div class="scrollbar-div overflow-y-auto" style="height: calc(100% - 64px);">
+                <!-- <ul>
+                              <li class="border-b-2 border-c-gray px-4 py-2.5">
+                                <div class="flex items-start justify-between gap-20">
+                                  <p class="text-sm text-c-black font-normal">Sara Martin mentioned you in a React for dark and light mode </p>
+                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
+                                </div>
+                                <span class="text-c-time font-normal text-sm">5 min ago</span>
+                              </li>
+                               <li class="border-b-2 border-c-gray px-4 py-2.5">
+                                <div class="flex items-start justify-between gap-20">
+                                  <p class="text-sm text-c-black font-normal">Ralph Edwards completed Improve workflow mode</p>
+                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
+                                </div>
+                                <span class="text-c-time font-normal text-sm">2 min ago</span>
+                              </li>
+                               <li class="border-b-2 border-c-gray px-4 py-2.5">
+                                <div class="flex items-start justify-between gap-20">
+                                  <p class="text-sm text-c-black font-normal">Arjun Mathur has sent you a request on facebook</p>
+                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
+                                </div>
+                                <span class="text-c-time font-normal text-sm">Just now</span>
+                              </li>
+                               <li class="border-b-2 border-c-gray px-4 py-2.5">
+                                <div class="flex items-start justify-between gap-20">
+                                  <p class="text-sm text-c-black font-normal">Robert Fox completed Create new components</p>
+                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
+                                </div>
+                                <span class="text-c-time font-normal text-sm">2 hours ago</span>
+                              </li>
+                            </ul> -->
+            </div>
         </div>
 
         <!-- Search Input -->
         <div id="search" class="Search hidden fixed top-60 sm:top-72 md:top-80 lg:top-64">
-          <div class="row">
-              <i class="ri-search-line search-icon absolute"></i>
-               <input type="search" id="searchInput" placeholder="Search">
-            <i class="ri-close-line cross-icon absolute" onclick=""></i>
-          </div>
+            <div class="row">
+                <i class="ri-search-line search-icon absolute"></i>
+                <input type="search" id="searchInput" placeholder="Search">
+                <i class="ri-close-line cross-icon absolute" onclick=""></i>
+            </div>
             <div id="searchsuggestions" class="searchdata hidden px-3 py-3 max-h-96">
             </div>
         </div>
 
-         <!-- Right Sidebar -->
-         <div class="dashboard-sidebar w-16 px-2 hidden sm:block">
+        <!-- Right Sidebar -->
+        <div class="dashboard-sidebar w-16 px-2 hidden sm:block">
             @foreach ($apps as $app)
-                <a href="#" class="{{ $app->app_function=='add_app' ? 'openiframe' :''}}" data-title="{{ $app->name }}" data-url="{{ url('/') }}/lightapp" data-image="{{ asset($constants['APPFILEPATH'].$app->icon)}}"  ><img class="mb-2" src="{{  asset($constants['APPFILEPATH'].$app->icon ) }}" alt="{{ $app->name }}" /></a>
+                <a href="#" class="{{ $app->app_function == 'add_app' ? 'openiframe' : '' }}"
+                    data-title="{{ $app->name }}" data-url="{{ url('/') }}/lightapp"
+                    data-image="{{ asset($constants['APPFILEPATH'] . $app->icon) }}"><img class="mb-2"
+                        src="{{ asset($constants['APPFILEPATH'] . $app->icon) }}" alt="{{ $app->name }}" /></a>
             @endforeach
         </div>
 
-<!-- Administrator -->
-    <div id="administrator" class="Administrator h-max absolute right-5 sm:right-28 bottom-16 hidden">
-      <div class="flex items-center gap-5 pl-10 pt-5">
-            <div class="logo">
-                @if (Auth::user()->avatar != null)
-                    <img class="w-16 h-16 rounded-full object-cover" src="{{ url('/') }}/{{ Auth::user()->avatar }}" alt="user image" />
-                @else
-                    <img class="w-16" src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
-                        alt="user image" />
-                @endif
+        <!-- Administrator -->
+        <div id="administrator" class="Administrator h-max absolute right-5 sm:right-28 bottom-16 hidden">
+            <div class="flex items-center gap-5 pl-10 pt-5">
+                <div class="logo">
+                    @if (Auth::user()->avatar != null)
+                        <img class="w-16 h-16 rounded-full object-cover"
+                            src="{{ url('/') }}/{{ Auth::user()->avatar }}" alt="user image" />
+                    @else
+                        <img class="w-16" src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
+                            alt="user image" />
+                    @endif
+                </div>
+                <div class="user-info">
+                    <h1 class="text-lg font-normal underline underline-offset-8 decoration-1">
+                        {{ ucfirst(Auth::user()->roles->name) }}
+                    </h1>
+                    <h4 class="text-sm">{{ ucfirst(Auth::user()->name) }}</h4>
+                </div>
             </div>
-            <div class="user-info">
-                <h1 class="text-lg font-normal underline underline-offset-8 decoration-1">
-                    {{ ucfirst(Auth::user()->roles->name) }}
-                </h1>
-                <h4 class="text-sm">{{ ucfirst(Auth::user()->name) }}</h4>
-            </div>
-        </div>
-          <div class="bottom border-t-2 border-gray-500">
-            <div class="features-list py-5 px-16">
-              <ul>
-                <li class="flex items-center gap-8 mb-4">
-                 <i class="ri-folder-3-fill ri-1x Ad-iconcolor"></i>
-                  <a href="{{ route('filemanager') }}">File manager</a>
-                </li>
-               <li class="flex items-center gap-8 mb-4">
-                  <i class="ri-bar-chart-fill ri-1x Ad-iconcolor"></i>
-                  <a href="{{ route('useradmin') }}">Backend</a>
-                </li>
-                <li class="flex items-center gap-8 mb-4">
-                  <i class="ri-user-fill ri-1x Ad-iconcolor"></i>
-                  <a href="{{ route('useradmin') }}">User manage</a>
-                </li>
-                <li class="flex items-center gap-5 mb-4">
-                  <i class="ri-download-2-line ri-1x Ad-iconcolor"></i>
-                  <a href="#">Downloads</a>
-                </li>
-                <li class="flex items-center gap-8 mb-4">
-                  <i class="ri-logout-box-r-line ri-1x Ad-iconcolor"></i>
-                  <a  href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+            <div class="bottom border-t-2 border-gray-500">
+                <div class="features-list py-5 px-16">
+                    <ul>
+                        <li class="flex items-center gap-8 mb-4">
+                            <i class="ri-folder-3-fill ri-1x Ad-iconcolor"></i>
+                            <a href="{{ route('filemanager') }}">File manager</a>
+                        </li>
+                        <li class="flex items-center gap-8 mb-4">
+                            <i class="ri-bar-chart-fill ri-1x Ad-iconcolor"></i>
+                            <a href="{{ route('useradmin') }}">Backend</a>
+                        </li>
+                        <li class="flex items-center gap-8 mb-4">
+                            <i class="ri-user-fill ri-1x Ad-iconcolor"></i>
+                            <a href="{{ route('useradmin') }}">User manage</a>
+                        </li>
+                        <li class="flex items-center gap-5 mb-4">
+                            <i class="ri-download-2-line ri-1x Ad-iconcolor"></i>
+                            <a href="#">Downloads</a>
+                        </li>
+                        <li class="flex items-center gap-8 mb-4">
+                            <i class="ri-logout-box-r-line ri-1x Ad-iconcolor"></i>
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                  </a>
-                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                  </form>
-                </li>
-              </ul>
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
-          </div>
         </div>
-<!-- Administrator end -->
+        <!-- Administrator end -->
 
-         <!-- Footer -->
+        <!-- Footer -->
 
-         <!-- Footer -->
+        <!-- Footer -->
         <div class="absolute bottom-4 right-4 px-5 has-tooltip">
-            <img
-              id="footer-logo"
-              class="w-10 h-10"
-              src="{{ asset($constants['IMAGEFILEPATH'].'logo.png') }}"
-              alt="Logo"
-            />
+            <img id="footer-logo" class="w-10 h-10" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
+                alt="Logo" />
         </div>
-         <!-- <div
-                class="absolute py-1 px-2 text-start text-xs tooltip bottom-2 right-20 z-10 bg-white border rounded-md border-c-yellow font-normal"
-              >
-                Administrator
-              </div> -->
-        
+        <!-- <div
+                                class="absolute py-1 px-2 text-start text-xs tooltip bottom-2 right-20 z-10 bg-white border rounded-md border-c-yellow font-normal"
+                              >
+                                Administrator
+                              </div> -->
 
-     
-     
+
+
+
     </div>
 @endsection
 @section('scripts')
-@php 
-$path = base64UrlEncode('Desktop');
-@endphp 
-<script src="{{ asset($constants['JSFILEPATH'].'dashboard.js') }}" ></script>
+    @php
+        $path = base64UrlEncode('Desktop');
+    @endphp
+    <script src="{{ asset($constants['JSFILEPATH'] . 'dashboard.js') }}"></script>
 
-<!-- <script>
-      const desktopapp = @json(route('desktopapp'));
-      const createFolderRoute = @json(route('createfolder'));
-      const createFileRoute = @json(route('createfile'));
-      const showFileDetail = @json(route('showpathdetail'));
-
-      let path = @json($path);
-      let navbar = true;
-
-</script>
-<script>
-    $(document).ready(function () {
-        if($('.navbarhead').hasClass('taskbar-slide')){
-          $('.navbarhead').removeClass('taskbar-slide');
-
-        }
-        
+    <script>
         $('#searchInput').on('input', function() {
             $('#searchsuggestions').html('');
             let searchQuery = $(this).val().trim(); // Get the search query from the input field
@@ -190,7 +175,9 @@ $path = base64UrlEncode('Desktop');
                 $.ajax({
                     url: '{{ route('search') }}', // Replace '/search' with your actual route URL
                     method: 'GET',
-                    data: { query: searchQuery }, // Pass the search query as data
+                    data: {
+                        query: searchQuery
+                    }, // Pass the search query as data
                     success: function(response) {
                         // Update the search results div with the response data
                         $('#searchsuggestions').html(response.html);
@@ -206,21 +193,29 @@ $path = base64UrlEncode('Desktop');
                 $('#searchsuggestions').addClass('hidden');
             }
         });
-        
-        $('.search-cross-icon').on('click',function(e){
-            e.preventDefault();
-            $('#searchbar').addClass('hidden');
-            $('#searchsuggestions').addClass('hidden');
+    </script>
+
+    {{-- <script>
+        const desktopapp = @json(route('desktopapp'));
+        const createFolderRoute = @json(route('createfolder'));
+        const createFileRoute = @json(route('createfile'));
+        const showFileDetail = @json(route('showpathdetail'));
+
+        let path = @json($path);
+        let navbar = true;
+    </script>
+    <script>
+        $(document).ready(function() {
+            if ($('.navbarhead').hasClass('taskbar-slide')) {
+                $('.navbarhead').removeClass('taskbar-slide');
+            }
+            $('.search-cross-icon').on('click', function(e) {
+                e.preventDefault();
+                $('#searchbar').addClass('hidden');
+                $('#searchsuggestions').addClass('hidden');
+            });
         });
-        
-        
-        
-    });
+    </script> --}}
 
-
-</script> -->
-
-    <!-- <script src="{{ asset($constants['JSFILEPATH'].'dashboard.js') }}"></script> -->
+    {{-- <script src="{{ asset($constants['JSFILEPATH'] . 'dashboard.js') }}"></script> --}}
 @endsection
-
- 
