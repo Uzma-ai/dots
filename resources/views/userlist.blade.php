@@ -397,11 +397,11 @@
                       </div>
                     </div>
                   </div>
-                  <div class="md:col-span-2 flex items-center ml-0 md:-ml-2">
+                 <!--  <div class="md:col-span-2 flex items-center ml-0 md:-ml-2">
                     <p class="text-xs text-c-black font-light w-full">
                       (GB) 0 is unlimited
                     </p>
-                  </div>
+                  </div> -->
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
@@ -752,7 +752,8 @@ function populateTable(term='') {
                     }
                     // document.getElementById('popup').style.display = 'none';
                     // fileList.empty();
-                    populateTable();
+                    //populateTable();
+                    setTimeout(location.reload.bind(location), 2000);
                 }
             });
         }
