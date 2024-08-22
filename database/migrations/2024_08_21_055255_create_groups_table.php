@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('parentLevel')->nullable();
             $table->string('extraField')->nullable();
             $table->integer('sort')->nullable();
-            $table->double('sizeMax')->nullable();
-            $table->integer('sizeUse')->nullable();
+            $table->double('sizeMax')->nullable()->default(2);
+            $table->integer('sizeUse')->nullable()->default(1);
             $table->foreignId('permissionID')->nullable()->constrained('permissions')->nullOnDelete();
             $table->timestamps();
         });

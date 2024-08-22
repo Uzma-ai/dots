@@ -18,8 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->double('sizeMax')->nullable();
-            $table->double('sizeUse')->nullable();
+            $table->double('sizeMax')->nullable()->default(2);
+            $table->double('sizeUse')->nullable()->default(1);
             $table->string('phone', 20)->nullable();
             $table->string('nickName', 50)->nullable();
             $table->string('avatar')->nullable();
