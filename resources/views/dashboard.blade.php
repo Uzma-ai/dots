@@ -11,10 +11,10 @@
 
         <!-- Desktop apps   -->
         <!-- <div class="desktopapps-div w-full overflow-x-auto">
-                            <div id="desktopapps" class="desktop-apps allapplist p-2 pt-3 w-min h-full flex flex-col gap-1 flex-wrap">
+                                            <div id="desktopapps" class="desktop-apps allapplist p-2 pt-3 w-min h-full flex flex-col gap-1 flex-wrap">
 
-                            </div>
-                        </div> -->
+                                            </div>
+                                        </div> -->
         <!--w-min :- giving issue || removed by: laxmi || date: 15-aug-24 -->
         <div class="desktopapps-div w-full overflow-x-auto">
             <div id="desktopapps"
@@ -34,35 +34,35 @@
             </div>
             <div class="scrollbar-div overflow-y-auto" style="height: calc(100% - 64px);">
                 <!-- <ul>
-                              <li class="border-b-2 border-c-gray px-4 py-2.5">
-                                <div class="flex items-start justify-between gap-20">
-                                  <p class="text-sm text-c-black font-normal">Sara Martin mentioned you in a React for dark and light mode </p>
-                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
-                                </div>
-                                <span class="text-c-time font-normal text-sm">5 min ago</span>
-                              </li>
-                               <li class="border-b-2 border-c-gray px-4 py-2.5">
-                                <div class="flex items-start justify-between gap-20">
-                                  <p class="text-sm text-c-black font-normal">Ralph Edwards completed Improve workflow mode</p>
-                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
-                                </div>
-                                <span class="text-c-time font-normal text-sm">2 min ago</span>
-                              </li>
-                               <li class="border-b-2 border-c-gray px-4 py-2.5">
-                                <div class="flex items-start justify-between gap-20">
-                                  <p class="text-sm text-c-black font-normal">Arjun Mathur has sent you a request on facebook</p>
-                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
-                                </div>
-                                <span class="text-c-time font-normal text-sm">Just now</span>
-                              </li>
-                               <li class="border-b-2 border-c-gray px-4 py-2.5">
-                                <div class="flex items-start justify-between gap-20">
-                                  <p class="text-sm text-c-black font-normal">Robert Fox completed Create new components</p>
-                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
-                                </div>
-                                <span class="text-c-time font-normal text-sm">2 hours ago</span>
-                              </li>
-                            </ul> -->
+                                              <li class="border-b-2 border-c-gray px-4 py-2.5">
+                                                <div class="flex items-start justify-between gap-20">
+                                                  <p class="text-sm text-c-black font-normal">Sara Martin mentioned you in a React for dark and light mode </p>
+                                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
+                                                </div>
+                                                <span class="text-c-time font-normal text-sm">5 min ago</span>
+                                              </li>
+                                               <li class="border-b-2 border-c-gray px-4 py-2.5">
+                                                <div class="flex items-start justify-between gap-20">
+                                                  <p class="text-sm text-c-black font-normal">Ralph Edwards completed Improve workflow mode</p>
+                                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
+                                                </div>
+                                                <span class="text-c-time font-normal text-sm">2 min ago</span>
+                                              </li>
+                                               <li class="border-b-2 border-c-gray px-4 py-2.5">
+                                                <div class="flex items-start justify-between gap-20">
+                                                  <p class="text-sm text-c-black font-normal">Arjun Mathur has sent you a request on facebook</p>
+                                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
+                                                </div>
+                                                <span class="text-c-time font-normal text-sm">Just now</span>
+                                              </li>
+                                               <li class="border-b-2 border-c-gray px-4 py-2.5">
+                                                <div class="flex items-start justify-between gap-20">
+                                                  <p class="text-sm text-c-black font-normal">Robert Fox completed Create new components</p>
+                                                  <i class="ri-close-circle-fill ri-1x cursor-pointer"></i>
+                                                </div>
+                                                <span class="text-c-time font-normal text-sm">2 hours ago</span>
+                                              </li>
+                                            </ul> -->
             </div>
         </div>
 
@@ -90,15 +90,21 @@
         <!-- Administrator -->
         <div id="administrator" class="Administrator h-max absolute right-5 sm:right-28 bottom-16 hidden">
             <div class="flex items-center gap-5 pl-10 pt-5">
-                <div class="logo">
-                    @if (Auth::user()->avatar != null)
-                        <img class="w-16 h-16 rounded-full object-cover"
-                            src="{{ url('/') }}/{{ Auth::user()->avatar }}" alt="user image" />
-                    @else
-                        <img class="w-16" src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
-                            alt="user image" />
-                    @endif
-                </div>
+                <form action="{{ route('ProfilePic') }}" id="FormProfilePic" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="logo">
+                        <input type="file" name="profile" accept="image/*" id="ProfilePic" class="hidden">
+                        <label for="ProfilePic">
+                            @if (Auth::user()->avatar != null)
+                                <img class="w-16 h-16 rounded-full object-cover"
+                                    src="{{ url('/') }}/{{ Auth::user()->avatar }}" alt="user image" />
+                            @else
+                                <img class="w-16" src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
+                                    alt="user image" />
+                            @endif
+                        </label>
+                    </div>
+                </form>
                 <div class="user-info">
                     <h1 class="text-lg font-normal underline underline-offset-8 decoration-1">
                         {{ ucfirst(Auth::user()->roles->name) }}
@@ -150,10 +156,10 @@
                 alt="Logo" />
         </div>
         <!-- <div
-                                class="absolute py-1 px-2 text-start text-xs tooltip bottom-2 right-20 z-10 bg-white border rounded-md border-c-yellow font-normal"
-                              >
-                                Administrator
-                              </div> -->
+                                                class="absolute py-1 px-2 text-start text-xs tooltip bottom-2 right-20 z-10 bg-white border rounded-md border-c-yellow font-normal"
+                                              >
+                                                Administrator
+                                              </div> -->
 
 
 
@@ -161,61 +167,53 @@
     </div>
 @endsection
 @section('scripts')
-@php 
-$path = base64UrlEncode('Desktop');
-@endphp 
-<script>
-     let path = @json($path);
-     let navbar = true;
-</script>
-<script src="{{ asset($constants['JSFILEPATH'].'dashboard.js') }}" ></script>
+    @php
+        $path = base64UrlEncode('Desktop');
+    @endphp
+    <script>
+        let path = @json($path);
+        let navbar = true;
+    </script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'dashboard.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            if ($('.navbarhead').hasClass('taskbar-slide')) {
+                $('.navbarhead').removeClass('taskbar-slide');
 
-
-<!-- <script>
-      const desktopapp = @json(route('desktopapp'));
-      const createFolderRoute = @json(route('createfolder'));
-      const createFileRoute = @json(route('createfile'));
-      const showFileDetail = @json(route('showpathdetail'));
-
-      let path = @json($path);
-      let navbar = true;
-
-</script>
-<script>
-    $(document).ready(function () {
-        if($('.navbarhead').hasClass('taskbar-slide')){
-          $('.navbarhead').removeClass('taskbar-slide');
-
-        }
-        
-        $('#searchInput').on('input', function() {
-            $('#searchsuggestions').html('');
-            let searchQuery = $(this).val().trim(); // Get the search query from the input field
-            if (searchQuery.length > 0) {
-                // Send AJAX request to the route
-                $.ajax({
-                    url: '{{ route('search') }}', // Replace '/search' with your actual route URL
-                    method: 'GET',
-                    data: {
-                        query: searchQuery
-                    }, // Pass the search query as data
-                    success: function(response) {
-                        // Update the search results div with the response data
-                        $('#searchsuggestions').html(response.html);
-                        $('#searchsuggestions').removeClass('hidden');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                // Clear the search results if the input is empty
-                $('#searchsuggestions').html('');
-                $('#searchsuggestions').addClass('hidden');
             }
+
+            $('#searchInput').on('input', function() {
+                $('#searchsuggestions').html('');
+                let searchQuery = $(this).val().trim(); // Get the search query from the input field
+                if (searchQuery.length > 0) {
+                    // Send AJAX request to the route
+                    $.ajax({
+                        url: '{{ route('search') }}', // Replace '/search' with your actual route URL
+                        method: 'GET',
+                        data: {
+                            query: searchQuery
+                        }, // Pass the search query as data
+                        success: function(response) {
+                            // Update the search results div with the response data
+                            $('#searchsuggestions').html(response.html);
+                            $('#searchsuggestions').removeClass('hidden');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                } else {
+                    // Clear the search results if the input is empty
+                    $('#searchsuggestions').html('');
+                    $('#searchsuggestions').addClass('hidden');
+                }
+            });
+
+            $(document).on('change','#ProfilePic',function(){
+                $('#FormProfilePic').submit();
+            });
         });
     </script>
-
     {{-- <script>
         const desktopapp = @json(route('desktopapp'));
         const createFolderRoute = @json(route('createfolder'));
@@ -239,4 +237,5 @@ $path = base64UrlEncode('Desktop');
     </script> --}}
 
     {{-- <script src="{{ asset($constants['JSFILEPATH'] . 'dashboard.js') }}"></script> --}}
+    @include('layouts.alert')
 @endsection

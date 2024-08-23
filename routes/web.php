@@ -38,6 +38,7 @@ Route::post('registerfacedata', [LoginController::class, 'RegisterFacedata'])->n
 
 Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
 
+ROute::post('profilepic',[UserController::class,'ProfilePic'])->name('ProfilePic');
 // routes/web.php
 
 //search

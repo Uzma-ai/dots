@@ -27,16 +27,14 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($id ='')
+    public function index($id = '')
     {
-       if($id){
-           $users = User::find($id);
-           return view('users.index',compact('users'));
-
-       }else{
-           $users = User::get();
-           return view('users.index',compact('users'));
-
+        if ($id) {
+            $users = User::find($id);
+            return view('users.index', compact('users'));
+        } else {
+            $users = User::get();
+            return view('users.index', compact('users'));
         }
     }
 
@@ -44,7 +42,7 @@ class UserController extends Controller
     {
         $users = User::get();
         $users = json_encode($users);
-        return view('users.users',compact('users'));
+        return view('users.users', compact('users'));
     }
 
     public function userAdmin()
@@ -53,19 +51,19 @@ class UserController extends Controller
         $roles = Roles::get();
         $permissions = Permissions::get();
         $users = User::with(['roles', 'group'])->paginate(10);
-        return view('userlist',compact('groups','roles','users','permissions'));
+        return view('userlist', compact('groups', 'roles', 'users', 'permissions'));
     }
 
-      public function usersList(Request $request)
+    public function usersList(Request $request)
     {
         $input = $request->all();
-        if($input['searchTerm']){
+        if ($input['searchTerm']) {
             $search = $input['searchTerm'];
-            $users = User::where('name','LIKE','%'.$search.'%')->get();
-        }else{
-        $users = User::paginate(10);
-        } 
-        $user = view('appendview.userlist')->with('users',$users)->render();
+            $users = User::where('name', 'LIKE', '%' . $search . '%')->get();
+        } else {
+            $users = User::paginate(10);
+        }
+        $user = view('appendview.userlist')->with('users', $users)->render();
         return response()->json($user);
     }
 
@@ -73,14 +71,14 @@ class UserController extends Controller
     {
         $groups = Group::get();
         $roles = Roles::get();
-       return view('users.add',compact('groups','roles'));
+        return view('users.add', compact('groups', 'roles'));
     }
 
-     public function create(Request $request)
+    public function create(Request $request)
     {
-         $duplicate = User::where('email', $request->email)->exists();
-        if($duplicate == 1){
-              return  redirect()->route('useradmin')->with('user-exist', 'test');
+        $duplicate = User::where('email', $request->email)->exists();
+        if ($duplicate == 1) {
+            return  redirect()->route('useradmin')->with('user-exist', 'test');
         }
 
         try {
@@ -138,64 +136,62 @@ class UserController extends Controller
 
         $id = $request->id;
         $user = User::find($id);
-        $users = view('appendview.editusers')->with('user',$user)->with('groups',$groups)->with('roles',$roles)->render();
+        $users = view('appendview.editusers')->with('user', $user)->with('groups', $groups)->with('roles', $roles)->render();
         return response()->json($users);
     }
 
-      public function update(Request $request, string $id)
+    public function update(Request $request, string $id)
     {
-         $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required',
         ]);
 
-          $input = request()->except(['_token']);
-          if(!empty($input['password'])){
+        $input = request()->except(['_token']);
+        if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
-           }else{
+        } else {
             unset($input['password']);
-           }
-           
+        }
+
         $updated = User::where('id', $id)->update($input);
 
-         return redirect()->route('useradmin')->with('success-update', 'User updated successfully!');
-    
+        return redirect()->route('useradmin')->with('success-update', 'User updated successfully!');
     }
 
-     public function destroy(string $id)
+    public function destroy(string $id)
     {
-        
+
         User::where('id', $id)->delete();
-       return redirect()->route('useradmin');
-    
+        return redirect()->route('useradmin');
     }
 
 
-     public function suspend(string $id)
+    public function suspend(string $id)
     {
         $user = User::find($id);
-        if($user->status == 1){
-                $update = array('status' => 0);
-                User::where('id', $id)->update($update);
-                return redirect('useradmin')->with('success-suspend', 'User suspended successfully!');
-        }else{
-               $update = array('status' => 1);
-                User::where('id', $id)->update($update);
-                return redirect()->route('useradmin')->with('success-active', 'User activated successfully!');;
+        if ($user->status == 1) {
+            $update = array('status' => 0);
+            User::where('id', $id)->update($update);
+            return redirect('useradmin')->with('success-suspend', 'User suspended successfully!');
+        } else {
+            $update = array('status' => 1);
+            User::where('id', $id)->update($update);
+            return redirect()->route('useradmin')->with('success-active', 'User activated successfully!');;
         }
-    
     }
-    
-    public function importUsers(Request $request){
-       try {
+
+    public function importUsers(Request $request)
+    {
+        try {
             $uploadedFiles = [];
             if ($request->hasFile('files')) {
                 foreach ($request->file('files') as $file) {
                     $originalName = $file->getClientOriginalName();
                     $filePath = $file->store('imports');
-    
+
                     $importer = new UsersImport();
-                   $test =  $importer->import(storage_path('app/' . $filePath));
+                    $test =  $importer->import(storage_path('app/' . $filePath));
                     $uploadedFiles[] = [
                         'name' => $originalName,
                         'size' => $file->getSize()
@@ -203,17 +199,38 @@ class UserController extends Controller
                 }
             }
 
-            if($test){
-                return response()->json(['success' => true, 'files' => $uploadedFiles,'test'=>$test]);
-            }else{
-                 return response()->json(['success' => false, 'message' => 'Roles / Group not found!!!']);
+            if ($test) {
+                return response()->json(['success' => true, 'files' => $uploadedFiles, 'test' => $test]);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Roles / Group not found!!!']);
             }
-    
         } catch (\Exception $e) {
             // Log the error for debugging purposes
             //\Log::error('Error importing users: ' . $e->getMessage());
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
+    }
 
+    public function ProfilePic(Request $request)
+    {
+        if (Auth::user()) {
+            $user = Auth::user();
+            $old = $user->avatar;
+            $type = $request->profile->getClientMimeType();
+            if (in_array($type, ['image/jpeg', 'image/jpeg', 'image/png'])) {
+                $FileName = time() . '.' . $request->profile->getClientOriginalExtension();;
+                $request->profile->move(public_path('storage/userprofile'), $FileName);
+                $user->avatar = 'public/storage/userprofile/' . $FileName;
+                $user->save();
+                if (File::exists(base_path($old))) {
+                    File::delete(base_path($old));
+                }
+                return redirect()->back()->with('success', 'Profile updated successfully.');
+            } else {
+                return redirect()->back()->with('error', 'Invalid image type! Select jpeg,png,jpg.');
+            }
+        } else {
+            return redirect()->route('login');
+        }
     }
 }
