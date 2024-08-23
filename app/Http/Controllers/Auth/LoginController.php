@@ -199,17 +199,17 @@ class LoginController extends Controller
     public function destroy(Request $request)
     {
         if (Auth::user()) {
-
             ActivityHelper::log('Log Out',  'From Desktop', 'India');
             $user = Auth::user();
             $user->last_seen = 0;
             $user->save();
-
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
+            return redirect('/');
+        }else{
+            return redirect('/');
         }
-        return redirect('/');
     }
 
     public function RegisterFacedata(Request $request)

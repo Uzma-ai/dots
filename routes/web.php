@@ -2,9 +2,7 @@
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\LightAppController;
 use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\LoginLogController;
@@ -12,12 +10,7 @@ use App\Http\Controllers\OperationLogController;
 use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
-use App\Models\File;
-use AWS\CRT\HTTP\Response;
 use Illuminate\Support\Facades\Artisan;
-
-
-
 
 Route::get('/', function () {
     return redirect(route('dashboard'));
@@ -34,20 +27,17 @@ Route::post('setfacesupport', [LoginController::class, 'SupportFace'])->name('Su
 Route::post('imagelogin', [LoginController::class, 'ImageLogin'])->name('ImageLogin');
 Route::post('voicelogin', [LoginController::class, 'VoiceLogin'])->name('VoiceLogin');
 Route::get('checkfacedata', [LoginController::class, 'CheckFaceData'])->name('CheckFaceData');
-Route::post('registerfacedata', [LoginController::class, 'RegisterFacedata'])->name('RegisterFacedata');
 
-Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
+Route::middleware(['auth'])->group(static function () {
+    Route::post('registerfacedata', [LoginController::class, 'RegisterFacedata'])->name('RegisterFacedata');
+    Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
+    Route::post('profilepic', [UserController::class, 'ProfilePic'])->name('ProfilePic');
 
-ROute::post('profilepic',[UserController::class,'ProfilePic'])->name('ProfilePic');
-// routes/web.php
-
-//search
+    //search
     Route::get('/search', [SearchController::class, 'search'])->name('search');
-    //
-
+});
 
 //Logs
-
 Route::get('/Graph-Data', [OverviewController::class, 'getGraphData'])->name('Graph.Data');
 Route::get('/get-data', [OverviewController::class, 'getData'])->name('get.data');
 
@@ -75,7 +65,7 @@ Route::get('operation-logs/filter', [OperationLogController::class, 'filter'])->
 
 Route::get('/users/role/{roleId}', [UserController::class, 'getUsersByRole'])->name('users.byRole');
 Route::get('/filter-record', [OperationLogController::class, 'filterRecords'])->name('filter.record');;
-    //end
+//end
 
 
 //EXCELL
@@ -88,26 +78,26 @@ Route::get('/export-operation', [OperationLogController::class, 'export'])->name
 
 // Light app start
 
-    Route::get('lightapp', [LightAppController::class, 'index'])->name('lightapp');
-    Route::post('createlightapp', [LightAppController::class, 'createLightApp'])->name('createlightapp');
-    Route::post('updatelightapp', [LightAppController::class, 'updateLightApp'])->name('updatelightapp');
-    Route::get('showlightapp', [LightAppController::class, 'allLightApps'])->name('showlightapp');
-    Route::get('desktopapp', [LightAppController::class, 'alladdedapps'])->name('desktopapp');
-    //Route::get('list', [LightAppController::class, 'index']);
-    //Route::get('add-form', [LightAppController::class, 'add_form']);
+Route::get('lightapp', [LightAppController::class, 'index'])->name('lightapp');
+Route::post('createlightapp', [LightAppController::class, 'createLightApp'])->name('createlightapp');
+Route::post('updatelightapp', [LightAppController::class, 'updateLightApp'])->name('updatelightapp');
+Route::get('showlightapp', [LightAppController::class, 'allLightApps'])->name('showlightapp');
+Route::get('desktopapp', [LightAppController::class, 'alladdedapps'])->name('desktopapp');
+//Route::get('list', [LightAppController::class, 'index']);
+//Route::get('add-form', [LightAppController::class, 'add_form']);
 
-    Route::post('submit', [LightAppController::class, 'add_data']);
-    Route::get('app_role_list/{type}', [LightAppController::class, 'AppRoleList']);
-    Route::post('apps-update/{id}', [LightAppController::class, 'update']);
-    Route::get('apps-delete/{id}', [LightAppController::class, 'delete_data']);
-    Route::post('add-apps-desktop/{id}', [LightAppController::class, 'apps']);
+Route::post('submit', [LightAppController::class, 'add_data']);
+Route::get('app_role_list/{type}', [LightAppController::class, 'AppRoleList']);
+Route::post('apps-update/{id}', [LightAppController::class, 'update']);
+Route::get('apps-delete/{id}', [LightAppController::class, 'delete_data']);
+Route::post('add-apps-desktop/{id}', [LightAppController::class, 'apps']);
 
 //end
 //search
-    Route::get('/search', [SearchController::class, 'search'])->name('search');
-    Route::get('/openiframe', [SearchController::class, 'listalliframe'])->name('openiframe');
-    Route::get('/closeiframe', [SearchController::class, 'closeiframe'])->name('closeiframe');
-    //
+Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/openiframe', [SearchController::class, 'listalliframe'])->name('openiframe');
+Route::get('/closeiframe', [SearchController::class, 'closeiframe'])->name('closeiframe');
+//
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
@@ -182,7 +172,3 @@ Route::get('/deletefile', [FileManagerController::class, 'deleteFile'])->name('d
 Route::get('/copyfile', [FileManagerController::class, 'copyFile'])->name('copyfile');
 Route::get('/pastefile', [FileManagerController::class, 'pasteFile'])->name('pastefile');
 Route::get('contextmenu', [FileManagerController::class, 'contextMenu'])->name('contextmenu');
-
-
-
-
