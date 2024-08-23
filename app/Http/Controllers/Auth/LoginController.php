@@ -39,6 +39,11 @@ class LoginController extends Controller
         $username = $request->email;
         $user = User::where('name', $username)->orWhere('email', $username)->first();
         if ($user) {
+            //check user is suspended or not
+            if ($user->status == 0) {
+            return response()->json(['status' => false, 'msg' => "User is Suspended."]);
+            }
+
             if (Hash::check($request->password, $user->password)) {
                 // password correct
                 $email = $user->email;
@@ -128,6 +133,9 @@ class LoginController extends Controller
         if (!$user->is_facedata) {
             return response()->json(['status' => false, 'msg' => "Facedata not register for this user."]);
         }
+        if ($user->status == 0) {
+            return response()->json(['status' => false, 'msg' => "User is Suspended."]);
+        }
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'http://dev-ubt-app05.dev.orientdots.net/api/authenticate_face?username=' . base64UrlEncode($user->id),
@@ -169,6 +177,9 @@ class LoginController extends Controller
         }
         if (!$user->is_facedata) {
             return response()->json(['status' => false, 'msg' => "Facedata not register for this user."]);
+        }
+         if ($user->status == 0) {
+            return response()->json(['status' => false, 'msg' => "User is Suspended."]);
         }
         $curl = curl_init();
         curl_setopt_array($curl, array(
