@@ -12,6 +12,7 @@ use App\Http\Controllers\OperationLogController;
 use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MessageController;
 use App\Models\File;
 use AWS\CRT\HTTP\Response;
 use Illuminate\Support\Facades\Artisan;
@@ -82,6 +83,8 @@ Route::get('/export-logins', [LoginLogController::class, 'export'])->name('expor
 Route::get('/export-operation', [OperationLogController::class, 'export'])->name('export.operations');
 //END
 
+
+Route::delete('/delete-message', [MessageController::class, 'destroy'])->name('delete-message');
 
 // Auth::routes();
 
@@ -182,6 +185,12 @@ Route::get('/copyfile', [FileManagerController::class, 'copyFile'])->name('copyf
 Route::get('/pastefile', [FileManagerController::class, 'pasteFile'])->name('pastefile');
 Route::get('contextmenu', [FileManagerController::class, 'contextMenu'])->name('contextmenu');
 
+
+//comments
+Route::get('/getUsers', [MessageController::class, 'getUsers'])->name('getUsers');
+Route::post('/saveComment', [MessageController::class, 'saveCommentOrReply'])->name('saveComment');
+// Route::post('/sendReply', [MessageController::class, 'sendReply'])->name('sendReply');
+Route::get('/getMessage', [MessageController::class, 'getMessageData'])->name('getMessageData');
 
 
 
