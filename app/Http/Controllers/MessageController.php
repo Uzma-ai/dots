@@ -19,7 +19,7 @@ class MessageController extends Controller
 {
     public function getUsers()
     {
-     dd("hello");
+     
         $users = User::all();
         $groups = Group::all();
         $roles = Roles::all();
