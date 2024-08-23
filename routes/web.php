@@ -16,6 +16,9 @@ Route::get('/', function () {
     return redirect(route('dashboard'));
 });
 
+//Suspend user middleware wil also use for IPaddress in future
+Route::middleware(['blockIP'])->group(function () {
+
 Route::get('clear', function () {
     Artisan::call('config:clear');
     return "cleared";
@@ -172,3 +175,8 @@ Route::get('/deletefile', [FileManagerController::class, 'deleteFile'])->name('d
 Route::get('/copyfile', [FileManagerController::class, 'copyFile'])->name('copyfile');
 Route::get('/pastefile', [FileManagerController::class, 'pasteFile'])->name('pastefile');
 Route::get('contextmenu', [FileManagerController::class, 'contextMenu'])->name('contextmenu');
+
+
+});
+
+

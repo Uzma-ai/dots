@@ -25,7 +25,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="name" class="block font-bold text-c-black">
-                      Name:<span class="text-red-500">*</span>
+                      Username:<span class="text-red-500">*</span>
                     </label>
                   </div>
                   <div class="md:col-span-8">
@@ -42,7 +42,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="nickname" class="block font-bold text-c-black">
-                      Nickname:
+                      Name:
                     </label>
                   </div>
                   <div class="md:col-span-8">

@@ -17,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'registerfacedata',
         ]);
+        $middleware->alias([
+            'blockIP' => \App\Http\Middleware\BlockIpMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
