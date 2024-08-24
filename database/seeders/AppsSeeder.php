@@ -10,133 +10,137 @@ class AppsSeeder extends Seeder
 {
     public function run(): void
     {
-        App::create([
+        Lightapp::create([
+            'id' => 1,
+            'group' => 1,
+            'name' => 'Docx',
+            'link' => '',
+            'description' => NULL,
+            'function' => 'createdocument',
+            'fileextension' => 'docx',
+            'icon' => 'docx.svg',
+            'open_type' => 1,
+            'width' => 700,
+            'height' => 700,
+            'sort_order' => 0,
+            'status' => 1,
+            'add_app' => 1,
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
+        ]);
+
+        Lightapp::create([
             'id' => 2,
-            'name' => 'Recycle Bin',
-            'icon' => 'bin.svg',
-            'app_function' => NULL,
-            'link' => 'filemanager',
-            'type' => 'folder',
-            'desktop_display' => 1,
-            'filemanager_display' => 1,
-            'path' => 'RecycleBin',
-            'parentpath' => '/',
-            'sort_order' => 2,
+            'group' => 1,
+            'name' => 'PPT',
+            'link' => '',
+            'description' => NULL,
+            'function' => 'createdocument',
+            'fileextension' => 'pptx',
+            'icon' => 'ppt.svg',
+            'open_type' => 1,
+            'width' => 700,
+            'height' => 700,
+            'sort_order' => 0,
             'status' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'add_app' => 1,
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
-        App::create([
+
+        Lightapp::create([
             'id' => 3,
-            'name' => 'Gallery',
-            'icon' => 'album.svg',
-            'app_function' => NULL,
-            'link' => 'filemanager',
-            'type' => 'folder',
-            'desktop_display' => 1,
-            'filemanager_display' => 1,
-            'path' => 'Gallery',
-            'parentpath' => NULL,
-            'sort_order' => 1,
+            'group' => 1,
+            'name' => 'EXCEL',
+            'link' => '',
+            'description' => NULL,
+            'function' => 'createdocument',
+            'fileextension' => 'xlsx',
+            'icon' => 'excel.svg',
+            'open_type' => 1,
+            'width' => 700,
+            'height' => 700,
+            'sort_order' => 0,
             'status' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'add_app' => 1,
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
-        App::create([
+
+        Lightapp::create([
             'id' => 4,
-            'name' => 'LightApp',
-            'icon' => 'lightapp.svg',
-            'app_function' => 'add_app',
-            'link' => 'lightapp',
-            'type' => 'route',
-            'desktop_display' => 1,
-            'filemanager_display' => 0,
-            'path' => NULL,
-            'parentpath' => NULL,
-            'sort_order' => 3,
+            'group' => 1,
+            'name' => 'Dots Chat',
+            'link' => 'https://zulip.sizaf.com/',
+            'description' => NULL,
+            'function' => NULL,
+            'fileextension' => NULL,
+            'icon' => 'chat.svg',
+            'open_type' => 1,
+            'width' => 700,
+            'height' => 700,
+            'sort_order' => 0,
             'status' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'add_app' => 1,
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
-        App::create([
+
+        Lightapp::create([
+            'id' => 5,
+            'group' => 1,
+            'name' => 'Dots Erp',
+            'link' => 'https://erp.sizaf.com/login#login',
+            'description' => NULL,
+            'function' => NULL,
+            'fileextension' => NULL,
+            'icon' => 'erp.svg',
+            'open_type' => 1,
+            'width' => 700,
+            'height' => 700,
+            'sort_order' => 0,
+            'status' => 1,
+            'add_app' => 1,
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
+        ]);
+
+        Lightapp::create([
             'id' => 6,
-            'name' => 'Setting',
-            'icon' => 'setting.svg',
-            'app_function' => NULL,
-            'link' => 'useradmin',
-            'type' => 'route',
-            'desktop_display' => 1,
-            'filemanager_display' => 0,
-            'path' => NULL,
-            'parentpath' => NULL,
-            'sort_order' => 4,
+            'group' => 1,
+            'name' => 'Dots Mail',
+            'link' => 'https://snappymail.sizaf.com/',
+            'description' => NULL,
+            'function' => NULL,
+            'fileextension' => NULL,
+            'icon' => 'mail.svg',
+            'open_type' => 1,
+            'width' => 700,
+            'height' => 700,
+            'sort_order' => 0,
             'status' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'add_app' => 1,
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
-        App::create([
+
+        Lightapp::create([
             'id' => 7,
-            'name' => 'Filmanager',
-            'icon' => 'filemanager.svg',
-            'app_function' => NULL,
-            'link' => 'filemanager',
-            'type' => 'route',
-            'desktop_display' => 0,
-            'filemanager_display' => 0,
-            'path' => NULL,
-            'parentpath' => NULL,
-            'sort_order' => 4,
+            'group' => 1,
+            'name' => 'Dots Social',
+            'link' => 'https://social.sizaf.com/html/user/login',
+            'description' => NULL,
+            'function' => NULL,
+            'fileextension' => NULL,
+            'icon' => 'social.svg',
+            'open_type' => 1,
+            'width' => 700,
+            'height' => 700,
+            'sort_order' => 0,
             'status' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        App::create([
-            'id' => 8,
-            'name' => 'Desktop',
-            'icon' => 'desktop.svg',
-            'app_function' => NULL,
-            'link' => 'filemanager',
-            'type' => 'folder',
-            'desktop_display' => 0,
-            'filemanager_display' => 1,
-            'path' => 'Desktop',
-            'parentpath' => '/',
-            'sort_order' => 2,
-            'status' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        App::create([
-            'id' => 9,
-            'name' => 'Document',
-            'icon' => 'document.svg',
-            'app_function' => NULL,
-            'link' => 'filemanager',
-            'type' => 'folder',
-            'desktop_display' => 0,
-            'filemanager_display' => 1,
-            'path' => 'Document',
-            'parentpath' => '/',
-            'sort_order' => 2,
-            'status' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        App::create([
-            'id' => 10,
-            'name' => 'Download',
-            'icon' => 'download.svg',
-            'app_function' => NULL,
-            'link' => 'filemanager',
-            'type' => 'folder',
-            'desktop_display' => 0,
-            'filemanager_display' => 1,
-            'path' => 'Download',
-            'parentpath' => '/',
-            'sort_order' => 2,
-            'status' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'add_app' => 1,
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
     }
 }
