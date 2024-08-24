@@ -10,7 +10,7 @@ class LightAppsSeeder extends Seeder
 {
     public function run(): void
     {
-        Lightapp::create([
+        LightApp::create([
             'id' => 1,
             'group' => 1,
             'name' => 'Docx',
@@ -26,7 +26,7 @@ class LightAppsSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        Lightapp::create([
+        LightApp::create([
             'id' => 2,
             'group' => 1,
             'name' => 'PPT',
@@ -42,7 +42,7 @@ class LightAppsSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        Lightapp::create([
+        LightApp::create([
             'id' => 3,
             'group' => 1,
             'name' => 'EXCEL',
@@ -58,7 +58,7 @@ class LightAppsSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        Lightapp::create([
+        LightApp::create([
             'id' => 4,
             'group' => 1,
             'name' => 'Dots Chat',
@@ -74,7 +74,7 @@ class LightAppsSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        Lightapp::create([
+        LightApp::create([
             'id' => 5,
             'group' => 1,
             'name' => 'Dots Erp',
@@ -90,7 +90,7 @@ class LightAppsSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        Lightapp::create([
+        LightApp::create([
             'id' => 6,
             'group' => 1,
             'name' => 'Dots Mail',
@@ -106,7 +106,7 @@ class LightAppsSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        Lightapp::create([
+        LightApp::create([
             'id' => 7,
             'group' => 1,
             'name' => 'Dots Social',
