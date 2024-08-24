@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
+use App\Jobs\ConfigClearJob;
 use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
@@ -22,6 +23,7 @@ Route::get('/', function () {
 });
 Route::get('clear', function () {
     Artisan::call('config:clear');
+    ConfigClearJob::dispatch();
     return "cleared";
 });
 
