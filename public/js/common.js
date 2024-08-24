@@ -320,11 +320,10 @@ $(document).ready(function () {
                 const filekey = $('.selectedfile').attr('data-filekey');
                 const filetype = $('.selectedfile').attr('data-filetype');
                 const apptype = $('.selectedfile').attr('data-apptype');
-                const isfile = $('.selectedfile').attr('data-isfile');
                 const originalIcon = $('.selectedfile').find('.icondisplay');
                 const imgicon =  $('#iframeheaders #iframeiconimage'+filetype+appkey);
                 animateIcon(imgicon, originalIcon, function() {
-                    const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype,isfile:isfile};
+                    const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype};
                     openiframe(iframedata)
                 }); 
             }else{
@@ -342,11 +341,10 @@ $(document).ready(function () {
                 const filekey = this.getAttribute('data-filekey');
                 const filetype = this.getAttribute('data-filetype');
                 const apptype = this.getAttribute('data-apptype');
-                const isfile = this.getAttribute('data-isfile');
                 const originalIcon = $(this).find('.icondisplay');
                 const imgicon =  $('#iframeheaders #iframeiconimage'+filetype+appkey);
                 animateIcon(imgicon, originalIcon, function() {
-                    const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype,isfile:isfile};
+                    const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype};
                     openiframe(iframedata);
                  
                 });           
@@ -451,9 +449,8 @@ $(document).ready(function () {
             const appkey = this.getAttribute('data-appkey');
             const filekey = this.getAttribute('data-filekey');
             const filetype = this.getAttribute('data-filetype');
-            const isfile = this.getAttribute('data-isfile');
             const fileid = this.getAttribute('data-iframefile-id');
-            closeiframe(appkey,filekey,fileid,filetype,isfile);
+            closeiframe(appkey,filekey,fileid,filetype);
         });
     
         // Maximize button functionality
@@ -668,12 +665,12 @@ $(document).ready(function () {
             });
         }
         
-        function closeiframe(appkey,filekey,fileid,filetype,isfile){
+        function closeiframe(appkey,filekey,fileid,filetype){
                $('#alliframelist #iframepopup'+fileid).removeClass('hidden');
                 $.ajax({
                 url: closeIframeRoute,
                 method: 'GET',
-                data: {appkey:appkey,filekey:filekey,filetype:filetype,isfile:isfile},
+                data: {appkey:appkey,filekey:filekey,filetype:filetype},
                 success: function (response) {
                     // Update the app list container with the updated list
                     $('#alliframelist').html(response.html);
