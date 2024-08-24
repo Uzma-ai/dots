@@ -139,7 +139,7 @@ class AppsSeeder extends Seeder
             'updated_at' => now()
         ]);
         App::create([
-            'id' => 10,
+            'id' => 11,
             'name' => 'DotsViewer',
             'icon' => 'defaultapp.svg',
             'app_function' => NULL,
