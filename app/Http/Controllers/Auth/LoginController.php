@@ -225,7 +225,6 @@ class LoginController extends Controller
 
     public function RegisterFacedata(Request $request)
     {
-        dd($request);
         $username = $request->username;
         $user = User::where('name', $username)->first();
         if (Auth::id() != $user->id) {
