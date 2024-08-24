@@ -123,7 +123,7 @@
                     class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl outline-none pl-5 "
                     type="text"
                     placeholder="Please enter an username"
-                    autocomplete="name"
+                    autocomplete="name"  required
                   />
                 </div>
               </div>
@@ -159,7 +159,7 @@
                       name="upload_limit"
                       class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl outline-none pl-4"
                       type="number"
-                      placeholder="Please upload file size"
+                      placeholder="Please upload file size" required
                     />
                     <div
                       class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray w-10 rounded-r-xl pl-2"
@@ -181,7 +181,7 @@
                     id="roleDescription"
                      name="description"
                     class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl"
-                    rows="4"
+                    rows="4" required
                   ></textarea>
                 </div>
               </div>
@@ -822,7 +822,7 @@ function populateTable(term='') {
     $('.alert').hide();                          
     });
 
-  $("#searchterm").keypress(function(){
+  $("#searchterm").keyup(function(){
     var term = $('#searchterm').val();
      populateTable(term);
   });

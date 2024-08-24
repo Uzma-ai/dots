@@ -138,5 +138,21 @@ class AppsSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+        App::create([
+            'id' => 11,
+            'name' => 'DotsViewer',
+            'icon' => 'defaultapp.svg',
+            'app_function' => NULL,
+            'link' => 'dotsviewer',
+            'type' => 'route',
+            'desktop_display' => 0,
+            'filemanager_display' => 0,
+            'path' => '',
+            'parentpath' => '',
+            'sort_order' => 2,
+            'status' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }

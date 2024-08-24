@@ -12,7 +12,7 @@
           </div>
         </div>
        <div class="flex flex-col items-center imagewraper">
-              <img class="w-16 icondisplay" src="{{ asset($constants['APPFILEPATH'].$dfolder->icon) }}" alt="{{ $dfolder->name }}"/>
+              <img class="w-16 icondisplay" src="{{ checkIconExist($dfolder->icon,'app') }}" alt="{{ $dfolder->name }}"/>
             
            <div class="input-wrapper" id="inputWrappersystemapp{{ base64UrlEncode($dfolder->id) }}">
                 <input type="text" class="text-center text-black appinputtext" disabled id="inputFieldsystemapp{{ base64UrlEncode($dfolder->id) }}" value="{{ $dfolder->name }}">
@@ -34,7 +34,7 @@
           </div>
         </div>
        <div class="flex flex-col items-center imagewraper">
-              <img class="w-16 icondisplay" src="{{ asset($constants['FILEICONPATH'].'folder.png')}}" alt="{{ $file->name }}"/>
+              <img class="w-16 icondisplay" src="{{ checkIconExist('folder','folder')}}" alt="{{ $file->name }}"/>
             
             <div class="input-wrapper" id="inputWrapperfolder{{ base64UrlEncode($file->id) }}">
                 <input type="text" class="text-center text-black appinputtext" disabled id="inputFieldfolder{{ base64UrlEncode($file->id) }}" value="{{ $file->name }}">
@@ -63,7 +63,7 @@
            <!--       <video class="w-16 icondisplay" alt="{{ $file->name }}"/><source src="{{ $file->path }}" type="video/mp4"></video>-->
            <!--     </a>-->
            <!--@else -->
-                  <img class="w-16 icondisplay " src="{{ asset($constants['FILEICONPATH'].($file->extension ?? 'default').$constants['ICONEXTENSION'])}}" alt="{{ $file->name }}"/>
+                  <img class="w-16 icondisplay " src="{{ checkIconExist($file->extension,'file')}}" alt="{{ $file->name }}"/>
                 
             <!-- @endif -->
             <div class="input-wrapper" id="inputWrapperdocument{{ base64UrlEncode($file->id) }}">

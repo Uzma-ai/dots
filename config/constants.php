@@ -7,7 +7,7 @@ return [
     'APPFILEPATH' => 'public/images/apps/', 
     'FILEICONPATH' => 'public/images/fileicon/', 
     'ICONEXTENSION' => '.svg', 
-    'FOLDERICON' => 'folder.svg'
+    'OTHERFILEPATH' => 'public/images/othericon/',
 ];
 
 ?>

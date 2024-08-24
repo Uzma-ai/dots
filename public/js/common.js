@@ -22,7 +22,6 @@ appDiv.on("click", (event) => {
 
 // Right Click Functionality
 $(document).ready(function () {
-    
  const appContextMenu = $("#app-contextmenu");
  const dashboardContextMenu = $("#context-menu");
  const dashboard = $(".allapplist .dashboard");
@@ -182,15 +181,7 @@ $(document).ready(function () {
    });
 
  
- $(document).on("click", function (e) {
-    if (!$(e.target).closest('.selectapp').length) {
-        // Hide the filemanagertool
-        $('.fimanagertoolpanel').addClass('disabledicon');
-        
-        // Remove the selectedfile class and other related classes
-        $('.allapplist .app .selectapp').removeClass('selectedfile');
-        $('.allapplist .app').removeClass('desktopapp-clicked');
-    }
+ $(document).on("click", function () {
    closeAllContainers();
  });
 });
@@ -329,11 +320,10 @@ $(document).ready(function () {
                 const filekey = $('.selectedfile').attr('data-filekey');
                 const filetype = $('.selectedfile').attr('data-filetype');
                 const apptype = $('.selectedfile').attr('data-apptype');
-                const isfile = $('.selectedfile').attr('data-isfile');
                 const originalIcon = $('.selectedfile').find('.icondisplay');
                 const imgicon =  $('#iframeheaders #iframeiconimage'+filetype+appkey);
                 animateIcon(imgicon, originalIcon, function() {
-                    const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype,isfile:isfile};
+                    const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype};
                     openiframe(iframedata)
                 }); 
             }else{
@@ -351,11 +341,10 @@ $(document).ready(function () {
                 const filekey = this.getAttribute('data-filekey');
                 const filetype = this.getAttribute('data-filetype');
                 const apptype = this.getAttribute('data-apptype');
-                const isfile = this.getAttribute('data-isfile');
                 const originalIcon = $(this).find('.icondisplay');
                 const imgicon =  $('#iframeheaders #iframeiconimage'+filetype+appkey);
                 animateIcon(imgicon, originalIcon, function() {
-                    const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype,isfile:isfile};
+                    const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype};
                     openiframe(iframedata);
                  
                 });           
@@ -366,25 +355,11 @@ $(document).ready(function () {
         });
 
 
-        // open app by click
-        $(document).on('click', '.allapplist .selectapp', function (e) {
-            e.preventDefault();
-            if($(this).hasClass('openiframe')){
-                $('.allapplist .app .selectapp').removeClass("selectedfile");
-                $('.allapplist .app').removeClass("desktopapp-clicked");
-                $('.fimanagertoolpanel').removeClass('disabledicon');
-                $(this).addClass('selectedfile');
-                $(this).closest('.app').addClass('desktopapp-clicked')
-            }
-               
-        });
-
 
         // cut file 
          // rename 
          $(document).on('click', '.context-menulist .renameFunction', function (e) {
             e.preventDefault();
-            e.stopPropagation();
             const filekey = $('.selectedfile').attr('data-filekey');
             const filetype = $('.selectedfile').attr('data-filetype');
             
@@ -453,29 +428,29 @@ $(document).ready(function () {
             pasteFunction(path);
          });
 
-         // Minimize button functionality
-         $(document).on('click', '#alliframelist .minimizeiframe-btn', function() {
-            var iframeId = $(this).data('iframe-id');
-            var iframePopup = $('#alliframelist #iframepopup' + iframeId);
-            const iframe = $('#alliframelist #iframepopup'+iframeId);
-            if (!iframe.hasClass('minimized')) {
-                iframe.addClass("minimized");
-                iframe.removeClass("fall-down");
-                minimized = true;
-                setTimeout(() => {
-                //    iframe.addClass("hidden");
-                }, 600);
-            }
-            
-        });
-        // Close button functionality
+     // Minimize button functionality
+     $(document).on('click', '#alliframelist .minimizeiframe-btn', function() {
+        var iframeId = $(this).data('iframe-id');
+        var iframePopup = $('#alliframelist #iframepopup' + iframeId);
+        const iframe = $('#alliframelist #iframepopup'+iframeId);
+        if (!iframe.hasClass('minimized')) {
+            iframe.addClass("minimized");
+            iframe.removeClass("fall-down");
+            minimized = true;
+            setTimeout(() => {
+            //    iframe.addClass("hidden");
+            }, 600);
+        }
+        
+    });
+    
+    // Close button functionality
         $(document).on('click', '#alliframelist .closeiframe-btn', function() {
             const appkey = this.getAttribute('data-appkey');
             const filekey = this.getAttribute('data-filekey');
             const filetype = this.getAttribute('data-filetype');
-            const isfile = this.getAttribute('data-isfile');
             const fileid = this.getAttribute('data-iframefile-id');
-            closeiframe(appkey,filekey,fileid,filetype,isfile);
+            closeiframe(appkey,filekey,fileid,filetype);
         });
     
         // Maximize button functionality
@@ -690,12 +665,12 @@ $(document).ready(function () {
             });
         }
         
-        function closeiframe(appkey,filekey,fileid,filetype,isfile){
+        function closeiframe(appkey,filekey,fileid,filetype){
                $('#alliframelist #iframepopup'+fileid).removeClass('hidden');
                 $.ajax({
                 url: closeIframeRoute,
                 method: 'GET',
-                data: {appkey:appkey,filekey:filekey,filetype:filetype,isfile:isfile},
+                data: {appkey:appkey,filekey:filekey,filetype:filetype},
                 success: function (response) {
                     // Update the app list container with the updated list
                     $('#alliframelist').html(response.html);

@@ -606,7 +606,7 @@ function populateTable(term='') {
     $('.alert').hide();                          
     });
 
- $("#searchterm").keypress(function(){
+ $("#searchterm").keyup(function(){
     var term = $('#searchterm').val();
      populateTable(term);
   });

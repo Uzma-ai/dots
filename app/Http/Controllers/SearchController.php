@@ -9,9 +9,16 @@ use App\Models\Folder;
 use App\Models\LightApp;
 use App\Models\App;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Filefunctions;
+
 
 class SearchController extends Controller
 {
+    protected $filefunctions;
+
+    public function __construct(Filefunctions $filefunctions){
+        $this->filefunctions = $filefunctions;
+    }
     public function search(Request $request)
     {
         $apps = App::all();
@@ -52,133 +59,95 @@ class SearchController extends Controller
 
     public function listalliframe(Request $request)
     {
-        $isfile = 0;
-        if ($request->input('appkey')) {
+        $iframearray = [];
+        if (!empty($request->input('appkey')) && !empty($request->input('filekey') && $request->input('filetype') && !empty($request->input('apptype')))) {
             $filekey = $request->input('filekey');
             $appkey = $request->input('appkey');
             $apptype = $request->input('apptype');
             $filetype = $request->input('filetype');
-            $isfile = $request->input('isfile');
-
-            // Retrieve file and app details from their respective tables
-
-            $testing =  0;
-            $appdet = ($apptype == "App") ? App::find(base64UrlDecode($appkey)) : LightApp::find(base64UrlDecode($appkey));
-            $applinktype = ($apptype == "App") ? $appdet->type : '';
-            $filename = $appdet->name;
-            $path = '';
-            $parentpath = '';
-            if ($isfile == 1) {
-                if ($filetype == "folder") {
-                    $file = Folder::find(base64UrlDecode($filekey));
-                    $filename = $file->name;
-                    $path = $file->path;
-                    $parentpath = $file->parentpath;
-                } else if ($filetype == "document") {
-                    $file = File::find(base64UrlDecode($filekey));
-                    $filename = $file->name;
-                    $path = $file->path;
-                    $parentpath = $file->parentpath;
-                }
+            $appdet = ($apptype == "app") ? App::find(base64UrlDecode($appkey)) : LightApp::find(base64UrlDecode($appkey));
+            if($filetype ="file" || $filetype ="folder"){
+                $file = File::find(base64UrlDecode($filekey));
+            }else{
+                $file = $appdet;
             }
-            // Check if the session array exists
-            if (Session::has('iframeapp')) {
-                $testing =  'n';
-                // Retrieve the existing array from the session
-                $arrayValues = Session::get('iframeapp');
+            
+            
+            if(!empty($file) && !empty($appdet)){
+                if($filetype =='file'){
+                    $filegroup =  checkFileGroup($file->pathextension);
+                    if($filegroup !='editor'){
+                        $iframeurllink = url('dotsviewer/'.$filegroup.'/'.$filekey);
+                    }else{
+                        $iframeurllink = url('editfile/'.$filekey);
+                    }
+                    
+                }else if($filetype =='folder'){
+                    $iframeurllink = url('filemanager',['path'=>base64UrlEncode($file->path)]);
+                }else{
+                    if($filetype =='app'){
+                        if($appdet->type=='folder'){
+                            $iframeurllink = url('filemanager',['path'=>base64UrlEncode($appdet->path)]);
 
-                // Check if the appname exists in the array
-                $appExists = false;
-                $fileExists = false;
-
-                foreach ($arrayValues as &$app) {
-                    $testing = 2;
-                    if (($filetype == $app['filetype']) || ($filetype != $app['filetype'] && $filetype == 'document' && $app['filetype'] == "lightapp")) {
-                        if (base64UrlDecode($app['appkey']) == base64UrlDecode($appkey)) {
-                            $appExists = true;
-                            // If appkey exists, check for filekey
-                            $testing = 3;
-                            foreach ($app['files'] as $filedet) {
-                                $testing = 4;
-                                if (base64UrlDecode($filedet['filekey']) == base64UrlDecode($filekey)) {
-                                    $fileExists = true;
-                                    $testing = 1;
-                                    break;
-                                }
-                            }
-
-                            // If appkey exists but filekey does not, add the new file details
-                            if (!$fileExists) {
-                                $testing = base64UrlDecode($filekey);
-                                $app['files'][] = [
-                                    'filekey' => $filekey,
-                                    'name' => $filename,
-                                    'path' => $path,
-                                    'parentpath' => $parentpath
-                                ];
-                            }
-                            break;
+                        }else{
+                            $iframeurllink = url($appdet->link);
+                        }
+                    }else{
+                        if($appdet->function=="createdocument"){
+                           $iframeurllink = $appdet->link;
+                        }else{
+                            $newarr = $this->filefunctions->createNewFile($appdet->fileextension, 'Document');
+                            $file = File::find($newarr['filekey']);
+                            $iframeurllink = $iframeurllink = url('editfile/'.base64UrlEncode($newarr['filekey']));
                         }
                     }
                 }
-
-                // If the appname does not exist, create a new array for the app
-                if (!$appExists) {
-                    $arrayValues[] = [
-                        'apptype' => $apptype,
-                        'applink' => $appdet->link,
-                        'applinktype' => $applinktype,
-                        'filetype' => $filetype,
-                        'appkey' => $appkey,
-                        'appname' => $appdet->name,
-                        'appicon' => $appdet->icon,
-                        'isfile' => $isfile,
-                        'files' => [
-                            [
-                                'filekey' => $filekey,
-                                'name' => $filename,
-                                'path' => $path,
-                                'parentpath' => $parentpath
-                            ]
-                        ]
-                    ];
-                }
-
-                // Update the session with the modified array
-                Session::put('iframeapp', $arrayValues);
-            } else {
-                // Create a new session array with the provided value
-                $arrayValues = [
-                    [
-                        'apptype' => $apptype,
-                        'applink' => $appdet->link,
-                        'applinktype' => $applinktype,
-                        'filetype' => $filetype,
-                        'appkey' => $appkey,
-                        'appname' => $appdet->name,
-                        'appicon' => $appdet->icon,
-                        'isfile' => $isfile,
-                        'files' => [
-                            [
-                                'filekey' => $filekey,
-                                'name' => $filename,
-                                'path' => $path,
-                                'parentpath' => $parentpath
-                            ]
-                        ]
-                    ]
-                ];
-                Session::put('iframeapp', $arrayValues);
             }
+
+
+            $newArray = [
+                'filekey' => $filekey,
+                'filetype' => $filetype,
+                'appkey' => $appkey,
+                'apptype' => $apptype,
+                'appicon' => $appdet->icon,
+                'filename' => $file->name,
+                'appname' => $appdet->name,
+                'iframeurl' => $iframeurllink
+            ];
+      if (Session::has('iframeapp')) {
+            $iframearray = Session::get('iframeapp');
+            if (isset($iframearray[$appkey])) {
+                $appArray = $iframearray[$appkey];
+                unset($iframearray[$appkey]);
+                $iframearray = array_merge([$appkey => $appArray], $iframearray);
+                $found = false;
+                foreach ($iframearray[$appkey] as $key => $subArray) {
+                    if ($subArray['filekey'] === $filekey) {
+                        unset($iframearray[$appkey][$key]);
+                        $iframearray[$appkey] = array_merge([$newArray], $iframearray[$appkey]);
+                        $found = true;
+                        break;
+                    }
+                }
+        
+                if (!$found) {
+                    $iframearray[$appkey] = array_merge([$newArray], $iframearray[$appkey]);
+                }
+            } else {
+                $iframearray[$appkey] = [$newArray];
+            }
+
         }
-        $finalarray = (Session::has('iframeapp')) ? Session::get('iframeapp') : array();
-        $html = view('appendview.iframe')->with('iframeapp', $finalarray)->render();
-        $html2 = view('appendview.iframetab')->with('iframeapp', $finalarray)->render();
+
+        }
+        $html = view('appendview.iframe')->with('iframeapp', $iframearray)->render();
+        $html2 = view('appendview.iframetab')->with('iframeapp', $iframearray)->render();
         $iframekey = '';
         if ($request->input('appkey')) {
             $iframekey = 'iframepopup' . $filetype . $filekey;
         }
-        return response()->json(['html' => $html, 'html2' => $html2, 'filekey' => $iframekey, 'isfile' => $isfile]);
+        return response()->json(['html' => $html, 'html2' => $html2, 'filekey' => $iframekey]);
     }
 
 
@@ -188,43 +157,40 @@ class SearchController extends Controller
             $filekey = $request->input('filekey');
             $appkey = $request->input('appkey');
             $filetype = $request->input('filetype');
-            $isfile = $request->input('isfile');
-
             // Check if the session array exists
             if (Session::has('iframeapp')) {
                 // Retrieve the existing array from the session
-                $arrayValues = Session::get('iframeapp');
-
-                foreach ($arrayValues as $appIndex => &$app) {
-                    if ($filetype == $app['filetype'] && base64UrlDecode($app['appkey']) == base64UrlDecode($appkey)) {
-                        if ($isfile != 1) {
-                            // Remove the entire app entry if not a file
-                            unset($arrayValues[$appIndex]);
-                        } else {
-                            // Remove the specific file within the app
-                            foreach ($app['files'] as $fileIndex => $filedet) {
-                                if (base64UrlDecode($filedet['filekey']) == base64UrlDecode($filekey)) {
-                                    unset($app['files'][$fileIndex]);
-                                    // Reindex the array to remove gaps
-                                    $app['files'] = array_values($app['files']);
-                                    // If the files array is empty, remove the entire app entry
-                                    if (empty($app['files'])) {
-                                        unset($arrayValues[$appIndex]);
-                                    }
-                                    break;
-                                }
+                $iframearray = Session::get('iframeapp');
+    
+                if (isset($iframearray[$appkey])) {
+                    // Check if the appkey exists in the session array
+                    $currentApp = $iframearray[$appkey];
+    
+                    // If the appkey has only one file, remove the entire appkey
+                    if (count($iframearray) == 1) {
+                        unset($iframearray[$appkey]);
+                    } else {
+                        // If the appkey has multiple files, check for the filekey
+                        foreach ($iframearray as $key => $app) {
+                            if ($app['filekey'] == $filekey) {
+                                unset($iframearray[$key]);
+    
+                                // Reindex the array to maintain proper order
+                                $iframearray = array_values($iframearray);
+                                break;
                             }
                         }
-                        // Reindex the main array to remove gaps
-                        $arrayValues = array_values($arrayValues);
-                        break;
+                    }
+    
+                    if (empty($iframearray)) {
+                        Session::forget('iframeapp');
+                    } else {
+                        // Otherwise, update the session with the modified array
+                        Session::put('iframeapp', $iframearray);
                     }
                 }
             }
         }
-
-        // Update the session with the modified array
-        Session::put('iframeapp', $arrayValues);
 
         $finalarray = (Session::has('iframeapp')) ? Session::get('iframeapp') : array();
         $html = view('appendview.iframe')->with('iframeapp', $finalarray)->render();

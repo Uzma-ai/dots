@@ -1,7 +1,7 @@
 
 @foreach ($lightApps as $lightApp)
 <div class="app maindesktopapp  w-20 h-32 cursor-pointer relative showappoptions" data-option="app">
- <a href="#" class="openiframe showappoptions selectapp" data-appkey="{{ base64UrlEncode($lightApp->id)}}" data-filekey="{{ base64UrlEncode($lightApp->id)}}" data-filetype="lightapp" data-apptype="LightApp" data-isfile=""> 
+ <a href="#" class="openiframe showappoptions selectapp" data-appkey="{{ base64UrlEncode($lightApp->id)}}" data-function="{{ $lightApp->function }}" data-filekey="{{ base64UrlEncode($lightApp->id)}}" data-filetype="lightapp" data-apptype="LightApp" data-isfile=""> 
 
         <div class="app-tools absolute top-0 left-1 flex items-center justify-between gap-8 py-0.5 px-1 invisible showappoptions">
           <input type="checkbox" name="option" class="appcheckbox" id="checkboxlightapp{{ base64UrlEncode($lightApp->id) }}">
@@ -10,7 +10,7 @@
           <!-- </div> -->
         </div>
        <div class="text-center flex flex-col items-center px-1 pt-5 imagewraper">
-              <img class="showappoptions w-16 icondisplay" src="{{ asset($constants['APPFILEPATH'].$lightApp->icon) }}" alt="{{ $lightApp->name }}"/>
+              <img class="showappoptions w-16 icondisplay" src="{{ checkIconExist($lightApp->icon,'app') }}" alt="{{ $lightApp->name }}"/>
             
             <div class="input-wrapper w-16" id="inputWrapperlightapp{{ base64UrlEncode($lightApp->id) }}">
                 <input type="text" class="text-center text-white appinputtext" disabled id="inputFieldlightapp{{ base64UrlEncode($lightApp->id) }}" value="{{ $lightApp->name }}">
@@ -32,7 +32,7 @@
           </div>
         </div>
        <div class="text-center flex flex-col items-center px-1 pt-5 imagewraper">
-              <img class="w-16 icondisplay" src="{{ asset($constants['FILEICONPATH'].'folder.png')}}" alt="{{ $file->name }}"/>
+              <img class="w-16 icondisplay" src="{{ checkIconExist('folder','folder') }}" alt="{{ $file->name }}"/>
             
             <div class="input-wrapper w-16" id="inputWrapperfolder{{ base64UrlEncode($file->id) }}">
                 <input type="text" class="text-center text-white appinputtext" disabled id="inputFieldfolder{{ base64UrlEncode($file->id) }}" value="{{ $file->name }}">
@@ -60,7 +60,7 @@
             <!--       <video class="w-16 icondisplay" alt="{{ $file->name }}"/><source src="{{ $file->path }}" type="video/mp4"></video>-->
             <!--     </a>-->
             <!--@else-->
-                    <img class="w-16 icondisplay " src="{{ asset($constants['FILEICONPATH'].($file->extension ?? 'default').$constants['ICONEXTENSION'])}}" alt="{{ $file->name }}"/>
+                    <img class="w-16 icondisplay " src="{{ checkIconExist($file->extension,'file')}}" alt="{{ $file->name }}"/>
                 
                 <!--@endif-->
                 <div class="input-wrapper w-16" id="inputWrapperdocument{{ base64UrlEncode($file->id) }}">
