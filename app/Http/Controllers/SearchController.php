@@ -72,26 +72,25 @@ class SearchController extends Controller
                 $file = $appdet;
             }
             
-            $applinktype = ($apptype == "App") ? $appdet->type : '';
-            $filename = $appdet->name;
+            
             if(!empty($file) && !empty($appdet)){
                 if($filetype =='file'){
                     $filegroup =  checkFileGroup($file->pathextension);
                     if($filegroup !='editor'){
-                        $iframeurllink = url('defaultviewer/'.$filekey.'/'.$filegroup);
+                        $iframeurllink = url('dotsviewer/'.$filegroup.'/'.$filekey);
                     }else{
                         $iframeurllink = url('editfile/'.$filekey);
                     }
                     
                 }else if($filetype =='folder'){
-                    $iframeurllink = url('/filemanager',['path'=>base64UrlEncode($file->path)]);
+                    $iframeurllink = url('filemanager',['path'=>base64UrlEncode($file->path)]);
                 }else{
                     if($filetype =='app'){
                         if($appdet->type=='folder'){
-                            $iframeurllink = url('/filemanager',['path'=>base64UrlEncode($appdet->path)]);
+                            $iframeurllink = url('filemanager',['path'=>base64UrlEncode($appdet->path)]);
 
                         }else{
-                            $iframeurllink = url('/'. $appdet->link);
+                            $iframeurllink = url($appdet->link);
                         }
                     }else{
                         if($appdet->function=="createdocument"){

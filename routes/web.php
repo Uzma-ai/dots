@@ -150,6 +150,8 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('copyfile', [FileManagerController::class, 'copyFile'])->name('copyfile');
     Route::get('pastefile', [FileManagerController::class, 'pasteFile'])->name('pastefile');
     Route::get('contextmenu', [FileManagerController::class, 'contextMenu'])->name('contextmenu');
+    Route::get('dotsviewer/{type}/{file}', [FileManagerController::class, 'editfile'])->where('name', '.*')
+    ->where('file', '.*')->name('createDocuments');
     //comments
     Route::get('getUsers', [MessageController::class, 'getUsers'])->name('getUsers');
     Route::post('saveComment', [MessageController::class, 'saveCommentOrReply'])->name('saveComment');
