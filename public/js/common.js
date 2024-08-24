@@ -22,7 +22,6 @@ appDiv.on("click", (event) => {
 
 // Right Click Functionality
 $(document).ready(function () {
-    
  const appContextMenu = $("#app-contextmenu");
  const dashboardContextMenu = $("#context-menu");
  const dashboard = $(".allapplist .dashboard");
@@ -182,15 +181,7 @@ $(document).ready(function () {
    });
 
  
- $(document).on("click", function (e) {
-    if (!$(e.target).closest('.selectapp').length) {
-        // Hide the filemanagertool
-        $('.fimanagertoolpanel').addClass('disabledicon');
-        
-        // Remove the selectedfile class and other related classes
-        $('.allapplist .app .selectapp').removeClass('selectedfile');
-        $('.allapplist .app').removeClass('desktopapp-clicked');
-    }
+ $(document).on("click", function () {
    closeAllContainers();
  });
 });
@@ -366,25 +357,11 @@ $(document).ready(function () {
         });
 
 
-        // open app by click
-        $(document).on('click', '.allapplist .selectapp', function (e) {
-            e.preventDefault();
-            if($(this).hasClass('openiframe')){
-                $('.allapplist .app .selectapp').removeClass("selectedfile");
-                $('.allapplist .app').removeClass("desktopapp-clicked");
-                $('.fimanagertoolpanel').removeClass('disabledicon');
-                $(this).addClass('selectedfile');
-                $(this).closest('.app').addClass('desktopapp-clicked')
-            }
-               
-        });
-
 
         // cut file 
          // rename 
          $(document).on('click', '.context-menulist .renameFunction', function (e) {
             e.preventDefault();
-            e.stopPropagation();
             const filekey = $('.selectedfile').attr('data-filekey');
             const filetype = $('.selectedfile').attr('data-filetype');
             
@@ -453,22 +430,23 @@ $(document).ready(function () {
             pasteFunction(path);
          });
 
-         // Minimize button functionality
-         $(document).on('click', '#alliframelist .minimizeiframe-btn', function() {
-            var iframeId = $(this).data('iframe-id');
-            var iframePopup = $('#alliframelist #iframepopup' + iframeId);
-            const iframe = $('#alliframelist #iframepopup'+iframeId);
-            if (!iframe.hasClass('minimized')) {
-                iframe.addClass("minimized");
-                iframe.removeClass("fall-down");
-                minimized = true;
-                setTimeout(() => {
-                //    iframe.addClass("hidden");
-                }, 600);
-            }
-            
-        });
-        // Close button functionality
+     // Minimize button functionality
+     $(document).on('click', '#alliframelist .minimizeiframe-btn', function() {
+        var iframeId = $(this).data('iframe-id');
+        var iframePopup = $('#alliframelist #iframepopup' + iframeId);
+        const iframe = $('#alliframelist #iframepopup'+iframeId);
+        if (!iframe.hasClass('minimized')) {
+            iframe.addClass("minimized");
+            iframe.removeClass("fall-down");
+            minimized = true;
+            setTimeout(() => {
+            //    iframe.addClass("hidden");
+            }, 600);
+        }
+        
+    });
+    
+    // Close button functionality
         $(document).on('click', '#alliframelist .closeiframe-btn', function() {
             const appkey = this.getAttribute('data-appkey');
             const filekey = this.getAttribute('data-filekey');
