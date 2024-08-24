@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'CSSFILEPATH' => 'public/css/', 
-    'JSFILEPATH' => 'public/js/', 
-    'IMAGEFILEPATH' => 'public/images/', 
-    'APPFILEPATH' => 'public/images/apps/', 
-    'FILEICONPATH' => 'public/images/fileicon/', 
+    'CSSFILEPATH' => 'css/', 
+    'JSFILEPATH' => 'js/', 
+    'IMAGEFILEPATH' => 'images/', 
+    'APPFILEPATH' => 'images/apps/', 
+    'FILEICONPATH' => 'images/fileicon/', 
     'ICONEXTENSION' => '.svg', 
     'OTHERFILEPATH' => 'public/images/othericon/',
 ];

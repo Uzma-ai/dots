@@ -221,7 +221,7 @@
                         class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
                         type="text"
                         placeholder="Group 1"
-                        name="name"
+                        name="name" required
                       />
                       <div
                         class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3"
@@ -305,7 +305,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="name" class="block font-bold text-c-black">
-                      Name:<span class="text-red-500">*</span>
+                      Username:<span class="text-red-500">*</span>
                     </label>
                   </div>
                   <div class="md:col-span-8">
@@ -322,7 +322,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="nickname" class="block font-bold text-c-black">
-                      Nickname:
+                      Name:
                     </label>
                   </div>
                   <div class="md:col-span-8">
@@ -397,11 +397,11 @@
                       </div>
                     </div>
                   </div>
-                  <div class="md:col-span-2 flex items-center ml-0 md:-ml-2">
+                 <!--  <div class="md:col-span-2 flex items-center ml-0 md:-ml-2">
                     <p class="text-xs text-c-black font-light w-full">
                       (GB) 0 is unlimited
                     </p>
-                  </div>
+                  </div> -->
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
@@ -565,7 +565,7 @@ function populateTable(term='') {
     $('.alert').hide();                          
     });
 
-   $("#searchterm").keypress(function(){
+   $("#searchterm").keyup(function(){
     var term = $('#searchterm').val();
      populateTable(term);
   });
@@ -752,7 +752,8 @@ function populateTable(term='') {
                     }
                     // document.getElementById('popup').style.display = 'none';
                     // fileList.empty();
-                    populateTable();
+                    //populateTable();
+                    setTimeout(location.reload.bind(location), 2000);
                 }
             });
         }

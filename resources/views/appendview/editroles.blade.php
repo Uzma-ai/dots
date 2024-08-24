@@ -32,7 +32,7 @@
                     class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl outline-none pl-5 "
                     type="text"
                     placeholder="Please enter an username"
-                    autocomplete="name" value="{{ $role->name }}"
+                    autocomplete="name" value="{{ $role->name }}" required
                   />
                 </div>
               </div>
@@ -68,7 +68,7 @@
                       name="upload_limit"
                       class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl outline-none pl-4"
                       type="number"
-                      placeholder="Please upload file size" value="{{ $role->upload_limit }}"
+                      placeholder="Please upload file size" value="{{ $role->upload_limit }}" required
                     />
                     <div
                       class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray w-10 rounded-r-xl pl-2"
