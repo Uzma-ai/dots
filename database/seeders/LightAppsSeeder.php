@@ -14,8 +14,10 @@ class LightAppsSeeder extends Seeder
             'id' => 1,
             'group' => 1,
             'name' => 'Docx',
-            'link' => 'https://essentiels.in/example/editor?mode=edit&fileName=new.docx&userid=uid-1&lang=en&directUrl=false',
+            'link' => '',
             'description' => NULL,
+            'function' => 'createdocument',
+            'fileextension' => 'docx',
             'icon' => 'docx.svg',
             'open_type' => 1,
             'width' => 700,
@@ -23,15 +25,18 @@ class LightAppsSeeder extends Seeder
             'sort_order' => 0,
             'status' => 1,
             'add_app' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
+
         LightApp::create([
             'id' => 2,
             'group' => 1,
             'name' => 'PPT',
-            'link' => 'https://essentiels.in/example/editor?mode=edit&fileName=new.pptx&userid=uid-1&lang=en&directUrl=false',
+            'link' => '',
             'description' => NULL,
+            'function' => 'createdocument',
+            'fileextension' => 'pptx',
             'icon' => 'ppt.svg',
             'open_type' => 1,
             'width' => 700,
@@ -39,15 +44,18 @@ class LightAppsSeeder extends Seeder
             'sort_order' => 0,
             'status' => 1,
             'add_app' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
+
         LightApp::create([
             'id' => 3,
             'group' => 1,
             'name' => 'EXCEL',
-            'link' => 'https://essentiels.in/example/editor?mode=edit&fileName=new.xlsx&userid=uid-1&lang=en&directUrl=false',
+            'link' => '',
             'description' => NULL,
+            'function' => 'createdocument',
+            'fileextension' => 'xlsx',
             'icon' => 'excel.svg',
             'open_type' => 1,
             'width' => 700,
@@ -55,15 +63,18 @@ class LightAppsSeeder extends Seeder
             'sort_order' => 0,
             'status' => 1,
             'add_app' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
+
         LightApp::create([
             'id' => 4,
             'group' => 1,
             'name' => 'Dots Chat',
             'link' => 'https://zulip.sizaf.com/',
             'description' => NULL,
+            'function' => NULL,
+            'fileextension' => NULL,
             'icon' => 'chat.svg',
             'open_type' => 1,
             'width' => 700,
@@ -71,15 +82,18 @@ class LightAppsSeeder extends Seeder
             'sort_order' => 0,
             'status' => 1,
             'add_app' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
+
         LightApp::create([
             'id' => 5,
             'group' => 1,
             'name' => 'Dots Erp',
             'link' => 'https://erp.sizaf.com/login#login',
             'description' => NULL,
+            'function' => NULL,
+            'fileextension' => NULL,
             'icon' => 'erp.svg',
             'open_type' => 1,
             'width' => 700,
@@ -87,15 +101,18 @@ class LightAppsSeeder extends Seeder
             'sort_order' => 0,
             'status' => 1,
             'add_app' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
+
         LightApp::create([
             'id' => 6,
             'group' => 1,
             'name' => 'Dots Mail',
             'link' => 'https://snappymail.sizaf.com/',
             'description' => NULL,
+            'function' => NULL,
+            'fileextension' => NULL,
             'icon' => 'mail.svg',
             'open_type' => 1,
             'width' => 700,
@@ -103,15 +120,18 @@ class LightAppsSeeder extends Seeder
             'sort_order' => 0,
             'status' => 1,
             'add_app' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
+
         LightApp::create([
             'id' => 7,
             'group' => 1,
             'name' => 'Dots Social',
             'link' => 'https://social.sizaf.com/html/user/login',
             'description' => NULL,
+            'function' => NULL,
+            'fileextension' => NULL,
             'icon' => 'social.svg',
             'open_type' => 1,
             'width' => 700,
@@ -119,8 +139,8 @@ class LightAppsSeeder extends Seeder
             'sort_order' => 0,
             'status' => 1,
             'add_app' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
         ]);
     }
 }

@@ -14,6 +14,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('link')->nullable();
             $table->string('description')->nullable();
+            $table->text('function')->nullable();
+            $table->string('fileextension')->nullable();
             $table->string('icon')->nullable();
             $table->unsignedInteger('open_type')->default(0);
             $table->integer('width')->default(700);
