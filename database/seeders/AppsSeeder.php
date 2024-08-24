@@ -10,7 +10,7 @@ class AppsSeeder extends Seeder
 {
     public function run(): void
     {
-        Lightapp::create([
+        App::create([
             'id' => 1,
             'group' => 1,
             'name' => 'Docx',
@@ -29,7 +29,7 @@ class AppsSeeder extends Seeder
             'updated_at' => '2024-06-02 14:27:35'
         ]);
 
-        Lightapp::create([
+        App::create([
             'id' => 2,
             'group' => 1,
             'name' => 'PPT',
@@ -48,7 +48,7 @@ class AppsSeeder extends Seeder
             'updated_at' => '2024-06-02 14:27:35'
         ]);
 
-        Lightapp::create([
+        App::create([
             'id' => 3,
             'group' => 1,
             'name' => 'EXCEL',
@@ -67,7 +67,7 @@ class AppsSeeder extends Seeder
             'updated_at' => '2024-06-02 14:27:35'
         ]);
 
-        Lightapp::create([
+        App::create([
             'id' => 4,
             'group' => 1,
             'name' => 'Dots Chat',
@@ -86,7 +86,7 @@ class AppsSeeder extends Seeder
             'updated_at' => '2024-06-02 14:27:35'
         ]);
 
-        Lightapp::create([
+        App::create([
             'id' => 5,
             'group' => 1,
             'name' => 'Dots Erp',
@@ -105,7 +105,7 @@ class AppsSeeder extends Seeder
             'updated_at' => '2024-06-02 14:27:35'
         ]);
 
-        Lightapp::create([
+        App::create([
             'id' => 6,
             'group' => 1,
             'name' => 'Dots Mail',
@@ -124,7 +124,7 @@ class AppsSeeder extends Seeder
             'updated_at' => '2024-06-02 14:27:35'
         ]);
 
-        Lightapp::create([
+        App::create([
             'id' => 7,
             'group' => 1,
             'name' => 'Dots Social',

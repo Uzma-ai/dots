@@ -6,24 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('comments', function (Blueprint $table) {
             $table->unsignedBigInteger('group_id')->nullable()->after('receiver_type');
             $table->unsignedBigInteger('role_id')->nullable()->after('group_id');
-
             // references
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('comments', function (Blueprint $table) {
