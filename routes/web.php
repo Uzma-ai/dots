@@ -172,3 +172,4 @@ Route::get('/deletefile', [FileManagerController::class, 'deleteFile'])->name('d
 Route::get('/copyfile', [FileManagerController::class, 'copyFile'])->name('copyfile');
 Route::get('/pastefile', [FileManagerController::class, 'pasteFile'])->name('pastefile');
 Route::get('contextmenu', [FileManagerController::class, 'contextMenu'])->name('contextmenu');
+Route::get('/fileExpSearch', [FileManagerController::class, 'fileExpSearch'])->name('fileExp-list');

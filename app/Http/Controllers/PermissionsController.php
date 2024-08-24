@@ -7,6 +7,7 @@ use App\Models\Permissions;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Http\JsonResponse;
+use App\Helpers\PermissionHelper;
 
 class PermissionsController extends Controller
 {
@@ -32,12 +33,14 @@ class PermissionsController extends Controller
 
     public function permissions()
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $permissions = Permissions::paginate(10);
-        return view('permissions.permissions')->with('permissions',$permissions);
+        return view('permissions.permissions')->with('permissions',$permissions)->with('filteredPermissions', $filteredPermissions);
     }
 
      public function permissionsList(Request $request)
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $input = $request->all();
         if($input['searchTerm']){
             $search = $input['searchTerm'];
@@ -45,7 +48,7 @@ class PermissionsController extends Controller
         }else{
         $permissions = Permissions::paginate(10);
         }
-        $permission = view('appendview.permissionlist')->with('permissions',$permissions)->render();
+        $permission = view('appendview.permissionlist')->with('permissions',$permissions)->with('filteredPermissions', $filteredPermissions)->render();
         return response()->json($permission);
     }
 

@@ -17,7 +17,7 @@ use App\Models\App;
 use App\Models\RecycleBin;
 use Illuminate\Support\Facades\DB;
 use Firebase\JWT\JWT;
-
+use App\Helpers\PermissionHelper;
 
 class FileManagerController extends Controller
 {
@@ -30,6 +30,7 @@ class FileManagerController extends Controller
 
     public function index($path=null)
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         //$path = $path ? base64UrlDecode($path) : '/';
         $contextTypes = ContextType::with(['contextOptions' => function($query) {
             $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
@@ -53,7 +54,7 @@ class FileManagerController extends Controller
         ->orderBy('sort_order', 'asc') // Sort context types by sort_order
         ->get();
         $path = $path ? $path : '/';
-        return view('filemanager',compact('path','contextTypes','resizecontextTypes','sortcontextTypes'));
+        return view('filemanager',compact('path','contextTypes','resizecontextTypes','sortcontextTypes', 'filteredPermissions'));
     }
     
     public function recyclebin($path=null)
@@ -597,4 +598,44 @@ class FileManagerController extends Controller
         return response()->json(['html' => $html]);
     }
     
+
+    // public function fileExpSearch(Request $request)
+    // {        
+    //     $search = $request->input('searchFiles', '');
+        
+    //     // Retrieve folders based on search query
+    //     $defaultfolders = App::where('name', 'LIKE', '%' . $search . '%')
+    //                          ->where('filemanager_display', 1)
+    //                          ->where('status', 1)
+    //                          ->orderBy('name')
+    //                          ->get();
+        
+    //     // Retrieve files based on search query
+    //     $files = FileModel::where('name', 'LIKE', '%' . $search . '%')
+    //                       ->where('status', 1)
+    //                       ->orderBy('name')
+    //                       ->get();
+    
+    //     // Render the view with filtered folders and files
+    //     $html = view('filemanager')->with('defaultfolders', $defaultfolders)
+    //                                 ->with('files', $files)
+    //                                 ->render();
+        
+    //     return response()->json($html);
+    // }
+    
+
+    // public function fileExpSearch_old(Request $request)
+    // {        
+    //     $input = $request->all();
+    //     // print_r($input); die;
+    //     if($input['searchFiles']){
+    //         $search = $input['searchFiles'];
+    //         $files = FileModel::where('name','LIKE','%'.$search.'%')->get();
+    //     }else{
+    //     $files = FileModel::all(10);
+    //     }
+    //     $file = view('filemanager')->with('files',$files)->render();
+    //     return response()->json($file);
+    // }
 }

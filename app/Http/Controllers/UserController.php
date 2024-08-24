@@ -14,6 +14,7 @@ use App\Imports\UsersImport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Helpers\PermissionHelper;
 
 
 use Validator;
@@ -47,15 +48,17 @@ class UserController extends Controller
 
     public function userAdmin()
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $groups = Group::get();
         $roles = Roles::get();
         $permissions = Permissions::get();
         $users = User::with(['roles', 'group'])->paginate(10);
-        return view('userlist', compact('groups', 'roles', 'users', 'permissions'));
+        return view('userlist', compact('groups', 'roles', 'users', 'permissions', 'filteredPermissions'));
     }
 
     public function usersList(Request $request)
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $input = $request->all();
         if ($input['searchTerm']) {
             $search = $input['searchTerm'];
@@ -63,7 +66,7 @@ class UserController extends Controller
         } else {
             $users = User::paginate(10);
         }
-        $user = view('appendview.userlist')->with('users', $users)->render();
+        $user = view('appendview.userlist')->with('users', $users)->with('filteredPermissions',$filteredPermissions)->render();
         return response()->json($user);
     }
 

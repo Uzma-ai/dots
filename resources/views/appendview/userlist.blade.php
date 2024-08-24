@@ -54,10 +54,11 @@
                                         Active
                                         </button>
                                       </a>
-                                  <button  class="editUsers block bg-white-300 w-full px-2 py-1" data-id="{{$user->id}}">
+                                      @if(!empty($filteredPermissions['userManagement']) && in_array('user-edit', $filteredPermissions['userManagement']))
+                                        <button  class="editUsers block bg-white-300 w-full px-2 py-1" data-id="{{$user->id}}">
                                         Edit
                                         </button>
-                                     
+                                      @endif
                                 </div>
                             </div>
                          </div>

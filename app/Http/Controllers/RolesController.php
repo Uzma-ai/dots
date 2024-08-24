@@ -9,6 +9,7 @@ use App\Models\Permissions;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Http\JsonResponse;
+use App\Helpers\PermissionHelper;
 
 class RolesController extends Controller
 {
@@ -34,13 +35,15 @@ class RolesController extends Controller
 
     public function roles()
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $permissions = Permissions::get();
         $roles = Roles::paginate(10);
-        return view('roles.roles',compact('roles','permissions'));
+        return view('roles.roles',compact('roles','permissions','filteredPermissions'));
     }
 
     public function rolesList(Request $request)
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $input = $request->all();
         if($input['searchTerm']){
             $search = $input['searchTerm'];
@@ -48,7 +51,7 @@ class RolesController extends Controller
         }else{
         $roles = Roles::paginate(10);
         }
-        $role = view('appendview.roleslist')->with('roles',$roles)->render();
+        $role = view('appendview.roleslist')->with('roles',$roles)->with('filteredPermissions', $filteredPermissions)->render();
         return response()->json($role);
     }
 

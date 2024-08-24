@@ -43,20 +43,24 @@
                    <i class="ri-search-line" id="search"></i>
                   </div>
                 </div>
+                @if(!empty($filteredPermissions['userManagement']) && in_array('user-create', $filteredPermissions['userManagement']))
                 <button class="has-tooltip">
                   <i
                     class="ri-add-circle-fill ri-xl"
                     onclick="toggleModal('newUserModal')"
                   >Add User</i>
                 </button>
+                @endif
                 <!-- <div
                   class="absolute py-1 px-2 text-start text-xs tooltip -bottom-8 right-5 z-10 bg-white border rounded-md border-c-yellow z-0 font-normal"
                 >
                   Add user
                 </div> -->
+                @if(!empty($filteredPermissions['userManagement']) && in_array('user-mass-upload', $filteredPermissions['userManagement']))
                 <button>
                   <i class="ri-file-excel-2-fill ri-xl" id="showimport-upload-popup">Import Users</i>
                 </button>
+                @endif
               </div>
             </div>
             <!-- searchbar in mobile-->
@@ -79,6 +83,7 @@
                    <i class="ri-search-line" id="search"></i>
                   </div>
                 </div>
+                @if(!empty($filteredPermissions['userManagement']) && in_array('user-create', $filteredPermissions['userManagement']))
                 <button class="px-2 has-tooltip">
                   <i
                     class="ri-add-circle-fill ri-xl"
@@ -90,9 +95,12 @@
                 >
                   Add user
                 </div>
+                @endif
+                @if(!empty($filteredPermissions['userManagement']) && in_array('user-mass-upload', $filteredPermissions['userManagement']))
                 <button>
                   <i class="ri-file-excel-2-fill ri-xl"></i>
                 </button>
+                @endif
               </div>
             </div>
 
@@ -103,12 +111,14 @@
               >
                 <div class="flex items-center gap-2 flex-wrap">
                   <div class="dropdown inline-block relative">
+                    @if(!empty($filteredPermissions['groupsManagement']) && in_array('group-view', $filteredPermissions['groupsManagement']))
                     <button
                       class="border rounded px-6 py-1 custom-safety-btn custom-outline hover:border-yellow-300"
                     >
                       <span class="mr-1">Group Function</span>
                       <i class="ri-arrow-down-s-fill"></i>
                     </button>
+                    @endif
                     <ul
                       class="dropdown-menu custom-dropdown-menu absolute hidden text-gray-700 shadow bg-custom-pure-white text-xs z-0"
                       style="width: 8.1rem"
@@ -118,10 +128,14 @@
                         <a
                           class="rounded-t custom-bg-hover py-2 px-4 block whitespace-no-wrap px-4 flex justify-between font-normal"
                           href="#"
-                          >{{ $group->name }} <i class="group-edit ri-pencil-fill" data-id="{{ $group->id }}"></i
-                        ></a>
+                          >{{ $group->name }} 
+                          @if(!empty($filteredPermissions['groupsManagement']) && in_array('group-edit', $filteredPermissions['groupsManagement']))
+                          <i class="group-edit ri-pencil-fill" data-id="{{ $group->id }}"></i>
+                          @endif
+                        </a>
                       </li>
                        @endforeach
+                      @if(!empty($filteredPermissions['groupsManagement']) && in_array('group-create', $filteredPermissions['groupsManagement']))
                        <li>
                         <a
                           class="rounded-b custom-bg-hover py-2 px-4 block whitespace-no-wrap px-4 flex justify-between font-normal"
@@ -134,6 +148,7 @@
                           ></i
                         ></a>
                       </li>
+                      @endif
                     </ul>
                   </div>
                 </div>
@@ -174,9 +189,12 @@
                       <th></th>
                     </tr>
                   </thead>
+                @if(!empty($filteredPermissions['userManagement']) && in_array('user-view', $filteredPermissions['userManagement']))
+
                   <tbody id="searchableTableBody">
                    
                   </tbody>
+                  @endif
                 </table>
               </div>
               <div class="mt-auto flex justify-end pt-3 font-normal">
