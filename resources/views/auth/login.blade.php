@@ -5,9 +5,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta http-equiv="Content-Security-Policy" content="worker-src 'self' blob: https:; default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
-    <!-- <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; media-src 'self' blob: data: https:;"> -->
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'cs.css') }}" />
@@ -29,13 +26,13 @@
                         <p>Welcome to</p>
                         <div class="flex flex-col mt-0.5">
                             <p>Dots.</p>
-                            <hr class="border-t-4 -mt-1 border-c-yellow rounded-full"/>
+                            <hr class="border-t-4 -mt-1 border-c-yellow rounded-full" />
                         </div>
-                    </div> 
+                    </div>
                     <div class="right-container flex flex-col gap-7">
                         <input class="userinput" type="text" placeholder="Username" id="InputUsername" required />
-                        <button class="rounded-full bg-c-black text-white px-24 py-2" name="next" style="padding: 8px 0px"
-                            onclick="setUsername()">Submit</button>
+                        <button class="rounded-full bg-c-black text-white px-24 py-2" name="next"
+                            style="padding: 8px 0px" onclick="setUsername()">Submit</button>
                     </div>
                 </div>
             </div>
@@ -47,16 +44,18 @@
                         <p>Welcome to</p>
                         <div class="flex flex-col mt-0.5">
                             <p>Dots.</p>
-                            <hr class="border-t-4 -mt-1 border-c-yellow rounded-full"/>
+                            <hr class="border-t-4 -mt-1 border-c-yellow rounded-full" />
                         </div>
-                    </div>                        
-                    <img class="h-24" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}" alt="Logo" />        
+                    </div>
+                    <img class="h-24" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}" alt="Logo" />
                     <div class="flex flex-col items-center justify-center gap-6 mt-2">
-                        <button class="bg-c-black text-white rounded-full px-24 py-2" type="submit" onclick="showModal('#login')" id="BtnLogoDirectLogin">
-                        Login
+                        <button class="bg-c-black text-white rounded-full px-24 py-2" type="submit"
+                            onclick="showModal('#login')" id="BtnLogoDirectLogin">
+                            Login
                         </button>
-                        <button class="text-c-black px-12 py-2 rounded-full"  style="background: rgba(0, 0, 0, 0.16);box-shadow: var(--box-shadow);" id="ChangeUsername">
-                        Change username
+                        <button class="text-c-black px-12 py-2 rounded-full"
+                            style="background: rgba(0, 0, 0, 0.16);box-shadow: var(--box-shadow);" id="ChangeUsername">
+                            Change username
                         </button>
                     </div>
                 </div>
@@ -162,13 +161,15 @@
                                         </fieldset>
                                         <fieldset>
                                             <div class="flex flex-col items-center justify-center mt-3">
-                                                <h1 class="text-c-green text-2xl">Congratulations!<i class="ri-checkbox-circle-fill text-c-green"></i></h1>
+                                                <h1 class="text-c-green text-2xl">Congratulations!<i
+                                                        class="ri-checkbox-circle-fill text-c-green"></i></h1>
                                                 <h1 class="text-c-green text-xl">You have successfully registered.</h1>
                                                 <img src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
                                                     alt="Profile" class="w-24 h-24 rounded-full object-cover mt-5"
                                                     id="RegisterImage" />
                                                 <a href="{{ route('dashboard') }}"
-                                                    class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 mt-5 text-sm cursor-pointer">Get Started >></a>
+                                                    class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 mt-5 text-sm cursor-pointer">Get
+                                                    Started >></a>
                                             </div>
                                         </fieldset>
                                     </div>
@@ -207,8 +208,10 @@
                                                 <i class="ri-error-warning-fill ri-xl"></i>
                                                 <p id="CamError">Failed to capture photo</p>
                                             </div>
-                                            <div class="relative flex justify-center items-center mx-auto w-10/12 h-96 sm:h-56 sm:w-8/12">
-                                                <video id="cam" autoplay muted playsinline class="rounded-lg w-full h-full object-cover">
+                                            <div
+                                                class="relative flex justify-center items-center mx-auto w-10/12 h-96 sm:h-56 sm:w-8/12">
+                                                <video id="cam" autoplay muted playsinline
+                                                    class="rounded-lg w-full h-full object-cover">
                                                     Not available
                                                 </video>
                                                 <div id="countdown-overlay"
@@ -298,16 +301,19 @@
                                             <h1 class="text-xl">
                                                 Hi <span id="SpanUsername"></span>
                                             </h1>
-                                            <img src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}" alt="Profile" class="w-24 h-24 rounded-full object-cover" id="LoginImage" />
+                                            <img src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
+                                                alt="Profile" class="w-24 h-24 rounded-full object-cover"
+                                                id="LoginImage" />
                                             <div class="flex items-center justify-center gap-1 font-semibold text-2xl">
                                                 <p>Welcome to</p>
                                                 <div class="flex flex-col mt-0.5">
                                                     <p>Dots</p>
-                                                    <hr class="border-t-4 -mt-1 border-c-yellow rounded-full"/>
+                                                    <hr class="border-t-4 -mt-1 border-c-yellow rounded-full" />
                                                 </div>
                                             </div>
                                             <a href="{{ route('dashboard') }}"
-                                                class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 text-sm mt-2 cursor-pointer">Get Started >></a>
+                                                class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 text-sm mt-2 cursor-pointer">Get
+                                                Started >></a>
                                         </div>
                                     </fieldset>
                                 </form>
@@ -753,15 +759,16 @@
                             },
                             success: function(response) {
                                 if (response.status == true) {
-                                    console.log(response);
-
                                     if (response.user.avatar != null) {
                                         var image = "{{ url('/') }}" + "/" + response.user.avatar;
                                         $('#LoginImage').attr('src', image);
                                     }
+                                    if (response.flag==true) {
+                                        toastr.success("Face authentication match, Check Voice.");
+                                    }
                                     $('#login').find("fieldset").hide();
                                     $('#SpanUsername').html(response.user.name);
-                                    $('#login').find("fieldset").eq(3).show();
+                                    $('#login').find("fieldset").eq(1).show();
                                 } else {
                                     $(id).find('#CamError').html(response.msg);
                                     $(id).find("#camera-error").removeClass("hidden");
@@ -1067,29 +1074,33 @@
 
     // Trigger confetti when the Register successfull
     function showConfetti() {
-    // Trigger confetti from both edges
-    var duration = 5 * 1000; // 5 seconds duration for confetti
-    var end = Date.now() + duration;
+        // Trigger confetti from both edges
+        var duration = 5 * 1000; // 5 seconds duration for confetti
+        var end = Date.now() + duration;
 
-    (function frame() {
-        confetti({
-        particleCount: 7,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 },
-        });
-        confetti({
-        particleCount: 7,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 },
-        });
+        (function frame() {
+            confetti({
+                particleCount: 7,
+                angle: 60,
+                spread: 55,
+                origin: {
+                    x: 0
+                },
+            });
+            confetti({
+                particleCount: 7,
+                angle: 120,
+                spread: 55,
+                origin: {
+                    x: 1
+                },
+            });
 
-        if (Date.now() < end) {
-        requestAnimationFrame(frame);
-        }
-    })();
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        })();
     }
-
 </script>
+
 </html>

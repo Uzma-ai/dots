@@ -155,8 +155,7 @@ class LoginController extends Controller
         $res = json_decode($response);
         curl_close($curl);
         if (isset($res->status) && $res->status == true) {
-            Auth::login($user);
-            return response()->json(['status' => true, 'user' => $user]);
+            return response()->json(['status' => true, 'user' => $user, 'flag' => true]);
         } else {
             return response()->json(['status' => false, 'msg' => $res->message ?? "Can't login using face."]);
         }
