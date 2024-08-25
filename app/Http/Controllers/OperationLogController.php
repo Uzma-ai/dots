@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use App\Exports\OperationExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Activity;
+use App\Helpers\PermissionHelper;
 
 
 class OperationLogController extends Controller
@@ -22,12 +23,12 @@ class OperationLogController extends Controller
         $this->middleware('auth');
     }
      public function index()
-    {
-    	
+    {    	
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $log = Activity::with('user')->orderBy('created_at', 'desc')->paginate(13);
         $roles = Roles::get();
 
-        return view('operationLog',compact('log', 'roles'));
+        return view('operationLog',compact('log', 'roles', 'filteredPermissions'));
     }
 
      public function filter(Request $request)

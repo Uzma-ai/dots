@@ -6,22 +6,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\Filefunctions;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Auth;
 use App\Models\File as FileModel ;
 use App\Models\User;
 use App\Models\LightApp;
 use App\Models\ContextType;
 use App\Models\App;
 use App\Models\RecycleBin;
-
-
+use Illuminate\Support\Facades\DB;
+use Firebase\JWT\JWT;
+use App\Helpers\PermissionHelper;
 
 class FileManagerController extends Controller
 {
-    protected $filefunctions;
-    public function __construct(Filefunctions $filefunctions)
+    public function __construct()
     {
-        $this->filefunctions = $filefunctions;
         $this->middleware('auth');
          $user = User::find(auth()->id());
         $this->username = ($user) ? $user->name : '';
@@ -29,6 +30,7 @@ class FileManagerController extends Controller
 
     public function index($path=null)
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         //$path = $path ? base64UrlDecode($path) : '/';
         $contextTypes = ContextType::with(['contextOptions' => function($query) {
             $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
@@ -52,7 +54,7 @@ class FileManagerController extends Controller
         ->orderBy('sort_order', 'asc') // Sort context types by sort_order
         ->get();
         $path = $path ? $path : '/';
-        return view('filemanager',compact('path','contextTypes','resizecontextTypes','sortcontextTypes'));
+        return view('filemanager',compact('path','contextTypes','resizecontextTypes','sortcontextTypes', 'filteredPermissions'));
     }
     
     public function recyclebin($path=null)
@@ -79,7 +81,7 @@ class FileManagerController extends Controller
 
         $options = [
             'document' => [
-                'fileType' => $this->filefunctions->fileTypeAlias($fileExt),
+                'fileType' => $this->fileTypeAlias($fileExt),
                 'key' => $token,
                 'title' => $fileName,
                 'url' => $fileUrl,
@@ -90,7 +92,7 @@ class FileManagerController extends Controller
                 ],
                 'version' => true,
             ],
-            'documentType' => $this->filefunctions->getDocumentType($fileExt),
+            'documentType' => $this->getDocumentType($fileExt),
             'type' => 'desktop',
             'editorConfig' => [
                 'callbackUrl' => '',
@@ -160,18 +162,52 @@ class FileManagerController extends Controller
 
     }
     
+    
     public function createFile(Request $request)
     {
         $fileatype = $request->input('filetype');
         $destinationParentPath = base64UrlDecode($request->input('destination')); // 
-        $resultarr = $this->filefunctions->createNewFile($fileatype, $destinationParentPath);
-        if($resultarr){
-            return response()->json(['status' => true, 'message' => 'File sucessfully created','fileName' =>$resultarr['filename'],'filekey'=>$resultarr['filekey']]);
-
+        $destinationPath = Storage::disk('root')->path($destinationParentPath);
+        $sourcePath = Storage::disk('public')->path('newfile.'.$fileatype);
+        $newFileName = 'New File.'.$fileatype;
+        $actualpath = $destinationParentPath.'/'.$newFileName;
+        $count = 1;
+        $destinationfPath = $destinationPath.'/'.$newFileName;
+        while (file_exists($destinationfPath)) {
+            $newFileName = 'New File('.($count).').'.$fileatype;
+            $destinationfPath = $destinationPath.'/'.$newFileName;
+            $actualpath = $destinationParentPath.'/'.$newFileName;
+            $count++;
+        }
+        
+        if($fileatype=='pptx'){
+            $checkapp = 'PPT';
+        }else if( $fileatype=='xlsx'){
+            $checkapp = 'EXCEL';
         }else{
-            return response()->json(['status' => false, 'message' => 'Path does not exist']);
+            $checkapp = 'Docx';
+        }
+        $lightapp = LightApp::where('name',$checkapp)->where('status',1)->first();
+        if (copy($sourcePath, $destinationfPath)) {
+            $filetype = $this->getFiletype($destinationfPath);
+            $newFile = new FileModel();
+            //$newFile->folder = $destinationParentPath;
+            $newFile->name = $newFileName;
+            $newFile->extension = $fileatype;
+            $newFile->filetype = $filetype;
+            $newFile->parentpath = $destinationParentPath;
+            $newFile->path = $actualpath;
+            $newFile->openwith = ($lightapp) ? $lightapp->id : '';
+            $newFile->status = 1; // Assuming 1 means active
+            $newFile->created_by = auth()->id(); // Assuming you want to save the ID of the authenticated user
+            // if(copy($sourcePath, $destinationfPath)){
+                $newFile->save();
+            //} 
+            return response()->json(['status' => true, 'message' => 'File sucessfully created','fileName' => basename($destinationfPath)]);
 
         }
+        return response()->json(['status' => false, 'message' => 'Path does not exist']);
+
     }
     
      public function pathfiledetail(Request $request){
@@ -460,7 +496,86 @@ class FileManagerController extends Controller
 
      }
     
+    private function getDocumentType($ext) {
+        $ExtsDoc = array("doc", "docm", "docx", "dot", "dotm", "dotx", "epub", "fodt", "ott", "htm", "html", "mht", "odt", "pdf", "rtf", "txt", "djvu", "xps");
+        $ExtsPre = array("fodp", "odp", "pot", "potm", "potx", "pps", "ppsm", "ppsx", "ppt", "pptm", "pptx", "otp");
+        $ExtsSheet = array("xls", "xlsx", "xltx", "ods", "ots", "csv", "xlt", "xltm", "fods");
+        if (in_array($ext,$ExtsDoc)) {
+            return "word";
+        } elseif (in_array($ext,$ExtsPre)) {
+            return "presentation";
+        } elseif (in_array($ext,$ExtsSheet)) {
+            return "spreadsheet";
+        } else {
+            return "undefined";
+        }
+    }
     
+    private function fileTypeAlias($ext) {
+        if (strpos(".docm.dotm.dot.wps.wpt",'.'.$ext) !== false) {
+            $ext = 'doc';
+        } else if (strpos(".xlt.xltx.xlsm.dotx.et.ett",'.'.$ext) !== false) {
+            $ext = 'xls';
+        } else if (strpos(".pot.potx.pptm.ppsm.potm.dps.dpt",'.'.$ext) !== false) {
+            $ext = 'ppt';
+        }
+        return $ext;
+    }
+    
+    private function getFiletype($file){
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime = finfo_file($finfo, $file);
+        finfo_close($finfo);
+        
+        // Get the first word of the MIME type
+        $mimeParts = explode('/', $mime);
+        return $mimeParts[0];
+    }
+    
+    public function moveFolder()
+    {
+        $sourcePath = storage_path('app/source_folder'); // Adjust the source path as needed
+        $destinationPath = storage_path('app/destination_folder'); // Adjust the destination path as needed
+
+        // Check if the source folder exists
+        if (File::exists($sourcePath)) {
+            // Move the folder
+            File::moveDirectory($sourcePath, $destinationPath);
+            return response()->json(['message' => 'Folder moved successfully']);
+        } else {
+            return response()->json(['message' => 'Source folder does not exist'], 404);
+        }
+    }
+    
+    public function getFileSize($filePath)
+    {
+        if (File::exists($filePath)) {
+            $size = File::size($filePath);
+            return response()->json(['size' => $size]);
+        } else {
+            return response()->json(['message' => 'File does not exist'], 404);
+        }
+    }
+    
+    
+    public function getDirectorySize($directoryPath)
+    {
+        if (File::exists($directoryPath)) {
+            $size = $this->folderSize($directoryPath);
+            return response()->json(['size' => $size]);
+        } else {
+            return response()->json(['message' => 'Directory does not exist'], 404);
+        }
+    }
+
+    private function folderSize($directory)
+    {
+        $size = 0;
+        foreach (File::allFiles($directory) as $file) {
+            $size += $file->getSize();
+        }
+        return $size;
+    }
 
     public function contextMenu(Request $request){
         $clicktype = $request->input('type');
@@ -482,5 +597,52 @@ class FileManagerController extends Controller
         $html = view('appendview.clickoption')->with('contextTypes', $contextTypes)->with('type',$clicktype)->render();
         return response()->json(['html' => $html]);
     }
-    
+       
+
+    public function fileExpSearch(Request $request)
+    {        
+        $search = $request->input('searchFiles', null);
+        $filepath = base64UrlDecode($request->input('path'));
+        $parentPath = empty($filepath) ? '/' : $filepath;
+        $defaultfolders = [];
+        $files = [];
+        $sortby = $request->input('sort_by', 'id');
+        $sortorder = $request->input('sort_order', 'asc');
+
+        if ($filepath != 'RecycleBin') {
+            $query = App::where('parentpath', $parentPath)
+                ->where('filemanager_display', 1)
+                ->where('status', 1)
+                ->orderBy('name');
+            
+            if ($search) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+            }
+            
+            $defaultfolders = $query->get();
+
+            $filesQuery = FileModel::where('parentpath', $parentPath)
+                ->where('status', 1)
+                ->where('created_by', auth()->id())
+                ->orderBy($sortby, $sortorder);
+
+            if ($search) {
+                $filesQuery->where('name', 'LIKE', '%' . $search . '%');
+            }
+
+            $files = $filesQuery->get();
+        } else {
+            $files = RecycleBin::where('tablename', 'file')
+                ->where('file_created_by', auth()->id())
+                ->get();
+        }
+
+        $html = view('appendview.pathview')
+            ->with('defaultfolders', $defaultfolders)
+            ->with('files', $files)
+            ->render();
+
+        return response()->json(['html' => $html, 'parentPath' => $parentPath]);
+    }
+
 }

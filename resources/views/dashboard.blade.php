@@ -115,18 +115,24 @@
             <div class="bottom border-t-2 border-gray-500">
                 <div class="features-list py-5 px-16">
                     <ul>
+                        @if(!empty($filteredPermissions['fileManager']))
                         <li class="flex items-center gap-8 mb-4">
                             <i class="ri-folder-3-fill ri-1x Ad-iconcolor"></i>
                             <a href="{{ route('filemanager') }}">File manager</a>
                         </li>
+                        @endif
+                        @if(!empty($filteredPermissions['backendManagement']))
                         <li class="flex items-center gap-8 mb-4">
                             <i class="ri-bar-chart-fill ri-1x Ad-iconcolor"></i>
                             <a href="{{ route('useradmin') }}">Backend</a>
                         </li>
+                        @endif
+                        @if(!empty($filteredPermissions['userManagement']))
                         <li class="flex items-center gap-8 mb-4">
                             <i class="ri-user-fill ri-1x Ad-iconcolor"></i>
                             <a href="{{ route('useradmin') }}">User manage</a>
                         </li>
+                        @endif
                         <li class="flex items-center gap-5 mb-4">
                             <i class="ri-download-2-line ri-1x Ad-iconcolor"></i>
                             <a href="#">Downloads</a>

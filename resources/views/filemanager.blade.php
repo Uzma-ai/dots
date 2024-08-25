@@ -68,13 +68,12 @@ if(empty($updatedPath)){
 <script src="{{ asset($constants['JSFILEPATH'].'tabs.js') }}" ></script>
 
 <script>
-      // const desktopapp = @json(route('desktopapp'));
-      // const createFolderRoute = @json(route('createfolder'));
-      // const createFileRoute = @json(route('createfile'));
-      // const showFileDetail = @json(route('showpathdetail'));
-      let path = @json($path);
-      let navbar = false;
-
+  // const desktopapp = @json(route('desktopapp'));
+  // const createFolderRoute = @json(route('createfolder'));
+  // const createFileRoute = @json(route('createfile'));
+  // const showFileDetail = @json(route('showpathdetail'));
+  let path = @json($path);
+  let navbar = false;
 </script>
     <script>
     $('.navbarhead').hide();
@@ -92,41 +91,67 @@ if(empty($updatedPath)){
           'applications.html': 'link-applications'
         };
 
-        const currentPage = window.location.pathname.split('/').pop();
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    //  document.querySelector('.newfiledropdown').addEventListener('click', function() {
+    //   document.querySelector('.newfiledropdownoption').classList.toggle('hidden');
+    // });           
+    const links = {
+      'desktop.html': 'link-desktop',
+      'Recent.html': 'link-recent',
+      'downloads.html': 'link-downloads',
+      'filemanager.html': 'link-filemanager',
+      'documents.html': 'link-documents',
+      'applications.html': 'link-applications'
+    };
 
-        const activeLinkId = links[currentPage];
-        if (activeLinkId) {
-          const activeLink = document.getElementById(activeLinkId);
-          if (activeLink) {
-            activeLink.classList.add('bg-black', 'text-orange-500', 'font-semibold');
-          }
-        }
+    const currentPage = window.location.pathname.split('/').pop();
+
+    const activeLinkId = links[currentPage];
+    if (activeLinkId) {
+      const activeLink = document.getElementById(activeLinkId);
+      if (activeLink) {
+        activeLink.classList.add('bg-black', 'text-orange-500', 'font-semibold');
+      }
+    }
       
-
-     showapathdetail(path);
+    // Show path details based on the given path
+    showapathdetail(path);
         
-        function showapathdetail(path){
+    function showapathdetail(path){
+        $.ajax({
+            url: showFileDetail,
+            method: 'GET',
+            data: {path:path},
+            success: function (response) {
+                $('.loaddetails').html(response.html);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        }); 
+    }
+        
+    // search functionality
+    $('#searchFiles').on('keyup', function() {
+      var query = $(this).val().trim();
+        if (query.length > 0) {
             $.ajax({
-                url: showFileDetail,
+                url: "{{ route('fileExp-list') }}", 
                 method: 'GET',
-                data: {path:path},
-                success: function (response) {
-                    // Update the app list container with the updated list
-                    $('.loaddetails').html(response.html);
+                data: { searchFiles: query, path: path },
+                success: function(data) {
+                  $('.loaddetails').html(data.html);
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);
                 }
             });
-            
-            
+        } else {
+          showapathdetail(path);
         }
-        
+      });            
+    });  
     
-            
-       });
-   
-    
-    </script>
-  
+  </script>
 @endsection
