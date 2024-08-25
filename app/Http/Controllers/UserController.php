@@ -236,4 +236,9 @@ class UserController extends Controller
             return redirect()->route('login');
         }
     }
+
+    public function voice(Request $request)
+    {
+        dd($request);
+    }
 }
