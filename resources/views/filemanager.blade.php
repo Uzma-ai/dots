@@ -131,5 +131,51 @@ if(empty($updatedPath)){
    
     
     </script>
+    <script>
+      $('#searchFiles').on('input', function() {
+      let searchValue = $(this).val();
+
+      $.ajax({
+          url: '{{ route("fileExp-list") }}', 
+          method: 'GET',
+          data: { searchFiles: searchValue },
+          success: function(response) {
+              $('.loaddetails').html(response);
+          },
+          error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+          }
+      });
+  });
+
+
+    // $(document).ready(function(){     
+    //   // Initial population of the table
+    //   populateTable();
+    //     function populateTable(term='') {
+    //     const searchFiles = term;
+    //     const attr = '{{ request()->get('page') }}';
+    //     const listroute = @json(route('fileExp-list'));
+    //       $.ajax({
+    //           url: listroute,
+    //           method: 'GET',
+    //           data: { page:attr,searchFiles:searchFiles },
+    //           success: function (response) {
+    //               // Update the app list container with the updated list
+    //               $('#searchableTableBody').html(response);
+    //           },
+    //           error: function (xhr, status, error) {
+    //               console.error(xhr.responseText);
+    //           }
+    //       });
+    //     }
+    //     $("#searchFiles").keypress(function(){          
+    //       var term = $('#searchFiles').val();
+    //      console.log(term);
+    //       // populateTable(term);
+    //     });
+    // });
+
+    </script>
   
 @endsection

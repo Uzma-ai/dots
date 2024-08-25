@@ -65,7 +65,7 @@
               <input
                 type="text"
                 class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none outline-none w-2/12"
-                placeholder="Search"
+                placeholder="Search" id="searchFiles" 
               />
               <div class="pt-3 pb-3 pr-4 flex items-center justify-center">
                 <i class="ri-search-line"></i>
@@ -190,6 +190,7 @@
                   @endif
                 </div>
               </div>
+              @if(!empty($filteredPermissions['fileManager']) && in_array('upload', $filteredPermissions['fileManager']))
               <div class="relative flex items-center upload">
                 <a href="#" class="clickmenu uploadFiles">
                   <button
@@ -199,7 +200,7 @@
                   </button>
                 </a>
               </div>
-
+              @endif
               <a href="#" class="clickmenu cutFunction disabledicon fimanagertoolpanel"><button class="scissor">
                 <i class="ri-scissors-2-fill ri-lg"></i>
               </button></a>
@@ -209,15 +210,19 @@
               <a href="#" class="clickmenu pasteFunction disabledicon fimanagertoolpanel"><button class="paste">
                 <i class="ri-clipboard-line ri-lg"></i>
               </button></a>
+              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']))
               <a href="#" class="clickmenu renameFunction disabledicon fimanagertoolpanel"><button class="edit">
                 <i class="ri-edit-line ri-lg"></i>
               </button></a>
+              @endif
               <!-- <button class="share" onclick="togglePopup('sharePopup');">
-                <i class="ri-share-fill ri-lg"></i>
+                <i class="ri-share-fill ri-lg"></i> 
               </button> -->
+              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']))
               <a href="#" class="clickmenu deleteFunction disabledicon fimanagertoolpanel"><button class="delete">
                 <i class="ri-delete-bin-line ri-lg"></i>
               </button></a>
+              @endif
               <div class="relative flex items-center sort">
                 <button class="flex gap-x-2">
                   <i class="ri-arrow-up-down-line ri-lg mt-1"></i>

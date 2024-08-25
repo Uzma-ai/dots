@@ -61,6 +61,9 @@
                     ></i>
                   </a>
                 </li>
+                @if(!empty($filteredPermissions['backendManagement']) &&
+                in_array('notice', $filteredPermissions['backendManagement'])
+                )
                 <li>
                   <div
                     role="button"
@@ -75,8 +78,11 @@
                       <i
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
                       ></i>
-                    </div>
+                    </div>                    
                     <ul class="drop-list text-sm space-y-1">
+                    @if(!empty($filteredPermissions['backendManagement']) &&
+                        in_array('basic', $filteredPermissions['backendManagement'])
+                      )
                       <li>
                         <a
                           href="system-setting-basic-page.html"
@@ -88,6 +94,10 @@
                           ></i>
                         </a>
                       </li>
+                      @endif
+                      @if(!empty($filteredPermissions['backendManagement']) &&
+                        in_array('menu', $filteredPermissions['backendManagement'])
+                      )
                       <li>
                         <a
                           href="#"
@@ -99,6 +109,10 @@
                           ></i>
                         </a>
                       </li>
+                      @endif
+                      @if(!empty($filteredPermissions['backendManagement']) &&
+                        in_array('notice', $filteredPermissions['backendManagement'])
+                      )
                       <li>
                         <a
                           href="system-setting-notice.html"
@@ -110,6 +124,10 @@
                           ></i>
                         </a>
                       </li>
+                      @endif
+                      @if(!empty($filteredPermissions['backendManagement']) &&
+                        in_array('internet-access', $filteredPermissions['backendManagement'])
+                      )
                       <li>
                         <a
                           href="#"
@@ -121,25 +139,32 @@
                           ></i>
                         </a>
                       </li>
+                      @endif
                     </ul>
                   </div>
                 </li>
+                @endif
+
                 <li>
                   <div
                     role="button"
                     onclick="toggleDropMenu(this)"
                     class="drop-menu cursor-pointer rounded-r-lg"
                   >
+                  @if(!empty($filteredPermissions['userManagement'])) 
                     <div
                       class="w-full px-6 py-3 flex justify-between items-center"
                       href="#"
                     >
+                    
                       <span class="font-normal">User Management</span>
                       <i
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
                       ></i>
                     </div>
+                   @endif
                     <ul class="drop-list text-sm space-y-1">
+                    @if(!empty($filteredPermissions['userManagement']))
                       <li>
                         <a
                           href="{{ route('useradmin') }}"
@@ -151,6 +176,8 @@
                           ></i>
                         </a>
                       </li>
+                      @endif
+                      @if(!empty($filteredPermissions['roleManagement']))
                       <li>
                         <a
                           href="{{ route('rolesadmin') }}"
@@ -162,6 +189,8 @@
                           ></i>
                         </a>
                       </li>
+                      @endif
+                      @if(!empty($filteredPermissions['userManagement']))
                       <li>
                         <a
                           href="{{ route('permissionsadmin') }}"
@@ -173,6 +202,7 @@
                           ></i>
                         </a>
                       </li>
+                      @endif
                       <!-- <li>
                         <a
                           href="#"
@@ -187,7 +217,11 @@
                     </ul>
                   </div>
                 </li>
-                                <li>
+
+                @if(!empty($filteredPermissions['backendManagement']) &&
+                in_array('logs', $filteredPermissions['backendManagement'])
+                )
+                <li>
                   <div
                     role="button"
                     onclick="toggleDropMenu(this)"
@@ -201,7 +235,7 @@
                       <i
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
                       ></i>
-                    </div>
+                    </div>                    
                     <ul class="drop-list text-sm space-y-1">
                       <li>
                         <a
@@ -228,12 +262,19 @@
                     </ul>
                   </div>
                 </li>
+                @endif
+
+                @if(!empty($filteredPermissions['backendManagement']) && 
+                  in_array('storage', $filteredPermissions['backendManagement']) &&
+                  in_array('backups', $filteredPermissions['backendManagement'])
+                  )
                 <li>
                   <div
                     role="button"
                     onclick="toggleDropMenu(this)"
                     class="drop-menu cursor-pointer rounded-r-lg"
                   >
+                  
                     <div
                       class="w-full px-6 py-3 flex justify-between items-center"
                       href="#"
@@ -243,6 +284,7 @@
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
                       ></i>
                     </div>
+                    
                     <ul class="drop-list text-sm space-y-1">
                       <li>
                         <a
@@ -266,6 +308,9 @@
                           ></i>
                         </a>
                       </li>
+                      @if(!empty($filteredPermissions['backendManagement']) &&
+                        in_array('share', $filteredPermissions['backendManagement'])
+                      )
                       <li>
                         <a
                           href="storage-file-share.html"
@@ -277,6 +322,11 @@
                           ></i>
                         </a>
                       </li>
+                      @endif
+
+                      @if(!empty($filteredPermissions['backendManagement']) &&
+                        in_array('webdev-mount', $filteredPermissions['backendManagement'])
+                      )
                       <li>
                         <a
                           href="#"
@@ -288,6 +338,10 @@
                           ></i>
                         </a>
                       </li>
+                      @endif
+                      @if(!empty($filteredPermissions['backendManagement']) &&
+                        in_array('media', $filteredPermissions['backendManagement'])
+                      )
                       <li>
                         <a
                           href="settings-storage-media-preview.html"
@@ -299,6 +353,10 @@
                           ></i>
                         </a>
                       </li>
+                      @endif
+                      @if(!empty($filteredPermissions['backendManagement']) &&
+                        in_array('client', $filteredPermissions['backendManagement'])
+                      )
                       <li>
                         <a
                           href="#"
@@ -310,9 +368,12 @@
                           ></i>
                         </a>
                       </li>
+                      @endif
                     </ul>
                   </div>
                 </li>
+                @endif
+
                 <li>
                   <a
                     class="w-full px-6 py-3 rounded-r-lg block flex justify-between items-center"

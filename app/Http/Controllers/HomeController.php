@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\LightApp;
 use App\Models\App;
 use App\Models\LightAppCategory;
-
+use App\Helpers\PermissionHelper;
 
 class HomeController extends Controller
 {
@@ -32,13 +32,14 @@ class HomeController extends Controller
 
     public function dashboard()
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $apps = App::where('desktop_display', 1)->where('status', 1)->get();
         $lightApps = LightApp::with('category')->get();
        $path = url();
         //$path = $path ? urldecode($path) : '/';
         $path ='/';
         // return view('app', compact('apps', 'lightApps','path'));
-        return view('dashboard', compact('apps', 'lightApps'));
+        return view('dashboard', compact('apps', 'lightApps', 'filteredPermissions'));
        
     }
      public function desktop()

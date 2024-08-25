@@ -19,7 +19,7 @@
                                 class="font-semibold text-c-black">Role</span>
                         </div>
                </div>
-
+               @if(!empty($filteredPermissions['roleManagement']) && in_array('role-create', $filteredPermissions['roleManagement']))               
                <div class="flex-grow md:w-1/2">
                   <div class="flex items-center justify-end gap-2 md:gap-6">
                     <div>
@@ -29,6 +29,7 @@
                     </div>
                   </div>
                </div>
+               @endif
                
             </div>
              <div class="mt-3 flex items-center justify-end px-4 gap-2">
