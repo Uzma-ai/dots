@@ -27,7 +27,10 @@ Route::get('clear', function () {
     return "cleared";
 });
 
-
+Route::get('dummydata',function(){
+    return view('dummy');
+});
+Route::post('voice',[UserController::class,'voice'])->name('voice');
 
 //Suspend user middleware wil also use for IPaddress in future
 Route::middleware(['blockIP'])->group(function () {
