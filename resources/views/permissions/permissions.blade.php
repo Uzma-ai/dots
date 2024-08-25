@@ -498,9 +498,9 @@
                   type="checkbox"
                   class="c-checkbox mt-1"
                   name="options"
-                  value="admin"
+                  value="admin" id="checkall"
                 />
-                <span class="text-c-black mt-0.5 font-normal" id="checkall">Select All / Cancel </span>
+                <span class="text-c-black mt-0.5 font-normal">Select All / Cancel </span>
               </div>
             </div>
 
@@ -609,6 +609,16 @@ function populateTable(term='') {
  $("#searchterm").keyup(function(){
     var term = $('#searchterm').val();
      populateTable(term);
+  });
+
+ $('#checkall').change(function (e) {
+  
+    if($(this).prop("checked")) {
+            $(".d-checkbox,.c-checkbox").prop("checked", true);
+        } else {
+            $(".d-checkbox,.c-checkbox").prop("checked", false);
+        }     
+
   });
 
 

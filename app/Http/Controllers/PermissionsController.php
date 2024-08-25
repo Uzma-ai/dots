@@ -75,9 +75,6 @@ class PermissionsController extends Controller
 
      public function edit(Request $request)
     {
-       // $permission = Permissions::find($id);
-       // $permission->permissions = explode(",", $permission->permissions);
-       // return view('Permissions.edit',compact('permission'));
         $id = $request->id;
         $permission = Permissions::find($id);
         $permission->permissions = explode(',',$permission->permissions);
@@ -91,7 +88,10 @@ class PermissionsController extends Controller
        // Access and prepare data from the request
         $data = request()->except(['_token']);
         $data['name'] = preg_replace('/[^A-Za-z0-9 ]/', '', $data['name']);
+        if(!empty($data['permissions']))
         $data['permissions'] = implode(',', $data['permissions']);
+        else
+        $data['permissions'] = '';
         $updated = Permissions::where('id', $id)->update($data);
         $role = Permissions::find($id);
 

@@ -1418,3 +1418,13 @@ button:focus,
 input[type="button"]:focus {
     outline: none; /* Remove the focus outline */
 }
+
+
+/**Tooltip **/
+.tooltip1 {
+    display: none;
+}
+
+.has-tooltip1:hover~.tooltip1 {
+    display: block;
+}

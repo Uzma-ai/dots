@@ -24,6 +24,11 @@ class UsersImport
             // Get roleID and groupID based on the name
             $role = Roles::where('name', $row['role'])->first();
             $group = Group::where('name', $row['group'])->first();
+            $duplicate = User::where('email', $row['email'])->exists();
+            if ($duplicate == 1) {
+                $exist[] = $row['email'];
+                continue;
+            }
             //  return $group;exit;
             // Check if a user with the same name or email already exists
             $existingUser = User::where('name', $row['username'])->orWhere('email', $row['email'])->first();
@@ -67,6 +72,9 @@ class UsersImport
                 return false;
             }
         }
+        if(empty($exist))
         return true;
+        else
+        return $exist;
     }
 }

@@ -47,16 +47,22 @@
                   <i
                     class="ri-add-circle-fill ri-xl"
                     onclick="toggleModal('newUserModal')"
-                  >Add User</i>
+                  ></i>
                 </button>
-                <!-- <div
+                <div
                   class="absolute py-1 px-2 text-start text-xs tooltip -bottom-8 right-5 z-10 bg-white border rounded-md border-c-yellow z-0 font-normal"
                 >
                   Add user
-                </div> -->
-                <button>
-                  <i class="ri-file-excel-2-fill ri-xl" id="showimport-upload-popup">Import Users</i>
+                </div>
+                <button class="has-tooltip1">
+                  <i class="ri-file-excel-2-fill ri-xl" id="showimport-upload-popup"></i>
                 </button>
+                <div  
+                  class="absolute py-1 px-2 text-start text-xs tooltip1 -bottom-8 -right-5 z-10 bg-white border rounded-md border-c-yellow z-0"
+                >
+                  Import Users
+                </div>
+                
               </div>
             </div>
             <!-- searchbar in mobile-->
@@ -93,6 +99,7 @@
                 <button>
                   <i class="ri-file-excel-2-fill ri-xl"></i>
                 </button>
+              
               </div>
             </div>
 
@@ -583,7 +590,6 @@ function populateTable(term='') {
    toastr.success("User activated successfully");
  @endif
 @if (Session::has('user-exist'))
-   console.log('testing');
    toastr.error("User email already exist!!");
  @endif
   @if (Session::has('success-group'))
@@ -591,6 +597,9 @@ function populateTable(term='') {
  @endif
  @if (Session::has('group-update'))
    toastr.success("Group Updated successfully");
+ @endif
+ @if (Session::has('user-special'))
+   toastr.error("User name has special characters!!!");
  @endif
 });
 
@@ -746,6 +755,7 @@ function populateTable(term='') {
                                     <div class="flex items-center">
                                         <i class="ri-close-circle-fill text-red-500 mr-2"></i>
                                         <span>Upload Failed (`+response.message+`)</span>
+                                        <span>Failed Email (`+response.test+`)</span>
                                     </div>
                                 </div>`
                             )
@@ -753,7 +763,7 @@ function populateTable(term='') {
                     // document.getElementById('popup').style.display = 'none';
                     // fileList.empty();
                     //populateTable();
-                    setTimeout(location.reload.bind(location), 2000);
+                    setTimeout(location.reload.bind(location), 3000);
                 }
             });
         }

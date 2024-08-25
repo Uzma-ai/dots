@@ -397,8 +397,8 @@
                 <input
                   type="checkbox"
                   class="c-checkbox mt-1"
-                  name="options"
-                  value="admin"
+                  name=""
+                  value="admin" id="editcheckall"
                 />
                 <span class="text-c-black mt-0.5 font-normal">Select All / Cancel </span>
               </div>
@@ -418,8 +418,19 @@
 <!--End New-->
 
 <script>
-  
+$(document).ready(function(){  
   $('.permission-edit-close').on('click', function (e) {
           $('.permission-edit-modal').hide();
     });
+
+  $('#editcheckall').change(function (e) {
+  
+    if($(this).prop("checked")) {
+            $(".d-checkbox,.c-checkbox").prop("checked", true);
+        } else {
+            $(".d-checkbox,.c-checkbox").prop("checked", false);
+        }     
+
+  });
+});
 </script>
