@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Models\File as FileModel ;
 use App\Models\LightApp;
+use App\Models\App;
 
 class Filefunctions extends Controller
 {
@@ -22,14 +23,9 @@ class Filefunctions extends Controller
             $count++;
         }
         
-        if($fileatype=='pptx'){
-            $checkapp = 'PPT';
-        }else if( $fileatype=='xlsx'){
-            $checkapp = 'EXCEL';
-        }else{
-            $checkapp = 'Docx';
-        }
+        $checkapp = checkLightApp($fileatype);
         $lightapp = LightApp::where('name',$checkapp)->where('status',1)->first();
+        $lightapp = empty($lightapp) ? App::where('name',$checkapp)->where('status',1)->first():$lightapp;
         if (copy($sourcePath, $destinationfPath)) {
             $filetype = $this->getFiletype($destinationfPath);
             $newFile = new FileModel();
@@ -41,10 +37,10 @@ class Filefunctions extends Controller
             $newFile->openwith = ($lightapp) ? $lightapp->id : '';
             $newFile->status = 1; // Assuming 1 means active
             $newFile->created_by = auth()->id(); // Assuming you want to save the ID of the authenticated user
-            $newfilekey = $newFile->save();
+            $newFile->save();
             $appname =($lightapp) ? $lightapp->name :'';
             $appicon =($lightapp) ? $lightapp->icon :'';
-            $returnarr = array('filekey'=> $newfilekey,'appkey'=> $newFile->openwith,'filename'=>$newFile->name,'appname'=>$appname,'appicon'=>$appicon);
+            $returnarr = array('filekey'=> $newFile->id,'appkey'=> $newFile->openwith,'filename'=>$newFile->name,'appname'=>$appname,'appicon'=>$appicon);
             return $returnarr;
 
         }else{

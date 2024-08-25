@@ -260,7 +260,7 @@ class FileManagerController extends Controller
     
                 // Move the file to the upload directory
                 if (move_uploaded_file($file->getPathname(), $filePath)) {
-                    $filetype = $this->getFiletype($filePath);
+                    $filetype = $this->filefunctions->getFiletype($filePath);
                     $newFile = new FileModel();
                     $newFile->name = $originalName;
                     $newFile->extension = $fileExtension;

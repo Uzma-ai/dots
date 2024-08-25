@@ -1,7 +1,7 @@
 
 @foreach ($lightApps as $lightApp)
 <div class="app maindesktopapp  w-20 h-32 cursor-pointer relative showappoptions" data-option="app">
- <a href="#" class="openiframe showappoptions selectapp" data-appkey="{{ base64UrlEncode($lightApp->id)}}" data-function="{{ $lightApp->function }}" data-filekey="{{ base64UrlEncode($lightApp->id)}}" data-filetype="lightapp" data-apptype="LightApp" data-isfile=""> 
+ <a href="#" class="openiframe showappoptions selectapp" data-appkey="{{ base64UrlEncode($lightApp->id)}}"  data-filekey="{{ base64UrlEncode($lightApp->id)}}" data-filetype="lightapp" data-apptype="lightapp"> 
 
         <div class="app-tools absolute top-0 left-1 flex items-center justify-between gap-8 py-0.5 px-1 invisible showappoptions">
           <input type="checkbox" name="option" class="appcheckbox" id="checkboxlightapp{{ base64UrlEncode($lightApp->id) }}">
@@ -24,7 +24,7 @@
 @foreach ($files as $file)
   @if($file->folder==1)
   <div class="app maindesktopapp w-20 h-32 cursor-pointer relative" data-option="file">
-      <a href="{{ url('/filemanager',['path'=>base64UrlEncode($file->path)]);}}" data-path =" {{ base64UrlEncode($file->path) }}" class="folders openiframe selectapp" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="App" data-isfile="1"> 
+      <a href="#" data-path =" {{ base64UrlEncode($file->path) }}" class="folders openiframe selectapp" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="app"> 
         <div class="app-tools absolute top-0 left-1 flex items-center justify-between gap-8 py-0.5 px-1 invisible showappoptions">
             <input type="checkbox" name="option" class="appcheckbox" id="checkboxfolder{{ base64UrlEncode($file->id) }}">
           <div class="ml-auto -mt-1">
@@ -42,7 +42,7 @@
     </div>
   @else
     <div class="app maindesktopapp w-20 h-32 cursor-pointer relative" data-option="file">
-    <a href="#" class="files openiframe selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="document" data-apptype="LightApp" data-isfile="1"> 
+    <a href="#" class="files openiframe selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="file" data-apptype="lightapp"> 
     <div class="app-tools absolute top-0 left-1 flex items-center justify-between gap-8 py-0.5 px-1 invisible showappoptions">
             <input type="checkbox" name="option" class="appcheckbox" id="checkboxdocument{{ base64UrlEncode($file->id) }}">
             <div class="ml-auto -mt-1">
@@ -50,19 +50,11 @@
             </div>
             </div>
         <div class="text-center flex flex-col items-center px-1 pt-5 imagewraper">
-            
-            <!--@if($file->filetype=='image')-->
-            <!--     <a href="#" class="files openiframe selectapp" data-ext = "{{ $file->extension }}" data-image="{{ $file->path }}" data-title="{{ $file->name }}"  data-url="{{ $file->path }}"> -->
-            <!--       <img class="w-16 icondisplay" src="{{ $file->path }}" alt="{{ $file->name }}"/>-->
-            <!--     </a>-->
-            <!--@elseif($file->filetype=='video')-->
-            <!--     <a href="#" class="files openiframe selectapp" data-ext = "{{ $file->extension }}" data-image="{{ $file->path }}" data-title="{{ $file->name }}"  data-url="{{ url($parts[1]) }}"> -->
-            <!--       <video class="w-16 icondisplay" alt="{{ $file->name }}"/><source src="{{ $file->path }}" type="video/mp4"></video>-->
-            <!--     </a>-->
-            <!--@else-->
-                    <img class="w-16 icondisplay " src="{{ checkIconExist($file->extension,'file')}}" alt="{{ $file->name }}"/>
-                
-                <!--@endif-->
+            @if(checkFileGroup($file->extension)=='image')
+                 <img class="w-16 icondisplay" src="{{ url(Storage::url('app/root/'.$file->path)) }}" alt="{{ $file->name }}"/>
+            @else
+                <img class="w-16 icondisplay " src="{{ checkIconExist($file->extension,'file')}}" alt="{{ $file->name }}"/>
+            @endif
                 <div class="input-wrapper w-16" id="inputWrapperdocument{{ base64UrlEncode($file->id) }}">
                     <input type="text" class="text-center text-white appinputtext" disabled id="inputFielddocument{{ base64UrlEncode($file->id) }}" value="{{ $file->name }}">
                 </div>

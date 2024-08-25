@@ -99,6 +99,23 @@ function checkFileGroup($ext){
     
 }
 
+function checkLightApp($ext){
+    $ExtsDoc = array("doc", "docm", "docx", "dot", "dotm", "dotx", "epub", "fodt", "ott", "htm", "html", "mht", "odt", "pdf", "rtf", "txt", "djvu", "xps");
+    $ExtsPre = array("fodp", "odp", "pot", "potm", "potx", "pps", "ppsm", "ppsx", "ppt", "pptm", "pptx", "otp");
+    $ExtsSheet = array("xls", "xlsx", "xltx", "ods", "ots", "csv", "xlt", "xltm", "fods");
+    
+    if (in_array($ext,$ExtsDoc)) {
+        return "Docx";
+    } elseif (in_array($ext,$ExtsPre)) {
+        return "EXCEL";
+    } elseif (in_array($ext,$ExtsSheet)) {
+        return "PPT";
+    }else {
+        return "DotsViewer";
+    }
+
+}
+
 
 
 ?>
