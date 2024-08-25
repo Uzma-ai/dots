@@ -83,6 +83,9 @@ class UserController extends Controller
         if ($duplicate == 1) {
             return  redirect()->route('useradmin')->with('user-exist', 'test');
         }
+        if(preg_replace('/^[A-Za-z0-9 ]+$/', '', $request->name)){
+                return  redirect()->route('useradmin')->with('user-special', '');
+            }
 
         try {
             DB::beginTransaction();
@@ -190,6 +193,10 @@ class UserController extends Controller
             $uploadedFiles = [];
             if ($request->hasFile('files')) {
                 foreach ($request->file('files') as $file) {
+                    $extension = $file->extension();
+                    if($extension != 'xlsx'){
+                        return response()->json(['success' => false, 'message' => 'Wrong file type only excel sheet allowed']);
+                    }
                     $originalName = $file->getClientOriginalName();
                     $filePath = $file->store('imports');
 
@@ -202,10 +209,12 @@ class UserController extends Controller
                 }
             }
 
-            if ($test) {
+            if ($test && !is_array($test) ) {
                 return response()->json(['success' => true, 'files' => $uploadedFiles, 'test' => $test]);
-            } else {
-                return response()->json(['success' => false, 'message' => 'Roles / Group not found!!!']);
+            } elseif(is_array($test)){
+                return response()->json(['success' => false, 'message' => 'Email already exists', 'test' => $test]);
+            }else {
+                return response()->json(['success' => false, 'message' => 'Roles or Group not found']);
             }
         } catch (\Exception $e) {
             // Log the error for debugging purposes
