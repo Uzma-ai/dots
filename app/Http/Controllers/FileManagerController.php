@@ -13,6 +13,8 @@ use App\Models\LightApp;
 use App\Models\ContextType;
 use App\Models\App;
 use App\Models\RecycleBin;
+use App\Helpers\PermissionHelper;
+
 
 
 
@@ -29,6 +31,7 @@ class FileManagerController extends Controller
 
     public function index($path=null)
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         //$path = $path ? base64UrlDecode($path) : '/';
         $contextTypes = ContextType::with(['contextOptions' => function($query) {
             $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
