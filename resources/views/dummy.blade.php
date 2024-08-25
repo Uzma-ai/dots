@@ -32,35 +32,41 @@
         let mediaRecorder;
         let audioChunks = [];
 
+        // Ensure compatibility with older Safari versions by including webkit prefixes
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+        window.URL = window.URL || window.webkitURL;
+
         // Start recording
-        recordButton.addEventListener('click', async () => {
+        recordButton.addEventListener('click', () => {
             audioChunks = [];
-            let stream = await navigator.mediaDevices.getUserMedia({
-                audio: true
-            });
-            mediaRecorder = new MediaRecorder(stream);
-            mediaRecorder.start();
-            recordButton.disabled = true;
-            stopButton.disabled = false;
+            navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.start();
+                recordButton.disabled = true;
+                stopButton.disabled = false;
 
-            mediaRecorder.addEventListener('dataavailable', event => {
-                audioChunks.push(event.data);
-            });
-
-            mediaRecorder.addEventListener('stop', () => {
-                let audioBlob = new Blob(audioChunks, {
-                    type: 'audio/webm'
+                mediaRecorder.addEventListener('dataavailable', event => {
+                    audioChunks.push(event.data);
                 });
-                let audioUrl = URL.createObjectURL(audioBlob);
-                audioPlayback.src = audioUrl;
 
-                // Convert the audio blob to Base64
-                let reader = new FileReader();
-                reader.readAsDataURL(audioBlob);
-                reader.onloadend = function() {
-                    voiceData.value = reader.result;
-                    submitBtn.disabled = false;
-                };
+                mediaRecorder.addEventListener('stop', () => {
+                    let audioBlob = new Blob(audioChunks, { type: 'audio/webm' }); // Use 'audio/webm' or 'audio/mp4' for better Safari compatibility
+                    let audioUrl = URL.createObjectURL(audioBlob);
+                    audioPlayback.src = audioUrl;
+
+                    // Convert the audio blob to Base64
+                    let reader = new FileReader();
+                    reader.readAsDataURL(audioBlob);
+                    reader.onloadend = function() {
+                        voiceData.value = reader.result;
+                        submitBtn.disabled = false;
+                    };
+                });
+            })
+            .catch(error => {
+                console.error('Error accessing the microphone:', error);
+                alert('Could not access the microphone. Please ensure your browser has permission to access it.');
             });
         });
 
@@ -72,5 +78,4 @@
         });
     </script>
 </body>
-
 </html>
