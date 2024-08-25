@@ -41,7 +41,7 @@ class LoginController extends Controller
         if ($user) {
             //check user is suspended or not
             if ($user->status == 0) {
-            return response()->json(['status' => false, 'msg' => "User is Suspended."]);
+                return response()->json(['status' => false, 'msg' => "User is Suspended."]);
             }
 
             if (Hash::check($request->password, $user->password)) {
@@ -138,7 +138,7 @@ class LoginController extends Controller
         }
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://dev-ubt-app05.dev.orientdots.net/api/authenticate_face?username=' . base64UrlEncode($user->id),
+            CURLOPT_URL => 'http://dev-ubt-app05.dev.orientdots.net/api/authenticate_face?username=' . base64UrlEncode($_SERVER['SERVER_NAME'] . $user->id),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -178,12 +178,12 @@ class LoginController extends Controller
         if (!$user->is_facedata) {
             return response()->json(['status' => false, 'msg' => "Facedata not register for this user."]);
         }
-         if ($user->status == 0) {
+        if ($user->status == 0) {
             return response()->json(['status' => false, 'msg' => "User is Suspended."]);
         }
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://dev-ubt-app05.dev.orientdots.net/api/authenticate_voice?username=' . base64UrlEncode($user->id),
+            CURLOPT_URL => 'http://dev-ubt-app05.dev.orientdots.net/api/authenticate_voice?username=' . base64UrlEncode($_SERVER['SERVER_NAME'] . $user->id),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -218,7 +218,7 @@ class LoginController extends Controller
             $request->session()->invalidate();
             $request->session()->regenerateToken();
             return redirect('/');
-        }else{
+        } else {
             return redirect('/');
         }
     }
@@ -264,7 +264,7 @@ class LoginController extends Controller
         ];
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://dev-ubt-app05.dev.orientdots.net/api/register?username=' . base64UrlEncode($user->id),
+            CURLOPT_URL => 'http://dev-ubt-app05.dev.orientdots.net/api/register?username=' . base64UrlEncode($_SERVER['SERVER_NAME'] . $user->id),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
