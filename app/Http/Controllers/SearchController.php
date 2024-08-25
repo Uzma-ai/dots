@@ -60,13 +60,16 @@ class SearchController extends Controller
     public function listalliframe(Request $request)
     {
         $iframearray = [];
+        $filetype='';
+        $filekey ='';
         if (!empty($request->input('appkey')) && !empty($request->input('filekey') && $request->input('filetype') && !empty($request->input('apptype')))) {
             $filekey = $request->input('filekey');
             $appkey = $request->input('appkey');
             $apptype = $request->input('apptype');
             $filetype = $request->input('filetype');
             $appdet = ($apptype == "app") ? App::find(base64UrlDecode($appkey)) : LightApp::find(base64UrlDecode($appkey));
-            if($filetype ="file" || $filetype ="folder"){
+            
+            if($filetype =="file" || $filetype =="folder"){
                 $file = File::find(base64UrlDecode($filekey));
             }else{
                 $file = $appdet;
@@ -75,12 +78,13 @@ class SearchController extends Controller
             
             if(!empty($file) && !empty($appdet)){
                 if($filetype =='file'){
-                    $filegroup =  checkFileGroup($file->pathextension);
+                    $filegroup =  checkFileGroup($file->extension);
                     if($filegroup !='editor'){
                         $iframeurllink = url('dotsviewer/'.$filegroup.'/'.$filekey);
                     }else{
                         $iframeurllink = url('editfile/'.$filekey);
                     }
+                    
                     
                 }else if($filetype =='folder'){
                     $iframeurllink = url('filemanager',['path'=>base64UrlEncode($file->path)]);
@@ -94,19 +98,25 @@ class SearchController extends Controller
                         }
                     }else{
                         if($appdet->function=="createdocument"){
-                           $iframeurllink = $appdet->link;
-                        }else{
                             $newarr = $this->filefunctions->createNewFile($appdet->fileextension, 'Document');
-                            $file = File::find($newarr['filekey']);
-                            $iframeurllink = $iframeurllink = url('editfile/'.base64UrlEncode($newarr['filekey']));
+                            if($newarr){
+                                $file = File::find($newarr['filekey']);
+                                $iframeurllink = $iframeurllink = url('editfile/'.base64UrlEncode($newarr['filekey']));
+                                $filekey = base64UrlEncode($newarr['filekey']);
+                            }else{
+                                return response()->json(['status'=>false,'message'=> 'Something Went wrong try again']);
+                            }
+                          
+                        }else{
+                            $iframeurllink = $appdet->link;
                         }
                     }
                 }
             }
 
-
+            //print_r($apptype);die;
             $newArray = [
-                'filekey' => $filekey,
+                'filekey' =>base64UrlEncode($file->id),
                 'filetype' => $filetype,
                 'appkey' => $appkey,
                 'apptype' => $apptype,
@@ -115,6 +125,7 @@ class SearchController extends Controller
                 'appname' => $appdet->name,
                 'iframeurl' => $iframeurllink
             ];
+           
       if (Session::has('iframeapp')) {
             $iframearray = Session::get('iframeapp');
             if (isset($iframearray[$appkey])) {
@@ -138,16 +149,17 @@ class SearchController extends Controller
                 $iframearray[$appkey] = [$newArray];
             }
 
+        }else{
+            $iframearray[$appkey] = [$newArray];
         }
-
+        Session::put('iframeapp', $iframearray);
+        
         }
+        $iframearray = Session::get('iframeapp');
         $html = view('appendview.iframe')->with('iframeapp', $iframearray)->render();
         $html2 = view('appendview.iframetab')->with('iframeapp', $iframearray)->render();
-        $iframekey = '';
-        if ($request->input('appkey')) {
-            $iframekey = 'iframepopup' . $filetype . $filekey;
-        }
-        return response()->json(['html' => $html, 'html2' => $html2, 'filekey' => $iframekey]);
+        $iframekey = 'iframepopup' . $filetype . $filekey;
+        return response()->json(['status'=>true,'html' => $html, 'html2' => $html2, 'filekey' => $iframekey]);
     }
 
 
@@ -157,27 +169,26 @@ class SearchController extends Controller
             $filekey = $request->input('filekey');
             $appkey = $request->input('appkey');
             $filetype = $request->input('filetype');
-            // Check if the session array exists
             if (Session::has('iframeapp')) {
-                // Retrieve the existing array from the session
                 $iframearray = Session::get('iframeapp');
     
                 if (isset($iframearray[$appkey])) {
-                    // Check if the appkey exists in the session array
                     $currentApp = $iframearray[$appkey];
     
-                    // If the appkey has only one file, remove the entire appkey
-                    if (count($iframearray) == 1) {
+                    if (count($iframearray[$appkey]) == 1) {
                         unset($iframearray[$appkey]);
                     } else {
-                        // If the appkey has multiple files, check for the filekey
                         foreach ($iframearray as $key => $app) {
-                            if ($app['filekey'] == $filekey) {
-                                unset($iframearray[$key]);
-    
-                                // Reindex the array to maintain proper order
-                                $iframearray = array_values($iframearray);
-                                break;
+                            if ($app[$appkey] == $appkey) {
+                                foreach($app[$appkey] as $appkey=>$appval){
+                                    if($appval['filekey']==$filekey){
+                                        unset($iframearray[$appkey][$appkey]['filekey']);
+                                        $iframearray = array_values($iframearray);
+                                        break;
+                                    }
+                                    
+                                }
+                                
                             }
                         }
                     }
@@ -185,7 +196,6 @@ class SearchController extends Controller
                     if (empty($iframearray)) {
                         Session::forget('iframeapp');
                     } else {
-                        // Otherwise, update the session with the modified array
                         Session::put('iframeapp', $iframearray);
                     }
                 }

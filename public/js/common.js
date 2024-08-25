@@ -132,6 +132,7 @@ $(document).ready(function () {
 
    if (target.closest(".allapplist .app").length) {
       let contexttypes = target.closest(".allapplist .app").attr('data-option');
+      $('.fimanagertoolpanel').addClass('disabledicon');
 
 // select app 
    let thisApp = target.closest('.allapplist .app');
@@ -142,17 +143,18 @@ $(document).ready(function () {
    $('.allapplist .app .appcheckbox').prop('checked', false);
       selectapp.addClass('selectedfile');
     thisApp.addClass('desktopapp-clicked');
-
-    // $(this).find('.app-tools').removeClass('invisible');
-    // $(this).find('.appcheckbox').prop('checked', true);
-    // if(selectfiletype =='folder' || selectfiletype =='document'){
-    //      $('.fimanagertoolpanel').removeClass('disabledicon');
-    // }
+    let filetype = selectapp.data('filetype');
+    if(filetype =='folder' || filetype =='file'){
+         $('.fimanagertoolpanel').removeClass('disabledicon');
+    }
 // end selection
        contextMenuList(contexttypes);
      positionAndShowMenu(appContextMenu, event);
    } else if (target.closest(".allapplist").length) {
        contextMenuList('rightclick');
+       $('.allapplist .app').removeClass("desktopapp-clicked");
+       $('.allapplist .app .selectapp').removeClass("selectedfile");
+       $('.fimanagertoolpanel').addClass('disabledicon');
      positionAndShowMenu(dashboardContextMenu, event);
    } else {
      closeAllContainers();
@@ -161,7 +163,7 @@ $(document).ready(function () {
 
  $(document).on('click', '.allapplist .app-tools i', function(event) {
        event.stopPropagation();
-
+       $('.fimanagertoolpanel').addClass('disabledicon');
        // select app 
        let thisApp = $(this).closest('.app');
        let selectapp = $(this).closest('.openiframe');
@@ -171,8 +173,12 @@ $(document).ready(function () {
         $('.allapplist .app .appcheckbox').prop('checked', false);
           selectapp.addClass('selectedfile');
         thisApp.addClass('desktopapp-clicked');
-    //     $(this).closest('.app-tools').removeClass('invisible');
-    // $(this).closest('.appcheckbox').prop('checked', true);
+        let filetype = selectapp.data('filetype');
+        if(filetype =='folder' || filetype =='file'){
+             $('.fimanagertoolpanel').removeClass('disabledicon');
+        }
+        let contexttypes = $(this).closest(".app").attr('data-option');
+        contextMenuList(contexttypes);
         
        // Hide dashboard context menu
        $('#context-menu').addClass('hidden').css('display', 'none');
@@ -527,7 +533,7 @@ $(document).ready(function () {
             e.preventDefault();
             var iframeId = $(this).data('iframe-id');
             var iframefileId = $(this).data('iframefile-id');
-            
+            console.log(iframefileId);
             //var popupcount = $(this).data('popup-count');
            
                 $('#alliframelist #iframepopup'+iframefileId).removeClass('hidden');
@@ -643,7 +649,7 @@ $(document).ready(function () {
             }
         });
        }
-       openiframe();
+      openiframe();
         function openiframe(data){
                 $.ajax({
                 url: openIframeRoute,
@@ -651,12 +657,17 @@ $(document).ready(function () {
                 data: data,
                 success: function (response) {
                     // Update the app list container with the updated list
-                    $('#alliframelist').html(response.html);
-                    $('#sortable-apps').html(response.html2);
-                    if(response.filekey){
-                      document.getElementById(response.filekey).classList.remove('hidden');
-                      $('#alliframelist #'+response.filekey).addClass('show');
+                        if(response.status){
+                        $('#alliframelist').html(response.html);
+                        $('#sortable-apps').html(response.html2);
+                        if(response.filekey!=''){
+                        $('#alliframelist #'+response.filekey).removeClass('hidden');
+                        $('#alliframelist #'+response.filekey).addClass('show');
+                        }
+                    }else{
+                        toastr.error(response.message);
                     }
+                    
 
                 },
                 error: function (xhr, status, error) {
@@ -725,6 +736,7 @@ $(document).ready(function () {
             }
         });
        }
+
        function shareFunction(){
          
        }

@@ -77,10 +77,7 @@ if(empty($updatedPath)){
 
 </script>
     <script>
-    if(!$('.navbarhead').hasClass('taskbar-slide')){
-          $('.navbarhead').addClass('taskbar-slide');
-
-        }
+    $('.navbarhead').hide();
        document.addEventListener("DOMContentLoaded", () => {
       //  document.querySelector('.newfiledropdown').addEventListener('click', function() {
       //   document.querySelector('.newfiledropdownoption').classList.toggle('hidden');
