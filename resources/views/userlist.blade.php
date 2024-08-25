@@ -111,7 +111,7 @@
               >
                 <div class="flex items-center gap-2 flex-wrap">
                   <div class="dropdown inline-block relative">
-                    @if(!empty($filteredPermissions['groupsManagement']) && in_array('group-view', $filteredPermissions['groupsManagement']))
+                    @if(!empty($filteredPermissions['groupsManagement']) || in_array('group-view', $filteredPermissions['groupsManagement']))
                     <button
                       class="border rounded px-6 py-1 custom-safety-btn custom-outline hover:border-yellow-300"
                     >

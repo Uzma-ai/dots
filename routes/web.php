@@ -27,6 +27,8 @@ Route::get('clear', function () {
     return "cleared";
 });
 
+
+
 //Suspend user middleware wil also use for IPaddress in future
 Route::middleware(['blockIP'])->group(function () {
     //login routes
@@ -54,13 +56,15 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('export-pdf', [OverviewController::class, 'exportPdf'])->name('export.pdf');
     Route::get('chart-logs/userId', [OverviewController::class, 'chartsData'])->name('chartLogs.userId');
     Route::get('group-usage/userId', [OverviewController::class, 'GroupusageData'])->name('groupUusage.userId');
-    Route::get('logs', [LoginLogController::class, 'index'])->name('logs');
+    Route::get('logs', [LoginLogController::class, 'index'])
+    ->name('logs')->middleware('checkPermis.backendManagement');
     Route::get('login-logs/filter', [LoginLogController::class, 'filter'])->name('loginLogs.filter');
     Route::get('users/role/{roleId}', [UserController::class, 'getUsersByRole'])->name('users.byRole');
     Route::get('filter-records', [LoginLogController::class, 'filterRecords'])->name('filter.records');;
     //operation
     Route::get('activities', [ActivityController::class, 'index'])->middleware('auth');
-    Route::get('operation_logs', [OperationLogController::class, 'index'])->name('operation_logs');
+    Route::get('operation_logs', [OperationLogController::class, 'index'])
+    ->name('operation_logs')->middleware('checkPermis.backendManagement');
     Route::get('operation-logs/filter', [OperationLogController::class, 'filter'])->name('operationLogs.filter');
     Route::get('users/role/{roleId}', [UserController::class, 'getUsersByRole'])->name('users.byRole');
     Route::get('filter-record', [OperationLogController::class, 'filterRecords'])->name('filter.record');;
@@ -103,10 +107,13 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('usersList', [UserController::class, 'usersList'])->name('user-list');
     Route::post('importusers', [UserController::class, 'importUsers'])->name('importusers');
     Route::get('user-suspend/{id}', [UserController::class, 'suspend'])->name('user-suspend');
-    Route::get('useradmin', [UserController::class, 'userAdmin'])->name('useradmin');
+    Route::get('useradmin', [UserController::class, 'userAdmin'])
+    ->name('useradmin')->middleware('checkPermis.userManagement');
     Route::get('usergroups', [UserController::class, 'userGroup'])->name('usergroups');
-    Route::get('rolesadmin', [RolesController::class, 'roles'])->name('rolesadmin');
-    Route::get('permissionsadmin', [PermissionsController::class, 'permissions'])->name('permissionsadmin');
+    Route::get('rolesadmin', [RolesController::class, 'roles'])
+    ->name('rolesadmin')->middleware('checkPermis.roleManagement');
+    Route::get('permissionsadmin', [PermissionsController::class, 'permissions'])
+    ->name('permissionsadmin')->middleware('checkPermis.userManagement');
     //roles routes
     Route::get('roles', [RolesController::class, 'index'])->name('roles');
     Route::get('roles/{id}', [RolesController::class, 'index']);
@@ -134,7 +141,8 @@ Route::middleware(['blockIP'])->group(function () {
     Route::post('group-update/{id}', [GroupController::class, 'update'])->name('group-update');
     Route::get('group-delete/{id}', [GroupController::class, 'destroy'])->name('group-delete');
     /// Filemanager
-    Route::get('filemanager/{path?}', [FileManagerController::class, 'index'])->where('path', '.*')->name('filemanager');
+    Route::get('filemanager/{path?}', [FileManagerController::class, 'index'])
+    ->where('path', '.*')->name('filemanager')->middleware('checkPermis.fileManager');
     Route::get('createfolder', [FileManagerController::class, 'createFolder'])->name('createfolder');
     Route::get('createfile', [FileManagerController::class, 'createFile'])->name('createfile');
     Route::get('editfile/{file}', [FileManagerController::class, 'editfile'])->where('name', '.*')->where('file', '.*')->name('editfile');
@@ -175,7 +183,8 @@ Route::get('chart-logs/userId', [OverviewController::class, 'chartsData'])->name
 Route::get('group-usage/userId', [OverviewController::class, 'GroupusageData'])->name('groupUusage.userId');
 
 
-Route::get('/logs', [App\Http\Controllers\LoginLogController::class, 'index'])->name('logs');
+Route::get('/logs', [App\Http\Controllers\LoginLogController::class, 'index'])
+->name('logs')->middleware('checkPermis.backendManagement');
 
 Route::get('login-logs/filter', [LoginLogController::class, 'filter'])->name('loginLogs.filter');
 
@@ -183,7 +192,8 @@ Route::get('/users/role/{roleId}', [UserController::class, 'getUsersByRole'])->n
 Route::get('/filter-records', [LoginLogController::class, 'filterRecords'])->name('filter.records');;
 //operation
 Route::get('/activities', [ActivityController::class, 'index'])->middleware('auth');
-Route::get('/operation_logs', [App\Http\Controllers\OperationLogController::class, 'index'])->name('operation_logs');
+Route::get('/operation_logs', [App\Http\Controllers\OperationLogController::class, 'index'])
+->name('operation_logs')->middleware('checkPermis.backendManagement');
 
 Route::get('operation-logs/filter', [OperationLogController::class, 'filter'])->name('operationLogs.filter');
 
@@ -240,10 +250,13 @@ Route::get('/usersList', [App\Http\Controllers\UserController::class, 'usersList
 Route::post('/importusers', [App\Http\Controllers\UserController::class, 'importUsers'])->name('importusers');
 Route::get('/user-suspend/{id}', [App\Http\Controllers\UserController::class, 'suspend'])->name('user-suspend');
 
-Route::get('/useradmin', [App\Http\Controllers\UserController::class, 'userAdmin'])->name('useradmin');
+Route::get('/useradmin', [App\Http\Controllers\UserController::class, 'userAdmin'])
+->name('useradmin')->middleware('checkPermis.userManagement');
 Route::get('/usergroups', [App\Http\Controllers\UserController::class, 'userGroup'])->name('usergroups');
-Route::get('/rolesadmin', [App\Http\Controllers\RolesController::class, 'roles'])->name('rolesadmin');
-Route::get('/permissionsadmin', [App\Http\Controllers\PermissionsController::class, 'permissions'])->name('permissionsadmin');
+Route::get('/rolesadmin', [App\Http\Controllers\RolesController::class, 'roles'])
+->name('rolesadmin')->middleware('checkPermis.roleManagement');
+Route::get('/permissionsadmin', [App\Http\Controllers\PermissionsController::class, 'permissions'])
+->name('permissionsadmin')->middleware('checkPermis.userManagement');
 
 //roles routes
 Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('roles');
@@ -275,9 +288,9 @@ Route::post('/group-update/{id}', [App\Http\Controllers\GroupController::class, 
 Route::get('/group-delete/{id}', [App\Http\Controllers\GroupController::class, 'destroy'])->name('group-delete');
 
 
-
 /// Filemanager
-Route::get('/filemanager/{path?}', [FileManagerController::class, 'index'])->where('path', '.*')->name('filemanager');
+Route::get('/filemanager/{path?}', [FileManagerController::class, 'index'])
+->where('path', '.*')->name('filemanager')->middleware('checkPermis.fileManager');
 Route::get('/createfolder', [FileManagerController::class, 'createFolder'])->name('createfolder');
 Route::get('/createfile', [FileManagerController::class, 'createFile'])->name('createfile');
 Route::get('/editfile/{file}', [FileManagerController::class, 'editfile'])->where('name', '.*')
@@ -297,3 +310,4 @@ Route::get('/copyfile', [FileManagerController::class, 'copyFile'])->name('copyf
 Route::get('/pastefile', [FileManagerController::class, 'pasteFile'])->name('pastefile');
 Route::get('contextmenu', [FileManagerController::class, 'contextMenu'])->name('contextmenu');
 Route::get('/fileExpSearch', [FileManagerController::class, 'fileExpSearch'])->name('fileExp-list');
+

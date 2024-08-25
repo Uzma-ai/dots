@@ -4,32 +4,63 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\PermissionHelper;
+
 
 class CheckPermission
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string  $permissionKey
-     * @return mixed
-     */
-    public function handle(Request $request, Closure $next, $permissionKey)
-    {
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */  
+
+    public function handle(Request $request, Closure $next)
+    {        
         $user = Auth::user();
-
         if (!$user) {
-            return redirect()->route('login'); // Redirect to login if user is not authenticated
+            return redirect()->route('login'); 
         }
+        
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
 
-        $filteredPermissions = \App\Helpers\PermissionHelper::getFilteredPermissions($user->id);
+        $routeName = $request->route()->getName();
+        $routeUri = $request->path();
 
-        if (isset($filteredPermissions[$permissionKey]) && !empty($filteredPermissions[$permissionKey])) {
-            return $next($request); // Allow access if user has the necessary permissions
+        $accessDenied = [];
+
+        if (strpos($routeName, 'filemanager') !== false && empty($filteredPermissions['fileManager'])) {
+            $accessDenied[] = 'fileManager';
         }
-
-        return redirect()->route('unauthorized'); // Redirect to unauthorized page if permission is denied
-    }
+        
+        if (strpos($routeName, 'logs') !== false && empty($filteredPermissions['backendManagement'])) {
+            $accessDenied[] = 'backendManagement';
+        }
+        if (strpos($routeName, 'operation_logs') !== false && empty($filteredPermissions['backendManagement'])) {
+            $accessDenied[] = 'backendManagement';
+        }
+        
+        if (strpos($routeName, 'useradmin') !== false && empty($filteredPermissions['userManagement'])) {
+            $accessDenied[] = 'userManagement';
+        }
+        
+        if (strpos($routeName, 'rolesadmin') !== false && empty($filteredPermissions['roleManagement'])) {
+            $accessDenied[] = 'roleManagement';
+        }
+        if (strpos($routeName, 'permissionsadmin') !== false && empty($filteredPermissions['roleManagement'])) {
+            $accessDenied[] = 'userManagement';
+        }
+        
+        // if (strpos($routeName, 'useradmin') !== false && empty($filteredPermissions['groupsManagement'])) {
+        //     $accessDenied[] = 'groupsManagement';
+        // }
+        
+        if (!empty($accessDenied)) {
+            abort(403, "You have not permission to access this page.");
+            // return response()->json(['error' => 'You do not have permission to access this page.'], 403);
+        }
+        return $next($request);
+    }   
 }

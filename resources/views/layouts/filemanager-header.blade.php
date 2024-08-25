@@ -89,7 +89,7 @@
               @foreach($pathComponents as $pckey=> $pcomponent) 
                 @if($pcomponent !='/' && !empty($pcomponent))
                 <button class="flex items-center">
-                  <span class="truncate">{{ $pcomponent }}</span>
+                  <span class="truncate">New folder(0)</span>
                   {!! ($pckey!=(count($pathComponents)-1)) ? '<span>/</span>' :'' !!}
                 </button>
                 @endif
@@ -175,12 +175,8 @@
                       @foreach ($contextType->contextOptions as $option)
                         <div class="hover-bg-c-yellow rounded-t-lg">
                           <a href="#" class="flex block p-2 pl-4 dropdown-item clickmenu {{ $contextType->function }} " data-type="{{ $option->function }}">
-                        @if(checkIconExist($option->image,'menu'))
-                            <img  class="pr-4 w-11" src="{{ checkIconExist($option->image,'menu')}}" alt="{{ $option->name }}" />
-                        @else
-                            {!! $option->icon !!}
-                        @endif
-                        <span>{{ $option->name }}</span
+                            <img src="{{ asset($constants['FILEICONPATH'].($option->image ?? 'default').$constants['ICONEXTENSION'])}}" alt="{{ $option->name }}" class="pr-4 w-11" /><span
+                              >{{ $option->name }}</span
                             >
                           </a>
                         </div>
@@ -241,12 +237,8 @@
                       @foreach ($scontextType->contextOptions as $soption)
                       <div class="hover-bg-c-yellow rounded-t-lg">
                         <a href="#" class="flex block p-2 pl-4 dropdown-item clickmenu {{ $scontextType->function }} " data-type="{{ $soption->function }}">
-                        @if(checkIconExist($soption->image,'menu'))
-                            <img  class="pr-4 w-11" src="{{ checkIconExist($soption->image,'menu')}}" alt="{{ $soption->name }}" />
-                        @else
-                            {!! $soption->icon !!}
-                        @endif
-                          <span>{{ $soption->name }}</span>
+                          <i class="ri-check-line pr-3 ri-lg mt-1"></i
+                          ><span>{{ $soption->name }}</span>
                         </a>
                       </div>
                        @endforeach
@@ -277,11 +269,7 @@
                             href="#"
                             class="flex items-center block p-2 pl-4 dropdown-item clickmenu {{ $rcontextType->function }} " data-type="{{ $roption->function }}"
                           >
-                          @if(checkIconExist($roption->image,'menu'))
-                            <img  class="pr-4 w-11" src="{{ checkIconExist($roption->image,'menu')}}" alt="{{ $roption->name }}" />
-                          @else
-                              <span class="pr-4">{!! $roption->icon !!}<span>
-                          @endif
+                            <i class="ri-gallery-view-2 text-sm mt-1 w-1/4"></i>
                             <span>{{ $roption->name }}</span>
                           </a>
                         </div>
