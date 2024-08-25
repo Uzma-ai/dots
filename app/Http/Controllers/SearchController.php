@@ -178,10 +178,10 @@ class SearchController extends Controller
                     if (count($iframearray[$appkey]) == 1) {
                         unset($iframearray[$appkey]);
                     } else {
-                        foreach ($iframearray as $key => $app) {
-                            if ($app[$appkey] == $appkey) {
-                                foreach($app[$appkey] as $appkey=>$appval){
+                            if ($iframearray[$appkey] == $appkey) {
+                                foreach($iframearray[$appkey] as $appkey=>$appval){
                                     if($appval['filekey']==$filekey){
+                                        // print_r($appval['filekey']);die;
                                         unset($iframearray[$appkey][$appkey]['filekey']);
                                         $iframearray = array_values($iframearray);
                                         break;
@@ -190,7 +190,7 @@ class SearchController extends Controller
                                 }
                                 
                             }
-                        }
+                        
                     }
     
                     if (empty($iframearray)) {

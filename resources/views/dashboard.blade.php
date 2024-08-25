@@ -80,10 +80,8 @@
         <!-- Right Sidebar -->
         <div class="dashboard-sidebar w-16 px-2 hidden sm:block">
             @foreach ($apps as $app)
-                <a href="#" class="{{ $app->app_function == 'add_app' ? 'openiframe' : '' }}"
-                    data-title="{{ $app->name }}" data-url="{{ url('/') }}/lightapp"
-                    data-image="{{ asset($constants['APPFILEPATH'] . $app->icon) }}"><img class="mb-2"
-                        src="{{ asset($constants['APPFILEPATH'] . $app->icon) }}" alt="{{ $app->name }}" /></a>
+                <a href="#"data-path =" {{ base64UrlEncode($app->path) }}" class="folders openiframe selectapp" data-appkey="{{ base64UrlEncode($app->id) }}" data-filekey="{{ base64UrlEncode($app->id) }}" data-filetype="app" data-apptype="app">
+                    <img class="mb-2"src="{{ asset($constants['APPFILEPATH'] . $app->icon) }}" alt="{{ $app->name }}" /></a>
             @endforeach
         </div>
 
