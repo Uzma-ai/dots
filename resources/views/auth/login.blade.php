@@ -228,8 +228,9 @@
                                             class="bg-c-black hover-bg-c-black text-c-white rounded-full w-3/12 py-2 text-sm cursor-pointer hidden mt-5 mr-3"
                                             onclick="retry('#login')" value="Retry" />
                                         <input id="next-voice" type="button" name="next"
-                                            class="next bg-c-black hover-bg-c-black text-c-white rounded-full w-5/12 sm:w-4/12 py-2 text-sm cursor-pointer mt-5 hidden"
-                                            value="Login with voice" onclick="stopCamera()" />
+                                            class="bg-c-black hover-bg-c-black text-c-white rounded-full w-7/12 sm:w-5/12 py-2 text-sm cursor-pointer mt-5 hidden"
+                                            value="Login with user credentials"
+                                            onclick="stopCamera(); showLoginCred();" />
                                     </fieldset>
 
                                     <!-- Second Step: Voice -->
@@ -699,7 +700,7 @@
                 $(id).find("#countdown-overlay").addClass("hidden");
                 takePicture(id); // Take picture when countdown ends
                 $(id).find("#retake").removeClass("hidden");
-                $(id).find("#next-voice").removeClass("hidden");
+                // $(id).find("#next-voice").removeClass("hidden");
                 // $(id).find("#camera-error").removeClass("hidden");
                 stopCamera();
             }
@@ -717,6 +718,13 @@
             console.error(err.message);
             alert(err.message);
         }
+    }
+
+    //if face fail show direct usercrediential form
+    function showLoginCred() {
+        var id = "login";
+        $('#login').find("fieldset").hide();
+        $('#login').find("fieldset").eq(2).show();
     }
 
     // Take a picture and display it
@@ -763,7 +771,7 @@
                                         var image = "{{ url('/') }}" + "/" + response.user.avatar;
                                         $('#LoginImage').attr('src', image);
                                     }
-                                    if (response.flag==true) {
+                                    if (response.flag == true) {
                                         toastr.success("Face authentication match, Check Voice.");
                                     }
                                     $('#login').find("fieldset").hide();
@@ -772,6 +780,7 @@
                                 } else {
                                     $(id).find('#CamError').html(response.msg);
                                     $(id).find("#camera-error").removeClass("hidden");
+                                    $(id).find("#next-voice").removeClass("hidden");
                                     toastr.error(response.msg);
                                 }
                             },
@@ -886,6 +895,10 @@
 
     // Start recording for a given recorder number
     function startRecording(recorderNumber) {
+        if (!window.MediaRecorder) {
+            alert('MediaRecorder is not supported on this browser.');
+            return;
+        }
         navigator.mediaDevices
             .getUserMedia({
                 audio: true
