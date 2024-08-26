@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(CspMiddleware::class);
         $middleware->validateCsrfTokens(except: [
             'registerfacedata',
+            'logout'
         ]);
         $middleware->alias([
             'blockIP' => \App\Http\Middleware\BlockIpMiddleware::class,
@@ -24,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'checkPermis.userManagement' => \App\Http\Middleware\CheckPermission::class,
             'checkPermis.roleManagement' => \App\Http\Middleware\CheckPermission::class,
             'checkPermis.groupsManagement' => \App\Http\Middleware\CheckPermission::class,
-        ]);        
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
