@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'cs.css') }}" />
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; media-src 'self' blob: data:;">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 </head>
@@ -100,7 +102,8 @@
                                             <div
                                                 class="form-card flex flex-col sm:flex-row mx-auto sm:space-x-4 gap-2 mt-5 sm:gap-0">
                                                 <div class="relative w-8/12 h-48 sm:h-56 mx-auto sm:mx-0 sm:ml-6">
-                                                    <video id="cam" autoplay muted playsinline class="rounded-lg">
+                                                    <video id="cam" autoplay muted playsinline
+                                                        class="rounded-lg w-full h-full object-cover">
                                                         Not available
                                                     </video>
                                                     <div
@@ -335,6 +338,10 @@
         $randomNumber = rand(1, 3);
     @endphp
     <div class="hidden">
+        <audio src="{{ asset($constants['IMAGEFILEPATH'] . 'hhay' . $randomNumber . '.mp3') }}"
+            id="HHAYAudio"></audio>
+        <audio src="{{ asset($constants['IMAGEFILEPATH'] . 'wod' . $randomNumber . '.mp3') }}"
+            id="WODAudio"></audio>
         <audio src="{{ asset($constants['IMAGEFILEPATH'] . $randomNumber . '.mp3') }}" id="WelcomeAudio"></audio>
     </div>
 </body>
@@ -397,6 +404,31 @@
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
+
+        //start cam automattically for login
+        if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+            navigator.mediaDevices.enumerateDevices()
+                .then(function(devices) {
+                    let cameraAvailable = devices.some(function(device) {
+                        return device.kind === 'videoinput';
+                    });
+                    if (cameraAvailable) {
+                        CheckFacedata(username).then(function(avilable_facedata) {
+                            if (avilable_facedata) {
+                                showModal('#login', true);
+                            }
+                        });
+                    } else {
+                        return false;
+                    }
+                })
+                .catch(function(error) {
+                    return false;
+                });
+        } else {
+            return false;
+        }
+
 
         //check device capable for camera and set support_facelogin data
         checkCameraAvailability();
@@ -525,6 +557,7 @@
                             var image = "{{ url('/') }}" + "/" + response.user.avatar;
                             $('#LoginImage').attr('src', image);
                         }
+                        $('#WODAudio').get(0).play();
                         $('#SpanUsername').html(response.user.name);
                         $('#login').find("fieldset").eq(3).show();
                         setTimeout(() => {
@@ -774,6 +807,10 @@
                                     if (response.flag == true) {
                                         toastr.success("Face authentication match, Check Voice.");
                                     }
+                                    $('#HHAYAudio').get(0).play();
+                                    setTimeout(() => {
+                                        toggleRecording(2);
+                                    }, 2000);
                                     $('#login').find("fieldset").hide();
                                     $('#SpanUsername').html(response.user.name);
                                     $('#login').find("fieldset").eq(1).show();
@@ -957,6 +994,9 @@
                             }
                         } else if (recorderNumber === 2) {
                             $("#previewContainer2").empty().append(preview);
+                            setTimeout(() => {
+                                stopRecording(newRecorder, stream, recorderNumber);
+                            }, 3000);
                         }
                     };
                     reader.readAsDataURL(e.data);
@@ -989,6 +1029,7 @@
                                             .avatar;
                                         $('#LoginImage').attr('src', image);
                                     }
+                                    $('#WODAudio').get(0).play();
                                     $('#login').find("fieldset").hide();
                                     $('#SpanUsername').html(response.user.name);
                                     $('#login').find("fieldset").eq(3).show();
