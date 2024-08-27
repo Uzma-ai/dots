@@ -90,9 +90,6 @@
     
                     var baseUrl = "{{url('/')}}";
 
-                    $( document ).ready(function() {
-                        console.log( baseUrl );
-                    });
 
                     (function () {
                       const commentSection = document.querySelector(".commentssection");
@@ -190,7 +187,9 @@ let messages = [];
 
 function fetchUsers() {
   
-    fetch("getUsers")
+    var url = "{{ route('getUsers') }}";
+     
+    fetch(url)
     .then((response) => response.json())
     .then((data) => {
         users = data.users;
@@ -204,7 +203,9 @@ fetchUsers();
 
 function fetchMessages() {
 
-    fetch("getMessage")
+    var url = "{{ route('getMessageData') }}";
+    
+    fetch(url)
     .then((response) => response.json())
     .then((data) => {
 
@@ -424,8 +425,9 @@ function handlePostButtonClick(event) {
       };
 
       /*        console.log("Request body:", bodyData);*/
-
-      fetch("saveComment", {
+//route('saveComnet')
+var url = "{{ route('saveComment') }}";
+      fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
