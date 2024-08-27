@@ -11,9 +11,10 @@
 // Split the path into components
 ///print_r($path);die;
 $pathComponents = explode('/', base64UrlDecode($path));
-
+$pathComponentsNew = $pathComponents;
+ 
 // Remove the last elements
-//array_pop($pathComponents);
+array_pop($pathComponentsNew);
 
 // Reassemble the path
 $updatedPath = implode('/', $pathComponents);
@@ -77,21 +78,7 @@ if(empty($updatedPath)){
 </script>
     <script>
     $('.navbarhead').hide();
-       document.addEventListener("DOMContentLoaded", () => {
-      //  document.querySelector('.newfiledropdown').addEventListener('click', function() {
-      //   document.querySelector('.newfiledropdownoption').classList.toggle('hidden');
-      // });
-           
-        const links = {
-          'desktop.html': 'link-desktop',
-          'Recent.html': 'link-recent',
-          'downloads.html': 'link-downloads',
-          'filemanager.html': 'link-filemanager',
-          'documents.html': 'link-documents',
-          'applications.html': 'link-applications'
-        };
-
-  }
+ 
   document.addEventListener("DOMContentLoaded", () => {
     //  document.querySelector('.newfiledropdown').addEventListener('click', function() {
     //   document.querySelector('.newfiledropdownoption').classList.toggle('hidden');
