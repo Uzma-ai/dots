@@ -59,8 +59,8 @@
             @else
                 <img class="w-16 icondisplay " src="{{ checkIconExist($file->extension,'file')}}" alt="{{ $file->name }}"/>
             @endif    
-            <div class="input-wrapper" id="inputWrapperdocument{{ base64UrlEncode($file->id) }}">
-                <input type="text" class="text-center text-black appinputtext" disabled id="inputFielddocument{{ base64UrlEncode($file->id) }}" value="{{ $file->name }}">
+            <div class="input-wrapper" id="inputWrapperfile{{ base64UrlEncode($file->id) }}">
+                <input type="text" class="text-center text-black appinputtext" disabled id="inputFieldfile{{ base64UrlEncode($file->id) }}" value="{{ $file->name }}">
             </div>
 
     </div>

@@ -5,12 +5,13 @@
             <div
               class="flex bg-c-white rounded-md w-16 h-8 justify-evenly ml-6"
             >
-            <a href="{{ url('/filemanager',['path'=>base64UrlEncode($updatedPath)]);}}">
+            <a href="{{ url('/filemanager',['path'=>base64UrlEncode($updatedPath)]);}}" class="pt-2">
             <button>
                 <i class="ri-arrow-left-line ri-lg"></i>
             </button>
             </a>
-            <a href="{{ url('/filemanager',['path'=>base64UrlEncode($updatedPath)]);}}">
+
+            <a href="{{ url('/filemanager',['path'=>base64UrlEncode($updatedPath)]);}}" class="pt-2">
             <button>
                 <i class="ri-arrow-right-line ri-lg text-c-gray-opaque"></i>
             </button>
@@ -89,7 +90,7 @@
               @foreach($pathComponents as $pckey=> $pcomponent) 
                 @if($pcomponent !='/' && !empty($pcomponent))
                 <button class="flex items-center">
-                  <span class="truncate">New folder(0)</span>
+                  <span class="truncate">{{$pcomponent}}</span>
                   {!! ($pckey!=(count($pathComponents)-1)) ? '<span>/</span>' :'' !!}
                 </button>
                 @endif
@@ -186,7 +187,7 @@
                   @endif
                 </div>
               </div>
-              @if(!empty($filteredPermissions['fileManager']) && in_array('upload', $filteredPermissions['fileManager']))
+             
               <div class="relative flex items-center upload">
                 <a href="#" class="clickmenu uploadFiles">
                   <button
@@ -196,7 +197,7 @@
                   </button>
                 </a>
               </div>
-              @endif
+             
               <a href="#" class="clickmenu cutFunction disabledicon fimanagertoolpanel"><button class="scissor">
                 <i class="ri-scissors-2-fill ri-lg"></i>
               </button></a>
@@ -206,19 +207,19 @@
               <a href="#" class="clickmenu pasteFunction disabledicon fimanagertoolpanel"><button class="paste">
                 <i class="ri-clipboard-line ri-lg"></i>
               </button></a>
-              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']))
+              
               <a href="#" class="clickmenu renameFunction disabledicon fimanagertoolpanel"><button class="edit">
                 <i class="ri-edit-line ri-lg"></i>
               </button></a>
-              @endif
+             
               <!-- <button class="share" onclick="togglePopup('sharePopup');">
                 <i class="ri-share-fill ri-lg"></i> 
               </button> -->
-              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']))
+             
               <a href="#" class="clickmenu deleteFunction disabledicon fimanagertoolpanel"><button class="delete">
                 <i class="ri-delete-bin-line ri-lg"></i>
               </button></a>
-              @endif
+             
               <div class="relative flex items-center sort">
                 <button class="flex gap-x-2">
                   <i class="ri-arrow-up-down-line ri-lg mt-1"></i>
