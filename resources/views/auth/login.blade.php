@@ -65,8 +65,8 @@
                             <div class="flex-grow border-t border-c-light-gray w-16 sm:w-20"></div>
                         </div>
                         <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-                            <button class="bg-c-black text-white rounded-full px-3 h-10 text-xs sm:text-sm"><i class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on mobile</button>
-                            <button class="bg-c-black text-white rounded-full px-3 h-10 text-xs sm:text-sm"><i class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</button>
+                            <a href="#" class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on mobile</a>
+                            <a href="#" class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
                         </div>
                     </div>
                 </div>
