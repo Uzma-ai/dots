@@ -7,7 +7,12 @@
 @endsection
 @section('content')
 
-    <div class="w-full h-full dashboard cs pt-20">
+    <div class="w-full h-full dashboard cs pt-20 relative">
+        <!-- Curtains   -->
+        <div id="curtain" class="open">
+            <div class="left"></div>
+            <div class="right"></div>
+        </div>
 
         <!-- Desktop apps   -->
         <!-- <div class="desktopapps-div w-full overflow-x-auto">
@@ -174,6 +179,12 @@
     @php
         $path = base64UrlEncode('Desktop');
     @endphp
+    <script>
+        // After 4 seconds, hide the curtains
+        setTimeout(() => {
+        $('#curtain').addClass('hidden');
+        }, 4000);
+    </script>
     <script>
         let path = @json($path);
         let navbar = true;

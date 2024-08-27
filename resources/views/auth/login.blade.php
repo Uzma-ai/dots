@@ -60,6 +60,17 @@
                             Change username
                         </button>
                     </div>
+                    <div class="flex flex-col items-center justify-center space-y-6 mt-5">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-grow border-t border-c-light-gray w-16 sm:w-20"></div>
+                            <div class="text-gray-700 text-xs sm:text-sm px-3">More ways to download</div>
+                            <div class="flex-grow border-t border-c-light-gray w-16 sm:w-20"></div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+                            <a href="#" class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on mobile</a>
+                            <a href="#" class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -280,7 +291,7 @@
                                                         src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
                                                         alt="profile" />
                                                 </div>
-                                                <p class="text-lg">Welcome To Dots</p>
+                                                <p class="text-lg">Welcome To Dots.</p>
                                                 <input id="email" type="text" class="userinput"
                                                     name="email" placeholder="Username" required
                                                     autocomplete="Email" autofocus>
@@ -311,7 +322,7 @@
                                             <div class="flex items-center justify-center gap-1 font-semibold text-2xl">
                                                 <p>Welcome to</p>
                                                 <div class="flex flex-col mt-0.5">
-                                                    <p>Dots</p>
+                                                    <p>Dots.</p>
                                                     <hr class="border-t-4 -mt-1 border-c-yellow rounded-full" />
                                                 </div>
                                             </div>
