@@ -618,9 +618,7 @@ $(document).ready(function () {
           });
 
        
-       function uploadFiles(){
-         
-       }
+      
        function createFolderFunction(){
             $.ajax({
                 url: createFolderRoute,
@@ -748,6 +746,15 @@ $(document).ready(function () {
             }
         });
        }
+
+       $(document).on('click', '.context-menulist .shareFunction', function (e) {
+        e.preventDefault();
+            const filekey = $('.selectedfile').attr('data-filekey');
+            const filepath = $('.selectedfile').attr('data-path');
+            const filetype = $('.selectedfile').attr('data-filetype');
+            shareFunction(filepath,'copy',filetype,filekey);
+            $('.selectapp').removeClass('.selectedfile');
+     });
 
        function shareFunction(){
          
