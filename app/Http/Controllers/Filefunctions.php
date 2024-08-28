@@ -35,6 +35,8 @@ class Filefunctions extends Controller
             $newFile->parentpath = $destinationParentPath;
             $newFile->path = $actualpath;
             $newFile->openwith = ($lightapp) ? $lightapp->id : '';
+            $newFile->path = $actualpath;
+            $newFile->filehash = md5(date('d-M-Y H:i:s'));
             $newFile->status = 1; // Assuming 1 means active
             $newFile->created_by = auth()->id(); // Assuming you want to save the ID of the authenticated user
             $newFile->save();

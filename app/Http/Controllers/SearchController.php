@@ -62,6 +62,7 @@ class SearchController extends Controller
         $iframearray = [];
         $filetype='';
         $filekey ='';
+        
         if (!empty($request->input('appkey')) && !empty($request->input('filekey') && $request->input('filetype') && !empty($request->input('apptype')))) {
             $filekey = $request->input('filekey');
             $appkey = $request->input('appkey');
@@ -75,12 +76,17 @@ class SearchController extends Controller
                 $file = $appdet;
             }
             
-            
             if(!empty($file) && !empty($appdet)){
                 if($filetype =='file'){
                     $filegroup =  checkFileGroup($file->extension);
                     if($filegroup !='editor'){
-                        $iframeurllink = url('dotsviewer/'.$filegroup.'/'.$filekey);
+                        if($filegroup =='image'){
+                            $iframeurllink = url('dotsimageviewer/'.$filekey);
+                        }else if($filegroup =='video' || $filegroup =='audio'){
+                            $iframeurllink = url('dotsvideoplayer/'.$filekey);
+                        }else{
+                            $iframeurllink = url('dotsdocumentviewer/'.$filekey);
+                        }
                     }else{
                         $iframeurllink = url('editfile/'.$filekey);
                     }
@@ -114,7 +120,6 @@ class SearchController extends Controller
                 }
             }
 
-            //print_r($apptype);die;
             $newArray = [
                 'filekey' =>base64UrlEncode($file->id),
                 'filetype' => $filetype,

@@ -11,7 +11,7 @@
                             <span class="text-lg flex font-semibold">
                             <img class="w-5 h-5 mt-1" src="{{ checkIconExist($iframedetail['appicon'],'app') }}"/>
                             <h2 class="text-white ml-2 font-thin">
-                                {{$iframedetail['appname'] }}
+                                {{$iframedetail['filename'] }}
                             </h2>
                             </span>
                             <div class="flex space-x-1">
@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <!--comment section-->
-                         <div class="commentssection absolute bottom-0 top-9 flex h-11/12 flex-col border-r bg-c-lighten-gray hidden md:w-1/3  font-size-14">
+        <div class="commentssection absolute bottom-0 top-9 flex h-11/12 flex-col border-r bg-c-lighten-gray hidden md:w-1/3  font-size-14">
           <div class="resizer absolute top-0 right-0 w-1 h-full" style="cursor: ew-resize; background-color: #d1d5db"></div>
           <div class="sticky top-0 z-10 flex items-center justify-between border-b px-4 py-2">
             <h3 class="font-medium font-size-16">Comments</h3>

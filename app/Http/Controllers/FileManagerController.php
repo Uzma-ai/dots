@@ -73,7 +73,7 @@ class FileManagerController extends Controller
         $fileName = $file->name;
        // $callbackUrl = route('savedocument');
         $fileUrl = url(Storage::url('app/root/'.$file->path));
-        $token = $fileid.base64UrlEncode($file->extension);
+        $token = $file->filehash;
         $user = User::find(auth()->id());
         $userName = "admin";
         if ($user) {
@@ -227,6 +227,9 @@ class FileManagerController extends Controller
     
                 // Move the file to the upload directory
                 if (move_uploaded_file($file->getPathname(), $filePath)) {
+                    $checkapp = checkLightApp($fileExtension);
+                    $lightapp = LightApp::where('name',$checkapp)->where('status',1)->first();
+                    $lightapp = empty($lightapp) ? App::where('name',$checkapp)->where('status',1)->first():$lightapp;
                     $filetype = $this->filefunctions->getFiletype($filePath);
                     $newFile = new FileModel();
                     $newFile->name = $originalName;
@@ -234,6 +237,8 @@ class FileManagerController extends Controller
                     $newFile->filetype = $filetype;
                     $newFile->parentpath = $uploadDirectorypath;
                     $newFile->path = $actualpath;
+                    $newFile->filehash = md5(date('d-M-Y H:i:s'));
+                    $newFile->openwith = ($lightapp) ? $lightapp->id : '';
                     $newFile->size = $file->getSize();
                     $newFile->status = 1; // Assuming 1 means active
                     $newFile->created_by = auth()->id(); // Assuming you want to save the ID of the authenticated user
@@ -484,6 +489,20 @@ class FileManagerController extends Controller
         }
         $html = view('appendview.clickoption')->with('contextTypes', $contextTypes)->with('type',$clicktype)->render();
         return response()->json(['html' => $html]);
+    }
+
+
+    public function dotsImageViewer($file){
+        $file = FileModel::find(base64UrlDecode($file));
+        return view('dotsimageviewer',compact('file'));
+    }
+    public function dotsVideoPlayer($file){
+        $file = FileModel::find(base64UrlDecode($file));
+        return view('dotsvideoplayer',compact('file'));
+    }
+    public function dotsDocumentViewer($file){
+        $file = FileModel::find(base64UrlDecode($file));
+        return view('dotsdocumentviewer',compact('file'));
     }
     
 }
