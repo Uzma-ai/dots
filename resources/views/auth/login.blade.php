@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'cs.css') }}" />
+    <link rel="shortcut icon" href="{{ asset($constants['IMAGEFILEPATH'] . 'logo.ico') }}" type="image/x-icon">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; media-src 'self' blob: data:;">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 </head>
@@ -61,12 +64,28 @@
                     <div class="flex flex-col items-center justify-center space-y-6 mt-5">
                         <div class="flex flex-row items-center">
                             <div class="flex-grow border-t border-c-light-gray w-16 sm:w-20"></div>
-                            <div class="text-gray-700 text-xs sm:text-sm px-3">More ways to download</div>
+                            <div class="text-gray-700 text-xs sm:text-sm px-3">Other ways to login</div>
                             <div class="flex-grow border-t border-c-light-gray w-16 sm:w-20"></div>
                         </div>
                         <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-                            <a href="#" class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on mobile</a>
-                            <a href="#" class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
+
+                            @if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com' || $_SERVER['SERVER_NAME'] == 'localhost')
+                                <a href="{{ url('/') }}/public/apps/Sizaf Server/Dots.apk" download
+                                    class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i
+                                        class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
+                                    mobile</a>
+                                <a href="{{ url('/') }}/public/apps/Sizaf Server/Sizaf Dots.zip" download
+                                    class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i
+                                        class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
+                            @elseif ($_SERVER['SERVER_NAME'] == 'dev-ubt-app04.dev.orientdots.net1')
+                                <a href="{{ url('/') }}/public/apps/Dots Server/Dots.apk" download
+                                    class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
+                                        class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
+                                    mobile</a>
+                                <a href="{{ url('/') }}/public/apps/Dots Server/Sizaf Dots.zip" download
+                                    class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
+                                        class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -111,7 +130,8 @@
                                             <div
                                                 class="form-card flex flex-col sm:flex-row mx-auto sm:space-x-4 gap-2 mt-5 sm:gap-0">
                                                 <div class="relative w-8/12 h-48 sm:h-56 mx-auto sm:mx-0 sm:ml-6">
-                                                    <video id="cam" autoplay muted playsinline class="rounded-lg">
+                                                    <video id="cam" autoplay muted playsinline
+                                                        class="rounded-lg w-full h-full object-cover">
                                                         Not available
                                                     </video>
                                                     <div
@@ -346,6 +366,10 @@
         $randomNumber = rand(1, 3);
     @endphp
     <div class="hidden">
+        <audio src="{{ asset($constants['IMAGEFILEPATH'] . 'hhay' . $randomNumber . '.mp3') }}"
+            id="HHAYAudio"></audio>
+        <audio src="{{ asset($constants['IMAGEFILEPATH'] . 'wod' . $randomNumber . '.mp3') }}"
+            id="WODAudio"></audio>
         <audio src="{{ asset($constants['IMAGEFILEPATH'] . $randomNumber . '.mp3') }}" id="WelcomeAudio"></audio>
     </div>
 </body>
@@ -408,6 +432,31 @@
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
+
+        //start cam automattically for login
+        // if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+        //     navigator.mediaDevices.enumerateDevices()
+        //         .then(function(devices) {
+        //             let cameraAvailable = devices.some(function(device) {
+        //                 return device.kind === 'videoinput';
+        //             });
+        //             if (cameraAvailable) {
+        //                 CheckFacedata(username).then(function(avilable_facedata) {
+        //                     if (avilable_facedata) {
+        //                         showModal('#login', true);
+        //                     }
+        //                 });
+        //             } else {
+        //                 return false;
+        //             }
+        //         })
+        //         .catch(function(error) {
+        //             return false;
+        //         });
+        // } else {
+        //     return false;
+        // }
+
 
         //check device capable for camera and set support_facelogin data
         checkCameraAvailability();
@@ -536,11 +585,9 @@
                             var image = "{{ url('/') }}" + "/" + response.user.avatar;
                             $('#LoginImage').attr('src', image);
                         }
+                        $('#WODAudio').get(0).play();
                         $('#SpanUsername').html(response.user.name);
                         $('#login').find("fieldset").eq(3).show();
-                        setTimeout(() => {
-                            window.href.location = '/dashboard';;
-                        }, 5000);
                     }
                 }
             },
@@ -785,6 +832,10 @@
                                     if (response.flag == true) {
                                         toastr.success("Face authentication match, Check Voice.");
                                     }
+                                    $('#HHAYAudio').get(0).play();
+                                    setTimeout(() => {
+                                        toggleRecording(2);
+                                    }, 2000);
                                     $('#login').find("fieldset").hide();
                                     $('#SpanUsername').html(response.user.name);
                                     $('#login').find("fieldset").eq(1).show();
@@ -923,7 +974,7 @@
                     };
                 }
                 let audioChunks = [];
-                let maxRecordTime = 5000; // 5 seconds timer
+                let maxRecordTime = 3000; // 3 seconds timer
                 let timeoutId;
 
                 recorders[recorderNumber].recorder = newRecorder;
@@ -968,6 +1019,9 @@
                             }
                         } else if (recorderNumber === 2) {
                             $("#previewContainer2").empty().append(preview);
+                            setTimeout(() => {
+                                stopRecording(newRecorder, stream, recorderNumber);
+                            }, 3000);
                         }
                     };
                     reader.readAsDataURL(e.data);
@@ -1000,6 +1054,7 @@
                                             .avatar;
                                         $('#LoginImage').attr('src', image);
                                     }
+                                    $('#WODAudio').get(0).play();
                                     $('#login').find("fieldset").hide();
                                     $('#SpanUsername').html(response.user.name);
                                     $('#login').find("fieldset").eq(3).show();
@@ -1021,7 +1076,7 @@
                 // Start recording
                 newRecorder.start();
 
-                // Set timeout to stop recording after 5 seconds
+                // Set timeout to stop recording after 3 seconds
                 timeoutId = setTimeout(function() {
                     stopRecording(newRecorder, stream, recorderNumber);
                 }, maxRecordTime);

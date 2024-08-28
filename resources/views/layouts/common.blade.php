@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
     <link href="https://unpkg.com/tailwindcss@^2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="{{ asset($constants['IMAGEFILEPATH'] . 'logo.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'common.css') }}" />
@@ -38,23 +39,23 @@
         </div>
          <!-- Taskbar End -->
 
-      
+
          <!-- <header id="iframeheaders" class="transparent p-2 text-white flex justify-center items-center fixed top-0 left-0 right-0 mainiframeiconheader mainscreen"> -->
 
-    
+
     <!--///// iframe -->
     <div id="alliframelist">
-        
+
     </div>
 
     <!--///// Context Menu -->
     <div id="context-menu" class="context-menu context-menulist hidden bg-c-white">
-        
+
     </div>
     <div id="app-contextmenu" class="context-menu context-menulist hidden bg-c-white">
     </div>
     <!--//// Context Menu End-->
-    
+
 <!-- Upload popup -->
 <div id="popupuploadfiles" class="fixed inset-0 flex z-20 items-center justify-center bg-gray-800 bg-opacity-50 hidden">
     <div class="popup-content bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
@@ -65,7 +66,7 @@
                 <i class="ri-close-line"></i>
             </button>
         </div>
-        
+
         <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-bold mb-4">File Upload</h2>
             <div id="dropzone" class="border-2 border-dashed border-gray-300 p-6 rounded-lg text-center">
@@ -88,11 +89,11 @@
     </div>
 </div>
 
-   
-   
+
+
     @yield('content')
 
-    
+
     <!--end here -->
 
 
@@ -125,7 +126,7 @@
 <!-- <script src="{{ asset($constants['JSFILEPATH'].'taskbar.js') }}" ></script> -->
 
 
- 
- 
+
+
 </body>
 </html>

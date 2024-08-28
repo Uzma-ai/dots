@@ -17,7 +17,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap"
     />
-
+    <link rel="shortcut icon" href="{{ asset($constants['IMAGEFILEPATH'] . 'logo.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'app.css') }}">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'setting.css') }}">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'common.css') }}">
@@ -100,7 +100,7 @@
             <!--<div class="storage-files-wrapper">-->
             <!--    <div class="p-3 mt-3 flex items-center rounded-r-md px-4 duration-300 cursor-pointer hover:bg-gray-900 text-black hover-color-custom-yellow" onclick="setActive(this); dropdown('submenu-storage-file', 'arrow-storage-file')">-->
             <!--        <div class="flex justify-between w-full items-center">-->
-                        
+
             <!--            <a href="./404.html" target="content-frame" class="flex items-center w-full">-->
             <!--                <span class="text-[15px] ml-4">Storage / Files</span>-->
             <!--                <span class="text-sm rotate-180 absolute right-4">-->
@@ -112,7 +112,7 @@
             <!--</div>-->
 
             <!--<div class="p-3 mt-3 flex items-center rounded-r-md px-4 duration-300 cursor-pointer hover:bg-gray-900 text-black hover-color-custom-yellow" onclick="setActive(this)">-->
-                
+
             <!--    <a href="./404.html" target="content-frame" class="flex items-center w-full">-->
             <!--        <span class="text-[15px] ml-4">Plugin Center</span>-->
             <!--        <span class="text-sm rotate-180 absolute right-4">-->
@@ -124,7 +124,7 @@
             <!--<div class="safety-control-wrapper">-->
             <!--    <div class="p-3 mt-3 flex items-center rounded-r-md px-4 duration-300 cursor-pointer hover:bg-gray-900 text-black hover-color-custom-yellow" onclick="setActive(this); dropdown('submenu-safety-control', 'arrow-safety-control')">-->
             <!--        <div class="flex justify-between w-full items-center">-->
-                        
+
             <!--            <a href="./404.html" target="content-frame" class="flex items-center w-full">-->
             <!--                <span class="text-[15px] ml-4">Safety Control</span>-->
             <!--                <span class="text-sm rotate-180 absolute right-4">-->
@@ -156,7 +156,7 @@
           <!-- Main Content end -->
     <div>
 
-   
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @yield('scripts')
@@ -193,8 +193,8 @@
     //       administratorDiv.classList.toggle("hidden");
     //     });
 
-      
-      
+
+
       //for dimissing toast
        document.querySelectorAll('[data-dismiss-target]').forEach(function(button) {
         button.addEventListener('click', function() {
@@ -204,8 +204,8 @@
             }
         });
     });
-    
-     
+
+
     </script>
 </body>
 </html>

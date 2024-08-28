@@ -29,7 +29,7 @@ class UsersSeeder extends Seeder
             'ip_address' => NULL,
             'sizeMax' => 250,
             'sizeUse' => 250,
-            'groupID' => 3,
+            'groupID' => 1,
             'is_facedata' => 0,
             'is_support_face' => 0,
             'last_seen' => 0

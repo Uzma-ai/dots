@@ -20,7 +20,7 @@ class RolesSeeder extends Seeder
             'upload_limit' => 420,
             'file_manage_settings' => 'preview,search,download,new-file,upload,share,edit,delete,move,compress,decompress',
             'user_settings' => 'config_modify,operation',
-            'permissionID' => NULL,
+            'permissionID' => 1,
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -31,7 +31,7 @@ class RolesSeeder extends Seeder
             'upload_limit' => 10,
             'file_manage_settings' => 'file-manage,preview,download',
             'user_settings' => 'move',
-            'permissionID' => NULL,
+            'permissionID' => 1,
             'created_at' => now(),
             'updated_at' => now()
         ]);
