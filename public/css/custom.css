@@ -1446,77 +1446,64 @@ input[type="button"]:focus {
     top: 0;
     width: 50%;
     height: 100%;
-    filter: brightness(180%);
-    background-image: url("../images/curtain.jpg");
+    background-image: url("../images/wallpaper.png");
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 #curtain .left {
+    border-top-right-radius: 100px;
     left: 0;
     transform-origin: top right;
 }
 #curtain .right {
+    border-top-left-radius: 100px;
     left: 50%;
     transform-origin: top left;
 }
 
 /* **********
-	opening
-********** */
-#curtain.open .left,
-#curtain.open .right {
-    filter: brightness(100%);
-}
+      opening
+  ********** */
 #curtain.open .left {
     animation-fill-mode: forwards;
-    animation-name: curtain-opening, left-curtain-opening;
-    animation-duration: 2s, 4s;
-    animation-timing-function: ease-in-out, ease-in-out;
-    animation-delay: 0s, 0s;
-    animation-iteration-count: 1, 1;
-    animation-direction: normal, normal;
+    animation-name: left-curtain-opening;
+    animation-duration: 4s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
 }
 #curtain.open .right {
     animation-fill-mode: forwards;
-    animation-name: curtain-opening, right-curtain-opening;
-    animation-duration: 2s, 4s;
-    animation-timing-function: ease-in-out, ease-in-out;
-    animation-delay: 0s, 0s;
-    animation-iteration-count: 1, 1;
-    animation-direction: normal, normal;
+    animation-name: right-curtain-opening;
+    animation-duration: 4s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
 }
 
 /* **********
-	animations
-********** */
-
-@keyframes curtain-opening {
-    /* 2s */
-    from {
-        filter: brightness(180%);
-    }
-    to {
-        filter: brightness(100%);
-    }
-}
+      animations
+  ********** */
 
 @keyframes left-curtain-opening {
     /* 4s */
     from {
-        transform: translate(0) rotate(0) scale(1, 1);
+        transform: translateX(0);
     }
     to {
-        transform: translate(-100%) rotate(20deg) scale(0, 2);
+        transform: translateX(-100%);
     }
 }
 
 @keyframes right-curtain-opening {
     /* 4s */
     from {
-        transform: translate(0) rotate(0) scale(1, 1);
+        transform: translateX(0);
     }
     to {
-        transform: translate(100%) rotate(-20deg) scale(0, 2);
+        transform: translateX(100%);
     }
 }
