@@ -44,6 +44,7 @@
                                 <i class="ri-arrow-down-s-line"></i>
                                 </button>
                                 <div class="absolute text-xs dropdown-option z-10 min-w-full bg-gray-100 border rounded-md">
+                                @if(!empty($filteredPermissions['userManagement']) && in_array('user-delete', $filteredPermissions['userManagement']))
                 
                                     <button  class="suspend-user block  @php echo ($user->status == 0)?'bg-yellow-300':'' @endphp w-full px-2 py-1" data-id="{{ $user->id }}">
                                             Deactivated
@@ -54,6 +55,7 @@
                                         Active
                                         </button>
                                       </a>
+                                      @endif
                                       @if(!empty($filteredPermissions['userManagement']) && in_array('user-edit', $filteredPermissions['userManagement']))
                                         <button  class="editUsers block bg-white-300 w-full px-2 py-1" data-id="{{$user->id}}">
                                         Edit
@@ -71,34 +73,34 @@
 <script>
      //edit popup
                     
-                     $('table tr button.editUsers').on('click', function (e) {
-                       e.preventDefault();
-                       
-                    id = $(this).attr("data-id");
-                    $.ajax({
-                            url: 'user-edit',
-                            method: 'GET',
-                            data: {id:id},
-                            success: function (response) {
-                                // Update the app list container with the updated list
-                                $('#user-edit-div').html(response);
-                                $('.user-edit-modal').removeClass('hidden');
-                            },
-                            error: function (xhr, status, error) {
-                                console.error(xhr.responseText);
-                            }
-                        });
-                     
-                    });
-                   
-                   $('table td button.suspend-user').on('click', function (e) {
-                       e.preventDefault();
-                      $("#delete-modal").removeClass('hidden');
-                      var id = $(this).attr("data-id");
-                      var deleteroute = "user-suspend/"+ id;
-                      $("#deleteRole").attr("href",deleteroute);
+        $('table tr button.editUsers').on('click', function (e) {
+          e.preventDefault();
+          
+      id = $(this).attr("data-id");
+      $.ajax({
+              url: 'user-edit',
+              method: 'GET',
+              data: {id:id},
+              success: function (response) {
+                  // Update the app list container with the updated list
+                  $('#user-edit-div').html(response);
+                  $('.user-edit-modal').removeClass('hidden');
+              },
+              error: function (xhr, status, error) {
+                  console.error(xhr.responseText);
+              }
+          });
+        
+      });
+      
+      $('table td button.suspend-user').on('click', function (e) {
+          e.preventDefault();
+        $("#delete-modal").removeClass('hidden');
+        var id = $(this).attr("data-id");
+        var deleteroute = "user-suspend/"+ id;
+        $("#deleteRole").attr("href",deleteroute);
 
-                     
-                    });
+        
+      });
    
 </script>

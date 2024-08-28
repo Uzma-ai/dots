@@ -12,7 +12,7 @@ use App\Exports\LoginsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Record; // Assuming you have a Record model
 use Illuminate\Support\Facades\Log; // Import the Log facade
-use App\Helpers\PermissionHelper;
+use App\Helpers\PermissionHelper; 
 
 
 class LoginLogController extends Controller
@@ -27,7 +27,6 @@ class LoginLogController extends Controller
     $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
     $log = LoginLog::with('user')->orderBy('created_at', 'desc')->paginate(10);
     $roles = Roles::get();
-//
     return view('loginLog',compact('log', 'roles', 'filteredPermissions'));
 }
 

@@ -625,6 +625,9 @@ function populateTable(term='') {
  @if (Session::has('success'))
    toastr.success("Permission Added successfully");
  @endif
+ @if (Session::has('error'))
+   toastr.error("Choose atleast one permission!!");
+ @endif
  @if (Session::has('success-update'))
    toastr.success("Permission Updated successfully");
  @endif

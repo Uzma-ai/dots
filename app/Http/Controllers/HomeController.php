@@ -38,11 +38,11 @@ class HomeController extends Controller
        $path = url();
         //$path = $path ? urldecode($path) : '/';
         $path ='/';
-        // return view('app', compact('apps', 'lightApps','path'));
-        return view('dashboard', compact('apps', 'lightApps', 'filteredPermissions'));
-       
+        // return view('app', compact('apps', 'lightApps','path')); 
+        return view('dashboard', compact('apps', 'lightApps', 'filteredPermissions'));       
     }
-     public function desktop()
+
+    public function desktop()
     {
         $apps = App::all();
         $lightApps = LightApp::with('category')->get();

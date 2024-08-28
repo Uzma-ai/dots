@@ -44,8 +44,7 @@
                     >
                       Add user
                     </div> -->
-                    @if (
-                        !empty($filteredPermissions['userManagement']) &&
+                    @if (!empty($filteredPermissions['userManagement']) &&
                             in_array('user-mass-upload', $filteredPermissions['userManagement']))
                         <button>
                             <i class="ri-file-excel-2-fill ri-xl" id="showimport-upload-popup">Import Users</i>
@@ -74,13 +73,13 @@
                             Add user
                         </div>
                     @endif
-                    @if (
-                        !empty($filteredPermissions['userManagement']) &&
+                    @if (!empty($filteredPermissions['userManagement']) &&
                             in_array('user-mass-upload', $filteredPermissions['userManagement']))
                         <button>
                             <i class="ri-file-excel-2-fill ri-xl"></i>
                         </button>
-                        <<<<<<< HEAD @endif
+                        @endif
+                        <<<<<<< HEAD 
                             =======
 
                             >>>>>>> ad247eeac18998615f54b97831339e49064f4ea2
@@ -128,6 +127,8 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div class="bg-white cs-table-container border border-gray-3 rounded-md mt-5">
                     <table class="table-auto w-full">
                         <thead class="h-14">
@@ -160,6 +161,7 @@
                         @endif
                     </table>
                 </div>
+                
                 <div class="mt-auto flex justify-end pt-3 font-normal">
                     {{ $users->links() }}
                 </div>

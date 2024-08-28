@@ -162,7 +162,7 @@
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
                       ></i>
                     </div>
-                   @endif
+                    @endif
                     <ul class="drop-list text-sm space-y-1">
                     @if(!empty($filteredPermissions['userManagement']))
                       <li>
@@ -177,7 +177,7 @@
                         </a>
                       </li>
                       @endif
-                      @if(!empty($filteredPermissions['roleManagement']))
+                      @if(!empty($filteredPermissions['roleManagement']) && !empty($filteredPermissions['userManagement']))
                       <li>
                         <a
                           href="{{ route('rolesadmin') }}"
@@ -189,8 +189,7 @@
                           ></i>
                         </a>
                       </li>
-                      @endif
-                      @if(!empty($filteredPermissions['userManagement']))
+                      
                       <li>
                         <a
                           href="{{ route('permissionsadmin') }}"
@@ -203,6 +202,7 @@
                         </a>
                       </li>
                       @endif
+                     
                       <!-- <li>
                         <a
                           href="#"
@@ -401,6 +401,7 @@
           </div>
         </div>
       </aside>
+      
 
        <!-- Main Content -->
        @yield('content')

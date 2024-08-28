@@ -27,11 +27,10 @@ class OperationLogController extends Controller
         $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $log = Activity::with('user')->orderBy('created_at', 'desc')->paginate(13);
         $roles = Roles::get();
-
         return view('operationLog',compact('log', 'roles', 'filteredPermissions'));
     }
 
-     public function filter(Request $request)
+    public function filter(Request $request)
     {
         
         $filter = $request->input('filter'); 

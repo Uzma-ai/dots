@@ -15,7 +15,7 @@ class RolesSeeder extends Seeder
     {
         Roles::create([
             'id' => 1,
-            'name' => 'superadmin',
+            'name' => 'Super Admin',
             'description' => 'super user role has all enable',
             'upload_limit' => 420,
             'file_manage_settings' => 'preview,search,download,new-file,upload,share,edit,delete,move,compress,decompress',
@@ -31,7 +31,7 @@ class RolesSeeder extends Seeder
             'upload_limit' => 10,
             'file_manage_settings' => 'file-manage,preview,download',
             'user_settings' => 'move',
-            'permissionID' => 1,
+            'permissionID' => 2,
             'created_at' => now(),
             'updated_at' => now()
         ]);

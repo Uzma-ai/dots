@@ -12,7 +12,7 @@ class PermissionSeeder extends Seeder
     {        
         Permissions::create([
             'id' => 1,
-            'name' => 'editor',
+            'name' => 'Admin',
             'permissions' => 'view,preview,download,upload,edit,delete,share,comments,dynamic,admin,user-create,user-edit,user-view,user-delete,user-mass-upload,user-rollback,user-permanent-delete,role-create,role-edit,role-view,role-delete,role-mass-upload,role-rollback,role-permanent-delete,group-create,group-edit,group-view,group-delete,group-mass-upload,group-rollback,group-permanent-delete,notice,storage,backups,logs,search,new-file,move,compress,decompress',
             'created_at' => '2024-05-29 23:17:41',
             'updated_at' => '2024-05-29 23:17:41'

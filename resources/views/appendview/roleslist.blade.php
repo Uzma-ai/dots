@@ -49,33 +49,35 @@
 <script>
      //edit popup
 
-                     $('table td button.editRoles').on('click', function (e) {
-                       e.preventDefault();
-                       
-                    var id = $(this).attr("data-id");
-                    $.ajax({
-                            url: 'role-edit',
-                            method: 'GET',
-                            data: {id:id},
-                            success: function (response) {
-                                // Update the app list container with the updated list
-                                $('#role-edit-div').html(response);
-                                $('.role-edit-modal').removeClass('hidden');
-                            },
-                            error: function (xhr, status, error) {
-                                console.error(xhr.responseText);
-                            }
-                        });
-                     
-                    });
+      $('table td button.editRoles').on('click', function (e) {
+        e.preventDefault();
+        
+    var id = $(this).attr("data-id");
+    $.ajax({
+            url: 'role-edit',
+            method: 'GET',
+            data: {id:id},
+            success: function (response) {
+                // Update the app list container with the updated list
+                $('#role-edit-div').html(response);
+                $('.role-edit-modal').removeClass('hidden');
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+      
+    });
 
-                    $('table td button.delete-role').on('click', function (e) {
-                       e.preventDefault();
-                      $("#delete-modal").removeClass('hidden');
-                      var id = $(this).attr("data-id");
-                      var deleteroute = "role-delete/"+ id;
-                      $("#deleteRole").attr("href",deleteroute);
+    $('table td button.delete-role').on('click', function (e) {
+        e.preventDefault();
+      $("#delete-modal").removeClass('hidden');
+      var id = $(this).attr("data-id");
+      var deleteroute = "role-delete/"+ id;
+      $("#deleteRole").attr("href",deleteroute);
 
-                     
-                    });
+      
+    });
 </script>
+
+

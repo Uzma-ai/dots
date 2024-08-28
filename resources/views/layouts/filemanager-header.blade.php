@@ -187,7 +187,7 @@
                   @endif
                 </div>
               </div>
-             
+              @if(!empty($filteredPermissions['fileManager']) && in_array('upload', $filteredPermissions['fileManager']))             
               <div class="relative flex items-center upload">
                 <a href="#" class="clickmenu uploadFiles">
                   <button
@@ -197,13 +197,18 @@
                   </button>
                 </a>
               </div>
-             
+              @endif
+
+              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']))             
               <a href="#" class="clickmenu cutFunction disabledicon fimanagertoolpanel"><button class="scissor">
                 <i class="ri-scissors-2-fill ri-lg"></i>
               </button></a>
               <a href="#" class="clickmenu copyFunction disabledicon fimanagertoolpanel"><button class="copy">
                 <i class="ri-file-copy-line ri-lg"></i>
               </button></a>
+              @endif
+
+              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']))
               <a href="#" class="clickmenu pasteFunction disabledicon fimanagertoolpanel"><button class="paste">
                 <i class="ri-clipboard-line ri-lg"></i>
               </button></a>
@@ -211,14 +216,17 @@
               <a href="#" class="clickmenu renameFunction disabledicon fimanagertoolpanel"><button class="edit">
                 <i class="ri-edit-line ri-lg"></i>
               </button></a>
-             
+              @endif
+              
               <!-- <button class="share" onclick="togglePopup('sharePopup');">
                 <i class="ri-share-fill ri-lg"></i> 
               </button> -->
-             
+
+              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']))             
               <a href="#" class="clickmenu deleteFunction disabledicon fimanagertoolpanel"><button class="delete">
                 <i class="ri-delete-bin-line ri-lg"></i>
               </button></a>
+              @endif
              
               <div class="relative flex items-center sort">
                 <button class="flex gap-x-2">

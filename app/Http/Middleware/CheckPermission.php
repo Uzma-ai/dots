@@ -45,13 +45,20 @@ class CheckPermission
         if (strpos($routeName, 'useradmin') !== false && empty($filteredPermissions['userManagement'])) {
             $accessDenied[] = 'userManagement';
         }
-        
-        if (strpos($routeName, 'rolesadmin') !== false && empty($filteredPermissions['roleManagement'])) {
+
+        if (
+            (strpos($routeName, 'rolesadmin') !== false || strpos($routeName, 'permissionsadmin') !== false) 
+            && (empty($filteredPermissions['roleManagement']) || empty($filteredPermissions['userManagement']))
+        ) {
             $accessDenied[] = 'roleManagement';
         }
-        if (strpos($routeName, 'permissionsadmin') !== false && empty($filteredPermissions['roleManagement'])) {
-            $accessDenied[] = 'userManagement';
-        }
+        
+        // if (strpos($routeName, 'rolesadmin') !== false && empty($filteredPermissions['roleManagement']) && empty($filteredPermissions['userManagement'])) {
+        //     $accessDenied[] = 'roleManagement';
+        // }
+        // if (strpos($routeName, 'permissionsadmin') !== false && empty($filteredPermissions['roleManagement']) && empty($filteredPermissions['userManagement'])) {
+        //     $accessDenied[] = 'docPermission';
+        // }
         
         // if (strpos($routeName, 'useradmin') !== false && empty($filteredPermissions['groupsManagement'])) {
         //     $accessDenied[] = 'groupsManagement';

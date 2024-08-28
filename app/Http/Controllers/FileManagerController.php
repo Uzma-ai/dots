@@ -55,7 +55,7 @@ class FileManagerController extends Controller
         ->orderBy('sort_order', 'asc') // Sort context types by sort_order
         ->get();
         $path = $path ? $path : '/';
-        return view('filemanager',compact('path','contextTypes','resizecontextTypes','sortcontextTypes'));
+        return view('filemanager',compact('path','contextTypes','resizecontextTypes','sortcontextTypes', 'filteredPermissions'));
     }
     
     public function recyclebin($path=null)
@@ -484,6 +484,52 @@ class FileManagerController extends Controller
         }
         $html = view('appendview.clickoption')->with('contextTypes', $contextTypes)->with('type',$clicktype)->render();
         return response()->json(['html' => $html]);
+    }
+
+    public function fileExpSearch(Request $request)
+    {        
+        $search = $request->input('searchFiles', null);
+        $filepath = base64UrlDecode($request->input('path'));
+        $parentPath = empty($filepath) ? '/' : $filepath;
+        $defaultfolders = [];
+        $files = [];
+        $sortby = $request->input('sort_by', 'id');
+        $sortorder = $request->input('sort_order', 'asc');
+
+        if ($filepath != 'RecycleBin') {
+            $query = App::where('parentpath', $parentPath)
+                ->where('filemanager_display', 1)
+                ->where('status', 1)
+                ->orderBy('name');
+            
+            if ($search) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+            }
+            
+            $defaultfolders = $query->get();
+
+            $filesQuery = FileModel::where('parentpath', $parentPath)
+                ->where('status', 1)
+                ->where('created_by', auth()->id())
+                ->orderBy($sortby, $sortorder);
+
+            if ($search) {
+                $filesQuery->where('name', 'LIKE', '%' . $search . '%');
+            }
+
+            $files = $filesQuery->get();
+        } else {
+            $files = RecycleBin::where('tablename', 'file')
+                ->where('file_created_by', auth()->id())
+                ->get();
+        }
+
+        $html = view('appendview.pathview')
+            ->with('defaultfolders', $defaultfolders)
+            ->with('files', $files)
+            ->render();
+
+        return response()->json(['html' => $html, 'parentPath' => $parentPath]);
     }
     
 }

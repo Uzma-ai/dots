@@ -116,7 +116,7 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('rolesadmin', [RolesController::class, 'roles'])
     ->name('rolesadmin')->middleware('checkPermis.roleManagement');
     Route::get('permissionsadmin', [PermissionsController::class, 'permissions'])
-    ->name('permissionsadmin')->middleware('checkPermis.userManagement');
+    ->name('permissionsadmin')->middleware('checkPermis.roleManagement');
     //roles routes
     Route::get('roles', [RolesController::class, 'index'])->name('roles');
     Route::get('roles/{id}', [RolesController::class, 'index']);
@@ -259,7 +259,7 @@ Route::get('/usergroups', [App\Http\Controllers\UserController::class, 'userGrou
 Route::get('/rolesadmin', [App\Http\Controllers\RolesController::class, 'roles'])
 ->name('rolesadmin')->middleware('checkPermis.roleManagement');
 Route::get('/permissionsadmin', [App\Http\Controllers\PermissionsController::class, 'permissions'])
-->name('permissionsadmin')->middleware('checkPermis.userManagement');
+->name('permissionsadmin')->middleware('checkPermis.roleManagement');
 
 //roles routes
 Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('roles');

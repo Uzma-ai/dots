@@ -24,7 +24,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'checkPermis.backendManagement' => \App\Http\Middleware\CheckPermission::class,
             'checkPermis.userManagement' => \App\Http\Middleware\CheckPermission::class,
             'checkPermis.roleManagement' => \App\Http\Middleware\CheckPermission::class,
-            'checkPermis.groupsManagement' => \App\Http\Middleware\CheckPermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -59,14 +59,26 @@ class PermissionsController extends Controller
 
     public function create(Request $request)
     {
+        //  $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string',
+        //     'permissions' => 'required',
+        // ]);
 
-         $validator = Validator::make($request->all(), [
+        // if($validator->fails()){
+        //     return $this->sendError('Validation Error.', $validator->errors());       
+        // }
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'permissions' => 'required',
+            'permissions' => 'required|array|min:1',
+        ], [
+            'name.required' => 'The name field is required.',
+            'permissions.required' => 'The permissions field is required and cannot be empty.',
+            // 'permissions.min' => 'You must select at least one permission.',
         ]);
-
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+        
+        if ($validator->fails()) {        
+            return redirect()->route('permissionsadmin')->with('error', 'Choose atleast one permission!'); 
         }
 
         $input = $request->all();
