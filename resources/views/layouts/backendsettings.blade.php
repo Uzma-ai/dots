@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@yield('title')</title>
+    <link rel="shortcut icon" href="{{ asset($constants['IMAGEFILEPATH'] . 'logo.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'custom.css') }}">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'root.css') }}">
@@ -18,7 +19,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
        <!-- Taskbar -->
         <div class="taskbar-slide h-16 flex items-center w-full absolute">
-        
+
             <div class="flex justify-center ml-10 w-full relative h-full" id="toolbar">
               <div class="bg absolute w-full  bottom-0">
                 <img id="shelf" class="w-full" src="{{ asset($constants['IMAGEFILEPATH'].'shelf.png')}}" alt="">
@@ -28,7 +29,7 @@
                 <i id="search-icon" class="ri-search-line "></i>
                 <i id="notification-icon" class="ri-notification-3-line "></i>
             </div>
-          
+
         </div>
       <main class="flex w-full h-full cs plugin fm role">
 
@@ -78,7 +79,7 @@
                       <i
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
                       ></i>
-                    </div>                    
+                    </div>
                     <ul class="drop-list text-sm space-y-1">
                     @if(!empty($filteredPermissions['backendManagement']) &&
                         in_array('basic', $filteredPermissions['backendManagement'])
@@ -151,12 +152,12 @@
                     onclick="toggleDropMenu(this)"
                     class="drop-menu cursor-pointer rounded-r-lg"
                   >
-                  @if(!empty($filteredPermissions['userManagement'])) 
+                  @if(!empty($filteredPermissions['userManagement']))
                     <div
                       class="w-full px-6 py-3 flex justify-between items-center"
                       href="#"
                     >
-                    
+
                       <span class="font-normal">User Management</span>
                       <i
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
@@ -235,7 +236,7 @@
                       <i
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
                       ></i>
-                    </div>                    
+                    </div>
                     <ul class="drop-list text-sm space-y-1">
                       <li>
                         <a
@@ -264,7 +265,7 @@
                 </li>
                 @endif
 
-                @if(!empty($filteredPermissions['backendManagement']) && 
+                @if(!empty($filteredPermissions['backendManagement']) &&
                   in_array('storage', $filteredPermissions['backendManagement']) &&
                   in_array('backups', $filteredPermissions['backendManagement'])
                   )
@@ -274,7 +275,7 @@
                     onclick="toggleDropMenu(this)"
                     class="drop-menu cursor-pointer rounded-r-lg"
                   >
-                  
+
                     <div
                       class="w-full px-6 py-3 flex justify-between items-center"
                       href="#"
@@ -284,7 +285,7 @@
                         class="ri-arrow-right-s-line text-c-yellow transition-all text-2xl big-right-arrow"
                       ></i>
                     </div>
-                    
+
                     <ul class="drop-list text-sm space-y-1">
                       <li>
                         <a
@@ -404,8 +405,8 @@
 
        <!-- Main Content -->
        @yield('content')
-       <!-- Main Content end --> 
-      
+       <!-- Main Content end -->
+
       </main>
       <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
      <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>

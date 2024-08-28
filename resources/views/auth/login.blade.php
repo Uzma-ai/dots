@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'cs.css') }}" />
+    <link rel="shortcut icon" href="{{ asset($constants['IMAGEFILEPATH'] . 'logo.ico') }}" type="image/x-icon">
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; media-src 'self' blob: data:;">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
