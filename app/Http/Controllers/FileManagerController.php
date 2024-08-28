@@ -73,7 +73,7 @@ class FileManagerController extends Controller
         $fileName = $file->name;
        // $callbackUrl = route('savedocument');
         $fileUrl = url(Storage::url('app/root/'.$file->path));
-        $token = $fileid.base64UrlEncode($file->extension);
+        $token = $file->filehash;
         $user = User::find(auth()->id());
         $userName = "admin";
         if ($user) {
@@ -189,7 +189,7 @@ class FileManagerController extends Controller
                 $defaultfolders = App::where('parentpath',$parentPath)->where('filemanager_display', 1)->where('status', 1)->orderBy('name')->get();
                 $files = FileModel::where('parentpath', $parentPath)->where('status', 1)->where('created_by', auth()->id())->orderBy($sortby, $sortorder)->get();
             }else{
-                $files = RecycleBin::where('tablename', 'file')->where('file_created_by', auth()->id())->get();
+                $files = FileModel::where('status', 0)->where('created_by', auth()->id())->orderBy($sortby, $sortorder)->get();
             }
             $html = view('appendview.pathview')->with('defaultfolders', $defaultfolders)->with('files', $files)->render();
         return response()->json(['html' => $html,'parentPath'=>$parentPath]);
@@ -227,6 +227,9 @@ class FileManagerController extends Controller
     
                 // Move the file to the upload directory
                 if (move_uploaded_file($file->getPathname(), $filePath)) {
+                    $checkapp = checkLightApp($fileExtension);
+                    $lightapp = LightApp::where('name',$checkapp)->where('status',1)->first();
+                    $lightapp = empty($lightapp) ? App::where('name',$checkapp)->where('status',1)->first():$lightapp;
                     $filetype = $this->filefunctions->getFiletype($filePath);
                     $newFile = new FileModel();
                     $newFile->name = $originalName;
@@ -234,6 +237,8 @@ class FileManagerController extends Controller
                     $newFile->filetype = $filetype;
                     $newFile->parentpath = $uploadDirectorypath;
                     $newFile->path = $actualpath;
+                    $newFile->filehash = md5(date('d-M-Y H:i:s'));
+                    $newFile->openwith = ($lightapp) ? $lightapp->id : '';
                     $newFile->size = $file->getSize();
                     $newFile->status = 1; // Assuming 1 means active
                     $newFile->created_by = auth()->id(); // Assuming you want to save the ID of the authenticated user
@@ -427,39 +432,32 @@ class FileManagerController extends Controller
     
      public function deleteFile(Request $request){
          
-         // Assume the condition value is passed as a request parameter
-        $type = $request->input('filetype');
-        $id = base64UrlDecode($request->input('filekey')); 
-            $file = FileModel::where('id', $id)->get();
-            if($file){
-                $transformedData = $file->map(function ($item) {
-                    return [
-                        'folder' => $item->folder,
-                        'name' => $item->name,
-                        'extension' => $item->extension,
-                        'filetype' => $item->filetype,
-                        'parentpath' => $item->parentpath,
-                        'path' => $item->path,
-                        'openwith' => $item->openwith,
-                        'tablename' => 'file',
-                        'file_created_by' => $item->created_by,
-                        'created_by' => auth()->id(),
-                        'file_created_at' => $item->created_at,
-                        'file_updated_at' => $item->updated_at,
-                    ];
-                });
-            }
-    
-        $deleteddata = RecycleBin::insert($transformedData->toArray());
-        if($deleteddata){
-                FileModel::where('id', $id)->delete();
-            
-            return response()->json(['message' => 'File deleted Successfully','status'=>true]);
+        $fileKey = base64UrlDecode($request->input('filekey'));
 
-        }else{
-            return response()->json(['message' => 'Something went wrong try again','status'=>false]);
-
+        $file = FileModel::find($fileKey);
+        if (!$file) {
+            return response()->json(['message' => 'File not found', 'status' => false]);
         }
+    
+        $file->status = 0;
+        $file->save();
+    
+        $currentPath = 'root/' . $file->path;
+        $recycleBinPath = 'root/RecycleBin/';
+        $newFileName = $fileKey . '-' . $file->name;
+    
+        try {
+            if (Storage::exists($currentPath)) {
+                Storage::move($currentPath, $recycleBinPath . $newFileName);
+            } else {
+                return response()->json(['message' => 'File does not exist', 'status' => false]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to move the file: ' . $e->getMessage(), 'status' => false]);
+        }
+    
+        return response()->json(['message' => 'File moved to RecycleBin', 'status' => true]);
+          
 
      }
     
@@ -530,6 +528,19 @@ class FileManagerController extends Controller
             ->render();
 
         return response()->json(['html' => $html, 'parentPath' => $parentPath]);
+    }
+
+    public function dotsImageViewer($file){
+        $file = FileModel::find(base64UrlDecode($file));
+        return view('dotsimageviewer',compact('file'));
+    }
+    public function dotsVideoPlayer($file){
+        $file = FileModel::find(base64UrlDecode($file));
+        return view('dotsvideoplayer',compact('file'));
+    }
+    public function dotsDocumentViewer($file){
+        $file = FileModel::find(base64UrlDecode($file));
+        return view('dotsdocumentviewer',compact('file'));
     }
     
 }

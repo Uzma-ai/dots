@@ -143,4 +143,6 @@ if(empty($updatedPath)){
   });  
     
   </script>
+
+  
 @endsection
