@@ -234,6 +234,8 @@ $(document).ready(function () {
             success: function (response) {
                 // Update the app list container with the updated list
                 $('.loaddetails').html(response.html);
+                $('.sortingcheck').addClass('hidden');
+                $('.sorting'+sort_by+'-'+sort_order).removeClass('hidden');
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
@@ -359,6 +361,23 @@ $(document).ready(function () {
                     window.location.href = url;
             }
         });
+
+        // $(document).on('dblclick', '.dashboardefaultdapp .selectapp', function (e) {
+        //     e.preventDefault();
+        //     if($(this).hasClass('openiframe')){
+        //         const appkey = this.getAttribute('data-appkey');
+        //         const filekey = this.getAttribute('data-filekey');
+        //         const filetype = this.getAttribute('data-filetype');
+        //         const apptype = this.getAttribute('data-apptype');
+        //         const originalIcon = $(this).find('.icondisplay');
+        //         const imgicon =  $('#iframeheaders #iframeiconimage'+filetype+appkey);
+        //         animateIcon(imgicon, originalIcon, function() {
+        //             const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype};
+        //             openiframe(iframedata);
+                 
+        //         });           
+        //      }
+        // });
 
 
 

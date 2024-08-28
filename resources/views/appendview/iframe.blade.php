@@ -1,8 +1,8 @@
 
 @if(!empty($iframeapp))
     @foreach($iframeapp as $iframekey=>$iframeval)
-    
         @foreach($iframeval as $iframedetail)
+        @if(!empty($iframedetail))
         <?php //print_r($iframedetail['filetype']);die;?>
                <!--Iframe popup-->
                 <div id="iframepopup{{ $iframedetail['filetype'].$iframedetail['filekey'] }}" data-app-id="iframepopup{{$iframedetail['filetype'].$iframedetail['filekey'] }}" class="draggableelement box popupiframe fixed inset-0 bg-black-900 bg-opacity-50 flex items-center justify-center rounded-lg hidden">
@@ -20,91 +20,94 @@
                             <a href="#" class="closeiframe-btn" data-filekey="{{$iframedetail['filekey'] }}" data-iframe-id = "{{$iframedetail['filetype'].$iframedetail['filekey'] }}" data-appkey="{{ $iframedetail['appkey'] }}" data-filetype="{{ $iframedetail['filetype'] }}" ><img src="{{ asset($constants['IMAGEFILEPATH'].'close'.$constants['ICONEXTENSION'])}}"/></a>
                             </div>
                         </div>
+                    
+                        @if ($iframedetail['extension'] == 'editor')
                         <!--comment section-->
-        <div class="commentssection absolute bottom-0 top-9 flex h-11/12 flex-col border-r bg-c-lighten-gray hidden md:w-1/3  font-size-14">
-          <div class="resizer absolute top-0 right-0 w-1 h-full" style="cursor: ew-resize; background-color: #d1d5db"></div>
-          <div class="sticky top-0 z-10 flex items-center justify-between border-b px-4 py-2">
-            <h3 class="font-medium font-size-16">Comments</h3>
-            <div>
-              <button class="pr-2 comment-button" onclick="togglePane('.addcomment')" data-type="comment">
-                <i class="ri-chat-new-line ri-lg"></i>
-            </button>
-            <button onclick="togglePane('.commentssection')">
-                <i class="ri-close-fill ri-lg"></i>
-            </button>
-        </div>
-    </div>
+                        <div class="commentssection absolute bottom-0 top-9 flex h-11/12 flex-col border-r bg-c-lighten-gray hidden md:w-1/3  font-size-14">
+                            <div class="resizer absolute top-0 right-0 w-1 h-full" style="cursor: ew-resize; background-color: #d1d5db"></div>
+                                <div class="sticky top-0 z-10 flex items-center justify-between border-b px-4 py-2">
+                                    <h3 class="font-medium font-size-16">Comments</h3>
+                                    <div>
+                                    <button class="pr-2 comment-button" onclick="togglePane('.addcomment')" data-type="comment">
+                                        <i class="ri-chat-new-line ri-lg"></i>
+                                    </button>
+                                    <button onclick="togglePane('.commentssection')">
+                                        <i class="ri-close-fill ri-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
                             <!--chat list-->
                             <div class="flex-1 overflow-auto comment-list">
-        <div class="space-y-4 p-4" id="message_view">
-          <!-- @if(isset($messages) && $messages->isNotEmpty()) -->
+                                <div class="space-y-4 p-4" id="message_view">
+                                <!-- @if(isset($messages) && $messages->isNotEmpty()) -->
 
-              <!-- @else
-                <p>No comments found.</p>
-                @endif -->
-            </div>
-        </div>
-                            <!--Add comment-->
-                            <div class="addcomment sticky bottom-0 z-10 border-t px-4 py-2 hidden bg-c-lighten-gray relative">
-            <!-- Mention list -->
-            <div class="absolute mentionList hidden bg-c-white border border-c-medium-gray rounded-md shadow-lg z-20 max-h-40 overflow-y-auto bottom-full">
-              <!-- Mention items will be dynamically inserted here -->
-          </div>
-          <div class="flex items-center gap-2 relative">
-              <div class="flex-1 relative">
-                <textarea placeholder="Write a new comment..." class="commentTextarea w-full rounded-md border border-c-medium-gray p-2 text-sm focus:outline-none bg-transparent relative z-10 text-transparent caret-black" rows="4" style="caret-color: black"></textarea>
-                <div class="styledTextarea absolute top-0 left-0 w-full h-full p-2 text-sm pointer-events-none whitespace-pre-wrap break-words overflow-hidden bg-transparent"></div>
-            </div>
-            <button class="postButton border px-3 hover-bg-c-black hover-text-c-yellow text-sm py-1 rounded border-gray-600 bg-c-yellow">
-                Post
-            </button>
-        </div>
-    </div>
-</div>
+                                    <!-- @else
+                                        <p>No comments found.</p>
+                                        @endif -->
+                                    </div>
+                                </div>
+                                <!--Add comment-->
+                                <div class="addcomment sticky bottom-0 z-10 border-t px-4 py-2 hidden bg-c-lighten-gray relative">
+                                    <!-- Mention list -->
+                                    <div class="absolute mentionList hidden bg-c-white border border-c-medium-gray rounded-md shadow-lg z-20 max-h-40 overflow-y-auto bottom-full">
+                                    <!-- Mention items will be dynamically inserted here -->
+                                </div>
+                                <div class="flex items-center gap-2 relative">
+                                    <div class="flex-1 relative">
+                                        <textarea placeholder="Write a new comment..." class="commentTextarea w-full rounded-md border border-c-medium-gray p-2 text-sm focus:outline-none bg-transparent relative z-10 text-transparent caret-black" rows="4" style="caret-color: black"></textarea>
+                                        <div class="styledTextarea absolute top-0 left-0 w-full h-full p-2 text-sm pointer-events-none whitespace-pre-wrap break-words overflow-hidden bg-transparent"></div>
+                                    </div>
+                                    <button class="postButton border px-3 hover-bg-c-black hover-text-c-yellow text-sm py-1 rounded border-gray-600 bg-c-yellow">
+                                        Post
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                             <!--comment section-->
+                        @endif
 
                         <!--Iframe-->
                         <iframe id="iframe{{ $iframedetail['filetype'].$iframedetail['filekey'] }}" src="{{ $iframedetail['iframeurl'] }}" class="w-full h-full frame"></iframe>
                         <!--chat button-->
-                        @if ($iframedetail['filetype'] == 'file')
-<div class="absolute bottom-5 left-5 bg-gray-300 rounded-full px-2 py-1 commentbutton">
-  <button class="comment" data-filekey="{{ $iframedetail['filetype'] . $iframedetail['filekey'] }}" onclick="togglePane('.commentssection')">
-    <i class="ri-chat-4-line ri-lg"></i>
-</button>
-</div>
-@endif  
+                        @if ($iframedetail['extension'] == 'editor')
+                            <div class="absolute bottom-5 left-5 bg-gray-300 rounded-full px-2 py-1 commentbutton">
+                            <button class="comment" data-filekey="{{ $iframedetail['filetype'] . $iframedetail['filekey'] }}" onclick="togglePane('.commentssection')">
+                                <i class="ri-chat-4-line ri-lg"></i>
+                            </button>
+                            </div>
+                        @endif  
                           <!--chat button-->
         
                         
                         </div>
                     </div>
                 <!-- iframe close -->
+                 @endif
         @endforeach
      @endforeach
 @endif
 
-
-
-
 <script>
+
     
-                    var baseUrl = "{{url('/')}}";
+var baseUrl = "{{url('/')}}";
 
 
-                    (function () {
-                      const commentSection = document.querySelector(".commentssection");
-                      const commentButton = document.querySelector(".commentbutton");
-                      const resizer = document.querySelector(".resizer");
-                      const commentList = document.querySelector(".comment-list");
-                      const mentionList = document.querySelector(".mentionList");
-                      const textarea = document.querySelector(".commentTextarea");
-                      const styledTextarea = document.querySelector(".styledTextarea");
-                      const iframePopup = document.querySelector(".popupiframe iframe");
-                      const postButton = document.querySelector(".postButton");
-                      const addComment = document.querySelector(".addcomment");
+(function () {
+ const commentSection = document.querySelector(".commentssection");
+ const commentButton = document.querySelector(".commentbutton");
+ const resizer = document.querySelector(".resizer");
+ const commentList = document.querySelector(".comment-list");
+ const mentionList = document.querySelector(".mentionList");
+ const textarea = document.querySelector(".commentTextarea");
+ const styledTextarea = document.querySelector(".styledTextarea");
+ const iframePopup = document.querySelector(".popupiframe iframe");
+ const postButton = document.querySelector(".postButton");
+ const addComment = document.querySelector(".addcomment");
+ if (commentSection && commentButton && resizer && commentList && mentionList && textarea && styledTextarea && iframePopup && postButton && addComment) {
 
-                      let selectedMention = null;
-                      let selectedMentionArr = [];
+ let selectedMention = null;
+let selectedMentionArr = [];
   let hasEventListenerBeenAdded = false; // Track if the event listener has been added
   let parentMessageId = null; // Store the parent message ID
 
@@ -116,9 +119,9 @@
         scrollToBottom();
     }
     updateFrameMargin();
-} else {
+    } else {
    /* console.error(`Element with selector ${id} not found.`);*/
-}
+    }
 }
 
 window.togglePane = togglePane;
@@ -265,20 +268,9 @@ function fetchMessages() {
 fetchMessages();
 
 function processMessage(message) {
-      /*// Split the message content based on spaces to find target words
-      const words = message.split(' ');
-
-      // Iterate over each word and apply styles if the word starts with "@"
-      return words.map(word => {
-          if (word.startsWith('@')) {
-              return `<span style="color:blue; font-style: italic;">${word}</span>`;
-          }
-          return word;
-      }).join(' '); // Join the words back into a string with spaces*/
-      // Regular expression to match words starting with '@'
+      
       const mentionRegex = /@(\w+)/g;
 
-    // Replace mentions with styled versions
     return message.replace(mentionRegex, '<span style="color:blue; font-style: italic;">@$1</span>');
 }
 
@@ -518,9 +510,8 @@ $(document).off('click', '.delete-button').on('click', '.delete-button', functio
         }
     });
 });
-
+ }
 })();
-
 
 
 </script>

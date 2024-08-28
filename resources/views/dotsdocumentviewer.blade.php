@@ -38,62 +38,6 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.3.122/pdf.min.js"></script>
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const documentViewer = document.getElementById('documentViewer');
-        const downloadBtn = document.getElementById('downloadBtn');
-
-        fileInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const fileType = file.type;
-
-                // Clear previous content
-                documentViewer.innerHTML = '';
-
-                // Create URL for file
-                const fileURL = URL.createObjectURL(file);
-
-                if (fileType.startsWith('image/')) {
-                    // Display image
-                    const img = document.createElement('img');
-                    img.src = fileURL;
-                    img.classList.add('w-full', 'h-auto', 'rounded-lg');
-                    documentViewer.appendChild(img);
-                } else if (fileType === 'application/pdf') {
-                    // Display PDF
-                    const pdfViewer = document.createElement('iframe');
-                    pdfViewer.src = fileURL;
-                    pdfViewer.classList.add('w-full', 'h-full', 'rounded-lg');
-                    documentViewer.appendChild(pdfViewer);
-                } else if (fileType.startsWith('text/')) {
-                    // Display text
-                    const reader = new FileReader();
-                    reader.onload = function() {
-                        const text = document.createElement('pre');
-                        text.textContent = reader.result;
-                        text.classList.add('whitespace-pre-wrap', 'p-4', 'bg-gray-900', 'text-yellow-400', 'rounded-lg');
-                        documentViewer.appendChild(text);
-                    };
-                    reader.readAsText(file);
-                } else {
-                    alert('Unsupported file format');
-                }
-            }
-        });
-
-        // Download Button Functionality
-        downloadBtn.addEventListener('click', () => {
-            const file = fileInput.files[0];
-            if (file) {
-                const fileURL = URL.createObjectURL(file);
-                const link = document.createElement('a');
-                link.href = fileURL;
-                link.download = file.name;
-                link.click();
-                URL.revokeObjectURL(fileURL);
-            }
-        });
-    </script>
+   
 </body>
 </html>

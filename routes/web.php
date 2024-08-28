@@ -176,4 +176,6 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('getMessage', [MessageController::class, 'getMessageData'])->name('getMessageData');
 });
 Route::get('fileExpSearch', [FileManagerController::class, 'fileExpSearch'])->name('fileExp-list');
+Route::get('leftarrowclick', [FileManagerController::class, 'leftArrowClick'])->name('leftarrowclick');
+Route::get('rightarrowclick', [FileManagerController::class, 'rightArrowClick'])->name('rightarrowclick');
 

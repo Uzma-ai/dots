@@ -17,9 +17,9 @@ $pathComponentsNew = $pathComponents;
 array_pop($pathComponentsNew);
 
 // Reassemble the path
-$updatedPath = implode('/', $pathComponents);
+$updatedPath = implode('/', $pathComponentsNew);
 if(empty($updatedPath)){
-    $updatedPath = '/';
+    $updatedPath = '';
 }
 //$pathnew = base64UrlEncode($path);
 @endphp
@@ -63,7 +63,7 @@ if(empty($updatedPath)){
 @section('scripts')
 
 <!--poup-->
-<!-- <script src="{{ asset($constants['JSFILEPATH'].'filemanager.js') }}"></script> -->
+<script src="{{ asset($constants['JSFILEPATH'].'filemanager.js') }}"></script>
 <script src="{{ asset($constants['JSFILEPATH'].'sidebar.js') }}" ></script>
 <script src="{{ asset($constants['JSFILEPATH'].'taskbar.js') }}" ></script>
 <script src="{{ asset($constants['JSFILEPATH'].'tabs.js') }}" ></script>

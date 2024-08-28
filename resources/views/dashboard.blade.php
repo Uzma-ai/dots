@@ -78,10 +78,11 @@
         </div>
 
         <!-- Right Sidebar -->
-        <div class="dashboard-sidebar w-16 px-2 hidden sm:block">
+        <div class="dashboardefaultdapp allapplist dashboard-sidebar w-16 px-2 hidden sm:block" data-option="app">
             @foreach ($apps as $app)
-                <a href="#"data-path =" {{ base64UrlEncode($app->path) }}" class="folders openiframe selectapp" data-appkey="{{ base64UrlEncode($app->id) }}" data-filekey="{{ base64UrlEncode($app->id) }}" data-filetype="app" data-apptype="app">
-                    <img class="mb-2"src="{{ asset($constants['APPFILEPATH'] . $app->icon) }}" alt="{{ $app->name }}" /></a>
+                <a href="#" data-path ="{{ base64UrlEncode($app->path) }}" class="openiframe selectapp" data-appkey="{{ base64UrlEncode($app->id) }}" data-filekey="{{ base64UrlEncode($app->id) }}" data-filetype="app" data-apptype="app">
+                    <img class="mb-2 icondisplay"src="{{ checkIconExist($app->icon,'app') }}" alt="{{ $app->name }}" />
+                </a>
             @endforeach
         </div>
 
@@ -160,13 +161,7 @@
             <img id="footer-logo" class="w-10 h-10" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
                 alt="Logo" />
         </div>
-        <!-- <div
-                                                class="absolute py-1 px-2 text-start text-xs tooltip bottom-2 right-20 z-10 bg-white border rounded-md border-c-yellow font-normal"
-                                              >
-                                                Administrator
-                                              </div> -->
-
-
+       
 
 
     </div>
@@ -219,28 +214,6 @@
             });
         });
     </script>
-    {{-- <script>
-        const desktopapp = @json(route('desktopapp'));
-        const createFolderRoute = @json(route('createfolder'));
-        const createFileRoute = @json(route('createfile'));
-        const showFileDetail = @json(route('showpathdetail'));
-
-        let path = @json($path);
-        let navbar = true;
-    </script>
-    <script>
-        $(document).ready(function() {
-            if ($('.navbarhead').hasClass('taskbar-slide')) {
-                $('.navbarhead').removeClass('taskbar-slide');
-            }
-            $('.search-cross-icon').on('click', function(e) {
-                e.preventDefault();
-                $('#searchbar').addClass('hidden');
-                $('#searchsuggestions').addClass('hidden');
-            });
-        });
-    </script> --}}
-
-    {{-- <script src="{{ asset($constants['JSFILEPATH'] . 'dashboard.js') }}"></script> --}}
+   
     @include('layouts.alert')
 @endsection
