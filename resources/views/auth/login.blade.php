@@ -587,9 +587,6 @@
                         $('#WODAudio').get(0).play();
                         $('#SpanUsername').html(response.user.name);
                         $('#login').find("fieldset").eq(3).show();
-                        setTimeout(() => {
-                            window.href.location = '/dashboard';;
-                        }, 5000);
                     }
                 }
             },
@@ -976,7 +973,7 @@
                     };
                 }
                 let audioChunks = [];
-                let maxRecordTime = 5000; // 5 seconds timer
+                let maxRecordTime = 3000; // 3 seconds timer
                 let timeoutId;
 
                 recorders[recorderNumber].recorder = newRecorder;
@@ -1078,7 +1075,7 @@
                 // Start recording
                 newRecorder.start();
 
-                // Set timeout to stop recording after 5 seconds
+                // Set timeout to stop recording after 3 seconds
                 timeoutId = setTimeout(function() {
                     stopRecording(newRecorder, stream, recorderNumber);
                 }, maxRecordTime);
