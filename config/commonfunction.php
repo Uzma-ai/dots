@@ -75,7 +75,7 @@ function checkIconExist($filePath, $type) {
 
 
 function checkFileGroup($ext){
-        $ExtsDoc = array("doc", "docm", "docx", "dot", "dotm", "dotx", "epub", "fodt", "ott", "htm", "html", "mht", "odt", "pdf", "rtf", "txt", "djvu", "xps");
+        $ExtsDoc = array("doc", "docm", "docx", "dot", "dotm", "dotx", "epub", "fodt", "ott", "htm", "html", "mht", "odt", "rtf", "txt", "djvu", "xps");
         $ExtsPre = array("fodp", "odp", "pot", "potm", "potx", "pps", "ppsm", "ppsx", "ppt", "pptm", "pptx", "otp");
         $ExtsSheet = array("xls", "xlsx", "xltx", "ods", "ots", "csv", "xlt", "xltm", "fods");
         $ExtsImage = array("jpg", "jpeg", "png", "gif", "bmp", "webp", "tiff", "tif", "ico", "svg", "heif", "heic", "raw", "nef", "cr2", "orf", "dng");
@@ -100,18 +100,24 @@ function checkFileGroup($ext){
 }
 
 function checkLightApp($ext){
-    $ExtsDoc = array("doc", "docm", "docx", "dot", "dotm", "dotx", "epub", "fodt", "ott", "htm", "html", "mht", "odt", "pdf", "rtf", "txt", "djvu", "xps");
+    $ExtsDoc = array("doc", "docm", "docx", "dot", "dotm", "dotx", "epub", "fodt", "ott", "htm", "html", "mht", "odt", "rtf", "txt", "djvu", "xps");
     $ExtsPre = array("fodp", "odp", "pot", "potm", "potx", "pps", "ppsm", "ppsx", "ppt", "pptm", "pptx", "otp");
     $ExtsSheet = array("xls", "xlsx", "xltx", "ods", "ots", "csv", "xlt", "xltm", "fods");
-    
+    $ExtsImage = array("jpg", "jpeg", "png", "gif", "bmp", "webp", "tiff", "tif", "ico", "svg", "heif", "heic", "raw", "nef", "cr2", "orf", "dng");
+    $ExtsVideo = array("mp4", "mkv", "avi", "mov", "wmv", "flv", "webm", "mpg", "mpeg", "ogv", "3gp", "3g2", "m4v", "rm", "rmvb", "ts", "vob", "m2ts", "asf", "mts");       
+    $ExtsAudio = array("mp3", "wav", "aac", "flac", "ogg", "wma", "m4a", "alac", "aiff", "au", "mid", "midi", "opus", "ra", "ram", "ape", "dsd");
     if (in_array($ext,$ExtsDoc)) {
         return "Docx";
     } elseif (in_array($ext,$ExtsPre)) {
         return "EXCEL";
     } elseif (in_array($ext,$ExtsSheet)) {
         return "PPT";
-    }else {
-        return "DotsViewer";
+    }elseif (in_array($ext,$ExtsImage)) {
+        return "DotsImageViewer";
+    }elseif (in_array($ext,$ExtsVideo) || in_array($ext,$ExtsAudio)) {
+        return "DotsVideoPlayer";
+    }else{
+        return "DotsDocumentViewer";
     }
 
 }

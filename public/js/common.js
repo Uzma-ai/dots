@@ -148,7 +148,7 @@ $(document).ready(function () {
          $('.fimanagertoolpanel').removeClass('disabledicon');
     }
 // end selection
-       contextMenuList(contexttypes);
+    contextMenuList(contexttypes);
      positionAndShowMenu(appContextMenu, event);
    } else if (target.closest(".allapplist").length) {
        contextMenuList('rightclick');
@@ -419,6 +419,18 @@ $(document).ready(function () {
                 const filepath = $('.selectedfile').attr('data-path');
                 const filetype = $('.selectedfile').attr('data-filetype');
                 copyFunction(filepath,'copy',filetype,filekey);
+                $('.selectapp').removeClass('.selectedfile');
+         });
+
+         $(document).on('click', '.context-menulist .deleteFunction', function (e) {
+            e.preventDefault();
+                const filekey = $('.selectedfile').attr('data-filekey');
+                const appkey = $('.selectedfile').attr('data-appkey');
+                const filepath = $('.selectedfile').attr('data-path');
+                const filetype = $('.selectedfile').attr('data-filetype');
+                const fileid = this.getAttribute('data-iframefile-id');
+                deleteFunction(filekey);
+                closeiframe(appkey,filekey,fileid,filetype);
                 $('.selectapp').removeClass('.selectedfile');
          });
          $(document).on('click', '.context-menulist .cutFunction', function (e) {
@@ -740,20 +752,22 @@ $(document).ready(function () {
        function shareFunction(){
          
        }
-       function deleteFunction(filekey,filetype){
+       function deleteFunction(filekey){
             $.ajax({
             url: deleteRoute,
             method: 'GET',
-            data: {filekey:filekey,filetype:filetype},
+            data: {filekey:filekey},
             success: function (response) {
                 if(response.status){
+                    desktoplightapp();
+                    showapathdetail(path);
                     toastr.success(response.message);
+
                     
                 }else{
                     toastr.error(response.message);
                 }
-                desktoplightapp();
-                showapathdetail(path);
+                
 
             },
             error: function (xhr, status, error) {

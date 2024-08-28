@@ -44,7 +44,7 @@
 </div>
 @else
 <div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="file">
-  <a href="#" class="files openiframe selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="file" data-apptype="lightapp"> 
+  <a href="#" class="files openiframe selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="file" data-apptype="{{ (checkFileGroup($file->extension) !='editor') ? 'app' : 'lightapp' }}"> 
 
    <div class="fixed w-full app-tools absolute flex item-center gap-8 px-2 invisible showappoptions">
           <input type="checkbox" class="appcheckbox" id="checkboxdocument{{ base64UrlEncode($file->id) }}">
@@ -55,7 +55,7 @@
        <div class="flex flex-col items-center imagewraper">
           
             @if(checkFileGroup($file->extension)=='image')
-                 <img class="w-16 icondisplay" src="{{ url(Storage::url('app/root/'.$file->path)) }}" alt="{{ $file->name }}"/>
+                 <img class="w-16 icondisplay" src="{{ url(Storage::url($constants['ROOTPATH'].$file->path)) }}" alt="{{ $file->name }}"/>
             @else
                 <img class="w-16 icondisplay " src="{{ checkIconExist($file->extension,'file')}}" alt="{{ $file->name }}"/>
             @endif    
