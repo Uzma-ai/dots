@@ -189,7 +189,7 @@ class FileManagerController extends Controller
                 $defaultfolders = App::where('parentpath',$parentPath)->where('filemanager_display', 1)->where('status', 1)->orderBy('name')->get();
                 $files = FileModel::where('parentpath', $parentPath)->where('status', 1)->where('created_by', auth()->id())->orderBy($sortby, $sortorder)->get();
             }else{
-                $files = RecycleBin::where('tablename', 'file')->where('file_created_by', auth()->id())->get();
+                $files = FileModel::where('status', 0)->where('created_by', auth()->id())->orderBy($sortby, $sortorder)->get();
             }
             $html = view('appendview.pathview')->with('defaultfolders', $defaultfolders)->with('files', $files)->render();
         return response()->json(['html' => $html,'parentPath'=>$parentPath]);
@@ -432,39 +432,32 @@ class FileManagerController extends Controller
     
      public function deleteFile(Request $request){
          
-         // Assume the condition value is passed as a request parameter
-        $type = $request->input('filetype');
-        $id = base64UrlDecode($request->input('filekey')); 
-            $file = FileModel::where('id', $id)->get();
-            if($file){
-                $transformedData = $file->map(function ($item) {
-                    return [
-                        'folder' => $item->folder,
-                        'name' => $item->name,
-                        'extension' => $item->extension,
-                        'filetype' => $item->filetype,
-                        'parentpath' => $item->parentpath,
-                        'path' => $item->path,
-                        'openwith' => $item->openwith,
-                        'tablename' => 'file',
-                        'file_created_by' => $item->created_by,
-                        'created_by' => auth()->id(),
-                        'file_created_at' => $item->created_at,
-                        'file_updated_at' => $item->updated_at,
-                    ];
-                });
-            }
-    
-        $deleteddata = RecycleBin::insert($transformedData->toArray());
-        if($deleteddata){
-                FileModel::where('id', $id)->delete();
-            
-            return response()->json(['message' => 'File deleted Successfully','status'=>true]);
+        $fileKey = base64UrlDecode($request->input('filekey'));
 
-        }else{
-            return response()->json(['message' => 'Something went wrong try again','status'=>false]);
-
+        $file = FileModel::find($fileKey);
+        if (!$file) {
+            return response()->json(['message' => 'File not found', 'status' => false]);
         }
+    
+        $file->status = 0;
+        $file->save();
+    
+        $currentPath = 'root/' . $file->path;
+        $recycleBinPath = 'root/RecycleBin/';
+        $newFileName = $fileKey . '-' . $file->name;
+    
+        try {
+            if (Storage::exists($currentPath)) {
+                Storage::move($currentPath, $recycleBinPath . $newFileName);
+            } else {
+                return response()->json(['message' => 'File does not exist', 'status' => false]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to move the file: ' . $e->getMessage(), 'status' => false]);
+        }
+    
+        return response()->json(['message' => 'File moved to RecycleBin', 'status' => true]);
+          
 
      }
     
