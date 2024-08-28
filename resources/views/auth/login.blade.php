@@ -63,12 +63,28 @@
                     <div class="flex flex-col items-center justify-center space-y-6 mt-5">
                         <div class="flex flex-row items-center">
                             <div class="flex-grow border-t border-c-light-gray w-16 sm:w-20"></div>
-                            <div class="text-gray-700 text-xs sm:text-sm px-3">More ways to download</div>
+                            <div class="text-gray-700 text-xs sm:text-sm px-3">Other ways to login</div>
                             <div class="flex-grow border-t border-c-light-gray w-16 sm:w-20"></div>
                         </div>
                         <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-                            <a href="#" class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on mobile</a>
-                            <a href="#" class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
+
+                            @if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com' || $_SERVER['SERVER_NAME'] == 'localhost')
+                                <a href="{{ url('/') }}/public/apps/Sizaf Server/Dots.apk" download
+                                    class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i
+                                        class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
+                                    mobile</a>
+                                <a href="{{ url('/') }}/public/apps/Sizaf Server/Sizaf Dots.zip" download
+                                    class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i
+                                        class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
+                            @elseif ($_SERVER['SERVER_NAME'] == 'dev-ubt-app04.dev.orientdots.net1')
+                                <a href="{{ url('/') }}/public/apps/Dots Server/Dots.apk" download
+                                    class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i
+                                        class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
+                                    mobile</a>
+                                <a href="{{ url('/') }}/public/apps/Dots Server/Sizaf Dots.zip" download
+                                    class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i
+                                        class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -417,28 +433,28 @@
         }
 
         //start cam automattically for login
-        if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
-            navigator.mediaDevices.enumerateDevices()
-                .then(function(devices) {
-                    let cameraAvailable = devices.some(function(device) {
-                        return device.kind === 'videoinput';
-                    });
-                    if (cameraAvailable) {
-                        CheckFacedata(username).then(function(avilable_facedata) {
-                            if (avilable_facedata) {
-                                showModal('#login', true);
-                            }
-                        });
-                    } else {
-                        return false;
-                    }
-                })
-                .catch(function(error) {
-                    return false;
-                });
-        } else {
-            return false;
-        }
+        // if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+        //     navigator.mediaDevices.enumerateDevices()
+        //         .then(function(devices) {
+        //             let cameraAvailable = devices.some(function(device) {
+        //                 return device.kind === 'videoinput';
+        //             });
+        //             if (cameraAvailable) {
+        //                 CheckFacedata(username).then(function(avilable_facedata) {
+        //                     if (avilable_facedata) {
+        //                         showModal('#login', true);
+        //                     }
+        //                 });
+        //             } else {
+        //                 return false;
+        //             }
+        //         })
+        //         .catch(function(error) {
+        //             return false;
+        //         });
+        // } else {
+        //     return false;
+        // }
 
 
         //check device capable for camera and set support_facelogin data
