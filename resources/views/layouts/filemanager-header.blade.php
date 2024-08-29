@@ -187,7 +187,7 @@
                   @endif
                 </div>
               </div>
-              @if(!empty($filteredPermissions['fileManager']) && in_array('upload', $filteredPermissions['fileManager']))             
+              @if(!empty($filteredPermissions['fileManager']) && in_array('upload', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
               <div class="relative flex items-center upload">
                 <a href="#" class="clickmenu uploadFiles">
                   <button
@@ -199,7 +199,7 @@
               </div>
               @endif
 
-              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']))             
+              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
               <a href="#" class="clickmenu cutFunction disabledicon fimanagertoolpanel"><button class="scissor">
                 <i class="ri-scissors-2-fill ri-lg"></i>
               </button></a>
@@ -208,7 +208,7 @@
               </button></a>
               @endif
 
-              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']))
+              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
               <a href="#" class="clickmenu pasteFunction disabledicon fimanagertoolpanel"><button class="paste">
                 <i class="ri-clipboard-line ri-lg"></i>
               </button></a>
@@ -222,7 +222,7 @@
                 <i class="ri-share-fill ri-lg"></i> 
               </button> -->
 
-              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']))             
+              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
               <a href="#" class="clickmenu deleteFunction disabledicon fimanagertoolpanel"><button class="delete">
                 <i class="ri-delete-bin-line ri-lg"></i>
               </button></a>

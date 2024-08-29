@@ -80,6 +80,15 @@
     transform: none !important;
   }
 
+    .maximized.reduced-height {
+      height: calc(100% - 64px) !important;
+      top: 64px !important;
+    }
+  
+    .draggable {
+      transition: height 0.3s ease-in-out, top 0.3s ease-in-out;
+    }
+  
   .triangle-btn {
     width: 0;
     height: 0;
@@ -105,6 +114,8 @@
   }
 
   .navbar {
+    transition: top 0.4s ease-in-out;
+    top: -100%;
     background: #fdfdfd3d;
     backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -127,6 +138,11 @@
   .navbar #toolbar {
     overflow-x: scroll;
   }
+
+    .navbar.show {
+      top: 0;
+      z-index: 9999999999999999999;
+    }
 
   .taskbar-slide.show {
     top: 0;

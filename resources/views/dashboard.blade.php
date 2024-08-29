@@ -106,7 +106,11 @@
                 </form>
                 <div class="user-info">
                     <h1 class="text-lg font-normal underline underline-offset-8 decoration-1">
-                        {{ ucfirst(Auth::user()->roles->name) }}
+                         @if (Auth::user()->name != 'masteradmin')
+                            {{ (!empty(Auth::user()->roles->name))?ucfirst(Auth::user()->roles->name):'NA' }}
+                         @else
+                         {{ 'Masteradmin'}}
+                         @endif
                     </h1>
                     <h4 class="text-sm">{{ ucfirst(Auth::user()->name) }}</h4>
                 </div>
@@ -114,19 +118,19 @@
             <div class="bottom border-t-2 border-gray-500">
                 <div class="features-list py-5 px-16">
                     <ul>
-                        @if(!empty($filteredPermissions['fileManager']))
+                        @if(!empty($filteredPermissions['fileManager']) || Auth::user()->cID == 0)
                         <li class="flex items-center gap-8 mb-4">
                             <i class="ri-folder-3-fill ri-1x Ad-iconcolor"></i>
                             <a href="{{ route('filemanager') }}">File manager</a>
                         </li>
                         @endif
-                        @if(!empty($filteredPermissions['backendManagement']))
+                        @if(!empty($filteredPermissions['backendManagement']) || Auth::user()->cID == 0)
                         <li class="flex items-center gap-8 mb-4">
                             <i class="ri-bar-chart-fill ri-1x Ad-iconcolor"></i>
                             <a href="{{ route('useradmin') }}">Backend</a>
                         </li>
                         @endif
-                        @if(!empty($filteredPermissions['userManagement']))
+                        @if(!empty($filteredPermissions['userManagement']) || Auth::user()->cID == 0)
                         <li class="flex items-center gap-8 mb-4">
                             <i class="ri-user-fill ri-1x Ad-iconcolor"></i>
                             <a href="{{ route('useradmin') }}">User manage</a>

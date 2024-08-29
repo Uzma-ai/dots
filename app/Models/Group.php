@@ -18,6 +18,7 @@ class Group extends Model
         'sort',
         'sizeMax',
         'sizeUse',
+        'cID',
     ];
     
      public function user()

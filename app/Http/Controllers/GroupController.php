@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Models\Permissions;
+use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
@@ -47,8 +48,10 @@ class GroupController extends Controller
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
-
+        
+        $cid = auth()->user()->cID;
         $input = $request->all();
+        $input['cID'] = $cid;
         $role = Group::create($input);
         return redirect()->route('useradmin')->with('success-group', 'Group created successfully!');  
     }
@@ -57,7 +60,9 @@ class GroupController extends Controller
     {
         $id = $request->id;
         $group = Group::find($id);
-        $groups = view('appendview.editgroup')->with('group',$group)->render();
+        $cid = $group->cID;
+        $company = Company::find($cid);
+        $groups = view('appendview.editgroup')->with('group',$group)->with('company',$company)->render();
         return response()->json($groups);
     }
 
