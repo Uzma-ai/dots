@@ -8,11 +8,7 @@
 @section('content')
 
     <div class="w-full h-full dashboard cs pt-20 relative">
-        <!-- Curtains   -->
-        <div id="curtain" class="open">
-            <div class="left"></div>
-            <div class="right"></div>
-        </div>
+        
 
         <!-- Desktop apps   -->
         <!-- <div class="desktopapps-div w-full overflow-x-auto">

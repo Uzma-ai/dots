@@ -22,6 +22,16 @@
                @if(!empty($filteredPermissions['roleManagement']) && in_array('role-create', $filteredPermissions['roleManagement']))               
                <div class="flex-grow md:w-1/2">
                   <div class="flex items-center justify-end gap-2 md:gap-6">
+                  <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-5/12">
+                  <input
+                    type="text" id="searchterm"
+                    class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none text-c-black outline-none"
+                    placeholder="Search role..."
+                  />
+                  <div class="pt-3 pb-3 pr-4 flex items-center justify-center">
+                  <i class="ri-search-line"></i>
+                  </div>
+                </div>
                     <div>
                         <button type="button" class=" flex items-center justify-center gap-2 bg-c-black text-c-yellow px-4 py-1.5 rounded-md openAddModalButton">
                           <i class="ri-add-circle-fill"></i><span class="text-sm">Add</span>
@@ -32,26 +42,29 @@
                @endif
                
             </div>
-             <div class="mt-3 flex items-center justify-end px-4 gap-2">
+            <!-- searchbar in mobile-->
+          <div
+            class="pl-4 pt-3 mt-3 pb-3 pr-4 w-full flex flex-row justify-between items-center bg-c-light-white-smoke md:hidden"
+            id="mobiletaskbar"
+          >
             <div
-                class="flex items-center rounded overflow-hidden bg-c-white h-8"
+              class="relative w-full flex flex-row items-center justify-end gap-2"
+            >
+              <div
+                class="flex items-center rounded overflow-hidden flex-shrink-0 flex-grow bg-c-white h-8 w-1/12"
               >
-                <input id="searchterm"
-                  type="text"
-                  class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none text-c-black outline-none"
-                  placeholder="Search roles"
+                <input
+                  type="text" id="searchterm"
+                  class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none outline-none w-3/12"
+                  placeholder="Search role..."
                 />
                 <div class="pt-3 pb-3 pr-4 flex items-center justify-center">
-                 <i class="ri-search-line"></i>
+                  <i class="ri-search-line"></i>
                 </div>
               </div>
-              <button
-                  class="text-c-light-black bg-c-gray-3 rounded px-6 py-1 mr-1" id='search'
-                >
-                  Search
-                </button>
+            </div>
           </div>
-
+          
             <!-- info table -->
              <div class="p-4 relative h-full flex flex-col scroll overflow-y-scroll">
             <div class="bg-white cs-table-container border border-c-gray rounded-md">

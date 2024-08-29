@@ -2,7 +2,7 @@
  @if($user->name == "masteradmin")
         @php continue;  @endphp
  @endif
-<tr class="h-16 border">
+<tr class="h-16 border-t">
                       <td class="pl-3 px-2 flex items-center justify-center mt-6">
                         <input
                           type="checkbox"
@@ -37,7 +37,7 @@
                         {{(!empty($user->group->name))?$user->group->name:'NA'}}
                       </td>
                       <td>
-                        <div class="cs flex relative text-sm gap-3">
+                        <div class="cs flex relative text-sm gap-3 pl-3">
                             <div class="relative">
                                 <button type="button" class="dropdown-btn">
                                   Action

@@ -584,12 +584,12 @@ input[type="search"]::-webkit-search-cancel-button {
 /* ****************** This CSS for Login page *********************** */
 
 .login .left-background {
-    background-image: url("../images/Wallpaper.png");
+    background-image: url("../images/login-wallpaper.jpg");
     border-top-right-radius: 100px;
 }
 
 .login .right-background {
-    background-image: url("../images/Wallpaper.png");
+    background-image: url("../images/login-wallpaper.jpg");
     border-top-left-radius: 100px;
 }
 
@@ -1446,18 +1446,18 @@ input[type="button"]:focus {
     top: 0;
     width: 50%;
     height: 100%;
-    background-image: url("../images/wallpaper.png");
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 #curtain .left {
-    border-top-right-radius: 100px;
+    background-image: url("../images/desktop-left.png");
     left: 0;
     transform-origin: top right;
 }
 #curtain .right {
-    border-top-left-radius: 100px;
+    background-image: url("../images/desktop-right.png");
     left: 50%;
     transform-origin: top left;
 }
@@ -1491,19 +1491,19 @@ input[type="button"]:focus {
 @keyframes left-curtain-opening {
     /* 4s */
     from {
-        transform: translateX(0);
+        transform: translateX(-100%);
     }
     to {
-        transform: translateX(-100%);
+        transform: translateX(0);
     }
 }
 
 @keyframes right-curtain-opening {
     /* 4s */
     from {
-        transform: translateX(0);
+        transform: translateX(100%);
     }
     to {
-        transform: translateX(100%);
+        transform: translateX(0);
     }
 }

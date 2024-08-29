@@ -80,15 +80,12 @@
                         <button>
                             <i class="ri-file-excel-2-fill ri-xl"></i>
                         </button>
-                        <<<<<<< HEAD @endif
-                            =======
-
-                            >>>>>>> ad247eeac18998615f54b97831339e49064f4ea2
+                    @endif
                 </div>
             </div>
 
             <!--Main content -->
-            <div class="p-4 relative h-full flex flex-col main-content overflow-y-scroll">
+            <div class="p-4 relative h-full flex flex-col main-content overflow-y-scroll scroll">
                 <div class="users-admin-btn-grp flex items-center relative justify-between flex-wrap">
                     <div class="flex items-center gap-2 flex-wrap">
                         <div class="dropdown inline-block relative">
@@ -96,13 +93,13 @@
                                 !empty($filteredPermissions['groupsManagement']) ||
                                     in_array('group-view', $filteredPermissions['groupsManagement']))
                                 <button
-                                    class="border rounded px-6 py-1 custom-safety-btn custom-outline hover:border-yellow-300">
+                                    class="border rounded px-6 py-1 custom-safety-btn hover:border-yellow-300">
                                     <span class="mr-1">Group Function</span>
                                     <i class="ri-arrow-down-s-fill"></i>
                                 </button>
                             @endif
                             <ul class="dropdown-menu custom-dropdown-menu absolute hidden text-gray-700 shadow bg-custom-pure-white text-xs z-0"
-                                style="width: 8.1rem">
+                                style="width: 11.4rem">
                                 @foreach ($groups as $group)
                                     <li>
                                         <a class="rounded-t custom-bg-hover py-2 px-4 block whitespace-no-wrap px-4 flex justify-between font-normal"
@@ -128,29 +125,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-white cs-table-container border border-gray-3 rounded-md mt-5">
+                <div class="bg-white cs-table-container border border-c-gray rounded-md mt-5">
                     <table class="table-auto w-full">
                         <thead class="h-14">
                             <tr class="bg-c-dark-gray">
-                                <th class="text-c-white font-medium text-left pl-3 text-base rounded-tl-md"></th>
+                                <th class="text-c-white font-medium text-left pl-3 rounded-tl-md"></th>
                                 <th
-                                    class="text-c-white font-medium text-left pl-3 text-base whitespace-nowrap w-1/4 pr-3 md:pr-0">
+                                    class="text-c-white font-medium text-left pl-3 whitespace-nowrap w-1/4 pr-3 md:pr-0">
                                     NickName / Account
                                 </th>
-                                <th class="text-c-white font-medium text-left text-base pl-3 pr-3 md:pr-0">
+                                <th class="text-c-white font-medium text-left pl-3 pr-3 md:pr-0">
                                     <button class="font-medium">
                                         Role <i class="ri-arrow-down-s-fill"></i>
                                     </button>
                                 </th>
-                                <th class="text-c-white font-medium text-left text-base pl-3 pr-3 md:pr-0">
+                                <th class="text-c-white font-medium text-left pl-3 pr-3 md:pr-0">
                                     <button class="font-medium">
                                         Space Usage <i class="ri-arrow-down-s-fill"></i>
                                     </button>
                                 </th>
-                                <th class="text-c-white font-medium text-left text-base pl-3 rounded-tr-md pr-3 md:pr-0">
+                                <th class="text-c-white font-medium text-left pl-3 pr-3 md:pr-0">
                                     Group
                                 </th>
-                                <th></th>
+                                <th class="rounded-tr-md text-c-white font-medium text-left pl-3 pr-3 md:pr-0">Action</th>
                             </tr>
                         </thead>
                         @if (!empty($filteredPermissions['userManagement']) && in_array('user-view', $filteredPermissions['userManagement']))

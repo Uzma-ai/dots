@@ -17,6 +17,11 @@
 
 <body class="login">
     <div class="login-screen w-full h-screen flex items-center justify-center gap-2 relative cs">
+        <!-- Curtains   -->
+        <div id="curtain" class="hidden">
+            <div class="left"></div>
+            <div class="right"></div>
+        </div>
         <!-- main content -->
         <div class="left-background w-1/2 h-full bg-no-repeat bg-cover bg-center">
             <div class="blur-container"></div>
@@ -71,11 +76,11 @@
 
                             @if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com' || $_SERVER['SERVER_NAME'] == 'localhost')
                                 <a href="{{ url('/') }}/public/apps/Sizaf Server/Dots.apk" download
-                                    class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i
+                                    class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
                                     mobile</a>
                                 <a href="{{ url('/') }}/public/apps/Sizaf Server/Sizaf Dots.zip" download
-                                    class="bg-c-black text-white rounded-full px-3 py-2.5 h-10 text-xs sm:text-sm"><i
+                                    class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
                             @elseif ($_SERVER['SERVER_NAME'] == 'dev-ubt-app04.dev.orientdots.net1')
                                 <a href="{{ url('/') }}/public/apps/Dots Server/Dots.apk" download
@@ -94,7 +99,7 @@
 
         <!-- register voice and camera popup -->
         <div id="register" role="dialog"
-            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-10 hidden">
+            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-0 z-10 hidden">
             <div class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-md w-full modal-content">
                 <!-- Sticky header -->
                 <div
@@ -199,7 +204,7 @@
                                                     alt="Profile" class="w-24 h-24 rounded-full object-cover mt-5"
                                                     id="RegisterImage" />
                                                 <a href="{{ route('dashboard') }}"
-                                                    class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 mt-5 text-sm cursor-pointer">Get
+                                                    class="getStartedBtn bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 mt-5 text-sm cursor-pointer">Get
                                                     Started >></a>
                                             </div>
                                         </fieldset>
@@ -214,7 +219,7 @@
 
         <!-- login voice and camera popup -->
         <div id="login" role="dialog"
-            class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-60 z-10">
+            class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-0 z-10">
             <div
                 class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-md w-full bg-c-lighten-gray modal-content">
                 <div
@@ -344,7 +349,7 @@
                                                 </div>
                                             </div>
                                             <a href="{{ route('dashboard') }}"
-                                                class="bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 text-sm mt-2 cursor-pointer">Get
+                                                class="getStartedBtn bg-c-black hover-bg-c-black text-white rounded-full w-5/12 sm:w-4/12 py-2 px-2 text-sm mt-2 cursor-pointer">Get
                                                 Started >></a>
                                         </div>
                                     </fieldset>
@@ -375,6 +380,20 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    // Dashboard opening animation
+    $('.getStartedBtn').on('click', function(event) {
+            event.preventDefault(); 
+            console.log("Button clicked");
+            $('#curtain').removeClass('hidden');
+
+            $('#curtain').addClass('open');
+
+            setTimeout(() => {
+                window.location.href = $(this).attr('href'); 
+            }, 4000);
+        });
+</script>
 <script>
     var avilable_facedata = false;
     var support_facelogin = false;
