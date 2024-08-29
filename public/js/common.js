@@ -495,6 +495,15 @@ $(document).ready(function () {
             var iframeId = $(this).data('iframe-id');
             var iframePopup = $('#alliframelist #iframepopup' + iframeId);
             iframePopup.toggleClass('maximized');
+            let pinIcon = $('#pinned');
+            if (iframePopup.hasClass('maximized')) {
+                if (pinIcon.hasClass('ri-unpin-line')) {
+                    iframePopup.removeClass('reduced-height')
+                    
+                } else {
+                    iframePopup.addClass('reduced-height')
+                }
+            }
         });
 
 
@@ -688,7 +697,8 @@ $(document).ready(function () {
                     // Update the app list container with the updated list
                         if(response.status){
                         $('#alliframelist').html(response.html);
-                        $('#sortable-apps').html(response.html2);
+                            $('#sortable-apps').html(response.html2);
+                            
                         if(response.filekey!=''){
                         $('#alliframelist #'+response.filekey).removeClass('hidden');
                         $('#alliframelist #'+response.filekey).addClass('show');
