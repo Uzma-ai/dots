@@ -526,39 +526,43 @@ $(document).ready(function () {
         });
         
         let isHoveringPopup = false;
-        
-        $(document).on('mouseenter', '#iframeheaders .iframemainheadericon', function() {
-            var iframeId = $(this).data('iframe-id');
-            var iframefileId = $(this).data('iframefile-id');
-            var popupcount = $(this).data('popup-count');
-            if(popupcount >1){
-                $('#iframeheaders #iframetab' + iframeId).removeClass('hidden');
-            }
-        });
-         $(document).on('mouseleave', '#iframeheaders .iframemainheadericon', function() {
-            var iframeId = $(this).data('iframe-id');
-            var iframefileId = $(this).data('iframefile-id');
-            var popupcount = $(this).data('popup-count');
+let isPopupClicked = false;
 
-            if(popupcount >1  && isHoveringPopup!=true){
-                $('#iframeheaders #iframetab' + iframeId).addClass('hidden');
-            }
-        });
-        
-        // Handle hover on the popup element
-        $(document).on('mouseenter', '#iframeheaders .parentiframe', function() {
-            isHoveringPopup = true;
-            //console.log(isHoveringPopup);
-        });
-    
-        $(document).on('mouseleave', '#iframeheaders .parentiframe', function() {
-            isHoveringPopup = false;
-            // Hide the popup if the mouse leaves the popup element and is not hovering the main header icon
-            let iframe = $(this).find('.iframemainheadericon');
-            let iframetab = $(this).data('iframe-id');
-            $('#iframeheaders #iframetab'+iframetab).addClass('hidden');
-        });
+// Mouseenter: Show popup when hovering
+$(document).on('mouseenter', '#iframeheaders .iframemainheadericon', function() {
+    var iframeId = $(this).data('iframe-id');
+    var popupcount = $(this).data('popup-count');
+    if (popupcount > 1) {
+        $('#iframeheaders #iframetab' + iframeId).removeClass('hidden');
+    }
+});
 
+// Mouseleave: Hide popup if not clicked
+$(document).on('mouseleave', '#iframeheaders .iframemainheadericon', function() {
+    var iframeId = $(this).data('iframe-id');
+    var popupcount = $(this).data('popup-count');
+    if (popupcount > 1 && !isPopupClicked) {
+        $('#iframeheaders #iframetab' + iframeId).addClass('hidden');
+    }
+});
+
+// Click: Keep popup open when clicking the icon
+$(document).on('click', '#iframeheaders .iframemainheadericon', function(event) {
+    isPopupClicked = true; // Set flag to keep popup open
+    event.stopPropagation(); // Prevent click from closing the popup immediately
+});
+
+// Close popup when clicking anywhere outside the icon or the popup
+$(document).on('click', function(event) {
+    // Check if the click is outside of the popup and icon
+    if (!$(event.target).closest('#iframeheaders, .iframemainheadericon').length) {
+        isPopupClicked = false; // Reset the flag
+        $('.iframetab').addClass('hidden'); // Hide the popup
+    }
+});
+
+        
+        
         /// click iframe icon 
          $(document).on('click', '#iframeheaders .iframemainheaderpopup', function(e) {
             e.preventDefault();
@@ -570,11 +574,11 @@ $(document).ready(function () {
                 $('#alliframelist #iframepopup'+iframefileId).removeClass('hidden');
                 $('#alliframelist #iframepopup'+iframefileId).removeClass('minimized');
                 $('#alliframelist #iframepopup'+iframefileId).addClass('fall-down');
-                $('#iframeheaders #iframetab'+iframeId).addClass('hidden');
-                if(!$('#alliframelist #iframepopup'+iframefileId).hasClass('show')){
-                    $('#alliframelist #iframepopup'+iframefileId).addClass('show');
+                // $('#iframeheaders #iframetab'+iframeId).addClass('hidden');
+                // if(!$('#alliframelist #iframepopup'+iframefileId).hasClass('show')){
+                //     $('#alliframelist #iframepopup'+iframefileId).addClass('show');
 
-                }
+                // }
                 
 
         });
@@ -869,7 +873,7 @@ $(document).ready(function () {
                 fileRow.append('<td class="py-2 px-4">' + file.name + '</td>');
                 fileRow.append('<td class="py-2 px-4">' + fileSize + '</td>');
                 let progressBarContainer = $('<td class="py-2 px-4"></td>');
-                let progressBar = $('<div class="w-full bg-gray-200 rounded-full h-2.5 relative"><div class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div><i class="ri-check-line text-green-600 absolute right-0 top-0 hidden"></i></div>');
+                let progressBar = $('<div class="w-full bg-gray-200 rounded-full h-2.5 relative"><div class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div></div>');
                 progressBarContainer.append(progressBar);
                 fileRow.append(progressBarContainer);
                 $('#file-list').append(fileRow);

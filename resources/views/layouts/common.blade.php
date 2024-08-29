@@ -75,10 +75,10 @@
             <div id="file-list-container" class="mt-4 space-y-2 hidden">
                 <table class="min-w-full bg-white">
                     <thead>
-                        <tr>
-                            <th class="py-2">Name</th>
-                            <th class="py-2">Size</th>
-                            <th class="py-2">Progress</th>
+                        <tr >
+                            <th class="py-2 px-4 text-left">Name</th>
+                            <th class="py-2 px-4 text-left">Size</th>
+                            <th class="py-2 px-4 text-left">Progress</th>
                         </tr>
                     </thead>
                     <tbody id="file-list"></tbody>

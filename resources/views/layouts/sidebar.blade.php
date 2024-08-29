@@ -24,8 +24,8 @@
                     class="drop-menu cursor-pointer rounded-r-lg"
                   >
                     <a
-                      class="w-full px-6 py-1 flex justify-between items-center bg-c-black rounded-r-xl"
-                      href="filemanager.html"
+                      class="w-full px-6 py-1 flex justify-between items-center bg-c-black text-c-yellow  rounded-r-xl"
+                      href="#"
                     >
                       <span>Position</span>
                       <i

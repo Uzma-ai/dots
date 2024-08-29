@@ -2,15 +2,15 @@
             class="py-4 w-full hidden md:flex flex-row items-center gap-2 taskbar"
           >
             <div
-              class="flex bg-c-white rounded-md w-16 h-8 justify-evenly ml-6"
+              class="flex bg-c-white rounded-md w-16 h-8 justify-evenly ml-6 items-center"
             >
-            <a href="#" class="pt-2 leftArrowClick" data-path ="{{ base64UrlDecode($path) }}" data-leftpath="{{ url('filemanager',['path'=>base64UrlEncode($updatedPath)]) }}">
+            <a href="#" class=" leftArrowClick" data-path ="{{ base64UrlDecode($path) }}" data-leftpath="{{ url('filemanager',['path'=>base64UrlEncode($updatedPath)]) }}">
               <button>
                   <i class="ri-arrow-left-line ri-lg {{ (empty(base64UrlDecode($path)) || base64UrlDecode($path)=='/') ? 'disabledicon' :''}}"></i>
               </button>
             </a>
 
-            <a href="#" class="pt-2 rightArrowClick" data-path ="{{ (session()->has('rightarrowpath')) ? url('filemanager',['path'=>base64UrlEncode(session('rightarrowpath'))]) : '' }}">
+            <a href="#" class=" rightArrowClick" data-path ="{{ (session()->has('rightarrowpath')) ? url('filemanager',['path'=>base64UrlEncode(session('rightarrowpath'))]) : '' }}">
             <button>
                 <i class="ri-arrow-right-line ri-lg {{ (session()->has('rightarrowpath')) ? : 'disabledicon' }}"></i>
             </button>

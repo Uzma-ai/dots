@@ -5,7 +5,7 @@
         @if(!empty($iframedetail))
         <?php //print_r($iframedetail['filetype']);die;?>
                <!--Iframe popup-->
-                <div id="iframepopup{{ $iframedetail['filetype'].$iframedetail['filekey'] }}" data-app-id="iframepopup{{$iframedetail['filetype'].$iframedetail['filekey'] }}" class="draggableelement box popupiframe fixed inset-0 bg-black-900 bg-opacity-50 flex items-center justify-center rounded-lg hidden">
+                <div id="iframepopup{{ $iframedetail['filetype'].$iframedetail['filekey'] }}" data-app-id="iframepopup{{$iframedetail['filetype'].$iframedetail['filekey'] }}" class="draggableelement draggable-clock box popupiframe fixed inset-0 bg-black-900 bg-opacity-50 flex items-center justify-center rounded-lg hidden" style="z-index: 1;">
                         <div class="draggable bg-opacity-70  shadow-lg w-full h-full relative">
                         <div class="flex justify-between items-center p-1 pr-2 border-b bg-c-gray-gradient">
                             <span class="text-lg flex font-semibold">

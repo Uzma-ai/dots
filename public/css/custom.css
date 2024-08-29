@@ -1312,6 +1312,11 @@
     z-index: -1;
   }
 
+  //custom bg transparent
+  .custom-bg-iframe{
+    background: rgb(235 224 224 / 86%) !important;
+  }
+
   .login #progressbar li.active:before,
   .login #progressbar li.active:after {
     background: var(--color-dark-yellow);
