@@ -151,7 +151,7 @@
                     onclick="toggleDropMenu(this)"
                     class="drop-menu cursor-pointer rounded-r-lg"
                   >
-                  @if(!empty($filteredPermissions['userManagement'])) 
+                  @if(!empty($filteredPermissions['userManagement']) || Auth::user()->cID == 0) 
                     <div
                       class="w-full px-6 py-3 flex justify-between items-center"
                       href="#"
@@ -164,7 +164,7 @@
                     </div>
                     @endif
                     <ul class="drop-list text-sm space-y-1">
-                    @if(!empty($filteredPermissions['userManagement']))
+                    @if(!empty($filteredPermissions['userManagement']) || Auth::user()->cID == 0)
                       <li>
                         <a
                           href="{{ route('useradmin') }}"
@@ -177,7 +177,7 @@
                         </a>
                       </li>
                       @endif
-                      @if(!empty($filteredPermissions['roleManagement']) && !empty($filteredPermissions['userManagement']))
+                      @if(!empty($filteredPermissions['roleManagement']) && !empty($filteredPermissions['userManagement']) || Auth::user()->cID == 0 )
                       <li>
                         <a
                           href="{{ route('rolesadmin') }}"
@@ -189,7 +189,8 @@
                           ></i>
                         </a>
                       </li>
-                      
+                      @endif
+                      @if(!empty($filteredPermissions['userManagement']) || Auth::user()->cID == 0)
                       <li>
                         <a
                           href="{{ route('permissionsadmin') }}"
@@ -202,7 +203,19 @@
                         </a>
                       </li>
                       @endif
-                     
+                      @if(auth()->user()->cID == 0)
+                      <li>
+                        <a
+                          href="{{ route('companies') }}"
+                          class="block py-2 px-8 rounded-r-md w-full flex justify-between items-center"
+                        >
+                          <span class="font-normal">Companies</span>
+                          <i
+                            class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl"
+                          ></i>
+                        </a>
+                      </li>
+                      @endif
                       <!-- <li>
                         <a
                           href="#"
@@ -220,7 +233,7 @@
 
                 @if(!empty($filteredPermissions['backendManagement']) &&
                 in_array('logs', $filteredPermissions['backendManagement'])
-                )
+                || Auth::user()->cID == 0 )
                 <li>
                   <div
                     role="button"
@@ -266,7 +279,7 @@
 
                 @if(!empty($filteredPermissions['backendManagement']) && 
                   in_array('storage', $filteredPermissions['backendManagement']) &&
-                  in_array('backups', $filteredPermissions['backendManagement'])
+                  in_array('backups', $filteredPermissions['backendManagement']) || Auth::user()->cID == 0
                   )
                 <li>
                   <div
@@ -309,7 +322,7 @@
                         </a>
                       </li>
                       @if(!empty($filteredPermissions['backendManagement']) &&
-                        in_array('share', $filteredPermissions['backendManagement'])
+                        in_array('share', $filteredPermissions['backendManagement']) || Auth::user()->cID == 0
                       )
                       <li>
                         <a

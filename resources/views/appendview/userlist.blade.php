@@ -44,7 +44,7 @@
                                 <i class="ri-arrow-down-s-line"></i>
                                 </button>
                                 <div class="absolute text-xs dropdown-option z-10 min-w-full bg-gray-100 border rounded-md">
-                                @if(!empty($filteredPermissions['userManagement']) && in_array('user-delete', $filteredPermissions['userManagement']))
+                                @if(!empty($filteredPermissions['userManagement']) && in_array('user-delete', $filteredPermissions['userManagement']) || Auth::user()->cID == 0)
                 
                                     <button  class="suspend-user block  @php echo ($user->status == 0)?'bg-yellow-300':'' @endphp w-full px-2 py-1" data-id="{{ $user->id }}">
                                             Deactivated
@@ -56,7 +56,7 @@
                                         </button>
                                       </a>
                                       @endif
-                                      @if(!empty($filteredPermissions['userManagement']) && in_array('user-edit', $filteredPermissions['userManagement']))
+                                      @if(!empty($filteredPermissions['userManagement']) && in_array('user-edit', $filteredPermissions['userManagement']) || Auth::user()->cID == 0)
                                         <button  class="editUsers block bg-white-300 w-full px-2 py-1" data-id="{{$user->id}}">
                                         Edit
                                         </button>

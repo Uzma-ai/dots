@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\Roles;
 use App\Models\Permissions;
+use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Crypt;
@@ -49,10 +50,22 @@ class UserController extends Controller
     public function userAdmin()
     {
         $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
-        $groups = Group::get();
-        $roles = Roles::get();
-        $permissions = Permissions::get();
-        $users = User::with(['roles', 'group'])->paginate(10);
+
+        //for masteradmin
+         if(auth()->user()->cID == 0){
+                    $groups = Group::get();
+                    $roles = Roles::get();
+                    $permissions = Permissions::get();
+                    $users = User::with(['roles', 'group'])->paginate(10);
+                    $company = '';
+        }else{
+                    $cid = auth()->user()->cID;
+                    $groups = Group::where('cID',$cid)->get();
+                    $roles = Roles::where('cID',$cid)->get();
+                    $permissions = Permissions::get();
+                    $company = Company::find($cid);
+                    $users = User::where('cID',$cid)->with(['roles', 'group'])->paginate(10);
+        }
         return view('userlist', compact('groups', 'roles', 'users', 'permissions', 'filteredPermissions'));
     }
 
@@ -99,9 +112,11 @@ class UserController extends Controller
                 return $this->sendError('Validation Error.', $validator->errors());
             }
 
+            $cid = auth()->user()->cID;
             $input = $request->all();
             $input['ip_address'] =  $request->ip();
             $input['password'] = Hash::make($request->password);
+            $input['cID'] = $cid;
             $user = User::create($input);
             if ($user) {
                 $username = $input['name'];
@@ -249,6 +264,51 @@ class UserController extends Controller
     public function voice(Request $request)
     {
         dd($request);
+    }
+
+    public function createSuperadmin(Request $request)
+    {
+
+         $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());       
+        }
+
+        $input = $request->all();
+        $input['ip_address'] =  $request->ip();
+        $input['upload_limit'] = 0;
+        $input['password'] = bcrypt($input['password']);
+        $id = $input['cID'];
+        $group = Group::where("cID",$id)->first();
+        $role = Roles::where("cID",$id)->first();
+        if(!empty($group) && !empty($role)){
+        $input['groupID'] = $group->id;
+        $input['cID'] = $group->cID;
+        $input['roleID'] = $role->id;
+        }
+        
+        $user = User::create($input);
+        if($user){
+            $group = Group::find($user->groupID);
+            $username = $input['name'];
+            $basePath = storage_path('app/root/'.$group->name.'/'.$username);
+            $folders = ['Desktop', 'Documents', 'Downloads', 'Gallery', 'Recyclebin'];
+        
+            // Create the folders
+            foreach ($folders as $folder) {
+                $folderPath = $basePath . '/' . $folder;
+                if (!File::exists($folderPath)) {
+                    File::makeDirectory($folderPath, 0755, true);
+                }
+            }
+
+        }
+        return redirect()->route('useradmin')->with('super-success', 'SuperAdmin created successfully!');  
     }
 }
 

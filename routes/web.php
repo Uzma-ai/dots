@@ -17,6 +17,7 @@ use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Jobs\ConfigClearJob;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\FileSharingController;
 
 Route::get('/', function () {
     return redirect(route('dashboard'));
@@ -117,6 +118,8 @@ Route::middleware(['blockIP'])->group(function () {
     ->name('rolesadmin')->middleware('checkPermis.roleManagement');
     Route::get('permissionsadmin', [PermissionsController::class, 'permissions'])
     ->name('permissionsadmin')->middleware('checkPermis.roleManagement');
+    //Superadmin routs
+    Route::post('superadmin-create', [App\Http\Controllers\UserController::class, 'createSuperadmin'])->name('superadmin-create');
     //roles routes
     Route::get('roles', [RolesController::class, 'index'])->name('roles');
     Route::get('roles/{id}', [RolesController::class, 'index']);
@@ -175,7 +178,18 @@ Route::middleware(['blockIP'])->group(function () {
     // Route::post('sendReply', [MessageController::class, 'sendReply'])->name('sendReply');
     Route::get('getMessage', [MessageController::class, 'getMessageData'])->name('getMessageData');
 });
+
 Route::get('fileExpSearch', [FileManagerController::class, 'fileExpSearch'])->name('fileExp-list');
 Route::get('leftarrowclick', [FileManagerController::class, 'leftArrowClick'])->name('leftarrowclick');
 Route::get('rightarrowclick', [FileManagerController::class, 'rightArrowClick'])->name('rightarrowclick');
+
+//company routes
+Route::get('company', [App\Http\Controllers\CompanyController::class, 'index'])->name('companies');
+Route::get('companyList', [App\Http\Controllers\CompanyController::class, 'companyList'])->name('company-list');
+Route::post('company-create', [App\Http\Controllers\CompanyController::class, 'create'])->name('company-create');
+Route::get('company-edit', [App\Http\Controllers\CompanyController::class, 'edit'])->name('company-edit');
+Route::post('company-update/{id}', [App\Http\Controllers\CompanyController::class, 'update'])->name('company-update');
+Route::get('company-delete/{id}', [App\Http\Controllers\CompanyController::class, 'destroy'])->name('company-delete');
+
+
 

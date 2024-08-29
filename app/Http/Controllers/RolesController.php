@@ -49,9 +49,14 @@ class RolesController extends Controller
         $input = $request->all();
         if($input['searchTerm']){
             $search = $input['searchTerm'];
-            $roles = Roles::where('name','LIKE','%'.$search.'%')->get();
+            $roles = Roles::where('name', 'LIKE', '%' . $search . '%')->get();
         }else{
-        $roles = Roles::paginate(10);
+              if(auth()->user()->cID == 0){
+                $roles = Roles::paginate(10);
+                }else{
+                $cid = auth()->user()->cID;
+                $roles = Roles::where('cID',$cid)->paginate(10);  
+                }
         }
         $role = view('appendview.roleslist')->with('roles',$roles)->with('filteredPermissions', $filteredPermissions)->render();
         return response()->json($role);
@@ -88,8 +93,10 @@ class RolesController extends Controller
             return $this->sendError('Validation Error.', $validator->errors());       
         }
 
+        $cid = auth()->user()->cID;
         $input = $request->all();
         $input['name'] = preg_replace('/[^A-Za-z0-9 ]/', '', $input['name']);
+        $input['cID'] = $cid;
         $role = Roles::create($input);
          return redirect()->route('rolesadmin')->with('success', 'Roles created successfully!');
            
