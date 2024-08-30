@@ -38,11 +38,11 @@ class UsersSeeder extends Seeder
         ]);
 
         //Masteradmin
-        //  User::factory()->create([
-        //     'name' => 'masteradmin',
-        //     'cID'  => 0,
-        //     'email' => 'masteradmin@sizaf.com',
-        //     'password' => Hash::make('sizaf@dots'),
-        // ]);
+        User::factory()->create([
+            'name' => 'masteradmin',
+            'cID'  => 0,
+            'email' => 'masteradmin@sizaf.com',
+            'password' => Hash::make('sizaf@dots'),
+        ]);
     }
 }
