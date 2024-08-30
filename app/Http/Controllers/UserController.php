@@ -56,7 +56,7 @@ class UserController extends Controller
                     $groups = Group::get();
                     $roles = Roles::get();
                     $permissions = Permissions::get();
-                    $users = User::with(['roles', 'group'])->where('id','!=',Auth::id())->paginate(10);
+                    $users = User::with(['roles', 'group'])->paginate(10);
                     $company = '';
         }else{
                     $cid = auth()->user()->cID;
@@ -64,7 +64,7 @@ class UserController extends Controller
                     $roles = Roles::where('cID',$cid)->get();
                     $permissions = Permissions::get();
                     $company = Company::find($cid);
-                    $users = User::where('cID',$cid)->where('id','!=',Auth::id())->with(['roles', 'group'])->paginate(10);
+                    $users = User::where('cID',$cid)->with(['roles', 'group'])->paginate(10);
         }
         return view('userlist', compact('groups', 'roles', 'users', 'permissions', 'filteredPermissions'));
     }
@@ -75,9 +75,9 @@ class UserController extends Controller
         $input = $request->all();
         if ($input['searchTerm']) {
             $search = $input['searchTerm'];
-            $users = User::where('name', 'LIKE', '%' . $search . '%')->get();
+            $users = User::where('name', 'LIKE', '%' . $search . '%')->where('id','!=',Auth::id())->get();
         } else {
-            $users = User::paginate(10);
+            $users = User::where('id','!=',Auth::id())->paginate(10);
         }
         $user = view('appendview.userlist')->with('users', $users)->with('filteredPermissions',$filteredPermissions)->render();
         return response()->json($user);
