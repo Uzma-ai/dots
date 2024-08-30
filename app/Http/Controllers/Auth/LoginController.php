@@ -96,9 +96,9 @@ class LoginController extends Controller
     {
         $user = User::where('name', $request->username)->first();
         if ($user) {
-            // if ($request->username!="masteradmin" || $request->username!="dotsmasteradmin") {
-            $user->is_support_face = 0;
-            // }
+            if ($request->username != "dotsmasteradmin") {
+                $user->is_support_face = $request->status;
+            }
             $user->save();
             return json_encode(['status' => true, 'msg' => "Face support."]);
         }
