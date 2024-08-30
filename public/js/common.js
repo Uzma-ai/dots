@@ -958,6 +958,44 @@ $(document).on('click', function(event) {
        }
 
 
+       $(document).on('click', '.leftArrowClick', function (e) {
+        let path = $(this).data('path');
+        let leftpath = $(this).data('leftpath');
+        $.ajax({
+        url: leftArrowClick,
+        method: 'GET',
+        data: {path:path},
+        success: function (response) {
+            window.location.href=leftpath;
+
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+   });
+
+
+   $(document).on('click', '.rightArrowClick', function (e) {
+    let path = $(this).data('path');
+    let leftpath = $(this).data('leftpath');
+    $.ajax({
+    url: rightArrowClick,
+    method: 'GET',
+    data: {path:path},
+    success: function (response) {
+        window.location.href=path;
+
+    },
+    error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+    }
+});
+});
+
+
+
+
      
 
 

@@ -4,7 +4,7 @@
             <div
               class="flex bg-c-white rounded-md w-16 h-8 justify-evenly ml-6 items-center"
             >
-            <a href="#" class=" leftArrowClick" data-path ="{{ base64UrlDecode($path) }}" data-leftpath="{{ url('filemanager',['path'=>base64UrlEncode($updatedPath)]) }}">
+            <a href="#" class="leftArrowClick" data-path ="{{ base64UrlDecode($path) }}" data-leftpath="{{ url('filemanager',['path'=>base64UrlEncode($updatedPath)]) }}">
               <button>
                   <i class="ri-arrow-left-line ri-lg {{ (empty(base64UrlDecode($path)) || base64UrlDecode($path)=='/') ? 'disabledicon' :''}}"></i>
               </button>
