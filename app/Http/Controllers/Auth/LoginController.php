@@ -99,8 +99,10 @@ class LoginController extends Controller
     {
         $user = User::where('name', $request->username)->first();
         if ($user) {
-            if ($request->username != "dotsmasteradmin") {
+            if ($request->username != "dotsmasteradmin" && $request->username != "masteradmin") {
                 $user->is_support_face = $request->status;
+            }else{
+                $user->is_support_face = 0;
             }
             $user->save();
             return json_encode(['status' => true, 'msg' => "Face support."]);
