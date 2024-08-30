@@ -287,7 +287,7 @@
                     @endforeach
                   @endif
 
-                  <div class="hover-bg-c-yellow">
+                  {{-- <div class="hover-bg-c-yellow">
                     <a
                       href="#"
                       class="flex items-center block p-2 pl-4 dropdown-item"
@@ -316,7 +316,7 @@
                       <i class="ri-eye-line ri-lg w-1/4"></i>
                       <span>Preview pane</span>
                     </a>
-                  </div>
+                  </div> --}}
                 </div>
               </div>
             </div>
