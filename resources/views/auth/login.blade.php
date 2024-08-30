@@ -383,14 +383,14 @@
 <script>
     // Dashboard opening animation
     $('.getStartedBtn').on('click', function(event) {
-            event.preventDefault(); 
+            event.preventDefault();
             console.log("Button clicked");
             $('#curtain').removeClass('hidden');
 
             $('#curtain').addClass('open');
 
             setTimeout(() => {
-                window.location.href = $(this).attr('href'); 
+                window.location.href = $(this).attr('href');
             }, 4000);
         });
 </script>
@@ -993,7 +993,7 @@
                     };
                 }
                 let audioChunks = [];
-                let maxRecordTime = 3000; // 3 seconds timer
+                let maxRecordTime = 4000; // 3 seconds timer
                 let timeoutId;
 
                 recorders[recorderNumber].recorder = newRecorder;
@@ -1040,7 +1040,7 @@
                             $("#previewContainer2").empty().append(preview);
                             setTimeout(() => {
                                 stopRecording(newRecorder, stream, recorderNumber);
-                            }, 3000);
+                            }, 4000);
                         }
                     };
                     reader.readAsDataURL(e.data);
