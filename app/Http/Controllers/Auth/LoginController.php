@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Jenssegers\Agent\Agent;
 use Stevebauman\Location\Facades\Location;
 use App\Helpers\ActivityHelper;
+use Illuminate\Support\Facades\Artisan;
 
 class LoginController extends Controller
 {
@@ -31,6 +32,7 @@ class LoginController extends Controller
 
     public function index()
     {
+        Artisan::call('config:clear');
         return view('auth.login');
     }
 

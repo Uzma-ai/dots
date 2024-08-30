@@ -639,6 +639,7 @@
 
     // hideModal - Hide the modal by adding the hidden class
     function hideModal(id) {
+        $(id).find("#camera-error").removeClass("hidden");
         $(id).addClass("hidden");
     }
 
