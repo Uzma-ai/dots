@@ -11,5 +11,4 @@ storage/app/root/Downloads/*
 storage/app/root/Gallery/*
 storage/app/root/Recyclebin/*
 storage/app/imports/*
-config/database.php
 .htaccess
