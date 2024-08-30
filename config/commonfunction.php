@@ -109,9 +109,9 @@ function checkLightApp($ext){
     if (in_array($ext,$ExtsDoc)) {
         return "Docx";
     } elseif (in_array($ext,$ExtsPre)) {
-        return "EXCEL";
-    } elseif (in_array($ext,$ExtsSheet)) {
         return "PPT";
+    } elseif (in_array($ext,$ExtsSheet)) {
+        return "EXCEL";
     }elseif (in_array($ext,$ExtsImage)) {
         return "DotsImageViewer";
     }elseif (in_array($ext,$ExtsVideo) || in_array($ext,$ExtsAudio)) {

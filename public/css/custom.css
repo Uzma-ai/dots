@@ -141,7 +141,7 @@
 
     .navbar.show {
       top: 0;
-      z-index: 9999999999999999999;
+      z-index: 999999;
     }
 
   .taskbar-slide.show {
@@ -1328,7 +1328,6 @@
     z-index: -1;
   }
 
-  //custom bg transparent
   .custom-bg-iframe{
     background: rgb(235 224 224 / 86%) !important;
   }

@@ -482,7 +482,21 @@ $(document).ready(function () {
     });
     
     // Close button functionality
-        $(document).on('click', '#alliframelist .closeiframe-btn', function() {
+        $(document).on('click', '#alliframelist .closeiframe-btn', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const appkey = this.getAttribute('data-appkey');
+            const filekey = this.getAttribute('data-filekey');
+            const filetype = this.getAttribute('data-filetype');
+            const fileid = this.getAttribute('data-iframefile-id');
+            closeiframe(appkey,filekey,fileid,filetype);
+        });
+
+        // Close button functionality
+        $(document).on('click', '#iframeheaders .popup .iframefilepopupclosebtn', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert("hello");
             const appkey = this.getAttribute('data-appkey');
             const filekey = this.getAttribute('data-filekey');
             const filetype = this.getAttribute('data-filetype');
@@ -490,6 +504,8 @@ $(document).ready(function () {
             closeiframe(appkey,filekey,fileid,filetype);
         });
     
+        
+
         // Maximize button functionality
         $(document).on('click', '#alliframelist .maximizeiframe-btn', function() {
             var iframeId = $(this).data('iframe-id');
@@ -577,15 +593,15 @@ $(document).on('click', function(event) {
             e.preventDefault();
             var iframeId = $(this).data('iframe-id');
             var iframefileId = $(this).data('iframefile-id');
-            console.log(iframefileId);
             //var popupcount = $(this).data('popup-count');
            
                 $('#alliframelist #iframepopup'+iframefileId).removeClass('hidden');
                 $('#alliframelist #iframepopup'+iframefileId).removeClass('minimized');
                 $('#alliframelist #iframepopup'+iframefileId).addClass('fall-down');
-                // $('#iframeheaders #iframetab'+iframeId).addClass('hidden');
+                console.log('#iframeheaders #iframetab'+iframeId);
+                $('#iframeheaders #iframetab'+iframeId).addClass('hidden');
                 // if(!$('#alliframelist #iframepopup'+iframefileId).hasClass('show')){
-                //     $('#alliframelist #iframepopup'+iframefileId).addClass('show');
+                //     $('#alliframelist #iframepopup'+iframefileId).removeClass('show');
 
                 // }
                 

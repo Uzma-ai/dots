@@ -1,4 +1,4 @@
-@extends('layouts.common')
+@extends('layouts.filemanagercommon')
 @section('title', 'File Manager')
 @section('styles')
 <!-- <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'dashbord.css') }}">
@@ -263,10 +263,8 @@ if(empty($updatedPath)){
   // const createFileRoute = @json(route('createfile'));
   // const showFileDetail = @json(route('showpathdetail'));
   let path = @json($path);
-  let navbar = false;
 </script>
     <script>
-    $('.navbarhead').hide();
  
   document.addEventListener("DOMContentLoaded", () => {
     //  document.querySelector('.newfiledropdown').addEventListener('click', function() {
@@ -311,27 +309,6 @@ if(empty($updatedPath)){
     // search functionality
     $('#searchFiles').on('keyup', function() {
       var query = $(this).val().trim();
-<<<<<<< Updated upstream
-      if (query.length > 0) {
-          $.ajax({
-              url: "{{ route('fileExp-list') }}", 
-              method: 'GET',
-              data: { searchFiles: query, path: path },
-              success: function(data) {
-                $('.loaddetails').html(data.html);
-              },
-              error: function (xhr, status, error) {
-                  console.error(xhr.responseText);
-              }
-          });
-      } else {
-        showapathdetail(path);
-      }
-    });
-
-
-  });  
-=======
         if (query.length > 0) {
             $.ajax({
                 url: "{{ route('fileExp-list') }}", 
@@ -361,7 +338,6 @@ if(empty($updatedPath)){
     if (popup) toggleClass(popup, "hidden");
     else console.error(`Popup with id ${popupId} not found.`);
   }; 
->>>>>>> Stashed changes
     
   </script>
 
