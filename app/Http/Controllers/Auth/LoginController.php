@@ -33,6 +33,7 @@ class LoginController extends Controller
     public function index()
     {
         Artisan::call('config:clear');
+        Artisan::call('cache:clear');
         return view('auth.login');
     }
 

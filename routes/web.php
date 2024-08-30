@@ -24,9 +24,10 @@ Route::get('/', function () {
 });
 Route::get('clear', function () {
     Artisan::call('config:clear');
+    Artisan::call('cache:clear');
     ConfigClearJob::dispatch();
-    return "cleared";
-});
+    return view('errors.clear');
+})->name('clear');
 
 Route::get('dummydata',function(){
     return view('dummy');
