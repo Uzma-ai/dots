@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Mpdf\Mpdf;
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use App\Helpers\PermissionHelper;
 
 class OverviewController extends Controller
 {
@@ -28,7 +29,7 @@ class OverviewController extends Controller
 
  public function index()
  {
-  
+    $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
       //Logins------------------
 
   // $loginsData = Activity::where('action', 'Log In')->get();
@@ -215,7 +216,8 @@ class OverviewController extends Controller
       $activityDelete = Activity::where('action', 'Delete')->count();
 
 
-      return view('overview',compact('totalUsers','countOnline','countOffline','activityUpload','activityCreate','activityEdit','activityDelete','Users','file','sizeMaxData','usersDataGraph','newUsersData','loginCounts','UsersGroup','activity','GroupSizePi','sizesData','maxSizes', 'actualdata', 'totalSizeUsesr', 'totalSizeUsesGroup'));
+      return view('overview',compact('totalUsers','countOnline','countOffline','activityUpload','activityCreate','activityEdit','activityDelete','Users','file','sizeMaxData','usersDataGraph','newUsersData','loginCounts','UsersGroup','activity','GroupSizePi','sizesData','maxSizes', 'actualdata', 'totalSizeUsesr', 'totalSizeUsesGroup', 'filteredPermissions'));
+    
     }
 
 

@@ -148,7 +148,7 @@ $(document).ready(function () {
          $('.fimanagertoolpanel').removeClass('disabledicon');
     }
 // end selection
-       contextMenuList(contexttypes);
+    contextMenuList(contexttypes);
      positionAndShowMenu(appContextMenu, event);
    } else if (target.closest(".allapplist").length) {
        contextMenuList('rightclick');
@@ -234,6 +234,8 @@ $(document).ready(function () {
             success: function (response) {
                 // Update the app list container with the updated list
                 $('.loaddetails').html(response.html);
+                $('.sortingcheck').addClass('hidden');
+                $('.sorting'+sort_by+'-'+sort_order).removeClass('hidden');
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
@@ -360,6 +362,23 @@ $(document).ready(function () {
             }
         });
 
+        // $(document).on('dblclick', '.dashboardefaultdapp .selectapp', function (e) {
+        //     e.preventDefault();
+        //     if($(this).hasClass('openiframe')){
+        //         const appkey = this.getAttribute('data-appkey');
+        //         const filekey = this.getAttribute('data-filekey');
+        //         const filetype = this.getAttribute('data-filetype');
+        //         const apptype = this.getAttribute('data-apptype');
+        //         const originalIcon = $(this).find('.icondisplay');
+        //         const imgicon =  $('#iframeheaders #iframeiconimage'+filetype+appkey);
+        //         animateIcon(imgicon, originalIcon, function() {
+        //             const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype};
+        //             openiframe(iframedata);
+                 
+        //         });           
+        //      }
+        // });
+
 
 
         // cut file 
@@ -421,6 +440,18 @@ $(document).ready(function () {
                 copyFunction(filepath,'copy',filetype,filekey);
                 $('.selectapp').removeClass('.selectedfile');
          });
+
+         $(document).on('click', '.context-menulist .deleteFunction', function (e) {
+            e.preventDefault();
+                const filekey = $('.selectedfile').attr('data-filekey');
+                const appkey = $('.selectedfile').attr('data-appkey');
+                const filepath = $('.selectedfile').attr('data-path');
+                const filetype = $('.selectedfile').attr('data-filetype');
+                const fileid = this.getAttribute('data-iframefile-id');
+                deleteFunction(filekey);
+                closeiframe(appkey,filekey,fileid,filetype);
+                $('.selectapp').removeClass('.selectedfile');
+         });
          $(document).on('click', '.context-menulist .cutFunction', function (e) {
             e.preventDefault();
                 const filekey = $('.selectedfile').attr('data-filekey');
@@ -451,7 +482,21 @@ $(document).ready(function () {
     });
     
     // Close button functionality
-        $(document).on('click', '#alliframelist .closeiframe-btn', function() {
+        $(document).on('click', '#alliframelist .closeiframe-btn', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const appkey = this.getAttribute('data-appkey');
+            const filekey = this.getAttribute('data-filekey');
+            const filetype = this.getAttribute('data-filetype');
+            const fileid = this.getAttribute('data-iframefile-id');
+            closeiframe(appkey,filekey,fileid,filetype);
+        });
+
+        // Close button functionality
+        $(document).on('click', '#iframeheaders .popup .iframefilepopupclosebtn', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert("hello");
             const appkey = this.getAttribute('data-appkey');
             const filekey = this.getAttribute('data-filekey');
             const filetype = this.getAttribute('data-filetype');
@@ -459,11 +504,22 @@ $(document).ready(function () {
             closeiframe(appkey,filekey,fileid,filetype);
         });
     
+        
+
         // Maximize button functionality
         $(document).on('click', '#alliframelist .maximizeiframe-btn', function() {
             var iframeId = $(this).data('iframe-id');
             var iframePopup = $('#alliframelist #iframepopup' + iframeId);
             iframePopup.toggleClass('maximized');
+            let pinIcon = $('#pinned');
+            if (iframePopup.hasClass('maximized')) {
+                if (pinIcon.hasClass('ri-unpin-line')) {
+                    iframePopup.removeClass('reduced-height')
+                    
+                } else {
+                    iframePopup.addClass('reduced-height')
+                }
+            }
         });
 
 
@@ -495,55 +551,59 @@ $(document).ready(function () {
         });
         
         let isHoveringPopup = false;
-        
-        $(document).on('mouseenter', '#iframeheaders .iframemainheadericon', function() {
-            var iframeId = $(this).data('iframe-id');
-            var iframefileId = $(this).data('iframefile-id');
-            var popupcount = $(this).data('popup-count');
-            if(popupcount >1){
-                $('#iframeheaders #iframetab' + iframeId).removeClass('hidden');
-            }
-        });
-         $(document).on('mouseleave', '#iframeheaders .iframemainheadericon', function() {
-            var iframeId = $(this).data('iframe-id');
-            var iframefileId = $(this).data('iframefile-id');
-            var popupcount = $(this).data('popup-count');
+let isPopupClicked = false;
 
-            if(popupcount >1  && isHoveringPopup!=true){
-                $('#iframeheaders #iframetab' + iframeId).addClass('hidden');
-            }
-        });
-        
-        // Handle hover on the popup element
-        $(document).on('mouseenter', '#iframeheaders .parentiframe', function() {
-            isHoveringPopup = true;
-            //console.log(isHoveringPopup);
-        });
-    
-        $(document).on('mouseleave', '#iframeheaders .parentiframe', function() {
-            isHoveringPopup = false;
-            // Hide the popup if the mouse leaves the popup element and is not hovering the main header icon
-            let iframe = $(this).find('.iframemainheadericon');
-            let iframetab = $(this).data('iframe-id');
-            $('#iframeheaders #iframetab'+iframetab).addClass('hidden');
-        });
+// Mouseenter: Show popup when hovering
+$(document).on('mouseenter', '#iframeheaders .iframemainheadericon', function() {
+    var iframeId = $(this).data('iframe-id');
+    var popupcount = $(this).data('popup-count');
+    if (popupcount > 1) {
+        $('#iframeheaders #iframetab' + iframeId).removeClass('hidden');
+    }
+});
 
+// Mouseleave: Hide popup if not clicked
+$(document).on('mouseleave', '#iframeheaders .iframemainheadericon', function() {
+    var iframeId = $(this).data('iframe-id');
+    var popupcount = $(this).data('popup-count');
+    if (popupcount > 1 && !isPopupClicked) {
+        $('#iframeheaders #iframetab' + iframeId).addClass('hidden');
+    }
+});
+
+// Click: Keep popup open when clicking the icon
+$(document).on('click', '#iframeheaders .iframemainheadericon', function(event) {
+    isPopupClicked = true; // Set flag to keep popup open
+    event.stopPropagation(); // Prevent click from closing the popup immediately
+});
+
+// Close popup when clicking anywhere outside the icon or the popup
+$(document).on('click', function(event) {
+    // Check if the click is outside of the popup and icon
+    if (!$(event.target).closest('#iframeheaders, .iframemainheadericon').length) {
+        isPopupClicked = false; // Reset the flag
+        $('.iframetab').addClass('hidden'); // Hide the popup
+    }
+});
+
+        
+        
         /// click iframe icon 
          $(document).on('click', '#iframeheaders .iframemainheaderpopup', function(e) {
             e.preventDefault();
             var iframeId = $(this).data('iframe-id');
             var iframefileId = $(this).data('iframefile-id');
-            console.log(iframefileId);
             //var popupcount = $(this).data('popup-count');
            
                 $('#alliframelist #iframepopup'+iframefileId).removeClass('hidden');
                 $('#alliframelist #iframepopup'+iframefileId).removeClass('minimized');
                 $('#alliframelist #iframepopup'+iframefileId).addClass('fall-down');
+                console.log('#iframeheaders #iframetab'+iframeId);
                 $('#iframeheaders #iframetab'+iframeId).addClass('hidden');
-                if(!$('#alliframelist #iframepopup'+iframefileId).hasClass('show')){
-                    $('#alliframelist #iframepopup'+iframefileId).addClass('show');
+                // if(!$('#alliframelist #iframepopup'+iframefileId).hasClass('show')){
+                //     $('#alliframelist #iframepopup'+iframefileId).removeClass('show');
 
-                }
+                // }
                 
 
         });
@@ -606,9 +666,7 @@ $(document).ready(function () {
           });
 
        
-       function uploadFiles(){
-         
-       }
+      
        function createFolderFunction(){
             $.ajax({
                 url: createFolderRoute,
@@ -659,7 +717,8 @@ $(document).ready(function () {
                     // Update the app list container with the updated list
                         if(response.status){
                         $('#alliframelist').html(response.html);
-                        $('#sortable-apps').html(response.html2);
+                            $('#sortable-apps').html(response.html2);
+                            
                         if(response.filekey!=''){
                         $('#alliframelist #'+response.filekey).removeClass('hidden');
                         $('#alliframelist #'+response.filekey).addClass('show');
@@ -737,23 +796,34 @@ $(document).ready(function () {
         });
        }
 
+       $(document).on('click', '.context-menulist .shareFunction', function (e) {
+        e.preventDefault();
+            const filekey = $('.selectedfile').attr('data-filekey');
+            const filepath = $('.selectedfile').attr('data-path');
+            const filetype = $('.selectedfile').attr('data-filetype');
+            shareFunction(filepath,'copy',filetype,filekey);
+            $('.selectapp').removeClass('.selectedfile');
+     });
+
        function shareFunction(){
          
        }
-       function deleteFunction(filekey,filetype){
+       function deleteFunction(filekey){
             $.ajax({
             url: deleteRoute,
             method: 'GET',
-            data: {filekey:filekey,filetype:filetype},
+            data: {filekey:filekey},
             success: function (response) {
                 if(response.status){
+                    desktoplightapp();
+                    showapathdetail(path);
                     toastr.success(response.message);
+
                     
                 }else{
                     toastr.error(response.message);
                 }
-                desktoplightapp();
-                showapathdetail(path);
+                
 
             },
             error: function (xhr, status, error) {
@@ -829,7 +899,7 @@ $(document).ready(function () {
                 fileRow.append('<td class="py-2 px-4">' + file.name + '</td>');
                 fileRow.append('<td class="py-2 px-4">' + fileSize + '</td>');
                 let progressBarContainer = $('<td class="py-2 px-4"></td>');
-                let progressBar = $('<div class="w-full bg-gray-200 rounded-full h-2.5 relative"><div class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div><i class="ri-check-line text-green-600 absolute right-0 top-0 hidden"></i></div>');
+                let progressBar = $('<div class="w-full bg-gray-200 rounded-full h-2.5 relative"><div class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div></div>');
                 progressBarContainer.append(progressBar);
                 fileRow.append(progressBarContainer);
                 $('#file-list').append(fileRow);

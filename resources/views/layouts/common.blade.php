@@ -22,7 +22,7 @@
       <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Taskbar -->
-        <div class="navbar navbarhead h-16 flex items-center w-full absolute top-0 z-10">
+        <div class="navbar navbarhead h-16 flex items-center w-full absolute z-10">
             <div class="flex justify-center ml-10 w-full relative h-full" id="toolbar">
             <div class="bg absolute w-full  bottom-0">
                 <img id="shelf" class="w-full" src="{{ asset($constants['IMAGEFILEPATH'].'shelf.png')}}" alt="">
@@ -34,6 +34,7 @@
             </div>
             <div class="flex items-center gap-8 w-48 justify-end pr-5">
                 <i id="search-icon" class="ri-search-line icon-color"></i>
+                 <i id="pinned" class="ri-pushpin-line"></i>
                 <!-- <i id="notification-icon" class="ri-notification-3-line icon-color"></i> -->
             </div>
         </div>
@@ -76,10 +77,10 @@
             <div id="file-list-container" class="mt-4 space-y-2 hidden">
                 <table class="min-w-full bg-white">
                     <thead>
-                        <tr>
-                            <th class="py-2">Name</th>
-                            <th class="py-2">Size</th>
-                            <th class="py-2">Progress</th>
+                        <tr >
+                            <th class="py-2 px-4 text-left">Name</th>
+                            <th class="py-2 px-4 text-left">Size</th>
+                            <th class="py-2 px-4 text-left">Progress</th>
                         </tr>
                     </thead>
                     <tbody id="file-list"></tbody>
@@ -111,6 +112,9 @@
       const closeIframeRoute =@json(route('closeiframe'));
       const openIframeRoute =@json(route('openiframe'));
       const uploadRoute =@json(route('upload'));
+      const leftArrowClick =@json(route('leftarrowclick'));
+      const rightArrowClick =@json(route('rightarrowclick'));
+
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -121,6 +125,8 @@
 <script src="{{ asset($constants['JSFILEPATH'].'animation.js') }}" ></script>
 
 <script src="{{ asset($constants['JSFILEPATH'].'common.js') }}" ></script>
+<script src="{{ asset($constants['JSFILEPATH'].'taskbar.js') }}" ></script>
+
 @yield('scripts')
 
 <!-- <script src="{{ asset($constants['JSFILEPATH'].'taskbar.js') }}" ></script> -->

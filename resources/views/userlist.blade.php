@@ -21,6 +21,12 @@
                         <span class="font-semibold text-c-black">
                             Users &amp; Groups
                         </span>
+                         @if(!empty($company->name))
+                           <i class="ri-arrow-right-line ri-lg text-c-light-black"></i>
+                          <span class="font-semibold text-c-black">
+                            {{ $company->name}}
+                          </span>
+                         @endif
                     </div>
                 </div>
                 <div
@@ -34,22 +40,23 @@
                             <i class="ri-search-line" id="search"></i>
                         </div>
                     </div>
-                    @if (!empty($filteredPermissions['userManagement']) && in_array('user-create', $filteredPermissions['userManagement']))
+                    @if (!empty($filteredPermissions['userManagement']) && in_array('user-create', $filteredPermissions['userManagement']) || Auth::user()->cID == 0)
                         <button class="has-tooltip">
                             <i class="ri-add-circle-fill ri-xl" onclick="toggleModal('newUserModal')"></i>
                         </button>
-                    @endif
-                    <!-- <div
+                    <div
                       class="absolute py-1 px-2 text-start text-xs tooltip -bottom-8 right-5 z-10 bg-white border rounded-md border-c-yellow z-0 font-normal"
                     >
                       Add user
-                    </div> -->
-                    @if (
-                        !empty($filteredPermissions['userManagement']) &&
-                            in_array('user-mass-upload', $filteredPermissions['userManagement']))
-                        <button>
-                            <i class="ri-file-excel-2-fill ri-xl" id="showimport-upload-popup">Import Users</i>
-                        </button>
+                    </div>
+                <button class="has-tooltip1">
+                  <i class="ri-file-excel-2-fill ri-xl" id="showimport-upload-popup"></i>
+                </button>
+                <div
+                  class="absolute py-1 px-2 text-start text-xs tooltip1 -bottom-8 -right-5 z-10 bg-white border rounded-md border-c-yellow z-0"
+                >
+                  Import Users
+                </div>
                     @endif
                 </div>
             </div>
@@ -65,7 +72,7 @@
                             <i class="ri-search-line" id="search"></i>
                         </div>
                     </div>
-                    @if (!empty($filteredPermissions['userManagement']) && in_array('user-create', $filteredPermissions['userManagement']))
+                    @if (!empty($filteredPermissions['userManagement']) && in_array('user-create', $filteredPermissions['userManagement']) || Auth::user()->cID == 0)
                         <button class="px-2 has-tooltip">
                             <i class="ri-add-circle-fill ri-xl" onclick="toggleModal('newUserModal')"></i>
                         </button>
@@ -74,9 +81,8 @@
                             Add user
                         </div>
                     @endif
-                    @if (
-                        !empty($filteredPermissions['userManagement']) &&
-                            in_array('user-mass-upload', $filteredPermissions['userManagement']))
+                    @if (!empty($filteredPermissions['userManagement']) &&
+                            in_array('user-mass-upload', $filteredPermissions['userManagement']) || Auth::user()->cID == 0)
                         <button>
                             <i class="ri-file-excel-2-fill ri-xl"></i>
                         </button>
@@ -91,7 +97,7 @@
                         <div class="dropdown inline-block relative">
                             @if (
                                 !empty($filteredPermissions['groupsManagement']) ||
-                                    in_array('group-view', $filteredPermissions['groupsManagement']))
+                                    in_array('group-view', $filteredPermissions['groupsManagement']) || Auth::user()->cID == 0 )
                                 <button
                                     class="border rounded px-6 py-1 custom-safety-btn hover:border-yellow-300">
                                     <span class="mr-1">Group Function</span>
@@ -106,7 +112,7 @@
                                             href="#">{{ $group->name }}
                                             @if (
                                                 !empty($filteredPermissions['groupsManagement']) &&
-                                                    in_array('group-edit', $filteredPermissions['groupsManagement']))
+                                                    in_array('group-edit', $filteredPermissions['groupsManagement']) || Auth::user()->cID == 0)
                                                 <i class="group-edit ri-pencil-fill" data-id="{{ $group->id }}"></i>
                                             @endif
                                         </a>
@@ -114,7 +120,7 @@
                                 @endforeach
                                 @if (
                                     !empty($filteredPermissions['groupsManagement']) &&
-                                        in_array('group-create', $filteredPermissions['groupsManagement']))
+                                        in_array('group-create', $filteredPermissions['groupsManagement']) || Auth::user()->cID == 0)
                                     <li>
                                         <a class="rounded-b custom-bg-hover py-2 px-4 block whitespace-no-wrap px-4 flex justify-between font-normal"
                                             href="#" onclick="toggleModal('editModal')">Add Group
@@ -150,13 +156,14 @@
                                 <th class="rounded-tr-md text-c-white font-medium text-left pl-3 pr-3 md:pr-0">Action</th>
                             </tr>
                         </thead>
-                        @if (!empty($filteredPermissions['userManagement']) && in_array('user-view', $filteredPermissions['userManagement']))
+                        @if (!empty($filteredPermissions['userManagement']) && in_array('user-view', $filteredPermissions['userManagement']) || Auth::user()->cID == 0)
                             <tbody id="searchableTableBody">
 
                             </tbody>
                         @endif
                     </table>
                 </div>
+
                 <div class="mt-auto flex justify-end pt-3 font-normal">
                     {{ $users->links() }}
                 </div>
@@ -518,6 +525,9 @@
             @if (Session::has('user-special'))
                 toastr.error("User name has special characters!!!");
             @endif
+            @if (Session::has('super-success'))
+                toastr.success("Super User created successfully");
+            @endif
         });
 
         // DeletetModal Open Functionality
@@ -647,7 +657,7 @@
             });
 
             $.ajax({
-                url: '/importusers',
+                url: 'importusers',
                 method: 'POST',
                 data: formData,
                 processData: false,

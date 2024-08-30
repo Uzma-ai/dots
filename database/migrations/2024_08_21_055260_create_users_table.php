@@ -30,6 +30,7 @@ return new class extends Migration
             $table->tinyInteger('is_facedata')->default(0)->nullable();
             $table->tinyInteger('is_support_face')->default(0)->nullable();
             $table->tinyInteger('status')->default(1)->nullable();
+            $table->bigInteger('cID')->nullable();
             $table->tinyInteger('lastLogin')->nullable();
             $table->integer('last_seen')->nullable();
             $table->timestamps();

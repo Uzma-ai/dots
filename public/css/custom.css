@@ -80,6 +80,15 @@
     transform: none !important;
 }
 
+.maximized.reduced-height {
+    height: calc(100% - 64px) !important;
+    top: 64px !important;
+}
+
+.draggable {
+    transition: height 0.3s ease-in-out, top 0.3s ease-in-out;
+}
+
 .triangle-btn {
     width: 0;
     height: 0;
@@ -105,6 +114,8 @@
 }
 
 .navbar {
+    transition: top 0.4s ease-in-out;
+    top: -100%;
     background: #fdfdfd3d;
     backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -126,6 +137,11 @@
 
 .navbar #toolbar {
     overflow-x: scroll;
+}
+
+.navbar.show {
+    top: 0;
+    z-index: 999999;
 }
 
 .taskbar-slide.show {
@@ -234,6 +250,7 @@
         width: 100%;
     }
 }
+
 .app:hover {
     border-radius: 5px;
     background: #fdfdfd3d;
@@ -280,7 +297,7 @@
     border-radius: 5px;
 }
 
-.context-menu ul li:hover > .submenu {
+.context-menu ul li:hover>.submenu {
     display: block;
 }
 
@@ -606,6 +623,7 @@ input[type="search"]::-webkit-search-cancel-button {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 .login .blur-popup-container {
     background: rgba(217, 217, 217, 0.41);
     border-radius: 50px;
@@ -613,6 +631,7 @@ input[type="search"]::-webkit-search-cancel-button {
     backdrop-filter: blur(2px);
     box-shadow: var(--box-shadow) inset;
 }
+
 .login .userinput::placeholder {
     font-weight: 400 !important;
     color: #646464 !important;
@@ -647,7 +666,9 @@ input[type="search"]::-webkit-search-cancel-button {
 .cs .userinput::placeholder {
     color: var(--color-pure-black);
 }
+
 @media (max-width: 768px) {
+
     .login .blur-container,
     .login .blur-popup-container,
     .login .login-container {
@@ -686,6 +707,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 @media (max-width: 480px) {
+
     .login .blur-container,
     .login .blur-popup-container,
     .login .login-container {
@@ -696,6 +718,7 @@ input[type="search"]::-webkit-search-cancel-button {
         margin-bottom: 20px;
     }
 }
+
 /* ********************** This CSS for LightApp Page ***************************** */
 
 .lightapp .all-tab {
@@ -1311,6 +1334,10 @@ input[type="search"]::-webkit-search-cancel-button {
     z-index: -1;
 }
 
+.custom-bg-iframe {
+    background: rgb(235 224 224 / 86%) !important;
+}
+
 .login #progressbar li.active:before,
 .login #progressbar li.active:after {
     background: var(--color-dark-yellow);
@@ -1328,6 +1355,7 @@ input[type="search"]::-webkit-search-cancel-button {
     width: 100%;
     object-fit: cover;
 }
+
 /* scroll-x for every page */
 .login .scroll::-webkit-scrollbar {
     width: 4px;
@@ -1341,6 +1369,7 @@ input[type="search"]::-webkit-search-cancel-button {
     background-color: rgba(128, 128, 128, 0.54);
     border-radius: 10px;
 }
+
 /* *********************** audio button animation used in login page *************************** */
 
 .login .mic-container {
@@ -1396,12 +1425,15 @@ input[type="search"]::-webkit-search-cancel-button {
     0% {
         transform: scale(1);
     }
+
     25% {
         transform: scale(1.4);
     }
+
     75% {
         transform: scale(1);
     }
+
     100% {
         transform: scale(1.3);
     }
@@ -1410,12 +1442,14 @@ input[type="search"]::-webkit-search-cancel-button {
 /********* Remove highlight color when click on any button in project ********/
 button,
 input[type="button"] {
-    -webkit-tap-highlight-color: transparent; /* Remove tap highlight color */
+    -webkit-tap-highlight-color: transparent;
+    /* Remove tap highlight color */
 }
 
 button:focus,
 input[type="button"]:focus {
-    outline: none; /* Remove the focus outline */
+    outline: none;
+    /* Remove the focus outline */
 }
 
 /**Tooltip **/
@@ -1423,7 +1457,7 @@ input[type="button"]:focus {
     display: none;
 }
 
-.has-tooltip1:hover ~ .tooltip1 {
+.has-tooltip1:hover~.tooltip1 {
     display: block;
 }
 
@@ -1456,6 +1490,7 @@ input[type="button"]:focus {
     left: 0;
     transform-origin: top right;
 }
+
 #curtain .right {
     background-image: url("../images/desktop-right.png");
     left: 50%;
@@ -1474,6 +1509,7 @@ input[type="button"]:focus {
     animation-iteration-count: 1;
     animation-direction: normal;
 }
+
 #curtain.open .right {
     animation-fill-mode: forwards;
     animation-name: right-curtain-opening;
@@ -1489,20 +1525,24 @@ input[type="button"]:focus {
   ********** */
 
 @keyframes left-curtain-opening {
+
     /* 4s */
     from {
         transform: translateX(-100%);
     }
+
     to {
         transform: translateX(0);
     }
 }
 
 @keyframes right-curtain-opening {
+
     /* 4s */
     from {
         transform: translateX(100%);
     }
+
     to {
         transform: translateX(0);
     }

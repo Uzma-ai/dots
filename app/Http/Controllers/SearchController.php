@@ -35,8 +35,11 @@ class SearchController extends Controller
         $filesByExtension = [];
         foreach ($files as $file) {
             $filesByExtension[$file->extension][] = [
+                
+                'id'=> $file->id,
                 'name' => $file->name,
                 'extension' => $file->extension,
+                'openwith' => $file->openwith,
                 'parentpath' => $file->parentpath,
                 'path' => $file->path,
                 'filetype' => $file->filetype,
@@ -62,6 +65,8 @@ class SearchController extends Controller
         $iframearray = [];
         $filetype='';
         $filekey ='';
+        $extension = 'other';
+        
         if (!empty($request->input('appkey')) && !empty($request->input('filekey') && $request->input('filetype') && !empty($request->input('apptype')))) {
             $filekey = $request->input('filekey');
             $appkey = $request->input('appkey');
@@ -75,12 +80,18 @@ class SearchController extends Controller
                 $file = $appdet;
             }
             
-            
             if(!empty($file) && !empty($appdet)){
                 if($filetype =='file'){
                     $filegroup =  checkFileGroup($file->extension);
+                    $extension  = $filegroup;
                     if($filegroup !='editor'){
-                        $iframeurllink = url('dotsviewer/'.$filegroup.'/'.$filekey);
+                        if($filegroup =='image'){
+                            $iframeurllink = url('dotsimageviewer/'.$filekey);
+                        }else if($filegroup =='video' || $filegroup =='audio'){
+                            $iframeurllink = url('dotsvideoplayer/'.$filekey);
+                        }else{
+                            $iframeurllink = url('dotsdocumentviewer/'.$filekey);
+                        }
                     }else{
                         $iframeurllink = url('editfile/'.$filekey);
                     }
@@ -101,6 +112,7 @@ class SearchController extends Controller
                             $newarr = $this->filefunctions->createNewFile($appdet->fileextension, 'Document');
                             if($newarr){
                                 $file = File::find($newarr['filekey']);
+                                $extension  = ($file) ? $file->extension : 'other';
                                 $iframeurllink = $iframeurllink = url('editfile/'.base64UrlEncode($newarr['filekey']));
                                 $filekey = base64UrlEncode($newarr['filekey']);
                             }else{
@@ -114,13 +126,13 @@ class SearchController extends Controller
                 }
             }
 
-            //print_r($apptype);die;
             $newArray = [
                 'filekey' =>base64UrlEncode($file->id),
                 'filetype' => $filetype,
                 'appkey' => $appkey,
                 'apptype' => $apptype,
                 'appicon' => $appdet->icon,
+                'extension' => $extension,
                 'filename' => $file->name,
                 'appname' => $appdet->name,
                 'iframeurl' => $iframeurllink

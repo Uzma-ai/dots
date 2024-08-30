@@ -35,7 +35,10 @@ class MessageController extends Controller
         // dd($request->all());exit;
         try {
             // fetching file key
-            $fileKey = Session('iframeapp');
+            $fileKey = array();
+            if (Session::has('iframeapp')) {
+                $fileKey = Session('iframeapp');
+            
 
             $app = null;
 
@@ -219,6 +222,7 @@ foreach ($request->user_array as $el) {
                 'message' => $responseMessage,
                 'comment' => $comment,
             ]);
+         }
         } catch (\Exception $e) {
            dd($e);
            Log::error("Error saving comment or reply: " . $e->getMessage());
@@ -233,8 +237,10 @@ foreach ($request->user_array as $el) {
    public function getMessageData()
    {
 
-    // fetching file key
-    $fileKey = Session('iframeapp');
+    $fileKey = array();
+    if (Session::has('iframeapp')) {
+        $fileKey = Session('iframeapp');
+    
     
 
     if (array_key_exists('Mw', $fileKey)) {
@@ -262,7 +268,7 @@ foreach ($request->user_array as $el) {
     
 
 
-    
+}
     return response()->json([
         'messages' => null,
 

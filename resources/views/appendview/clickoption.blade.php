@@ -4,7 +4,7 @@
             <ul class="ullist">
             @foreach ($contextTypes as $contextType) 
                 @if($contextType->is_options !=1)
-                    <a href="#"  class="clickmenu {{ $contextType->function }} {{ session()->has($contextType->conditional) ? '' : 'hidden' }}" data-option="{{ $contextType->is_options }}">
+                    <a href="#"  class="clickmenu {{ $contextType->function }} {{ session()->has($contextType->conditional) ? '' : 'hidden' }}"  data-option="{{ $contextType->is_options }}">
                         <li class="flex items-center justify-between px-4 py-2">
                         <p class="text-c-black text-sm">{{ $contextType->name }}</p>
                         <p class="menu-sidename">{{ $contextType->shortcut }}</p>
@@ -41,7 +41,7 @@
             @foreach ($contextTypes as $contextType) 
                 @if($contextType->is_options !=1)
                 <a href="#" class="allappoptions appoptions openrightclick clickmenu {{ $contextType->function }}" data-option="{{ $contextType->is_options }}">
-                    <li class="flex items-center justify-between px-2 py-2">
+                    <li class="flex items-center justify-between px-2 py-2" @if($contextType->name == 'Share')onclick="togglePopup('sharePopup');"@endif>
                     <p class="text-c-black text-sm">{{ $contextType->name }}</p>
                     <p class="menu-sidename">{{ $contextType->shortcut }}</p>
                     </li>

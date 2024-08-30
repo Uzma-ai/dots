@@ -19,7 +19,7 @@
                                 class="font-semibold text-c-black">Role</span>
                         </div>
                </div>
-               @if(!empty($filteredPermissions['roleManagement']) && in_array('role-create', $filteredPermissions['roleManagement']))               
+               @if(!empty($filteredPermissions['roleManagement']) && in_array('role-create', $filteredPermissions['roleManagement']) || Auth::user()->cID == 0)               
                <div class="flex-grow md:w-1/2">
                   <div class="flex items-center justify-end gap-2 md:gap-6">
                   <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-5/12">
@@ -40,6 +40,7 @@
                   </div>
                </div>
                @endif
+               
                
             </div>
             <!-- searchbar in mobile-->

@@ -140,10 +140,42 @@ class AppsSeeder extends Seeder
         ]);
         App::create([
             'id' => 11,
-            'name' => 'DotsViewer',
-            'icon' => 'defaultapp.svg',
+            'name' => 'DotsImageViewer',
+            'icon' => 'album.png',
             'app_function' => NULL,
-            'link' => 'dotsviewer',
+            'link' => 'dotsimageviewer',
+            'type' => 'route',
+            'desktop_display' => 0,
+            'filemanager_display' => 0,
+            'path' => '',
+            'parentpath' => '',
+            'sort_order' => 2,
+            'status' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        App::create([
+            'id' => 12,
+            'name' => 'DotsVideoPlayer',
+            'icon' => 'video.svg',
+            'app_function' => NULL,
+            'link' => 'dotsvideoplayer',
+            'type' => 'route',
+            'desktop_display' => 0,
+            'filemanager_display' => 0,
+            'path' => '',
+            'parentpath' => '',
+            'sort_order' => 2,
+            'status' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        App::create([
+            'id' => 13,
+            'name' => 'DotsDocumentViewer',
+            'icon' => 'document.svg',
+            'app_function' => NULL,
+            'link' => 'dotsdocumentviewer',
             'type' => 'route',
             'desktop_display' => 0,
             'filemanager_display' => 0,

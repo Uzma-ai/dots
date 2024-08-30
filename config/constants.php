@@ -8,6 +8,7 @@ return [
     'FILEICONPATH' => 'public/images/fileicon/', 
     'ICONEXTENSION' => '.svg', 
     'OTHERFILEPATH' => 'public/images/othericon/',
+    'ROOTPATH' => 'app/root/'
 ];
 
 ?>

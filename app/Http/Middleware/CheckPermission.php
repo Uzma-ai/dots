@@ -45,17 +45,29 @@ class CheckPermission
         if (strpos($routeName, 'useradmin') !== false && empty($filteredPermissions['userManagement'])) {
             $accessDenied[] = 'userManagement';
         }
-        
-        if (strpos($routeName, 'rolesadmin') !== false && empty($filteredPermissions['roleManagement'])) {
+
+        if (
+            (strpos($routeName, 'rolesadmin') !== false || strpos($routeName, 'permissionsadmin') !== false) 
+            && (empty($filteredPermissions['roleManagement']) || empty($filteredPermissions['userManagement']))
+        ) {
             $accessDenied[] = 'roleManagement';
         }
-        if (strpos($routeName, 'permissionsadmin') !== false && empty($filteredPermissions['roleManagement'])) {
-            $accessDenied[] = 'userManagement';
-        }
+        
+        // if (strpos($routeName, 'rolesadmin') !== false && empty($filteredPermissions['roleManagement']) && empty($filteredPermissions['userManagement'])) {
+        //     $accessDenied[] = 'roleManagement';
+        // }
+        // if (strpos($routeName, 'permissionsadmin') !== false && empty($filteredPermissions['roleManagement']) && empty($filteredPermissions['userManagement'])) {
+        //     $accessDenied[] = 'docPermission';
+        // }
         
         // if (strpos($routeName, 'useradmin') !== false && empty($filteredPermissions['groupsManagement'])) {
         //     $accessDenied[] = 'groupsManagement';
         // }
+
+        //for Masteradmin
+        if($user->cID == 0){
+             return $next($request);
+        }
         
         if (!empty($accessDenied)) {
             abort(403, "You have not permission to access this page.");

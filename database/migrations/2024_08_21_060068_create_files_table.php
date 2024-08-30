@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('parentpath')->nullable();
             $table->text('path')->nullable();
             $table->integer('openwith')->nullable();
+            $table->text('filehash')->nullable();
             $table->integer('sort_order')->default(0);
             $table->tinyInteger('is_root')->default(0);
             $table->tinyInteger('is_share')->default(0);

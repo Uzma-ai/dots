@@ -42,11 +42,17 @@ class PermissionsController extends Controller
     {
         $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $input = $request->all();
+
         if($input['searchTerm']){
-            $search = $input['searchTerm'];
+           $search = $input['searchTerm'];
             $permissions = Permissions::where('name','LIKE','%'.$search.'%')->get();
         }else{
-        $permissions = Permissions::paginate(10);
+              if(auth()->user()->cID == 0){
+               $permissions = Permissions::paginate(10);
+                }else{
+                $cid = auth()->user()->cID;
+                $permissions = Permissions::where('cID',$cid)->paginate(10);  
+                }
         }
         $permission = view('appendview.permissionlist')->with('permissions',$permissions)->with('filteredPermissions', $filteredPermissions)->render();
         return response()->json($permission);
@@ -59,19 +65,33 @@ class PermissionsController extends Controller
 
     public function create(Request $request)
     {
+        //  $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string',
+        //     'permissions' => 'required',
+        // ]);
 
-         $validator = Validator::make($request->all(), [
+        // if($validator->fails()){
+        //     return $this->sendError('Validation Error.', $validator->errors());       
+        // }
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'permissions' => 'required',
+            'permissions' => 'required|array|min:1',
+        ], [
+            'name.required' => 'The name field is required.',
+            'permissions.required' => 'The permissions field is required and cannot be empty.',
+            // 'permissions.min' => 'You must select at least one permission.',
         ]);
-
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+        
+        if ($validator->fails()) {        
+            return redirect()->route('permissionsadmin')->with('error', 'Choose atleast one permission!'); 
         }
 
+        $cid = auth()->user()->cID;
         $input = $request->all();
         $input['name'] = preg_replace('/[^A-Za-z0-9 ]/', '', $input['name']);
         $input['permissions'] = implode(',', $input['permissions']);
+        $input['cID'] = $cid;
         $role = Permissions::create($input);
         return redirect()->route('permissionsadmin')->with('success', 'Permission created successfully!'); 
     }

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UsersSeeder extends Seeder
 {
@@ -24,6 +25,7 @@ class UsersSeeder extends Seeder
             'nickName' => NULL,
             'avatar' => NULL,
             'status' => 1,
+            'cID'  => 1,
             'lastLogin' => NULL,
             'sex' => NULL,
             'ip_address' => NULL,
@@ -34,5 +36,13 @@ class UsersSeeder extends Seeder
             'is_support_face' => 0,
             'last_seen' => 0
         ]);
+
+        //Masteradmin
+        //  User::factory()->create([
+        //     'name' => 'masteradmin',
+        //     'cID'  => 0,
+        //     'email' => 'masteradmin@sizaf.com',
+        //     'password' => Hash::make('sizaf@dots'),
+        // ]);
     }
 }
