@@ -56,7 +56,7 @@ class UserController extends Controller
                     $groups = Group::get();
                     $roles = Roles::get();
                     $permissions = Permissions::get();
-                    $users = User::with(['roles', 'group'])->paginate(10);
+                    $users = User::with(['roles', 'group'])->where('id','!=',Auth::id())->paginate(10);
                     $company = '';
         }else{
                     $cid = auth()->user()->cID;
@@ -64,7 +64,7 @@ class UserController extends Controller
                     $roles = Roles::where('cID',$cid)->get();
                     $permissions = Permissions::get();
                     $company = Company::find($cid);
-                    $users = User::where('cID',$cid)->with(['roles', 'group'])->paginate(10);
+                    $users = User::where('cID',$cid)->where('id','!=',Auth::id())->with(['roles', 'group'])->paginate(10);
         }
         return view('userlist', compact('groups', 'roles', 'users', 'permissions', 'filteredPermissions'));
     }
@@ -276,7 +276,7 @@ class UserController extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+            return $this->sendError('Validation Error.', $validator->errors());
         }
 
         $input = $request->all();
@@ -291,14 +291,14 @@ class UserController extends Controller
         $input['cID'] = $group->cID;
         $input['roleID'] = $role->id;
         }
-        
+
         $user = User::create($input);
         if($user){
             $group = Group::find($user->groupID);
             $username = $input['name'];
             $basePath = storage_path('app/root/'.$group->name.'/'.$username);
             $folders = ['Desktop', 'Documents', 'Downloads', 'Gallery', 'Recyclebin'];
-        
+
             // Create the folders
             foreach ($folders as $folder) {
                 $folderPath = $basePath . '/' . $folder;
@@ -308,7 +308,7 @@ class UserController extends Controller
             }
 
         }
-        return redirect()->route('useradmin')->with('super-success', 'SuperAdmin created successfully!');  
+        return redirect()->route('useradmin')->with('super-success', 'SuperAdmin created successfully!');
     }
 }
 
