@@ -528,6 +528,7 @@ $(document).ready(function () {
             var iframeId = $(this).data('iframe-id');
             var iframefileId = $(this).data('iframefile-id');
             let img = $(this).find('.app-icon');
+            $('#iframeheaders .parentiframe .iframetabselement').addClass('hidden');
 
             /// animation close
             var popupcount = $(this).data('popup-count');
@@ -716,6 +717,7 @@ $(document).on('click', function(event) {
                 success: function (response) {
                     // Update the app list container with the updated list
                         if(response.status){
+                            closeallpopup();
                         $('#alliframelist').html(response.html);
                             $('#sortable-apps').html(response.html2);
                             
@@ -946,6 +948,14 @@ $(document).on('click', function(event) {
     });
 
        // upload code end
+
+
+       // close all popup 
+       function closeallpopup(){
+            $('#search').addClass('hidden');
+            $('#administrator').addClass('hidden');
+            $('#iframeheaders .parentiframe .iframetabselement').addClass('hidden');
+       }
 
 
      

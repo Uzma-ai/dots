@@ -74,7 +74,7 @@
                 <input type="search" id="searchInput" placeholder="Search">
                 <i class="ri-close-line cross-icon absolute" onclick=""></i>
             </div>
-            <div id="searchsuggestions" class="searchdata hidden px-3 py-3 max-h-96">
+            <div id="searchsuggestions" class="searchdata allapplist hidden px-3 py-3 max-h-96">
             </div>
         </div>
 
