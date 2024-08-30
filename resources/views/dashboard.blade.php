@@ -8,7 +8,7 @@
 @section('content')
 
     <div class="w-full h-full dashboard cs pt-20 relative">
-        
+
 
         <!-- Desktop apps   -->
         <!-- <div class="desktopapps-div w-full overflow-x-auto">
@@ -137,7 +137,7 @@
                             <a href="{{ route('useradmin') }}">User manage</a>
                         </li>
                         @endif
-                        <li class="flex items-center gap-5 mb-4">
+                        <li class="flex items-center gap-8 mb-4">
                             <i class="ri-download-2-line ri-1x Ad-iconcolor"></i>
                             <a href="#">Downloads</a>
                         </li>
@@ -157,7 +157,7 @@
             </div>
         </div>
         <!-- Administrator end -->
-         
+
 
         <!-- Footer -->
 
@@ -166,7 +166,7 @@
             <img id="footer-logo" class="w-10 h-10" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
                 alt="Logo" />
         </div>
-       
+
 
 
     </div>
@@ -225,6 +225,6 @@
             });
         });
     </script>
-   
+
     @include('layouts.alert')
 @endsection
