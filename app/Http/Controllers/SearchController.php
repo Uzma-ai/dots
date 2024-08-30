@@ -140,29 +140,29 @@ class SearchController extends Controller
            
       if (Session::has('iframeapp')) {
             $iframearray = Session::get('iframeapp');
-            if (isset($iframearray[$appkey])) {
-                $appArray = $iframearray[$appkey];
-                unset($iframearray[$appkey]);
-                $iframearray = array_merge([$appkey => $appArray], $iframearray);
+            if (isset($iframearray[$apptype.$appkey])) {
+                $appArray = $iframearray[$apptype.$appkey];
+                unset($iframearray[$apptype.$appkey]);
+                $iframearray = array_merge([$apptype.$appkey => $appArray], $iframearray);
                 $found = false;
-                foreach ($iframearray[$appkey] as $key => $subArray) {
+                foreach ($iframearray[$apptype.$appkey] as $key => $subArray) {
                     if ($subArray['filekey'] === $filekey) {
-                        unset($iframearray[$appkey][$key]);
-                        $iframearray[$appkey] = array_merge([$newArray], $iframearray[$appkey]);
+                        unset($iframearray[$apptype.$appkey][$key]);
+                        $iframearray[$apptype.$appkey] = array_merge([$newArray], $iframearray[$apptype.$appkey]);
                         $found = true;
                         break;
                     }
                 }
         
                 if (!$found) {
-                    $iframearray[$appkey] = array_merge([$newArray], $iframearray[$appkey]);
+                    $iframearray[$apptype.$appkey] = array_merge([$newArray], $iframearray[$appkey]);
                 }
             } else {
-                $iframearray[$appkey] = [$newArray];
+                $iframearray[$apptype.$appkey] = [$newArray];
             }
 
         }else{
-            $iframearray[$appkey] = [$newArray];
+            $iframearray[$apptype.$appkey] = [$newArray];
         }
         Session::put('iframeapp', $iframearray);
         

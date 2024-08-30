@@ -980,7 +980,7 @@ $(document).on('click', function(event) {
     let path = $(this).data('path');
     let leftpath = $(this).data('leftpath');
     $.ajax({
-    url: leftArrowClick,
+    url: rightArrowClick,
     method: 'GET',
     data: {path:path},
     success: function (response) {
