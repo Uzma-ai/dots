@@ -24,7 +24,7 @@ class SearchController extends Controller
         $apps = App::all();
         $query = $request->input('query');
         $createdBy = auth()->id();
-        $files = File::select('extension', 'name', 'parentpath', 'path', 'filetype') // Select specific columns
+        $files = File::select('id','openwith','extension', 'name', 'parentpath', 'path', 'filetype') // Select specific columns
             ->where('name', 'like', "%$query%")
             ->where('created_by', $createdBy)
             ->where('status', 1)

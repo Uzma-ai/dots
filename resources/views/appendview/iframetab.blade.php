@@ -7,7 +7,7 @@
 @if(!empty($iframeapp))
 @foreach($iframeapp as $iframekey=>$iframeval)
     <div class="relative parentiframe draggable-element">
-                <div id="iframeicon{{ $iframeval[0]['filetype'].$iframekey }}" data-popup-count="{{ count($iframeval) }}" data-iframefile-id = "{{ $iframeval[0]['filetype'].$iframeval[0]['filekey'] }}" data-iframe-id = "{{ $iframeval[0]['filetype'].$iframekey }}" class="iframemainheadericon flex items-center justify-center text-white cursor-pointer">
+                <div id="iframeicon{{ $iframeval[0]['filetype'].$iframekey }}" data-popup-count="{{ count($iframeval) }}" data-iframefile-id = "{{ $iframeval[0]['filetype'].$iframeval[0]['filekey'] }}" data-iframe-id = "{{ $iframeval[0]['apptype'].$iframekey }}" class="iframemainheadericon flex items-center justify-center text-white cursor-pointer">
                     <img class="app-icon" id ="iframeiconimage{{ $iframeval[0]['filetype'].$iframekey }}" data-app-id ="iframeiconimage{{ $iframeval[0]['filetype'].$iframekey }}" src="{{ checkIconExist($iframeval[0]['appicon'],'app') }}" >
                 </div>
             @if(count($iframeval)>1)
@@ -17,8 +17,8 @@
                     
                     @foreach($iframeval as $iframefile)
         
-                            <div class="custom-bg-iframe popup rounded shadow-md">
-                                <div class="flex justify-between items-center iframemainheaderpopup" id="iframefilepopupdet{{ $iframefile['filetype'].$iframefile['filekey'] }}"  data-popup-count="{{ count($iframeval) }}" data-iframefile-id = "{{ $iframefile['filetype'].$iframefile['filekey'] }}" data-iframe-id = "{{ $iframefile['apptype'].$iframekey }}">
+                            <div class="custom-bg-iframe popup rounded shadow-md iframemainheaderpopup" id="iframefilepopupdet{{ $iframefile['filetype'].$iframefile['filekey'] }}"  data-popup-count="{{ count($iframeval) }}" data-iframefile-id = "{{ $iframefile['filetype'].$iframefile['filekey'] }}" data-iframe-id = "{{ $iframefile['apptype'].$iframekey }}" >
+                                <div class="flex justify-between items-center">
                                     <div class="overflow-hidden scrollbar-hidden scroll-container max-w-full">
                                         <div class="whitespace-no-wrap flex text-black scroll-content items-center ">
                                             <img class="w-6" src="{{ checkIconExist($iframefile['appicon'],'app') }}"><span>{{ $iframefile['filename'] }}</span>

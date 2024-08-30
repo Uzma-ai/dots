@@ -1,6 +1,6 @@
 @if (count($results['files']) > 0)
     @foreach ($results['files'] as $filekey => $file)
-        <div class="image-file border-t border-c-dark-gray mt-1 p-3 allapplist">
+        <div class="image-file border-t border-c-dark-gray mt-1 p-3">
             <h1 class="text-xl font-medium mb-2">{{ $filekey }}</h1>
             <ul>
                 @foreach ($file as $filedet)
@@ -18,7 +18,7 @@
     @endforeach
 @endif
 @if (count($results['folders']) > 0)
-    <div class="image-file border-t border-c-dark-gray mt-1 p-3 allapplist">
+    <div class="image-file border-t border-c-dark-gray mt-1 p-3">
         <h1 class="text-xl font-medium mb-2">Folder</h1>
         <ul>
             @foreach ($results['folders'] as $folder)
