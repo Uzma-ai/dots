@@ -246,7 +246,7 @@ $(document).ready(function () {
 
        /// Desktop app end
        //contextMenuList
-   function contextMenuList(type){
+        function contextMenuList(type){
            $.ajax({
                url: contextmenu,
                method: 'GET',
@@ -262,8 +262,7 @@ $(document).ready(function () {
                error: function (xhr, status, error) {
                    console.error(xhr.responseText);
                }
-           });
-           
+           });           
            
        }
 
@@ -752,13 +751,28 @@ $(document).ready(function () {
             const filekey = $('.selectedfile').attr('data-filekey');
             const filepath = $('.selectedfile').attr('data-path');
             const filetype = $('.selectedfile').attr('data-filetype');
-            shareFunction(filepath,'copy',filetype,filekey);
+            // shareFunction(filepath,'share',filetype,filekey);
+            shareFunction(filetype,filekey,'share');
             $('.selectapp').removeClass('.selectedfile');
      });
 
-       function shareFunction(){
-         
-       }
+     function shareFunction(filetype, filekey){
+        $.ajax({
+            type: "GET",
+            url: shareRoute,
+            data: {
+                filetype: filetype,
+                filekey: filekey
+            },
+            success: function(response) {
+                // console.log(response.html);
+                $('#shareFilesFolderModal').html(response.html);
+                // $('#sharePopup').removeClass('hidden');
+            }
+        });
+     }
+     
+
        function deleteFunction(filekey){
             $.ajax({
             url: deleteRoute,

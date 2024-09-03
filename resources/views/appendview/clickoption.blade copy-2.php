@@ -1,25 +1,20 @@
-@php
-    $mergedPermissionContextMapping = [
-        'download' => ['download'],
-        'upload' => ['upload'],
-        'edit' => ['new folder','new file', 'rename', 'paste', 'unzip', 'compress'],
-        'delete' => ['cut', 'copy', 'move','delete'],
-        'share' => ['share'],
-        'comments' => ['comments'],
-    ];
-
-    $default = [
-        'refresh', 'icon size', 'sort order', 'open'
-    ];
-
-    // Merge permissions without the 'default' key
-    $permissionContextMapping = $mergedPermissionContextMapping;
-    $permissionContextMapping['default'] = $default;
-@endphp
-
-@if(!empty($contextTypes))
+<!-- Right click Menu -->
+ @if(!empty($contextTypes))
+    @php
+        //left side permission & right side menu
+        $permissionContextMapping = [
+            'view' => ['refresh','icon size','sort order'],
+            'preview' => ['open'],
+            'download' => ['download'],
+            'upload' => ['upload'],
+            'edit' => ['new folder','new file', 'rename', 'paste', 'unzip', 'compress'],
+            'delete' => ['cut', 'copy', 'move','delete'],
+            'share' => ['share'],
+            'comments' => ['comments'],
+        ];
+    @endphp
     @if ($type=='rightclick')
-        <ul class="ullist">
+            <ul class="ullist">
             @foreach ($contextTypes as $contextType)
                 @php
                     $lowerContextTypeName = strtolower($contextType->name);
@@ -34,11 +29,6 @@
                             $hasPermission = true;
                             break;
                         }
-                    }
-
-                    // Always show default options
-                    if (in_array($lowerContextTypeName, $permissionContextMapping['default'])) {
-                        $hasPermission = true;
                     }
                 @endphp
 
@@ -74,26 +64,12 @@
                     @endif
                 @endif
             @endforeach
-        </ul>
+            </ul>
+        <!-- End Right click -->
     @else
         <!-- Apps context-menu -->
-        <ul class="ullist">
-            <!-- Always show default options -->
-            @foreach ($contextTypes as $contextType)
-                @php
-                    $lowerContextTypeName = strtolower($contextType->name);
-                @endphp
-
-                @if (in_array($lowerContextTypeName, $permissionContextMapping['default']))
-                    <a href="#" class="allappoptions appoptions openrightclick clickmenu {{ $contextType->function }}" data-option="{{ $contextType->is_options }}">
-                        <li class="flex items-center justify-between px-2 py-2">
-                            <p class="text-c-black text-sm">{{ $contextType->name }}</p>
-                            <p class="menu-sidename">{{ $contextType->shortcut }}</p>
-                        </li>
-                    </a>
-                @endif
-            @endforeach
-
+        <ul class="ullist">          
+            
             @foreach ($filteredPermissions['fileManager'] as $permission)
                 @php
                     $lowerPermission = strtolower($permission);
@@ -115,9 +91,9 @@
                         @endif
                     @endforeach
                 @endif
-            @endforeach
-
-            
-        </ul>
-    @endif
+            @endforeach 
+                    
+            </ul>
+      <!-- Apps context-menu end -->
+@endif
 @endif

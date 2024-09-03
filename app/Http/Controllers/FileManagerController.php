@@ -464,6 +464,7 @@ class FileManagerController extends Controller
     
 
     public function contextMenu(Request $request){
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $clicktype = $request->input('type');
         if($clicktype=='rightclick'){
         $contextTypes = ContextType::with(['contextOptions' => function($query) {
@@ -480,7 +481,7 @@ class FileManagerController extends Controller
             ->orderBy('sort_order', 'asc') // Sort context types by sort_order
             ->get();
         }
-        $html = view('appendview.clickoption')->with('contextTypes', $contextTypes)->with('type',$clicktype)->render();
+        $html = view('appendview.clickoption')->with('contextTypes', $contextTypes)->with('type',$clicktype)->with('filteredPermissions',$filteredPermissions)->render();
         return response()->json(['html' => $html]);
     }
 
@@ -542,5 +543,6 @@ class FileManagerController extends Controller
         $file = FileModel::find(base64UrlDecode($file));
         return view('dotsdocumentviewer',compact('file'));
     }
+    
     
 }

@@ -124,7 +124,7 @@ if(empty($updatedPath)){
       var query = $(this).val().trim();
       if (query.length > 0) {
           $.ajax({
-              url: "{{ route('fileExp-list') }}", 
+              url: searchFileExploreRoute, 
               method: 'GET',
               data: { searchFiles: query, path: path },
               success: function(data) {
