@@ -12,6 +12,7 @@ use App\Http\Controllers\OperationLogController;
 use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FileSharingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
@@ -143,7 +144,15 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('group-edit', [GroupController::class, 'edit'])->name('group-edit');
     Route::post('group-update/{id}', [GroupController::class, 'update'])->name('group-update');
     Route::get('group-delete/{id}', [GroupController::class, 'destroy'])->name('group-delete');
+    //Link Share
+    Route::get('linkshare/{path?}', [FileSharingController::class, 'shareLinks'])->name('linkshare');
+    Route::get('/cancel-share/{id}', [FileSharingController::class, 'cancelShare'])->name('cancel.share');
+
+    Route::post('/cancel-share2', [FileSharingController::class, 'cancelShare2'])->name('cancel.share2');
+    Route::get('showsharedetail', [FileManagerController::class, 'sharefiledetail'])->name('showsharedetail');
+    
     /// Filemanager
+
     Route::get('filemanager/{path?}', [FileManagerController::class, 'index'])
     ->where('path', '.*')->name('filemanager')->middleware('checkPermis.fileManager');
     Route::get('createfolder', [FileManagerController::class, 'createFolder'])->name('createfolder');
