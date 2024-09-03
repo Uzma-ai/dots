@@ -5,21 +5,21 @@
     background-size: 100% 100%;
     background-position: center;
     position: relative;
-  }
+}
 
-  /* Icon color */
+/* Icon color */
 
-  .icon-color {
+.icon-color {
     color: var(--color-white);
-  }
+}
 
-  .Ad-iconcolor {
+.Ad-iconcolor {
     color: var(--color-light-black);
-  }
+}
 
-  /* Taskbar and iFrame */
+/* Taskbar and iFrame */
 
-  .box {
+.box {
     position: fixed;
     top: 50% !important;
     left: 50% !important;
@@ -33,25 +33,25 @@
     overflow: auto;
     transition: transform 0.5s ease-in-out;
     transform-origin: center;
-  }
+}
 
-  .popupiframe {
+.popupiframe {
     transform: translate(-50%, -100%) scale(0);
-  }
+}
 
-  .popupiframe.show {
+.popupiframe.show {
     transform: translate(-50%, -50%) scale(1);
-  }
+}
 
-  .popupiframe.hidden {
+.popupiframe.hidden {
     display: none;
-  }
+}
 
-  .popupiframe-content {
+.popupiframe-content {
     padding: 10px;
-  }
+}
 
-  .popupiframe-header {
+.popupiframe-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -60,27 +60,36 @@
     color: white;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-  }
+}
 
-  .popupiframe-header i {
+.popupiframe-header i {
     cursor: pointer;
-  }
+}
 
-  .popupiframe iframe {
+.popupiframe iframe {
     width: 100%;
     height: 93.2%;
     border: none;
-  }
+}
 
-  .maximized {
+.maximized {
     width: 100% !important;
     height: 100% !important;
     top: 0 !important;
     left: 0 !important;
     transform: none !important;
-  }
+}
 
-  .triangle-btn {
+.maximized.reduced-height {
+    height: calc(100% - 64px) !important;
+    top: 64px !important;
+}
+
+.draggable {
+    transition: height 0.3s ease-in-out, top 0.3s ease-in-out;
+}
+
+.triangle-btn {
     width: 0;
     height: 0;
     border-top: 4px solid transparent;
@@ -90,9 +99,9 @@
     position: relative;
     overflow: hidden;
     transform: translateY(-50%);
-  }
+}
 
-  .taskbar-slide {
+.taskbar-slide {
     transition: top 0.4s ease-in-out;
     top: -100%;
     background: #fdfdfd3d;
@@ -102,140 +111,147 @@
     border-bottom-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
     z-index: 10;
-  }
+}
 
-  .navbar {
+.navbar {
+    transition: top 0.4s ease-in-out;
+    top: -100%;
     background: #fdfdfd3d;
     backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-right-color: rgba(255, 255, 255, 0.1);
     border-bottom-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
-  }
+}
 
-  .navbar #shelf {
+.navbar #shelf {
     height: 25px;
-  }
+}
 
-  .navbar img {
+.navbar img {
     height: 45px;
     margin: 0 5px;
     cursor: pointer;
     transition: transform 0.3s;
-  }
+}
 
-  .navbar #toolbar {
+.navbar #toolbar {
     overflow-x: scroll;
-  }
+}
 
-  .taskbar-slide.show {
+.navbar.show {
     top: 0;
-  }
+    z-index: 999999;
+}
 
-  .taskbar-slide img {
+.taskbar-slide.show {
+    top: 0;
+}
+
+.taskbar-slide img {
     height: 45px;
     margin: 0 5px;
     cursor: pointer;
     transition: transform 0.3s;
-  }
+}
 
-  .taskbar-slide #shelf {
+.taskbar-slide #shelf {
     height: 25px;
-  }
+}
 
-  .taskbar-slide #toolbar {
+.taskbar-slide #toolbar {
     overflow-x: scroll;
-  }
+}
 
-  #toolbar::-webkit-scrollbar {
+#toolbar::-webkit-scrollbar {
     display: none;
-  }
+}
 
-   .box {
+.box {
     transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
 .minimized {
-  transform: translate(-50%, -100%) scale(0) !important;
+    transform: translate(-50%, -100%) scale(0) !important;
 }
-
 
 .moving-to-top {
     animation: moveToTop 0.5s ease-in-out forwards;
-  }
+}
 
-  @keyframes moveToTop {
+@keyframes moveToTop {
     from {
-      transform: translate(0, 0) rotateY(0deg);
+        transform: translate(0, 0) rotateY(0deg);
     }
 
     to {
-      transform: translate(var(--move-x), var(--move-y)) rotate(360deg);
+        transform: translate(var(--move-x), var(--move-y)) rotate(360deg);
     }
-  }
+}
 
-  .fall-down {
+.fall-down {
     animation: fallDown 0.5s ease-in-out forwards;
-  }
+}
 
-  @keyframes fallDown {
+@keyframes fallDown {
     0% {
-      transform: translate(-50%, -100%) scale(0);
+        transform: translate(-50%, -100%) scale(0);
     }
 
     100% {
-      transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
-  }
+}
 
-  /* Desktop apps */
+/* Desktop apps */
 
-  .desktopapps-div {
+.desktopapps-div {
     height: calc(100% - 64px);
     width: calc(100% - 470px);
-  }
+}
 
-  .desktopapps-div .desktop-apps {
+.desktopapps-div .desktop-apps {
     overflow-x: auto;
-  }
+}
 
-  .desktop-apps::-webkit-scrollbar {
+.desktop-apps::-webkit-scrollbar {
     height: 5px;
-  }
+}
 
-  .desktop-apps::-webkit-scrollbar-track {
+.desktop-apps::-webkit-scrollbar-track {
     background: transparent;
-  }
+}
 
-  .desktop-apps::-webkit-scrollbar-thumb {
+.desktop-apps::-webkit-scrollbar-thumb {
     background-color: rgba(128, 128, 128, 0.76);
     border-radius: 10px;
-  }
+}
 
-  @media (max-width: 1280px) {
+@media (max-width: 1280px) {
     .desktopapps-div {
-      width: calc(100% - 120px);
+        width: calc(100% - 120px);
     }
-  }
+}
 
-  @media (max-width: 1024px) {
+@media (max-width: 1024px) {
     .desktopapps-div {
-      width: calc(100% - 145px);
+        width: calc(100% - 145px);
     }
-  }
+}
 
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
     .desktopapps-div {
-      width: calc(100% - 200px);
+        width: calc(100% - 200px);
     }
-  }
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
     .desktopapps-div {
-      width: 100%;
+        width: 100%;
     }
-  }
-  .app:hover {
+}
+
+.app:hover {
     border-radius: 5px;
     background: #fdfdfd3d;
     backdrop-filter: blur(2px);
@@ -243,55 +259,55 @@
     border-right-color: rgba(255, 255, 255, 0.1);
     border-bottom-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
-  }
+}
 
-  .app:hover .app-tools {
+.app:hover .app-tools {
     visibility: visible;
-  }
+}
 
-  /* Right click Menu */
+/* Right click Menu */
 
-  .context-menu {
+.context-menu {
     position: absolute;
     z-index: 1000;
     min-width: 200px;
     border: 1px solid var(--color-gray-2);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-  }
+}
 
-  .context-menu ul {
+.context-menu ul {
     list-style: none;
     padding: 5px 3px;
     margin: 0;
-  }
+}
 
-  .context-menu ul li {
+.context-menu ul li {
     position: relative;
-  }
+}
 
-  .context-menu ul li a {
+.context-menu ul li a {
     text-decoration: none;
     color: var(--color-light-gray);
     display: block;
-  }
+}
 
-  .context-menu ul li:hover {
+.context-menu ul li:hover {
     background: var(--color-dark-yellow);
     border-radius: 5px;
 }
 
-.context-menu ul li:hover > .submenu {
+.context-menu ul li:hover>.submenu {
     display: block;
-  }
+}
 
-  .context-menu ul li a {
+.context-menu ul li a {
     color: var(--color-light-gray);
     font-size: var(--font-weight-400);
     font-size: var(--font-size-14);
-  }
+}
 
-  .submenu {
+.submenu {
     position: absolute;
     min-width: 200px;
     top: -10%;
@@ -299,31 +315,31 @@
     background-color: var(--color-white);
     border: 1px solid var(--color-gray-2);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  }
+}
 
-  .menu-sidename {
+.menu-sidename {
     font-size: var(--font-size-14);
     font-weight: var(--font-weight-400);
     color: var(--color-medium-gray);
-  }
+}
 
-  .open-submenu {
+.open-submenu {
     min-width: 250px;
-  }
+}
 
-  /* Clock */
+/* Clock */
 
-  .dashboard .clock {
+.dashboard .clock {
     position: absolute;
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: move;
-  }
+}
 
-  /* Search Input */
+/* Search Input */
 
-  .dashboard .Search {
+.dashboard .Search {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 999;
@@ -332,29 +348,29 @@
     background: var(--bg-linear-gradient);
     box-shadow: var(--box-shadow);
     border-radius: 20px;
-  }
+}
 
-  .Search.open {
+.Search.open {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-  }
+}
 
-  .row {
+.row {
     display: flex;
     align-items: center;
     padding: 10px 50px;
-  }
+}
 
-  .row input {
+.row input {
     flex: 1;
     height: 30px;
     background: transparent;
     border: 0;
     outline: 0;
     font-size: 16px;
-  }
+}
 
-  .searchdata {
+.searchdata {
     position: absolute;
     width: 100%;
     background: var(--bg-linear-gradient);
@@ -363,117 +379,117 @@
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     overflow-y: auto;
-  }
+}
 
-  input[type="search"]::-webkit-search-cancel-button {
+input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
-  }
+}
 
-  .search-icon {
+.search-icon {
     left: 16px;
     top: 12px;
-  }
+}
 
-  .cross-icon {
+.cross-icon {
     right: 20px;
     top: 12px;
     cursor: pointer;
-  }
+}
 
-  /* Sidebar */
+/* Sidebar */
 
-  .dashboard .dashboard-sidebar {
+.dashboard .dashboard-sidebar {
     border-radius: 24px;
     background: #c6c6c660;
     position: absolute;
     top: 35%;
     right: 30px;
-  }
+}
 
-  /* Notification */
+/* Notification */
 
-  .dashboard .Notification {
+.dashboard .Notification {
     width: 90%;
     max-width: 400px;
     border-radius: 20px;
     background: var(--color-lighten-gray);
     box-shadow: var(--box-shadow);
     z-index: 99;
-  }
+}
 
-  .Notification .scrollbar-div::-webkit-scrollbar {
+.Notification .scrollbar-div::-webkit-scrollbar {
     display: none;
-  }
+}
 
-  /* Administrator */
+/* Administrator */
 
-  .dashboard .Administrator {
+.dashboard .Administrator {
     width: 90%;
     max-width: 500px;
     border-radius: 20px;
     background: var(--bg-linear-gradient);
     box-shadow: var(--box-shadow);
-  }
+}
 
-  .user-info h1 {
+.user-info h1 {
     font-size: 25px;
     line-height: 1;
-  }
+}
 
-  .features-list ul li:hover a {
+.features-list ul li:hover a {
     font-weight: 600;
     text-decoration: underline solid var(--color-dark-yellow) 15%;
     text-underline-position: under;
-  }
+}
 
-  .features-list ul li:hover i {
+.features-list ul li:hover i {
     color: var(--color-dark-yellow);
-  }
+}
 
-  /* Text scroll css */
+/* Text scroll css */
 
-  .input-wrapper {
+.input-wrapper {
     position: relative;
     display: inline-block;
-  }
+}
 
-  .input-wrapper input[type="text"] {
+.input-wrapper input[type="text"] {
     display: none;
-  }
+}
 
-  .input-wrapper .text-display {
+.input-wrapper .text-display {
     display: block;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     cursor: pointer;
-  }
+}
 
-  .input-wrapper .text-display:focus-within {
+.input-wrapper .text-display:focus-within {
     display: none;
-  }
+}
 
-  .input-wrapper input[type="text"] {
+.input-wrapper input[type="text"] {
     display: block;
     width: 100%;
     padding: 8px;
     border-radius: 4px;
     box-sizing: border-box;
     outline: none;
-  }
+}
 
-  .appinputtext {
+.appinputtext {
     border: none;
     background: transparent;
-  }
+}
 
-  /* Input checkbox css */
+/* Input checkbox css */
 
-  .cs .app-tools input[type="checkbox"] {
+.cs .app-tools input[type="checkbox"] {
     accent-color: var(--color-dark-yellow);
-  }
+}
 
-  .cs .app-tools input[type="checkbox"] {
+.cs .app-tools input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
     display: flex;
@@ -487,114 +503,114 @@
     height: 12px;
     border: 1px solid var(--color-pure-black);
     border-radius: 2px;
-  }
+}
 
-  .cs .app-tools input[type="checkbox"]:checked {
+.cs .app-tools input[type="checkbox"]:checked {
     background-color: rgba(217, 217, 217, 0.41);
-  }
+}
 
-  .cs .app-tools input[type="checkbox"]:checked::after {
+.cs .app-tools input[type="checkbox"]:checked::after {
     content: "✔";
     font-size: 10px;
     position: absolute;
     height: 12px;
     top: -2px;
     left: 1px;
-  }
+}
 
-  @media (max-width: 900px) {
+@media (max-width: 900px) {
     .dashboard .clock {
-      top: 28px;
-      left: 70px;
-      align-items: start;
-      gap: 0px;
+        top: 28px;
+        left: 70px;
+        align-items: start;
+        gap: 0px;
     }
 
     .clock .time {
-      font-size: 2vw;
-      line-height: 0.5;
+        font-size: 2vw;
+        line-height: 0.5;
     }
 
     .clock .date {
-      font-size: 1.5vw;
+        font-size: 1.5vw;
     }
-  }
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
     .cs .app-tools input[type="checkbox"]:checked::after {
-      content: "\2713";
-      font-size: 11px;
-      position: absolute;
-      height: 12px;
-      top: -3px;
-      left: 1px;
+        content: "\2713";
+        font-size: 11px;
+        position: absolute;
+        height: 12px;
+        top: -3px;
+        left: 1px;
     }
 
     .dashboard .Administrator {
-      background: var(--color-lighten-gray);
+        background: var(--color-lighten-gray);
     }
 
     .user-info h1 {
-      font-size: 20px;
-      line-height: 1;
+        font-size: 20px;
+        line-height: 1;
     }
 
     .dashboard .Search {
-      background: var(--color-lighten-gray);
+        background: var(--color-lighten-gray);
     }
 
     .dashboard .clock {
-      top: 28px;
-      left: 50px;
-      align-items: start;
-      gap: 0px;
+        top: 28px;
+        left: 50px;
+        align-items: start;
+        gap: 0px;
     }
 
     .clock .time {
-      font-size: 4vw;
-      line-height: 1;
+        font-size: 4vw;
+        line-height: 1;
     }
 
     .clock .date {
-      font-size: 2.5vw;
+        font-size: 2.5vw;
     }
 
     .dashboard .app {
-      height: 110px;
+        height: 110px;
     }
 
     .dashboard .app img {
-      width: 55px;
+        width: 55px;
     }
-  }
+}
 
-  @media (max-width: 320px) {
+@media (max-width: 320px) {
     .dashboard .Administrator {
-      top: 2%;
+        top: 2%;
     }
 
     .features-list {
-      padding: 5px 40px;
+        padding: 5px 40px;
     }
 
     .features-list ul li {
-      margin: 6px;
+        margin: 6px;
     }
-  }
+}
 
-  /* ****************** This CSS for Login page *********************** */
+/* ****************** This CSS for Login page *********************** */
 
-  .login .left-background {
-    background-image: url("../images/Wallpaper.png");
+.login .left-background {
+    background-image: url("../images/login-wallpaper.jpg");
     border-top-right-radius: 100px;
-  }
+}
 
-  .login .right-background {
-    background-image: url("../images/Wallpaper.png");
+.login .right-background {
+    background-image: url("../images/login-wallpaper.jpg");
     border-top-left-radius: 100px;
-  }
+}
 
-  .login .blur-container {
+.login .blur-container {
     width: 700px;
     height: 600px;
     border-radius: 50px;
@@ -607,6 +623,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 .login .blur-popup-container {
     background: rgba(217, 217, 217, 0.41);
     border-radius: 50px;
@@ -614,12 +631,13 @@
     backdrop-filter: blur(2px);
     box-shadow: var(--box-shadow) inset;
 }
+
 .login .userinput::placeholder {
     font-weight: 400 !important;
     color: #646464 !important;
-  }
+}
 
-  .login .login-container {
+.login .login-container {
     width: 700px;
     height: 600px;
     border-radius: 50px;
@@ -627,9 +645,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
+}
 
-  .login .right-container .userinput {
+.login .right-container .userinput {
     padding: 0px 15px;
     width: 289px;
     height: 32px;
@@ -638,39 +656,41 @@
     background: rgba(0, 0, 0, 0.16);
     box-shadow: var(--box-shadow);
     color: var(--color-pure-black);
-  }
+}
 
-  .login #login-btn {
+.login #login-btn {
     background: var(--color-light-gray);
     color: var(--color-white);
 }
 
 .cs .userinput::placeholder {
-  color: var(--color-pure-black);
+    color: var(--color-pure-black);
 }
+
 @media (max-width: 768px) {
+
     .login .blur-container,
     .login .blur-popup-container,
     .login .login-container {
-      width: 96%;
-      max-height: 500px;
-      border-radius: 20px;
-      padding: 20px;
+        width: 96%;
+        max-height: 500px;
+        border-radius: 20px;
+        padding: 20px;
     }
 
     .login .logo {
-      margin-top: 20px;
+        margin-top: 20px;
     }
 
     .login .user-login {
-      flex-direction: column;
-      align-items: center;
-      margin-top: 10px;
-      padding-left: 0;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+        padding-left: 0;
     }
 
     .login .left-container {
-      display: none;
+        display: none;
     }
 
     .login .right-container {
@@ -678,109 +698,111 @@
     }
 
     .login .right-container .userinput {
-      width: 100%;
+        width: 100%;
     }
 
     .login #login-btn {
-      width: 100%;
+        width: 100%;
     }
 }
 
 @media (max-width: 480px) {
+
     .login .blur-container,
     .login .blur-popup-container,
     .login .login-container {
-      width: 100%;
+        width: 100%;
     }
 
     .login .left-container {
-      margin-bottom: 20px;
+        margin-bottom: 20px;
     }
 }
+
 /* ********************** This CSS for LightApp Page ***************************** */
 
 .lightapp .all-tab {
     background: var(--color-light-gray);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-  }
+}
 
-  .lightapp .lightapp-btn {
+.lightapp .lightapp-btn {
     background: var(--color-light-gray);
     color: var(--color-dark-yellow);
-  }
+}
 
-  .lightapp .modal-heading {
+.lightapp .modal-heading {
     font-size: 16px;
     color: var(--color-pure-black);
-  }
+}
 
-  .lightapp .small-container {
+.lightapp .small-container {
     width: 187px;
     height: 227px;
     border: 1px solid var(--border-light-gray);
     background-color: var(--bg-light-gray);
     border-radius: 11px;
-  }
+}
 
-  .lightapp .small-container .img-container {
+.lightapp .small-container .img-container {
     width: 70px;
     height: 70px;
     box-shadow: 0 4px rgba(0, 0, 0, 0.2);
-  }
+}
 
-  .lightapp .small-container #dropdown {
+.lightapp .small-container #dropdown {
     z-index: 99999;
-  }
+}
 
-  /* Edit Modal */
+/* Edit Modal */
 
-  .lightapp #Edit-modal .img-container {
+.lightapp #Edit-modal .img-container {
     width: 60px;
     height: 60px;
     border-radius: 15px;
     background: var(--color-white);
     box-shadow: var(--box-shadow);
-  }
+}
 
-  .lightapp .add-btn {
+.lightapp .add-btn {
     color: var(--color-dark-yellow);
-  }
+}
 
-  .lightapp #All {
+.lightapp #All {
     color: var(--color-dark-yellow);
-  }
+}
 
-  /* Dropdown menu and button */
+/* Dropdown menu and button */
 
-  .lightapp .dropdown-menu {
+.lightapp .dropdown-menu {
     border: 1px solid #686868;
-  }
+}
 
-  .lightapp .dropdown-button {
+.lightapp .dropdown-button {
     border-radius: 5px;
     background: var(--color-light-gray);
-  }
+}
 
-  /* For Internet Explorer 10-11 */
-  .lightapp input:-ms-input-placeholder {
+/* For Internet Explorer 10-11 */
+.lightapp input:-ms-input-placeholder {
     color: var(--color-gray-2);
     font-weight: 300;
-  }
+}
 
-  /* For Microsoft Edge */
-  .lightapp input::-ms-input-placeholder {
+/* For Microsoft Edge */
+.lightapp input::-ms-input-placeholder {
     color: var(--color-gray-2);
     font-weight: 300;
-  }
+}
 
-  /* Checkbox css */
+/* Checkbox css */
 
-  .ms input[type="checkbox"] {
+.ms input[type="checkbox"] {
     accent-color: var(--color-dark-yellow);
-  }
+}
 
-  .ms input[type="checkbox"] {
+.ms input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
     display: flex;
@@ -795,197 +817,197 @@
     border: none;
     border: 2px solid var(--color-dark-yellow);
     border-radius: 2px;
-  }
+}
 
-  .ms input[type="checkbox"]:checked {
+.ms input[type="checkbox"]:checked {
     background-color: var(--color-white);
-  }
+}
 
-  .ms input[type="checkbox"]:checked::after {
+.ms input[type="checkbox"]:checked::after {
     content: "✔";
     font-size: 12px;
     position: absolute;
     height: 12px;
     top: -2px;
     left: 2px;
-  }
+}
 
-  /* Responsive css */
+/* Responsive css */
 
-  @media (max-width: 320px) {
+@media (max-width: 320px) {
     .ms h4 {
-      font-size: 11px;
+        font-size: 11px;
     }
-  }
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
     .lightapp .small-container {
-      width: 150px;
-      height: 200px;
+        width: 150px;
+        height: 200px;
     }
 
     .ms input[type="checkbox"]:checked::after {
-      content: "\2713";
-      font-size: 11px;
-      height: 12px;
-      top: -2px;
-      left: 2px;
+        content: "\2713";
+        font-size: 11px;
+        height: 12px;
+        top: -2px;
+        left: 2px;
     }
 
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
+        -webkit-appearance: none;
+        margin: 0;
     }
-  }
+}
 
-  @media (max-width: 835px) {
+@media (max-width: 835px) {
     .lightapp .small-container {
-      width: 168px;
-      height: 210px;
+        width: 168px;
+        height: 210px;
     }
-  }
+}
 
-  /* ************************ This CSS for Plugin Page ****************************** */
+/* ************************ This CSS for Plugin Page ****************************** */
 
-  .plugin .all-tab {
+.plugin .all-tab {
     background: var(--color-light-gray);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-  }
+}
 
-  /* Css for Apps */
-  .plugin .small-container {
+/* Css for Apps */
+.plugin .small-container {
     width: 187px;
     height: 227px;
     border: 1px solid var(--border-light-gray);
     background-color: var(--bg-light-gray);
     border-radius: 11px;
-  }
+}
 
-  .plugin .small-container .img-container {
+.plugin .small-container .img-container {
     width: 70px;
     height: 70px;
     box-shadow: 0 4px rgba(0, 0, 0, 0.2);
-  }
+}
 
-  .plugin #All {
+.plugin #All {
     color: var(--color-dark-yellow);
-  }
+}
 
-  .plugin .dropdown-button {
+.plugin .dropdown-button {
     border-radius: 5px;
     background: var(--color-light-gray);
-  }
+}
 
-  .plugin .dropdown-menu {
+.plugin .dropdown-menu {
     border: 1px solid var(--border-light-gray);
-  }
+}
 
-  .plugin .plugin-modal {
+.plugin .plugin-modal {
     max-width: 1016px;
     height: 600px;
     border-radius: 20px;
-  }
+}
 
-  .plugin .modal-container {
+.plugin .modal-container {
     width: 220px;
     height: 400px;
     border-radius: 11px;
     border: 1px solid var(--border-light-gray);
-  }
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
     .plugin .small-container {
-      width: 150px;
-      height: 200px;
+        width: 150px;
+        height: 200px;
     }
-  }
+}
 
-  @media (max-width: 835px) {
+@media (max-width: 835px) {
     .plugin .small-container {
-      width: 168px;
-      height: 210px;
+        width: 168px;
+        height: 210px;
     }
-  }
+}
 
-  /* ************************ This CSS for Storage File Backup Page ***************************** */
+/* ************************ This CSS for Storage File Backup Page ***************************** */
 
-  @media (max-width: 320px) {
+@media (max-width: 320px) {
     .backup .label {
-      font-size: 12px;
+        font-size: 12px;
     }
 
     .backup .radio-button span {
-      width: 20px;
-      font-size: 11px;
+        width: 20px;
+        font-size: 11px;
     }
 
     .backup .radio-circle .text {
-      font-size: 12px;
+        font-size: 12px;
     }
-  }
+}
 
-  /* ************************ This CSS for System Setting Role Page ****************************** */
+/* ************************ This CSS for System Setting Role Page ****************************** */
 
-  .role .title-btn {
+.role .title-btn {
     background-color: var(--color-dark-yellow);
-  }
+}
 
-  .role hr {
+.role hr {
     border: 1px solid var(--color-light-white);
-  }
+}
 
-  .role .checkbox-container {
+.role .checkbox-container {
     background-color: var(--color-lighten-gray);
     border: 1px solid var(--border-light-gray);
-  }
+}
 
-  .role #modal {
+.role #modal {
     z-index: 999;
-  }
+}
 
-  /* input and textarea Css */
+/* input and textarea Css */
 
-  .role .add input,
-  .role textarea {
+.role .add input,
+.role textarea {
     border: 1px solid var(--border-light-gray);
-  }
+}
 
-  .role .edit input,
-  .role textarea {
+.role .edit input,
+.role textarea {
     border: 1px solid var(--border-light-gray);
-  }
+}
 
-  .role .addModal,
-  .role .editModal {
+.role .addModal,
+.role .editModal {
     max-width: 832px;
-  }
+}
 
-  .role input::placeholder {
+.role input::placeholder {
     color: var(--color-gray-2);
     font-weight: 300;
-  }
+}
 
-  /* For Internet Explorer 10-11 */
-  .role input:-ms-input-placeholder {
+/* For Internet Explorer 10-11 */
+.role input:-ms-input-placeholder {
     color: var(--color-gray-2);
     font-weight: 300;
-  }
+}
 
-  /* For Microsoft Edge */
-  .role input::-ms-input-placeholder {
+/* For Microsoft Edge */
+.role input::-ms-input-placeholder {
     color: var(--color-gray-2);
     font-weight: 300;
-  }
+}
 
-  /* Checkbox css */
+/* Checkbox css */
 
-  .role input[type="checkbox"].d-checkbox {
+.role input[type="checkbox"].d-checkbox {
     accent-color: var(--color-dark-yellow);
-  }
+}
 
-  .role input[type="checkbox"].d-checkbox {
+.role input[type="checkbox"].d-checkbox {
     appearance: none;
     -webkit-appearance: none;
     display: flex;
@@ -999,46 +1021,46 @@
     height: 16px;
     border: 2px solid var(--color-dark-yellow);
     border-radius: 2px;
-  }
+}
 
-  .role input[type="checkbox"].d-checkbox:checked {
+.role input[type="checkbox"].d-checkbox:checked {
     background-color: var(--color-white);
-  }
+}
 
-  .role input[type="checkbox"].d-checkbox:checked::after {
+.role input[type="checkbox"].d-checkbox:checked::after {
     content: "\2714";
     font-size: 12px;
     position: absolute;
     height: 12px;
     top: -2px;
     left: 2px;
-  }
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
     .role input[type="checkbox"].d-checkbox:checked::after {
-      content: "\2713";
-      font-size: 12px;
-      position: absolute;
-      height: 12px;
-      top: -3px;
-      left: 1px;
+        content: "\2713";
+        font-size: 12px;
+        position: absolute;
+        height: 12px;
+        top: -3px;
+        left: 1px;
     }
-  }
+}
 
-  /* ********************* This CSS for Help Page ***************************** */
+/* ********************* This CSS for Help Page ***************************** */
 
-  .help .username {
+.help .username {
     text-decoration-color: var(--color-dark-yellow);
-  }
+}
 
-  .help .submit-btn {
+.help .submit-btn {
     border-radius: 30px;
     background-color: var(--color-light-gray);
-  }
+}
 
-  /* ********************** This CSS for Account Page ******************************* */
+/* ********************** This CSS for Account Page ******************************* */
 
-  .account .enabled-input {
+.account .enabled-input {
     width: 100%;
     max-width: 494px;
     height: 38px;
@@ -1046,16 +1068,16 @@
     border: 1px solid var(--border-light-gray);
     background: var(--color-lighten-gray);
     padding: 0 10px;
-  }
+}
 
-  .account .bg-edit-mode {
+.account .bg-edit-mode {
     border-radius: 5px;
     background: #efefef;
     padding: 5px;
     margin: 10px 0;
-  }
+}
 
-  .account .input-div {
+.account .input-div {
     width: 100%;
     max-width: 494px;
     height: 38px;
@@ -1063,91 +1085,91 @@
     background: var(--color-lighten-gray);
     border: 1px solid var(--border-light-gray);
     overflow: hidden;
-  }
+}
 
-  .account .input-div input {
+.account .input-div input {
     width: 90%;
     height: 100%;
     padding: 0 10px;
     background: var(--color-lighten-gray);
-  }
+}
 
-  .account .wallpapers {
+.account .wallpapers {
     display: grid;
     grid-template-columns: repeat(auto-fit, 13rem);
     justify-content: start;
     gap: 35px;
-  }
+}
 
-  .account #add-div {
+.account #add-div {
     max-width: 196px;
     height: 136px;
     border-radius: 20px;
     box-shadow: var(--box-shadow);
-  }
+}
 
-  .account .wallpaper-div {
+.account .wallpaper-div {
     max-width: 196px;
     height: 136px;
     border-radius: 20px;
-  }
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
     .account .enabled-input {
-      height: 30px;
+        height: 30px;
     }
 
     .account .input-div {
-      height: 30px;
+        height: 30px;
     }
 
     .account .input-div input {
-      width: 83%;
+        width: 83%;
     }
-  }
+}
 
-  @media (min-width: 320px) {
+@media (min-width: 320px) {
     .account .wallpapers {
-      justify-content: center;
+        justify-content: center;
     }
-  }
+}
 
-  @media (min-width: 600px) {
+@media (min-width: 600px) {
     .account .wallpapers {
-      justify-content: center;
-      gap: 40px;
+        justify-content: center;
+        gap: 40px;
     }
-  }
+}
 
-  @media (min-width: 1000px) {
+@media (min-width: 1000px) {
     .account .wallpapers {
-      justify-content: center;
-      gap: 25px;
+        justify-content: center;
+        gap: 25px;
     }
-  }
+}
 
-  @media (min-width: 1281px) {
+@media (min-width: 1281px) {
     .account .wallpapers {
-      justify-content: start;
-      gap: 37px;
+        justify-content: start;
+        gap: 37px;
     }
-  }
+}
 
-  /* *********************** Shared by Adil Basic page Css *************************** */
+/* *********************** Shared by Adil Basic page Css *************************** */
 
-  .bg-c-div-gray {
+.bg-c-div-gray {
     background-color: #ededed;
-  }
+}
 
-  .br-c-amber {
+.br-c-amber {
     background-color: #fef3c7;
-  }
+}
 
-  .cs input[type="checkbox"].d-checkbox {
+.cs input[type="checkbox"].d-checkbox {
     accent-color: var(--color-dark-yellow);
-  }
+}
 
-  .cs input[type="checkbox"].d-checkbox {
+.cs input[type="checkbox"].d-checkbox {
     appearance: none;
     -webkit-appearance: none;
     display: flex;
@@ -1161,69 +1183,69 @@
     height: 16px;
     border: 2px solid var(--color-dark-yellow);
     border-radius: 2px;
-  }
+}
 
-  .cs input[type="checkbox"].d-checkbox:checked {
+.cs input[type="checkbox"].d-checkbox:checked {
     background-color: var(--color-white);
-  }
+}
 
-  .cs input[type="checkbox"].d-checkbox:checked::after {
+.cs input[type="checkbox"].d-checkbox:checked::after {
     content: "✔";
     font-size: 12px;
     position: absolute;
     height: 12px;
     top: -2px;
     left: 2px;
-  }
+}
 
-  @media (max-width: 480px) {
+@media (max-width: 480px) {
     .cs input[type="checkbox"].d-checkbox:checked::after {
-      content: "\2713";
-      font-size: 12px;
-      position: absolute;
-      height: 12px;
-      top: -3px;
-      left: 2px;
+        content: "\2713";
+        font-size: 12px;
+        position: absolute;
+        height: 12px;
+        top: -3px;
+        left: 2px;
     }
-  }
+}
 
-  @media (max-width: 375px) {
+@media (max-width: 375px) {
     .flex-col {
-      flex-direction: column;
+        flex-direction: column;
     }
 
     .w-full {
-      width: 100%;
+        width: 100%;
     }
 
     .mt-1 {
-      margin-top: 0.25rem;
+        margin-top: 0.25rem;
     }
 
     .md\:mt-0 {
-      margin-top: 0;
+        margin-top: 0;
     }
 
     .md\:ml-2 {
-      margin-left: 0;
+        margin-left: 0;
     }
-  }
+}
 
-  /* *********************** Step form used in login page *************************** */
+/* *********************** Step form used in login page *************************** */
 
-  .login #heading {
+.login #heading {
     text-transform: uppercase;
     color: #673ab7;
     font-weight: normal;
-  }
+}
 
-  .login .msform {
+.login .msform {
     text-align: center;
     position: relative;
     margin-top: 20px;
-  }
+}
 
-  .login .msform fieldset {
+.login .msform fieldset {
     border: 0 none;
     border-radius: 0.5rem;
     box-sizing: border-box;
@@ -1231,27 +1253,27 @@
     margin: 0;
     padding-bottom: 20px;
     position: relative;
-  }
+}
 
-  .login .form-card {
+.login .form-card {
     text-align: left;
-  }
+}
 
-  .login .msform fieldset:not(:first-of-type) {
+.login .msform fieldset:not(:first-of-type) {
     display: none;
-  }
+}
 
-  .login .card {
+.login .card {
     z-index: 0;
     border: none;
     position: relative;
-  }
+}
 
-  .login .photos {
+.login .photos {
     width: 5.5rem;
-  }
+}
 
-  .login .steps {
+.login .steps {
     font-size: 25px;
     color: gray;
     margin-bottom: 10px;
@@ -1262,9 +1284,9 @@
 .login #progressbar {
     overflow: hidden;
     color: lightgrey;
-  }
+}
 
-  .login #progressbar .active {
+.login #progressbar .active {
     color: var(--color-dark-yellow);
     font-weight: 600;
 }
@@ -1276,9 +1298,9 @@
     float: left;
     position: relative;
     font-weight: 400;
-  }
+}
 
-  .login #progressbar #camera:before {
+.login #progressbar #camera:before {
     content: "1";
 }
 
@@ -1288,9 +1310,9 @@
 
 .login #progressbar #confirm:before {
     content: "3";
-  }
+}
 
-  .login #progressbar li:before {
+.login #progressbar li:before {
     width: 30px;
     height: 30px;
     display: block;
@@ -1299,9 +1321,9 @@
     background: lightgray;
     border-radius: 50%;
     margin: 11px auto 10px auto;
-  }
+}
 
-  .login #progressbar li:after {
+.login #progressbar li:after {
     content: "";
     width: 100%;
     height: 2px;
@@ -1310,115 +1332,125 @@
     left: 0;
     top: 25px;
     z-index: -1;
-  }
+}
 
-  .login #progressbar li.active:before,
-  .login #progressbar li.active:after {
+.custom-bg-iframe {
+    background: rgb(235 224 224 / 86%) !important;
+}
+
+.login #progressbar li.active:before,
+.login #progressbar li.active:after {
     background: var(--color-dark-yellow);
-  }
+}
 
-  .login .progress {
+.login .progress {
     height: 20px;
-  }
+}
 
-  .login .progress-bar {
+.login .progress-bar {
     background-color: #673ab7;
-  }
+}
 
-  .login .fit-image {
+.login .fit-image {
     width: 100%;
     object-fit: cover;
-  }
-  /* scroll-x for every page */
-  .login .scroll::-webkit-scrollbar {
+}
+
+/* scroll-x for every page */
+.login .scroll::-webkit-scrollbar {
     width: 4px;
-  }
+}
 
-  .login .scroll::-webkit-scrollbar-track {
+.login .scroll::-webkit-scrollbar-track {
     background: transparent;
-  }
+}
 
-  .login .scroll::-webkit-scrollbar-thumb {
+.login .scroll::-webkit-scrollbar-thumb {
     background-color: rgba(128, 128, 128, 0.54);
     border-radius: 10px;
-  }
-  /* *********************** audio button animation used in login page *************************** */
+}
 
-  .login .mic-container {
+/* *********************** audio button animation used in login page *************************** */
+
+.login .mic-container {
     display: flex;
     align-items: center;
     justify-content: center;
 
     .circle {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1;
-      transition: 0.5s;
-      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
-        0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
-
-      i {
-        color: #b2b1b1;
-        font-size: 23px;
-        transition: 0.9s;
-      }
-
-      &:before {
-        content: "";
         width: 80px;
         height: 80px;
         border-radius: 50%;
-        opacity: 0.2;
-        z-index: -1;
-        position: absolute;
-      }
+        background: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        transition: 0.5s;
+        box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+            0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+
+        i {
+            color: #b2b1b1;
+            font-size: 23px;
+            transition: 0.9s;
+        }
+
+        &:before {
+            content: "";
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            opacity: 0.2;
+            z-index: -1;
+            position: absolute;
+        }
     }
 
     .circle.active {
-      background: var(--color-dark-yellow);
+        background: var(--color-dark-yellow);
 
-      &:before {
-        background-color: gray;
-        animation: bounce 0.8s ease-in-out infinite 0.5s;
-      }
+        &:before {
+            background-color: gray;
+            animation: bounce 0.8s ease-in-out infinite 0.5s;
+        }
 
-      i {
-        color: #ffffff;
-      }
+        i {
+            color: #ffffff;
+        }
     }
-  }
+}
 
-  @keyframes bounce {
+@keyframes bounce {
     0% {
-      transform: scale(1);
+        transform: scale(1);
     }
+
     25% {
-      transform: scale(1.4);
+        transform: scale(1.4);
     }
+
     75% {
-      transform: scale(1);
+        transform: scale(1);
     }
+
     100% {
-      transform: scale(1.3);
+        transform: scale(1.3);
     }
 }
 
 /********* Remove highlight color when click on any button in project ********/
 button,
 input[type="button"] {
-    -webkit-tap-highlight-color: transparent; /* Remove tap highlight color */
+    -webkit-tap-highlight-color: transparent;
+    /* Remove tap highlight color */
 }
 
 button:focus,
 input[type="button"]:focus {
-    outline: none; /* Remove the focus outline */
+    outline: none;
+    /* Remove the focus outline */
 }
-
 
 /**Tooltip **/
 .tooltip1 {
@@ -1427,4 +1459,91 @@ input[type="button"]:focus {
 
 .has-tooltip1:hover~.tooltip1 {
     display: block;
+}
+
+/********* curtains animation on desktop page ********/
+
+#curtain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+#curtain .left,
+#curtain .right {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#curtain .left {
+    background-image: url("../images/desktop-left.png");
+    left: 0;
+    transform-origin: top right;
+}
+
+#curtain .right {
+    background-image: url("../images/desktop-right.png");
+    left: 50%;
+    transform-origin: top left;
+}
+
+/* **********
+      opening
+  ********** */
+#curtain.open .left {
+    animation-fill-mode: forwards;
+    animation-name: left-curtain-opening;
+    animation-duration: 4s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+}
+
+#curtain.open .right {
+    animation-fill-mode: forwards;
+    animation-name: right-curtain-opening;
+    animation-duration: 4s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+}
+
+/* **********
+      animations
+  ********** */
+
+@keyframes left-curtain-opening {
+
+    /* 4s */
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes right-curtain-opening {
+
+    /* 4s */
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
 }

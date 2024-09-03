@@ -16,6 +16,7 @@ class Roles extends Model
         'file_manage_settings',
         'user_settings',
         'permissionID',
+        'cID',
     ];
     
     public function user()

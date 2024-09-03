@@ -14,12 +14,12 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             GroupsSeeder::class,
             RolesSeeder::class,
-            UsersSeeder::class,
             AppsSeeder::class,
             LightAppCategoriesSeeder::class,
             LightAppsSeeder::class,
             ContextTypesTableSeeder::class,
-            ContextOptionsTableSeeder::class
+            ContextOptionsTableSeeder::class,
+            UsersSeeder::class,
         ]);
     }
 }

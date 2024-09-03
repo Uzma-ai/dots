@@ -24,7 +24,7 @@ class SearchController extends Controller
         $apps = App::all();
         $query = $request->input('query');
         $createdBy = auth()->id();
-        $files = File::select('extension', 'name', 'parentpath', 'path', 'filetype') // Select specific columns
+        $files = File::select('id','openwith','extension', 'name', 'parentpath', 'path', 'filetype') // Select specific columns
             ->where('name', 'like', "%$query%")
             ->where('created_by', $createdBy)
             ->where('status', 1)
@@ -35,8 +35,11 @@ class SearchController extends Controller
         $filesByExtension = [];
         foreach ($files as $file) {
             $filesByExtension[$file->extension][] = [
+                
+                'id'=> $file->id,
                 'name' => $file->name,
                 'extension' => $file->extension,
+                'openwith' => $file->openwith,
                 'parentpath' => $file->parentpath,
                 'path' => $file->path,
                 'filetype' => $file->filetype,
@@ -62,6 +65,7 @@ class SearchController extends Controller
         $iframearray = [];
         $filetype='';
         $filekey ='';
+        $extension = 'other';
         
         if (!empty($request->input('appkey')) && !empty($request->input('filekey') && $request->input('filetype') && !empty($request->input('apptype')))) {
             $filekey = $request->input('filekey');
@@ -79,6 +83,7 @@ class SearchController extends Controller
             if(!empty($file) && !empty($appdet)){
                 if($filetype =='file'){
                     $filegroup =  checkFileGroup($file->extension);
+                    $extension  = $filegroup;
                     if($filegroup !='editor'){
                         if($filegroup =='image'){
                             $iframeurllink = url('dotsimageviewer/'.$filekey);
@@ -107,6 +112,7 @@ class SearchController extends Controller
                             $newarr = $this->filefunctions->createNewFile($appdet->fileextension, 'Document');
                             if($newarr){
                                 $file = File::find($newarr['filekey']);
+                                $extension  = ($file) ? $file->extension : 'other';
                                 $iframeurllink = $iframeurllink = url('editfile/'.base64UrlEncode($newarr['filekey']));
                                 $filekey = base64UrlEncode($newarr['filekey']);
                             }else{
@@ -126,6 +132,7 @@ class SearchController extends Controller
                 'appkey' => $appkey,
                 'apptype' => $apptype,
                 'appicon' => $appdet->icon,
+                'extension' => $extension,
                 'filename' => $file->name,
                 'appname' => $appdet->name,
                 'iframeurl' => $iframeurllink
@@ -133,29 +140,29 @@ class SearchController extends Controller
            
       if (Session::has('iframeapp')) {
             $iframearray = Session::get('iframeapp');
-            if (isset($iframearray[$appkey])) {
-                $appArray = $iframearray[$appkey];
-                unset($iframearray[$appkey]);
-                $iframearray = array_merge([$appkey => $appArray], $iframearray);
+            if (isset($iframearray[$apptype.$appkey])) {
+                $appArray = $iframearray[$apptype.$appkey];
+                unset($iframearray[$apptype.$appkey]);
+                $iframearray = array_merge([$apptype.$appkey => $appArray], $iframearray);
                 $found = false;
-                foreach ($iframearray[$appkey] as $key => $subArray) {
+                foreach ($iframearray[$apptype.$appkey] as $key => $subArray) {
                     if ($subArray['filekey'] === $filekey) {
-                        unset($iframearray[$appkey][$key]);
-                        $iframearray[$appkey] = array_merge([$newArray], $iframearray[$appkey]);
+                        unset($iframearray[$apptype.$appkey][$key]);
+                        $iframearray[$apptype.$appkey] = array_merge([$newArray], $iframearray[$apptype.$appkey]);
                         $found = true;
                         break;
                     }
                 }
         
                 if (!$found) {
-                    $iframearray[$appkey] = array_merge([$newArray], $iframearray[$appkey]);
+                    $iframearray[$apptype.$appkey] = array_merge([$newArray], $iframearray[$appkey]);
                 }
             } else {
-                $iframearray[$appkey] = [$newArray];
+                $iframearray[$apptype.$appkey] = [$newArray];
             }
 
         }else{
-            $iframearray[$appkey] = [$newArray];
+            $iframearray[$apptype.$appkey] = [$newArray];
         }
         Session::put('iframeapp', $iframearray);
         

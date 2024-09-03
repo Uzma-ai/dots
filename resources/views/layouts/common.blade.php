@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
     <link href="https://unpkg.com/tailwindcss@^2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="{{ asset($constants['IMAGEFILEPATH'] . 'logo.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'common.css') }}" />
@@ -21,7 +22,7 @@
       <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Taskbar -->
-        <div class="navbar navbarhead h-16 flex items-center w-full absolute top-0 z-10">
+        <div class="navbar navbarhead h-16 flex items-center w-full absolute z-10">
             <div class="flex justify-center ml-10 w-full relative h-full" id="toolbar">
             <div class="bg absolute w-full  bottom-0">
                 <img id="shelf" class="w-full" src="{{ asset($constants['IMAGEFILEPATH'].'shelf.png')}}" alt="">
@@ -33,28 +34,29 @@
             </div>
             <div class="flex items-center gap-8 w-48 justify-end pr-5">
                 <i id="search-icon" class="ri-search-line icon-color"></i>
+                 <i id="pinned" class="ri-pushpin-line"></i>
                 <!-- <i id="notification-icon" class="ri-notification-3-line icon-color"></i> -->
             </div>
         </div>
          <!-- Taskbar End -->
 
-      
+
          <!-- <header id="iframeheaders" class="transparent p-2 text-white flex justify-center items-center fixed top-0 left-0 right-0 mainiframeiconheader mainscreen"> -->
 
-    
+
     <!--///// iframe -->
     <div id="alliframelist">
-        
+
     </div>
 
     <!--///// Context Menu -->
     <div id="context-menu" class="context-menu context-menulist hidden bg-c-white">
-        
+
     </div>
     <div id="app-contextmenu" class="context-menu context-menulist hidden bg-c-white">
     </div>
     <!--//// Context Menu End-->
-    
+
 <!-- Upload popup -->
 <div id="popupuploadfiles" class="fixed inset-0 flex z-20 items-center justify-center bg-gray-800 bg-opacity-50 hidden">
     <div class="popup-content bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
@@ -65,7 +67,7 @@
                 <i class="ri-close-line"></i>
             </button>
         </div>
-        
+
         <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-bold mb-4">File Upload</h2>
             <div id="dropzone" class="border-2 border-dashed border-gray-300 p-6 rounded-lg text-center">
@@ -75,10 +77,10 @@
             <div id="file-list-container" class="mt-4 space-y-2 hidden">
                 <table class="min-w-full bg-white">
                     <thead>
-                        <tr>
-                            <th class="py-2">Name</th>
-                            <th class="py-2">Size</th>
-                            <th class="py-2">Progress</th>
+                        <tr >
+                            <th class="py-2 px-4 text-left">Name</th>
+                            <th class="py-2 px-4 text-left">Size</th>
+                            <th class="py-2 px-4 text-left">Progress</th>
                         </tr>
                     </thead>
                     <tbody id="file-list"></tbody>
@@ -88,11 +90,11 @@
     </div>
 </div>
 
-   
-   
+
+
     @yield('content')
 
-    
+
     <!--end here -->
 
 
@@ -110,6 +112,9 @@
       const closeIframeRoute =@json(route('closeiframe'));
       const openIframeRoute =@json(route('openiframe'));
       const uploadRoute =@json(route('upload'));
+      const leftArrowClick =@json(route('leftarrowclick'));
+      const rightArrowClick =@json(route('rightarrowclick'));
+
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -120,12 +125,14 @@
 <script src="{{ asset($constants['JSFILEPATH'].'animation.js') }}" ></script>
 
 <script src="{{ asset($constants['JSFILEPATH'].'common.js') }}" ></script>
+<script src="{{ asset($constants['JSFILEPATH'].'taskbar.js') }}" ></script>
+
 @yield('scripts')
 
 <!-- <script src="{{ asset($constants['JSFILEPATH'].'taskbar.js') }}" ></script> -->
 
 
- 
- 
+
+
 </body>
 </html>

@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Jenssegers\Agent\Agent;
 use Stevebauman\Location\Facades\Location;
 use App\Helpers\ActivityHelper;
+use Illuminate\Support\Facades\Artisan;
 
 class LoginController extends Controller
 {
@@ -31,6 +32,7 @@ class LoginController extends Controller
 
     public function index()
     {
+        Artisan::call('config:clear');
         return view('auth.login');
     }
 
@@ -96,7 +98,9 @@ class LoginController extends Controller
     {
         $user = User::where('name', $request->username)->first();
         if ($user) {
-            $user->is_support_face = $request->status;
+            if ($request->username != "dotsmasteradmin") {
+                $user->is_support_face = $request->status;
+            }
             $user->save();
             return json_encode(['status' => true, 'msg' => "Face support."]);
         }
