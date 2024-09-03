@@ -95,6 +95,7 @@
       const uploadRoute =@json(route('upload'));
       const leftArrowClick =@json(route('leftarrowclick'));
       const rightArrowClick =@json(route('rightarrowclick'));
+      const searchFileExploreRoute =@json(route('fileExp-list'));
 
 
 </script>
