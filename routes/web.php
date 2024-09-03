@@ -18,7 +18,7 @@ use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Jobs\ConfigClearJob;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\FileSharingController;
+
 
 Route::get('/', function () {
     return redirect(route('dashboard'));

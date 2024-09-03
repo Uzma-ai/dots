@@ -19,10 +19,10 @@ class MessageController extends Controller
 {
     public function getUsers()
     {
-
-        $users = User::all();
-        $groups = Group::all();
-        $roles = Roles::all();
+        $cid = auth()->user()->cID;
+        $users = User::where('cID',$cid)->get();
+        $groups = Group::where('cID',$cid)->get();
+        $roles = Roles::where('cID',$cid)->get();
         return response()->json([
             'users' => $users,
             'groups' => $groups,
@@ -35,10 +35,7 @@ class MessageController extends Controller
         // dd($request->all());exit;
         try {
             // fetching file key
-            $fileKey = array();
-            if (Session::has('iframeapp')) {
-                $fileKey = Session('iframeapp');
-            
+            $fileKey = Session('iframeapp');
 
             $app = null;
 
@@ -222,7 +219,6 @@ foreach ($request->user_array as $el) {
                 'message' => $responseMessage,
                 'comment' => $comment,
             ]);
-         }
         } catch (\Exception $e) {
            dd($e);
            Log::error("Error saving comment or reply: " . $e->getMessage());
@@ -237,10 +233,8 @@ foreach ($request->user_array as $el) {
    public function getMessageData()
    {
 
-    $fileKey = array();
-    if (Session::has('iframeapp')) {
-        $fileKey = Session('iframeapp');
-    
+    // fetching file key
+    $fileKey = Session('iframeapp');
     
 
     if (array_key_exists('Mw', $fileKey)) {
@@ -268,7 +262,7 @@ foreach ($request->user_array as $el) {
     
 
 
-}
+    
     return response()->json([
         'messages' => null,
 
