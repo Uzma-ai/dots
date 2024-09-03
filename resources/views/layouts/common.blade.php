@@ -22,15 +22,15 @@
       <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Taskbar -->
-        <div class="navbar navbarhead h-16 flex items-center w-full absolute z-10">
+        <div class="navbar navbarhead h-16 flex items-center w-full absolute">
             <div class="flex justify-center ml-10 w-full relative h-full" id="toolbar">
-            <div class="bg absolute w-full  bottom-0">
-                <img id="shelf" class="w-full" src="{{ asset($constants['IMAGEFILEPATH'].'shelf.png')}}" alt="">
-            </div>
-            <header id="iframeheaders" class="mt-1">
-                <div class="flex space-x-4" id="sortable-apps">
+                <div class="bg absolute w-full  bottom-0">
+                    <img id="shelf" class="w-full" src="{{ asset($constants['IMAGEFILEPATH'].'shelf.png')}}"  alt="" loading="lazy">
                 </div>
-            </header>
+                <header id="iframeheaders" class="mt-1">
+                    <div class="flex space-x-4" id="sortable-apps">
+                    </div>
+                </header>
             </div>
             <div class="flex items-center gap-8 w-48 justify-end pr-5">
                 <i id="search-icon" class="ri-search-line icon-color"></i>
