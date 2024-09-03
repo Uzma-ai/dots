@@ -36,6 +36,7 @@ class MessageController extends Controller
         try {
             // fetching file key
              $fileKey = $request->input('fileID');
+             dd($fileKey);
             if (!empty($fileKey)) {
             
             $fileKey = base64UrlDecode($fileKey);
