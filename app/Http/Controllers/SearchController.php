@@ -155,7 +155,7 @@ class SearchController extends Controller
                 }
         
                 if (!$found) {
-                    $iframearray[$apptype.$appkey] = array_merge([$newArray], $iframearray[$appkey]);
+                    $iframearray[$apptype.$appkey] = array_merge([$newArray], $iframearray[$apptype.$appkey]);
                 }
             } else {
                 $iframearray[$apptype.$appkey] = [$newArray];
