@@ -1,8 +1,8 @@
 
 @foreach($permissions as $permission)
 
-<tr class="h-14 border-b border-c-dark-gray-opaque">
-                    <td class="py-2 pl-3"> <input type="checkbox" class="c-checkbox"></td>
+<tr class="h-14 border-t">
+                    <td class="py-2 pl-3 pt-5 flex items-start"> <input type="checkbox" class="c-checkbox"></td>
                     <td
                       class="font-normal text-c-black text-left pl-3 align-top pt-4"
                     >

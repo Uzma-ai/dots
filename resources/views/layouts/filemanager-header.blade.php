@@ -1,32 +1,31 @@
-            <!-- topbar -->
-            <div
+      <div
             class="py-4 w-full hidden md:flex flex-row items-center gap-2 taskbar"
           >
             <div
-              class="flex bg-c-white rounded-md w-16 h-8 justify-evenly ml-6"
+              class="flex bg-c-white rounded-md w-16 h-8 justify-evenly ml-6 items-center"
             >
-            <a href="{{ url('/filemanager',['path'=>base64UrlEncode($updatedPath)]);}}" class="pt-2">
-            <button>
-                <i class="ri-arrow-left-line ri-lg"></i>
-            </button>
+            <a href="#" class="leftArrowClick" data-path ="{{ base64UrlDecode($path) }}" data-leftpath="{{ url('filemanager',['path'=>base64UrlEncode($updatedPath)]) }}">
+              <button>
+                  <i class="ri-arrow-left-line ri-lg {{ (empty(base64UrlDecode($path)) || base64UrlDecode($path)=='/') ? 'disabledicon' :''}}"></i>
+              </button>
             </a>
 
-            <a href="{{ url('/filemanager',['path'=>base64UrlEncode($updatedPath)]);}}" class="pt-2">
+            <a href="#" class=" rightArrowClick" data-path ="{{ (session()->has('rightarrowpath')) ? url('filemanager',['path'=>base64UrlEncode(session('rightarrowpath'))]) : '' }}">
             <button>
-                <i class="ri-arrow-right-line ri-lg text-c-gray-opaque"></i>
+                <i class="ri-arrow-right-line ri-lg {{ (session()->has('rightarrowpath')) ? : 'disabledicon' }}"></i>
             </button>
             </a>
             </div>
 
             <div
-              class="flex items-center rounded-md overflow-hidden bg-c-white h-8 md:ml-6 md:w-61 lg:w-8/12 cursor-pointer"
+              class="flex context-menulist items-center rounded-md overflow-hidden bg-c-white h-8 md:ml-6 md:w-61 lg:w-8/12 cursor-pointer"
             >
-            <a href="{{ url('/filemanager',['path'=>base64UrlEncode($updatedPath)]);}}">
+            <a href="#" class="leftArrowClick" data-path ="{{ base64UrlDecode($path) }}" data-leftpath="{{ url('filemanager',['path'=>base64UrlEncode($updatedPath)]) }}">
 
                 <button
                 class="pt-3 pb-3 pl-4 hidden md:flex items-center justify-center border-r border-c-gray-opaque pr-3"
                 >
-                <i class="ri-arrow-up-line ri-lg"></i>
+                <i class="ri-arrow-up-line ri-lg {{ (empty(base64UrlDecode($path)) || base64UrlDecode($path)=='/') ? 'disabledicon' :''}}"></i>
                 </button>
             </a>
           
@@ -54,10 +53,11 @@
               >
                 <i class="ri-star-line"></i>
               </button>
-
+            <a href="#" class="refreshButton">
               <button class="pr-4 pt-3 pb-3 flex items-center justify-center">
                 <i class="ri-loop-left-line"></i>
               </button>
+            </a>
             </div>
 
             <div
@@ -187,7 +187,7 @@
                   @endif
                 </div>
               </div>
-              @if(!empty($filteredPermissions['fileManager']) && in_array('upload', $filteredPermissions['fileManager']))             
+              @if(!empty($filteredPermissions['fileManager']) && in_array('upload', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
               <div class="relative flex items-center upload">
                 <a href="#" class="clickmenu uploadFiles">
                   <button
@@ -199,7 +199,7 @@
               </div>
               @endif
 
-              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']))             
+              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
               <a href="#" class="clickmenu cutFunction disabledicon fimanagertoolpanel"><button class="scissor">
                 <i class="ri-scissors-2-fill ri-lg"></i>
               </button></a>
@@ -208,7 +208,7 @@
               </button></a>
               @endif
 
-              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']))
+              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
               <a href="#" class="clickmenu pasteFunction disabledicon fimanagertoolpanel"><button class="paste">
                 <i class="ri-clipboard-line ri-lg"></i>
               </button></a>
@@ -222,7 +222,7 @@
                 <i class="ri-share-fill ri-lg"></i> 
               </button> -->
 
-              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']))             
+              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
               <a href="#" class="clickmenu deleteFunction disabledicon fimanagertoolpanel"><button class="delete">
                 <i class="ri-delete-bin-line ri-lg"></i>
               </button></a>
@@ -246,8 +246,8 @@
                       @foreach ($scontextType->contextOptions as $soption)
                       <div class="hover-bg-c-yellow rounded-t-lg">
                         <a href="#" class="flex block p-2 pl-4 dropdown-item clickmenu {{ $scontextType->function }} " data-type="{{ $soption->function }}">
-                          <i class="ri-check-line pr-3 ri-lg mt-1"></i
-                          ><span>{{ $soption->name }}</span>
+                          <i class="ri-check-line pr-3 ri-lg mt-1 sortingcheck sorting{{ $soption->function }} {{ (session()->has('sortfiles') && session('sortfiles')['sortby'].'-'.session('sortfiles')['sortorder'] == $soption->function) ? : 'hidden'}}"></i>
+                          <span>{{ $soption->name }}</span>
                         </a>
                       </div>
                        @endforeach
@@ -287,7 +287,7 @@
                     @endforeach
                   @endif
 
-                  <div class="hover-bg-c-yellow">
+                  {{-- <div class="hover-bg-c-yellow">
                     <a
                       href="#"
                       class="flex items-center block p-2 pl-4 dropdown-item"
@@ -316,7 +316,7 @@
                       <i class="ri-eye-line ri-lg w-1/4"></i>
                       <span>Preview pane</span>
                     </a>
-                  </div>
+                  </div> --}}
                 </div>
               </div>
             </div>

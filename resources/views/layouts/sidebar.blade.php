@@ -24,10 +24,10 @@
                     class="drop-menu cursor-pointer rounded-r-lg"
                   >
                     <a
-                      class="w-full px-6 py-1 flex justify-between items-center bg-c-black rounded-r-xl"
-                      href="filemanager.html"
+                      class="w-full px-6 py-1 flex justify-between items-center bg-c-black text-c-yellow  rounded-r-xl"
+                      href="#"
                     >
-                      <span>Position</span>
+                      <span>Position (WIP)</span>
                       <i
                         class="ri-arrow-right-s-line text-c-yellow big-right-arrow text-2xl"
                       ></i>
@@ -131,7 +131,7 @@
                     <ul class="drop-list text-sm space-y-1">
                       <li>
                         <a
-                          href="filemanager-linkshare.html"
+                          href="{{ route('linkshare') }}"
                           class="block py-1 px-8 rounded-r-md w-full flex justify-between items-center"
                         >
                           <span>Link Sharing</span>

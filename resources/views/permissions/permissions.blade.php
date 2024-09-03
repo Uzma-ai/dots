@@ -30,7 +30,17 @@
             </div>
 
             <div class="flex-grow md:w-1/2">
-              <div class="flex items-center justify-end">
+              <div class="flex items-center justify-end gap-6">
+                <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-5/12">
+                  <input
+                    type="text" id="searchterm"
+                    class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none text-c-black outline-none"
+                    placeholder="Search document permission..."
+                  />
+                  <div class="pt-3 pb-3 pr-4 flex items-center justify-center">
+                  <i class="ri-search-line"></i>
+                  </div>
+                </div>
                 <div>
                   <button
                     class="flex items-center justify-center gap-2 bg-c-black text-c-yellow px-3 sm:px-4 py-1 sm:py-1.5 rounded-md"
@@ -43,28 +53,33 @@
               </div>
             </div>
           </div>
-            <div class="mt-3 flex items-center justify-end px-3 gap-2">
-            <div class="flex items-center rounded overflow-hidden bg-c-white h-8">
+          <!-- searchbar in mobile-->
+          <div
+            class="pl-4 pt-3 mt-3 pb-3 pr-4 w-full flex flex-row justify-between items-center bg-c-light-white-smoke md:hidden"
+            id="mobiletaskbar"
+          >
+            <div
+              class="relative w-full flex flex-row items-center justify-end gap-2"
+            >
+              <div
+                class="flex items-center rounded overflow-hidden flex-shrink-0 flex-grow bg-c-white h-8 w-1/12"
+              >
                 <input
                   type="text" id="searchterm"
-                  class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none text-c-black outline-none"
-                  placeholder="Search users, groups..."
+                  class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none outline-none w-3/12"
+                  placeholder="Search document permission..."
                 />
                 <div class="pt-3 pb-3 pr-4 flex items-center justify-center">
-                 <i class="ri-search-line"></i>
+                  <i class="ri-search-line"></i>
                 </div>
               </div>
-              <button
-                  class="text-c-light-black bg-c-gray-3 rounded px-6 py-1 mr-1" id='search'
-                >
-                  Search
-                </button>
+            </div>
           </div>
-
+            
           <!-- info table -->
-          <div class="p-4 relative h-full flex flex-col">
+          <div class="p-4 relative h-full flex flex-col overflow-y-scroll scroll">
             <div
-              class="bg-white as-table-container border rounded-md"
+              class="bg-white cs-table-container border rounded-md"
             >
               <table class="table-auto w-full">
                 <thead class="h-14">
@@ -325,32 +340,32 @@
                       >User & Groups:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                  <div class="md:col-span-9 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-create">
                     <p class="text-c-black">Create</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-edit">
                     <p class="text-c-black">Edit</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-view">
                     <p class="text-c-black">View/Preview</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-delete">
                     <p class="text-c-black">Delete</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-mass-upload">
                     <p class="text-c-black">Bulk-Upload</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-rollback">
                     <p class="text-c-black">Rollback</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-permanent-delete">
                     <p class="text-c-black">Hard Delete</p>
                   </div>
@@ -374,32 +389,32 @@
                       >Roles:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
-                     <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                  <div class="md:col-span-9 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                     <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-create">
                     <p class="text-c-black">Create</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-edit">
                     <p class="text-c-black">Edit</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-view">
                     <p class="text-c-black">View/Preview</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-delete">
                     <p class="text-c-black">Delete</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-mass-upload">
                     <p class="text-c-black">Bulk-Upload</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-rollback">
                     <p class="text-c-black">Rollback</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-permanent-delete">
                     <p class="text-c-black">Hard Delete</p>
                   </div>
@@ -422,32 +437,32 @@
                       >Groups:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
-                     <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                  <div class="md:col-span-9 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                     <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-create">
                     <p class="text-c-black">Create</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-edit">
                     <p class="text-c-black">Edit</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-view">
                     <p class="text-c-black">View/Preview</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-delete">
                     <p class="text-c-black">Delete</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-mass-upload">
                     <p class="text-c-black">Bulk-Upload</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-rollback">
                     <p class="text-c-black">Rollback</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-permanent-delete">
                     <p class="text-c-black">Hard Delete</p>
                   </div>
@@ -470,20 +485,20 @@
                       >Backend:</h3
                     >
                   </div>
-                  <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                  <div class="md:col-span-9 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="notice">
                     <p class="text-c-black">Notice</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="storage">
                     <p class="text-c-black">Storage</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="backups">
                     <p class="text-c-black">Backup</p>
                   </div>
-                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-center  gap-3 h-9">
+                   <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="logs">
                     <p class="text-c-black">Logs</p>
                   </div>

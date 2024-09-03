@@ -7,7 +7,8 @@
 @endsection
 @section('content')
 
-    <div class="w-full h-full dashboard cs pt-20">
+    <div class="w-full h-full dashboard cs pt-20 relative">
+
 
         <!-- Desktop apps   -->        
         <div class="desktopapps-div w-full overflow-x-auto">
@@ -67,15 +68,16 @@
                 <input type="search" id="searchInput" placeholder="Search">
                 <i class="ri-close-line cross-icon absolute" onclick=""></i>
             </div>
-            <div id="searchsuggestions" class="searchdata hidden px-3 py-3 max-h-96">
+            <div id="searchsuggestions" class="searchdata allapplist hidden px-3 py-3 max-h-96">
             </div>
         </div>
 
         <!-- Right Sidebar -->
-        <div class="dashboard-sidebar w-16 px-2 hidden sm:block">
+        <div class="dashboardefaultdapp allapplist dashboard-sidebar w-16 px-2 hidden sm:block" data-option="app">
             @foreach ($apps as $app)
-                <a href="#"data-path =" {{ base64UrlEncode($app->path) }}" class="folders openiframe selectapp" data-appkey="{{ base64UrlEncode($app->id) }}" data-filekey="{{ base64UrlEncode($app->id) }}" data-filetype="app" data-apptype="app">
-                    <img class="mb-2"src="{{ asset($constants['APPFILEPATH'] . $app->icon) }}" alt="{{ $app->name }}" /></a>
+                <a href="#" data-path ="{{ base64UrlEncode($app->path) }}" class="openiframe selectapp" data-appkey="{{ base64UrlEncode($app->id) }}" data-filekey="{{ base64UrlEncode($app->id) }}" data-filetype="app" data-apptype="app">
+                    <img class="mb-2 icondisplay"src="{{ checkIconExist($app->icon,'app') }}" alt="{{ $app->name }}" />
+                </a>
             @endforeach
         </div>
 
@@ -99,7 +101,11 @@
                 </form>
                 <div class="user-info">
                     <h1 class="text-lg font-normal underline underline-offset-8 decoration-1">
-                        {{ ucfirst(Auth::user()->roles->name) }}
+                         @if (Auth::user()->name != 'masteradmin')
+                            {{ (!empty(Auth::user()->roles->name))?ucfirst(Auth::user()->roles->name):'NA' }}
+                         @else
+                         {{ 'Masteradmin'}}
+                         @endif
                     </h1>
                     <h4 class="text-sm">{{ ucfirst(Auth::user()->name) }}</h4>
                 </div>
@@ -107,25 +113,25 @@
             <div class="bottom border-t-2 border-gray-500">
                 <div class="features-list py-5 px-16">
                     <ul>
-                        @if(!empty($filteredPermissions['fileManager']))
+                        @if(!empty($filteredPermissions['fileManager']) || Auth::user()->cID == 0)
                         <li class="flex items-center gap-8 mb-4">
                             <i class="ri-folder-3-fill ri-1x Ad-iconcolor"></i>
                             <a href="{{ route('filemanager') }}">File manager</a>
                         </li>
                         @endif
-                        @if(!empty($filteredPermissions['backendManagement']))
+                        @if(!empty($filteredPermissions['backendManagement']) || Auth::user()->cID == 0)
                         <li class="flex items-center gap-8 mb-4">
                             <i class="ri-bar-chart-fill ri-1x Ad-iconcolor"></i>
                             <a href="{{ route('useradmin') }}">Backend</a>
                         </li>
                         @endif
-                        @if(!empty($filteredPermissions['userManagement']))
+                        @if(!empty($filteredPermissions['userManagement']) || Auth::user()->cID == 0)
                         <li class="flex items-center gap-8 mb-4">
                             <i class="ri-user-fill ri-1x Ad-iconcolor"></i>
                             <a href="{{ route('useradmin') }}">User manage</a>
                         </li>
                         @endif
-                        <li class="flex items-center gap-5 mb-4">
+                        <li class="flex items-center gap-8 mb-4">
                             <i class="ri-download-2-line ri-1x Ad-iconcolor"></i>
                             <a href="#">Downloads</a>
                         </li>
@@ -145,7 +151,7 @@
             </div>
         </div>
         <!-- Administrator end -->
-         
+
 
         <!-- Footer -->
 
@@ -154,12 +160,6 @@
             <img id="footer-logo" class="w-10 h-10" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
                 alt="Logo" />
         </div>
-        <!-- <div
-                                                class="absolute py-1 px-2 text-start text-xs tooltip bottom-2 right-20 z-10 bg-white border rounded-md border-c-yellow font-normal"
-                                              >
-                                                Administrator
-                                              </div> -->
-
 
 
 
@@ -169,6 +169,12 @@
     @php
         $path = base64UrlEncode('Desktop');
     @endphp
+    <script>
+        // After 4 seconds, hide the curtains
+        setTimeout(() => {
+        $('#curtain').addClass('hidden');
+        }, 4000);
+    </script>
     <script>
         let path = @json($path);
         let navbar = true;
@@ -213,28 +219,6 @@
             });
         });
     </script>
-    {{-- <script>
-        const desktopapp = @json(route('desktopapp'));
-        const createFolderRoute = @json(route('createfolder'));
-        const createFileRoute = @json(route('createfile'));
-        const showFileDetail = @json(route('showpathdetail'));
 
-        let path = @json($path);
-        let navbar = true;
-    </script>
-    <script>
-        $(document).ready(function() {
-            if ($('.navbarhead').hasClass('taskbar-slide')) {
-                $('.navbarhead').removeClass('taskbar-slide');
-            }
-            $('.search-cross-icon').on('click', function(e) {
-                e.preventDefault();
-                $('#searchbar').addClass('hidden');
-                $('#searchsuggestions').addClass('hidden');
-            });
-        });
-    </script> --}}
-
-    {{-- <script src="{{ asset($constants['JSFILEPATH'] . 'dashboard.js') }}"></script> --}}
     @include('layouts.alert')
 @endsection

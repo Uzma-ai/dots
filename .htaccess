@@ -25,7 +25,7 @@
     Header always set Content-Security-Policy "frame-ancestors 'self' http://dev-ubt-app01.dev.orientdots.net https://dev-ubt-app01.dev.orientdots.net;"
 
     # Allow popups from the same origin and other sites
-    Header always set Content-Security-Policy "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; media-src 'self' blob:;"
+    Header always set Content-Security-Policy "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; media-src 'self' blob: data: https:"
 
     # Set SameSite and Secure attributes for cookies
     Header always edit Set-Cookie (.*) "$1; SameSite=None; Secure"

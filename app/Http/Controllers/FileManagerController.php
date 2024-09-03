@@ -146,7 +146,7 @@ class FileManagerController extends Controller
         
         $newFolder = new FileModel();
         $newFolder->folder = 1;
-        $newFolder->extension = 'folder';
+        $newFolder->extension = 'Absolute';
         $newFolder->name = basename($childFolderPath);
         $newFolder->parentpath = $parentFolder;
         $newFolder->path = $actualpath;
@@ -178,32 +178,32 @@ class FileManagerController extends Controller
     }
     
      public function pathfiledetail(Request $request){
-         // Get the updated app list HTML
             $filepath = base64UrlDecode($request->input('path'));
-            $parentPath = empty($filepath) ? '/' : $filepath ; // Adjust this path as needed
+            $parentPath = empty($filepath) ? '/' : $filepath ; 
             $defaultfolders = array();
             $files = array();
-            $sortby= !empty($request->input('sort_by')) ? $request->input('sort_by') : 'id';
+            $sortby= !empty($request->input('sort_by')) ? $request->input('sort_by') : 'name';
             $sortorder= !empty($request->input('sort_order')) ? $request->input('sort_order') : 'asc';
+            $sortsession = ['sortby'=>$sortby,'sortorder'=>$sortorder];
+            Session::put('sortfiles', $sortsession);
+            $sortsessionorder = (Session::has('sortfiles')) ? Session::get('sortfiles') : ['sortby'=>'name','sortorder'=>'asc'] ;
             if($filepath != 'RecycleBin'){
                 $defaultfolders = App::where('parentpath',$parentPath)->where('filemanager_display', 1)->where('status', 1)->orderBy('name')->get();
-                $files = FileModel::where('parentpath', $parentPath)->where('status', 1)->where('created_by', auth()->id())->orderBy($sortby, $sortorder)->get();
+                $files = FileModel::where('parentpath', $parentPath)->where('status', 1)->where('created_by', auth()->id())->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])->get();
             }else{
-                $files = FileModel::where('status', 0)->where('created_by', auth()->id())->orderBy($sortby, $sortorder)->get();
+                $files = FileModel::where('status', 0)->where('created_by', auth()->id())->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])->get();
             }
             $html = view('appendview.pathview')->with('defaultfolders', $defaultfolders)->with('files', $files)->render();
         return response()->json(['html' => $html,'parentPath'=>$parentPath]);
 
     }
-    
-   public function upload(Request $request)
+       public function upload(Request $request)
     {
         $uploadDirectorypath = base64UrlDecode($request->header('Upload-Directory'));
 
         $uploadedFiles = [];
         $uploadDirectory =  Storage::disk('root')->path($uploadDirectorypath); // Directory to store uploaded files
     
-        // Create the directory if it doesn't exist
         if (!file_exists($uploadDirectory)) {
             mkdir($uploadDirectory, 0755, true);
         }
@@ -214,7 +214,6 @@ class FileManagerController extends Controller
                 $filePath = $uploadDirectory . DIRECTORY_SEPARATOR . $originalName;
                 $actualpath = $uploadDirectorypath . DIRECTORY_SEPARATOR . $originalName;
                 $fileExtension = pathinfo($originalName, PATHINFO_EXTENSION);
-                // Check if file with same name already exists
                 $count = 1;
                 while (file_exists($filePath)) {
                     $fileName = pathinfo($originalName, PATHINFO_FILENAME);
@@ -241,7 +240,7 @@ class FileManagerController extends Controller
                     $newFile->openwith = ($lightapp) ? $lightapp->id : '';
                     $newFile->size = $file->getSize();
                     $newFile->status = 1; // Assuming 1 means active
-                    $newFile->created_by = auth()->id(); // Assuming you want to save the ID of the authenticated user
+                    $newFile->created_by = auth()->id(); 
                     if ($newFile->save()) {
                     
                         $uploadedFiles[] = [
@@ -543,6 +542,21 @@ class FileManagerController extends Controller
         $file = FileModel::find(base64UrlDecode($file));
         return view('dotsdocumentviewer',compact('file'));
     }
+
+    public function leftArrowClick(Request $request){
+        $filepath = $request->input('path');
+        if(!empty($filepath) && $filepath != "/" ){
+            Session::put('rightarrowpath', $filepath);
+        }else{
+            Session::forget('rightarrowpath');
+
+        }
+    }
+    public function rightArrowClick(Request $request){
+        Session::forget('rightarrowpath');
+        
+    }
+
     
     
 }

@@ -10,7 +10,7 @@
             <div
               class="flex py-2 px-5 justify-between items-center border-b border-gray-3 text-c-black"
             >
-              <div class="text-lg font-normal">Edit Group</div>
+              <div class="text-lg font-normal">@if(!empty($company->name)){{ $company->name}} -- @endif Edit Group</div>
               <button
                 type="button"
                 id="closeModalButton"

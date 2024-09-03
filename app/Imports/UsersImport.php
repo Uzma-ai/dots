@@ -18,6 +18,7 @@ class UsersImport
     public function import($filePath)
     {
         $rows = SimpleExcelReader::create($filePath)->getRows();
+        $cid = auth()->user()->cID; //current companyid
 
         foreach ($rows as $row) {
 
@@ -55,6 +56,7 @@ class UsersImport
                     'nickName' => $row['name'],
                     'roleID' => $role->id,
                     'groupID' => $group->id,
+                    'cID' => $cid,
                     'sizeMax' => $row['space']
                 ]);
                 if ($user) {

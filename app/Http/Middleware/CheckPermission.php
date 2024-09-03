@@ -63,6 +63,11 @@ class CheckPermission
         // if (strpos($routeName, 'useradmin') !== false && empty($filteredPermissions['groupsManagement'])) {
         //     $accessDenied[] = 'groupsManagement';
         // }
+
+        //for Masteradmin
+        if($user->cID == 0){
+             return $next($request);
+        }
         
         if (!empty($accessDenied)) {
             abort(403, "You have not permission to access this page.");
