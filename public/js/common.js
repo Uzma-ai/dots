@@ -116,13 +116,32 @@ $(document).ready(function () {
        $("#app-contextmenu").addClass("hidden").css("display", "none");
        $("#context-menu").addClass("hidden").css("display", "none");
 
-  });
+   });
+    
+    const containers = {
+        notification: document.getElementById("notification"),
+        search: document.getElementById("search"),
+        administrator: document.getElementById("administrator"),
+    };
 
- function closeAllContainers() {
+    function closeAllContainers(except = null) {
    appContextMenu.hide();
-   dashboardContextMenu.hide();
+        dashboardContextMenu.hide();
+        $.each(containers, function (key, container) {
+            if (container !== except) {
+                $(container).addClass("hidden");
+            }
+        });
  }
 
+    $(document).on("click", function (event) {
+        if (!$(event.target).closest("#notification").length &&
+            !$(event.target).closest("#search").length &&
+            !$(event.target).closest("#administrator").length) {
+            closeAllContainers();
+        }
+    });
+    
  $(document).on("contextmenu", function (event) {
    event.preventDefault();
    
