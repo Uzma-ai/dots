@@ -181,6 +181,10 @@
         $('#curtain').addClass('hidden');
         }, 4000);
     </script>
+    <script>
+        let path = @json($path);
+        let navbar = true;
+    </script>
     <script src="{{ asset($constants['JSFILEPATH'] . 'dashboard.js') }}"></script>
     <script>
         $(document).ready(function() {
