@@ -17,19 +17,7 @@
 
 /* Navbar */
 
-.navbar {
-  background: rgb(138, 131, 125);
-  background: linear-gradient(
-    90deg,
-    rgba(138, 131, 125, 1) 8%,
-    rgba(174, 160, 148, 1) 39%,
-    rgba(196, 174, 161, 1) 60%
-  );
-  border-bottom: 1px solid #978a82;
-  -webkit-box-shadow: 0px 1px 18px -6px rgba(189, 170, 157, 0.7);
-  -moz-box-shadow: 0px 1px 18px -6px rgba(189, 170, 157, 0.7);
-  box-shadow: 0px 1px 18px -6px rgba(189, 170, 157, 0.7);
-}
+
 
 /* Desktop apps */
 

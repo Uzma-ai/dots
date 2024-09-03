@@ -93,7 +93,7 @@ class MessageController extends Controller
             $message->subject("You are Tagged in a Comment.");
             //CommentMailSend::dispatch($user, $email,$cmt);
         });*/
-        /*CommentMailSend::dispatch($request->input('receiver_id'),$request->input('message'));*/
+        //CommentMailSend::dispatch($request->input('receiver_id'),$request->input('message'));/
 
 
     } else if($request->receiver_type == 'Role'){
@@ -155,7 +155,7 @@ foreach ($request->user_array as $el) {
                     });*/
                                         CommentMailSend::dispatch($user, $cmt, $auth);
 
-                    /*dump($email,'user',$el['id']);*/
+                    //dump($email,'user',$el['id']);/
                 }
 
                 if ($el['type'] == 'Role') {
@@ -175,7 +175,7 @@ foreach ($request->user_array as $el) {
                             $message->to($email);
                             $message->subject("You are Tagged in a Comment.");
                         });*/
-                        /*dump($email,'role',$key->id);*/
+                       //dump($email,'role',$key->id);/
                     }
                 }
 
@@ -196,7 +196,7 @@ foreach ($request->user_array as $el) {
                             $message->to($email);
                             $message->subject("You are Tagged in a Comment.");
                         });*/
-                        /*dump($email,'group',$key->id);*/
+                        //dump($email,'group',$key->id);/
                     }
                 }
             }
