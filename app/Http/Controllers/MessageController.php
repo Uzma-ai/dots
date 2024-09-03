@@ -39,7 +39,6 @@ class MessageController extends Controller
             if (!empty($fileKey)) {
             
             $fileKey = base64UrlDecode($fileKey);
-            /*$fileKey = count($fileKey) > 0 ? base64UrlDecode($fileKey[0]['files'][0]['filekey']) : null;*/
 
 
 
