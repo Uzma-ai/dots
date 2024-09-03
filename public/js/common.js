@@ -1027,6 +1027,26 @@ $(document).on('click', function(event) {
 });
 
 
+//button press delete 
+ //for keypress delete
+  $('html').keyup(function(e){
+      if(e.keyCode == 46) {
+          //alert('Delete key released');
+                const filekey = $('.selectedfile').attr('data-filekey');
+                const appkey = $('.selectedfile').attr('data-appkey');
+                const filepath = $('.selectedfile').attr('data-path');
+                const filetype = $('.selectedfile').attr('data-filetype');
+                const fileid = this.getAttribute('data-iframefile-id');
+                deleteFunction(filekey);
+                closeiframe(appkey,filekey,fileid,filetype);
+                $('.selectapp').removeClass('.selectedfile');
+      }
+  });
+
+
+
+
+
 
 
      
