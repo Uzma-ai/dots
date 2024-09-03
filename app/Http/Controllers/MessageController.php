@@ -35,28 +35,11 @@ class MessageController extends Controller
         // dd($request->all());exit;
         try {
             // fetching file key
-            $fileKey = array();
-            if (Session::has('iframeapp')) {
-                $fileKey = Session('iframeapp');
+             $fileKey = $request->input('fileID');
+            if (!empty($fileKey)) {
             
-
-            $app = null;
-
-            if (array_key_exists('Mw', $fileKey)) {
-                $app = 'Mw';
-            } elseif (array_key_exists('Mg', $fileKey)) {
-                $app = 'Mg';
-            } elseif (array_key_exists('MQ', $fileKey)) {
-                $app = 'MQ';
-            } 
-
-            $fileKey = $fileKey[$app];
-
-            $fileKey = base64UrlDecode($fileKey[0]['filekey']);
-            /*$fileKey = count($fileKey) > 0 ? base64UrlDecode($fileKey[0]['files'][0]['filekey']) : null;*/
-
-
-
+            $fileKey = base64UrlDecode($fileKey);
+           
             $group_id = $request->receiver_type == 'Group' ? $request->input('receiver_id') : null;
             $role_id = $request->receiver_type == 'Role' ? $request->input('receiver_id') : null;
             
@@ -108,7 +91,7 @@ class MessageController extends Controller
             $message->subject("You are Tagged in a Comment.");
             //CommentMailSend::dispatch($user, $email,$cmt);
         });*/
-        /*CommentMailSend::dispatch($request->input('receiver_id'),$request->input('message'));*/
+        //CommentMailSend::dispatch($request->input('receiver_id'),$request->input('message'));/
 
 
     } else if($request->receiver_type == 'Role'){
@@ -170,7 +153,7 @@ foreach ($request->user_array as $el) {
                     });*/
                                         CommentMailSend::dispatch($user, $cmt, $auth);
 
-                    /*dump($email,'user',$el['id']);*/
+                    //dump($email,'user',$el['id']);/
                 }
 
                 if ($el['type'] == 'Role') {
@@ -190,7 +173,7 @@ foreach ($request->user_array as $el) {
                             $message->to($email);
                             $message->subject("You are Tagged in a Comment.");
                         });*/
-                        /*dump($email,'role',$key->id);*/
+                       //dump($email,'role',$key->id);/
                     }
                 }
 
@@ -211,7 +194,7 @@ foreach ($request->user_array as $el) {
                             $message->to($email);
                             $message->subject("You are Tagged in a Comment.");
                         });*/
-                        /*dump($email,'group',$key->id);*/
+                        //dump($email,'group',$key->id);/
                     }
                 }
             }

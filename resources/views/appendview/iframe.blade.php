@@ -11,7 +11,7 @@
                             <span class="text-lg flex font-semibold">
                             <img class="w-5 h-5 mt-1" src="{{ checkIconExist($iframedetail['appicon'],'app') }}"/>
                             <h2 class="text-white ml-2 font-thin">
-                                {{$iframedetail['filename'] }}
+                                {{$iframedetail['appname'] }}
                             </h2>
                             </span>
                             <div class="flex space-x-1">
@@ -23,19 +23,22 @@
                     
                         @if ($iframedetail['extension'] == 'editor')
                         <!--comment section-->
-                        <div class="commentssection absolute bottom-0 top-9 flex h-11/12 flex-col border-r bg-c-lighten-gray hidden md:w-1/3  font-size-14">
-                            <div class="resizer absolute top-0 right-0 w-1 h-full" style="cursor: ew-resize; background-color: #d1d5db"></div>
-                                <div class="sticky top-0 z-10 flex items-center justify-between border-b px-4 py-2">
-                                    <h3 class="font-medium font-size-16">Comments</h3>
-                                    <div>
-                                    <button class="pr-2 comment-button" onclick="togglePane('.addcomment')" data-type="comment">
-                                        <i class="ri-chat-new-line ri-lg"></i>
-                                    </button>
-                                    <button onclick="togglePane('.commentssection')">
-                                        <i class="ri-close-fill ri-lg"></i>
-                                    </button>
-                                </div>
-                            </div>
+
+                         <div class="commentssection absolute bottom-0 top-9 flex h-11/12 flex-col border-r bg-c-lighten-gray hidden md:w-1/3  font-size-14">
+          <div class="resizer absolute top-0 right-0 w-1 h-full" style="cursor: ew-resize; background-color: #d1d5db"></div>
+          <div class="sticky top-0 z-10 flex items-center justify-between border-b px-4 py-2">
+            <h3 class="font-medium font-size-16">Comments</h3>
+            <div>
+              <button class="pr-2 comment-button" onclick="togglePane('.addcomment')" data-type="comment">
+                <i class="ri-chat-new-line ri-lg"></i>
+            </button>
+            <button onclick="togglePane('.commentssection')">
+                <i class="ri-close-fill ri-lg"></i>
+            </button>
+        </div>
+    </div>
+
+       
                             <!--chat list-->
                             <div class="flex-1 overflow-auto comment-list">
                                 <div class="space-y-4 p-4" id="message_view">
@@ -57,7 +60,7 @@
                                         <textarea placeholder="Write a new comment..." class="commentTextarea w-full rounded-md border border-c-medium-gray p-2 text-sm focus:outline-none bg-transparent relative z-10 text-transparent caret-black" rows="4" style="caret-color: black"></textarea>
                                         <div class="styledTextarea absolute top-0 left-0 w-full h-full p-2 text-sm pointer-events-none whitespace-pre-wrap break-words overflow-hidden bg-transparent"></div>
                                     </div>
-                                    <button class="postButton border px-3 hover-bg-c-black hover-text-c-yellow text-sm py-1 rounded border-gray-600 bg-c-yellow">
+                                    <button data-fileid=" {{ $iframedetail['filekey'] }}" class="postButton border px-3 hover-bg-c-black hover-text-c-yellow text-sm py-1 rounded border-gray-600 bg-c-yellow">
                                         Post
                                     </button>
                                 </div>
@@ -389,6 +392,8 @@ function addPostButtonClickListener() {
 
 function handlePostButtonClick(event) {
     const button = event.target.closest(".postButton");
+    let fileId = button.getAttribute("data-fileid");
+
     if (!button) return;
 
     const authUserId = {{ auth()->user()->id }};
@@ -405,13 +410,13 @@ function handlePostButtonClick(event) {
       console.log("Selected mention:", selectedMention);
       */
       if (message) {
-        const parsedFileID = parseInt("MQ", 10);
+        const parsedFileID = fileId
         const bodyData = {
           user_id: authUserId,
           receiver_id: selectedMention ? selectedMention.id : null,
           receiver_type: selectedMention ? selectedMention.type : null,
           message: message,
-          fileID: isNaN(parsedFileID) ? null : parsedFileID,
+          fileID: parsedFileID,
           parent_message_id: parentMessageId,
           user_array: selectedMentionArr,
       };

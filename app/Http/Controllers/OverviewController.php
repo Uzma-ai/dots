@@ -8,6 +8,7 @@ use App\Models\File;
 use App\Models\Group;
 use App\Models\Activity;
 use App\Models\Roles;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Permissions;
 use App\Exports\OverviewExport;
 use Illuminate\Support\Facades\DB;
@@ -207,7 +208,8 @@ class OverviewController extends Controller
       $file = File::first();
       $sizeMaxData = User::sum('sizeUse');
       $GroupSizePi = Group::sum('sizeUse');
-      $totalUsers = User::count();
+      
+      $totalUsers = User::where('cID', '!=', 0)->count();
       $countOnline = User::where('last_seen', 1)->count();
       $countOffline = User::where('last_seen', 0)->count();
       $activityUpload = Activity::where('action', 'Upload')->count();
