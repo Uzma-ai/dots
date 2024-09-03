@@ -35,24 +35,10 @@ class MessageController extends Controller
         // dd($request->all());exit;
         try {
             // fetching file key
-            $fileKey = array();
-            if (Session::has('iframeapp')) {
-                $fileKey = Session('iframeapp');
+             $fileKey = $request->input('fileID');
+            if (!empty($fileKey)) {
             
-
-            $app = null;
-
-            if (array_key_exists('Mw', $fileKey)) {
-                $app = 'Mw';
-            } elseif (array_key_exists('Mg', $fileKey)) {
-                $app = 'Mg';
-            } elseif (array_key_exists('MQ', $fileKey)) {
-                $app = 'MQ';
-            } 
-
-            $fileKey = $fileKey[$app];
-
-            $fileKey = base64UrlDecode($fileKey[0]['filekey']);
+            $fileKey = base64UrlDecode($fileKey);
             /*$fileKey = count($fileKey) > 0 ? base64UrlDecode($fileKey[0]['files'][0]['filekey']) : null;*/
 
 
