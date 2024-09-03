@@ -173,7 +173,7 @@
                                                 </div>
                                                 <div
                                                     class="container flex flex-col justify-center items-center space-y-5">
-                                                    <p id="VoiceInfo">Example: My Name is John</p>
+                                                    <p id="VoiceInfo" class="pl-10 pr-5">Here's a quick story. Ready? Start recording now:<br />On a foggy night, an old man found a glowing coin on the street. When he picked it up, he was transported to a world of endless wonder.</p>
                                                     <div class="mic-container mic-wrapper1 relative flex gap-3">
                                                         <button class="circle cursor-pointer has-tooltip"
                                                             id="recordButton1">
@@ -375,7 +375,6 @@
             id="HHAYAudio"></audio>
         <audio src="{{ asset($constants['IMAGEFILEPATH'] . 'wod' . $randomNumber . '.mp3') }}"
             id="WODAudio"></audio>
-        <audio src="{{ asset($constants['IMAGEFILEPATH'] . $randomNumber . '.mp3') }}" id="WelcomeAudio"></audio>
     </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -418,7 +417,7 @@
         var is_played = 0;
         $(document).on('click', '#nextButton', function() {
             if (is_played == 0) {
-                $("#WelcomeAudio")[0].play();
+                $("#WODAudio")[0].play();
                 is_played = 1;
             }
         });
@@ -953,27 +952,16 @@
     };
 
     // Event listener for record button 1
-    $("#recordButton1").click(function() {
+    $("#recordButton1").click(function(event) {
         event.preventDefault();
-        toggleRecording(1);
+        startRecording(1);
     });
 
     // Event listener for record button 2
-    $("#recordButton2").click(function() {
+    $("#recordButton2").click(function(event) {
         event.preventDefault();
-        toggleRecording(2);
+        startRecording(2);
     });
-
-    // Toggle recording state for a given recorder number
-    function toggleRecording(recorderNumber) {
-        var currentRecorder = recorders[recorderNumber].recorder;
-        var currentStream = recorders[recorderNumber].stream;
-        if (currentRecorder && currentRecorder.state === "recording") {
-            stopRecording(currentRecorder, currentStream, recorderNumber);
-        } else {
-            startRecording(recorderNumber);
-        }
-    }
 
     // Start recording for a given recorder number
     function startRecording(recorderNumber) {
@@ -987,14 +975,14 @@
             })
             .then(function(stream) {
                 var options;
-                var newRecorder = new MediaRecorder(stream, options);
                 if (MediaRecorder.isTypeSupported('audio/webm;')) {
                     options = {
                         mimeType: 'audio/webm;'
                     };
                 }
+                var newRecorder = new MediaRecorder(stream, options);
                 let audioChunks = [];
-                let maxRecordTime = 4000; // 3 seconds timer
+                let maxRecordTime = 8000; // 8 seconds timer
                 let timeoutId;
 
                 recorders[recorderNumber].recorder = newRecorder;
@@ -1004,8 +992,7 @@
                     micContainer.addClass("active");
                     $(`.mic-wrapper${recorderNumber}`)
                         .find(".mic").addClass("ri-voiceprint-line").removeClass("ri-user-voice-fill")
-                        .removeClass(
-                            "ri-mic-line");
+                        .removeClass("ri-mic-line");
                     $(`.mic-wrapper${recorderNumber}`).find("#voice-retake").html("Recording");
                 }, 300);
 
@@ -1018,25 +1005,15 @@
                         var preview = $("<audio controls></audio>").attr("src", dataUrl).attr("name",
                             "audio" + recorders[1].count);
                         if (recorderNumber === 1) {
-                            $("#previewContainer1").append(preview);
-                            recorders[1].count++;
-                            if (recorders[1].count == 1) {
-                                $('#VoiceInfo').html("Good say, Hii how are you today.");
-                            }
-                            if (recorders[1].count == 2) {
-                                $('#VoiceInfo').html("Excellent say, I am happy to join");
-                            }
-                            if (recorders[1].count >= 3) {
-                                $('#VoiceInfo').html("Good job, Scroll and click submit.");
-                                $("#recordButton1").prop("disabled", true);
-                                // $(`.voice${recorderNumber}`).find("#voice-error").removeClass("hidden");
-                                $('#SubmitRegister').removeClass('hidden');
-                                $(`.mic-wrapper${recorderNumber}`).find(".circle").removeClass(
-                                    "has-tooltip").removeClass("cursor-pointer");
-                                $(`.mic-wrapper${recorderNumber}`).find(".mic").removeClass("ri-mic-line")
-                                    .removeClass("ri-user-voice-fill").removeClass("ri-voiceprint-line")
-                                    .addClass("ri-mic-off-line");
-                            }
+                            $("#previewContainer1").empty().append(preview);
+                            recorders[1].count = 1;
+                            $("#recordButton1").prop("disabled", true);
+                            $('#SubmitRegister').removeClass('hidden');
+                            $(`.mic-wrapper${recorderNumber}`).find(".circle").removeClass(
+                                "has-tooltip").removeClass("cursor-pointer");
+                            $(`.mic-wrapper${recorderNumber}`).find(".mic").removeClass("ri-mic-line")
+                                .removeClass("ri-user-voice-fill").removeClass("ri-voiceprint-line")
+                                .addClass("ri-mic-off-line");
                         } else if (recorderNumber === 2) {
                             $("#previewContainer2").empty().append(preview);
                             setTimeout(() => {
@@ -1046,6 +1023,7 @@
                     };
                     reader.readAsDataURL(e.data);
                 };
+
                 newRecorder.onstop = function() {
                     clearTimeout(timeoutId); // Clear the timeout when recording stops
                     let audioBlob = new Blob(audioChunks, {
@@ -1070,8 +1048,7 @@
                             success: function(response) {
                                 if (response.status == true) {
                                     if (response.user.avatar != null) {
-                                        var image = "{{ url('/') }}" + "/" + response.user
-                                            .avatar;
+                                        var image = "{{ url('/') }}" + "/" + response.user.avatar;
                                         $('#LoginImage').attr('src', image);
                                     }
                                     $('#WODAudio').get(0).play();
@@ -1096,7 +1073,7 @@
                 // Start recording
                 newRecorder.start();
 
-                // Set timeout to stop recording after 3 seconds
+                // Set timeout to stop recording after maxRecordTime
                 timeoutId = setTimeout(function() {
                     stopRecording(newRecorder, stream, recorderNumber);
                 }, maxRecordTime);
@@ -1119,7 +1096,6 @@
             .removeClass("ri-voiceprint-line");
         $(`.mic-wrapper${recorderNumber}`).find("#voice-retake").html("Retry");
         $(`.voice${recorderNumber}`).find("#next-login").removeClass("hidden");
-        // $(`.voice${recorderNumber}`).find("#voice-error").removeClass("hidden");
     }
 
     // Password eye toggle - Toggle password visibility and icon for the input

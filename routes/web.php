@@ -25,14 +25,24 @@ Route::get('/', function () {
 });
 Route::get('clear', function () {
     Artisan::call('config:clear');
+    Artisan::call('cache:clear');
     ConfigClearJob::dispatch();
-    return "cleared";
-});
+    return view('errors.clear');
+})->name('clear');
 
 Route::get('dummydata',function(){
     return view('dummy');
 });
 Route::post('voice',[UserController::class,'voice'])->name('voice');
+
+//docs route
+Route::get('docs',function(){
+    return view('docs.user');
+});
+
+Route::get('admindocs',function(){
+    return view('docs.admin');
+});
 
 //Suspend user middleware wil also use for IPaddress in future
 Route::middleware(['blockIP'])->group(function () {
