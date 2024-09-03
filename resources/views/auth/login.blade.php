@@ -383,7 +383,6 @@
     // Dashboard opening animation
     $('.getStartedBtn').on('click', function(event) {
             event.preventDefault();
-            console.log("Button clicked");
             $('#curtain').removeClass('hidden');
 
             $('#curtain').addClass('open');
@@ -853,7 +852,7 @@
                                     }
                                     $('#HHAYAudio').get(0).play();
                                     setTimeout(() => {
-                                        toggleRecording(2);
+                                        startRecording(2);
                                     }, 2000);
                                     $('#login').find("fieldset").hide();
                                     $('#SpanUsername').html(response.user.name);
