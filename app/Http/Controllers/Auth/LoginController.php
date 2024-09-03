@@ -254,19 +254,19 @@ class LoginController extends Controller
         $image3 = $request->file('photo3');
         $imageContents3 = file_get_contents($image3->getPathName());
         $encodedImage3 = base64_encode($imageContents3);
-        $audio2 = $request->file('audio1');
-        $audioContents2 = file_get_contents($audio2->getPathName());
-        $encodedAudio2 = base64_encode($audioContents2);
-        $audio3 = $request->file('audio2');
-        $audioContents3 = file_get_contents($audio3->getPathName());
-        $encodedAudio3 = base64_encode($audioContents3);
+        // $audio2 = $request->file('audio1');
+        // $audioContents2 = file_get_contents($audio2->getPathName());
+        // $encodedAudio2 = base64_encode($audioContents2);
+        // $audio3 = $request->file('audio2');
+        // $audioContents3 = file_get_contents($audio3->getPathName());
+        // $encodedAudio3 = base64_encode($audioContents3);
         $payload = [
             "image1" => $encodedImage,
             "audio1" => $encodedAudio,
             "image2" => $encodedImage2,
-            "audio2" => $encodedAudio2,
+            // "audio2" => $encodedAudio2,
             "image3" => $encodedImage3,
-            "audio3" => $encodedAudio3,
+            // "audio3" => $encodedAudio3,
         ];
         $curl = curl_init();
         curl_setopt_array($curl, array(
