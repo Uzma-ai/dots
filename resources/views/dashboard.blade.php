@@ -10,7 +10,13 @@
     <div class="w-full h-full dashboard cs pt-20 relative">
 
 
-        <!-- Desktop apps   -->        
+        <!-- Desktop apps   -->
+        <!-- <div class="desktopapps-div w-full overflow-x-auto">
+                                            <div id="desktopapps" class="desktop-apps allapplist p-2 pt-3 w-min h-full flex flex-col gap-1 flex-wrap">
+
+                                            </div>
+                                        </div> -->
+        <!--w-min :- giving issue || removed by: laxmi || date: 15-aug-24 -->
         <div class="desktopapps-div w-full overflow-x-auto">
             <div id="desktopapps"
                 class="desktop-apps  content-start allapplist gap-4 p-2 pt-3 h-full flex flex-col  flex-wrap">
@@ -174,10 +180,6 @@
         setTimeout(() => {
         $('#curtain').addClass('hidden');
         }, 4000);
-    </script>
-    <script>
-        let path = @json($path);
-        let navbar = true;
     </script>
     <script src="{{ asset($constants['JSFILEPATH'] . 'dashboard.js') }}"></script>
     <script>
