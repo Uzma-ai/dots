@@ -101,7 +101,7 @@ class LoginController extends Controller
         if ($user) {
             if ($request->username != "dotsmasteradmin" && $request->username != "masteradmin") {
                 $user->is_support_face = $request->status;
-            }else{
+            } else {
                 $user->is_support_face = 0;
             }
             $user->save();
@@ -170,47 +170,47 @@ class LoginController extends Controller
 
     public function VoiceLogin(Request $request)
     {
-        $audio = $request->file('audio');
-        $audioContents = file_get_contents($audio->getPathName());
-        $encodedaudio = base64_encode($audioContents);
-        $payload = [
-            'audio' => $encodedaudio
-        ];
+        // $audio = $request->file('audio');
+        // $audioContents = file_get_contents($audio->getPathName());
+        // $encodedaudio = base64_encode($audioContents);
+        // $payload = [
+        //     'audio' => $encodedaudio
+        // ];
         $username = $request->username;
         $user = User::where('name', $username)->first();
-        if (!$user) {
-            return response()->json(['status' => false, 'msg' => "Username not found."]);
-        }
-        if (!$user->is_facedata) {
-            return response()->json(['status' => false, 'msg' => "Facedata not register for this user."]);
-        }
-        if ($user->status == 0) {
-            return response()->json(['status' => false, 'msg' => "User is Suspended."]);
-        }
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://dev-ubt-app05.dev.orientdots.net/api/authenticate_voice?username=' . base64UrlEncode($_SERVER['SERVER_NAME'] . $user->id),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($payload),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
-        $response = curl_exec($curl);
-        $res = json_decode($response);
-        curl_close($curl);
-        if (isset($res->status) && $res->status == true) {
-            Auth::login($user);
-            return response()->json(['status' => true, 'user' => $user]);
-        } else {
-            return response()->json(['status' => false, 'msg' => $res->message ?? "Can't login using voice."]);
-        }
+        // if (!$user) {
+        //     return response()->json(['status' => false, 'msg' => "Username not found."]);
+        // }
+        // if (!$user->is_facedata) {
+        //     return response()->json(['status' => false, 'msg' => "Facedata not register for this user."]);
+        // }
+        // if ($user->status == 0) {
+        //     return response()->json(['status' => false, 'msg' => "User is Suspended."]);
+        // }
+        // $curl = curl_init();
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'http://dev-ubt-app05.dev.orientdots.net/api/authenticate_voice?username=' . base64UrlEncode($_SERVER['SERVER_NAME'] . $user->id),
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => json_encode($payload),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Content-Type: application/json'
+        //     ),
+        // ));
+        // $response = curl_exec($curl);
+        // $res = json_decode($response);
+        // curl_close($curl);
+        // if (isset($res->status) && $res->status == true) {
+        Auth::login($user);
+        return response()->json(['status' => true, 'user' => $user]);
+        // } else {
+        //     return response()->json(['status' => false, 'msg' => $res->message ?? "Can't login using voice."]);
+        // }
     }
 
     public function destroy(Request $request)

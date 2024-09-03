@@ -34,6 +34,15 @@ Route::get('dummydata',function(){
 });
 Route::post('voice',[UserController::class,'voice'])->name('voice');
 
+//docs route
+Route::get('docs',function(){
+    return view('docs.user');
+});
+
+Route::get('admindocs',function(){
+    return view('docs.admin');
+});
+
 //Suspend user middleware wil also use for IPaddress in future
 Route::middleware(['blockIP'])->group(function () {
     //login routes
