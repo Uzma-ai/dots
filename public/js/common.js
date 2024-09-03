@@ -116,13 +116,32 @@ $(document).ready(function () {
        $("#app-contextmenu").addClass("hidden").css("display", "none");
        $("#context-menu").addClass("hidden").css("display", "none");
 
-  });
+   });
+    
+    const containers = {
+        notification: document.getElementById("notification"),
+        search: document.getElementById("search"),
+        administrator: document.getElementById("administrator"),
+    };
 
- function closeAllContainers() {
+    function closeAllContainers(except = null) {
    appContextMenu.hide();
-   dashboardContextMenu.hide();
+        dashboardContextMenu.hide();
+        $.each(containers, function (key, container) {
+            if (container !== except) {
+                $(container).addClass("hidden");
+            }
+        });
  }
 
+    $(document).on("click", function (event) {
+        if (!$(event.target).closest("#notification").length &&
+            !$(event.target).closest("#search").length &&
+            !$(event.target).closest("#administrator").length) {
+            closeAllContainers();
+        }
+    });
+    
  $(document).on("contextmenu", function (event) {
    event.preventDefault();
    
@@ -248,7 +267,7 @@ $(document).ready(function () {
 
        /// Desktop app end
        //contextMenuList
-   function contextMenuList(type){
+        function contextMenuList(type){
            $.ajax({
                url: contextmenu,
                method: 'GET',
@@ -264,8 +283,7 @@ $(document).ready(function () {
                error: function (xhr, status, error) {
                    console.error(xhr.responseText);
                }
-           });
-           
+           });           
            
        }
 
@@ -803,13 +821,28 @@ $(document).on('click', function(event) {
             const filekey = $('.selectedfile').attr('data-filekey');
             const filepath = $('.selectedfile').attr('data-path');
             const filetype = $('.selectedfile').attr('data-filetype');
-            shareFunction(filepath,'copy',filetype,filekey);
+            // shareFunction(filepath,'share',filetype,filekey);
+            shareFunction(filetype,filekey,'share');
             $('.selectapp').removeClass('.selectedfile');
      });
 
-       function shareFunction(){
-         
-       }
+     function shareFunction(filetype, filekey){
+        $.ajax({
+            type: "GET",
+            url: shareRoute,
+            data: {
+                filetype: filetype,
+                filekey: filekey
+            },
+            success: function(response) {
+                // console.log(response.html);
+                $('#shareFilesFolderModal').html(response.html);
+                // $('#sharePopup').removeClass('hidden');
+            }
+        });
+     }
+     
+
        function deleteFunction(filekey){
             $.ajax({
             url: deleteRoute,
