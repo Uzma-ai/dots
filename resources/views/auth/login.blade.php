@@ -278,7 +278,7 @@
                                                 <p id="VoiceError">Failed to record voice</p>
                                             </div>
                                             <div class="container flex flex-col justify-center items-center space-y-5">
-                                                <p>Example: My Name is John</p>
+                                                <p>Speak: On a foggy night, an old man found a glowing coin on the street. When he picked it up, he was transported to a world of endless wonder.</p>
                                                 <div class="mic-container mic-wrapper2 relative flex gap-3">
                                                     <button class="circle cursor-pointer has-tooltip"
                                                         id="recordButton2">
@@ -383,7 +383,6 @@
     // Dashboard opening animation
     $('.getStartedBtn').on('click', function(event) {
             event.preventDefault();
-            console.log("Button clicked");
             $('#curtain').removeClass('hidden');
 
             $('#curtain').addClass('open');
@@ -853,7 +852,7 @@
                                     }
                                     $('#HHAYAudio').get(0).play();
                                     setTimeout(() => {
-                                        toggleRecording(2);
+                                        startRecording(2);
                                     }, 2000);
                                     $('#login').find("fieldset").hide();
                                     $('#SpanUsername').html(response.user.name);
