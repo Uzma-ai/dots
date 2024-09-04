@@ -118,20 +118,9 @@ $(document).ready(function () {
 
    });
     
-    const containers = {
-        notification: document.getElementById("notification"),
-        search: document.getElementById("search"),
-        administrator: document.getElementById("administrator"),
-    };
-
     function closeAllContainers(except = null) {
    appContextMenu.hide();
         dashboardContextMenu.hide();
-        $.each(containers, function (key, container) {
-            if (container !== except) {
-                $(container).addClass("hidden");
-            }
-        });
  }
 
     $(document).on("click", function (event) {
