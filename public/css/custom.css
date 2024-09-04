@@ -143,6 +143,7 @@
 
 .navbar.show {
     top: 0;
+    z-index: 999999;
 }
 
 
