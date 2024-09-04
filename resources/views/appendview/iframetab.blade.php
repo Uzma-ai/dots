@@ -24,7 +24,7 @@
                                             <img class="w-6" src="{{ checkIconExist($iframefile['appicon'],'app') }}"><span>{{ $iframefile['filename'] }}</span>
                                         </div>
                                     </div>
-                                    <button class="iframefilepopupclosebtn -mt-6 text-gray-900 hover:text-gray-700" data-filekey="{{ $iframefile['filekey'] }}" data-iframefile-id = "{{ $iframefile['filetype'].$iframefile['filekey'] }}" data-appkey="{{ $iframeval[0]['appkey'] }}" data-filetype="{{ $iframefile['filetype'] }}">
+                                    <button class="iframefilepopupclosebtn -mt-6 text-gray-900 hover:text-gray-700" data-apptype="{{ $iframefile['apptype'] }}" data-filekey="{{ $iframefile['filekey'] }}" data-iframefile-id = "{{ $iframefile['filetype'].$iframefile['filekey'] }}" data-appkey="{{ $iframeval[0]['appkey'] }}" data-filetype="{{ $iframefile['filetype'] }}">
                                         <i class="ri-close-line"></i>
                                     </button>
                                 </div>

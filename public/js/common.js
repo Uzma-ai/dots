@@ -466,8 +466,9 @@ $(document).ready(function () {
                 const filepath = $('.selectedfile').attr('data-path');
                 const filetype = $('.selectedfile').attr('data-filetype');
                 const fileid = this.getAttribute('data-iframefile-id');
+                const apptype = $('.selectedfile').attr('data-apptype');
                 deleteFunction(filekey);
-                closeiframe(appkey,filekey,fileid,filetype);
+                closeiframe(appkey,filekey,fileid,apptype);
                 $('.selectapp').removeClass('.selectedfile');
          });
          $(document).on('click', '.context-menulist .cutFunction', function (e) {
@@ -507,19 +508,21 @@ $(document).ready(function () {
             const filekey = this.getAttribute('data-filekey');
             const filetype = this.getAttribute('data-filetype');
             const fileid = this.getAttribute('data-iframefile-id');
-            closeiframe(appkey,filekey,fileid,filetype);
+            const apptype = this.getAttribute('data-apptype');
+            closeiframe(appkey,filekey,fileid,apptype);
+                
         });
 
         // Close button functionality
         $(document).on('click', '#iframeheaders .popup .iframefilepopupclosebtn', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            alert("hello");
             const appkey = this.getAttribute('data-appkey');
             const filekey = this.getAttribute('data-filekey');
             const filetype = this.getAttribute('data-filetype');
             const fileid = this.getAttribute('data-iframefile-id');
-            closeiframe(appkey,filekey,fileid,filetype);
+            const apptype = this.getAttribute('data-apptype');            
+            closeiframe(appkey,filekey,fileid,apptype);
         });
     
         
@@ -755,12 +758,12 @@ $(document).on('click', function(event) {
             });
         }
         
-        function closeiframe(appkey,filekey,fileid,filetype){
+        function closeiframe(appkey,filekey,fileid,apptype){
                $('#alliframelist #iframepopup'+fileid).removeClass('hidden');
                 $.ajax({
                 url: closeIframeRoute,
                 method: 'GET',
-                data: {appkey:appkey,filekey:filekey,filetype:filetype},
+                data: {appkey:appkey,filekey:filekey,apptype:apptype},
                 success: function (response) {
                     // Update the app list container with the updated list
                     $('#alliframelist').html(response.html);
