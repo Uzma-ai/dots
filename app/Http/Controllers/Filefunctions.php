@@ -102,4 +102,19 @@ class Filefunctions extends Controller
         }
         return $size;
     }
+
+    // Function to reorder the array
+    public function moveSubArrayToTop(&$array, $filekeyToMove) {
+        foreach ($array as $key => $subArray) {
+            foreach ($subArray as $item) {
+                if ($item['filekey'] === $filekeyToMove) {
+                    // Move the matching sub-array to the top
+                    $temp = [$key => $array[$key]];
+                    unset($array[$key]);
+                    $array = $temp + $array;
+                    break 2;
+                }
+            }
+        }
+    }
 }

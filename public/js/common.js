@@ -455,8 +455,9 @@ $(document).ready(function () {
                 const filepath = $('.selectedfile').attr('data-path');
                 const filetype = $('.selectedfile').attr('data-filetype');
                 const fileid = this.getAttribute('data-iframefile-id');
+                const apptype = $('.selectedfile').attr('data-apptype');
                 deleteFunction(filekey);
-                closeiframe(appkey,filekey,fileid,filetype);
+                closeiframe(appkey,filekey,fileid,apptype);
                 $('.selectapp').removeClass('.selectedfile');
          });
          $(document).on('click', '.context-menulist .cutFunction', function (e) {
@@ -496,19 +497,21 @@ $(document).ready(function () {
             const filekey = this.getAttribute('data-filekey');
             const filetype = this.getAttribute('data-filetype');
             const fileid = this.getAttribute('data-iframefile-id');
-            closeiframe(appkey,filekey,fileid,filetype);
+            const apptype = this.getAttribute('data-apptype');
+            closeiframe(appkey,filekey,fileid,apptype);
+                
         });
 
         // Close button functionality
         $(document).on('click', '#iframeheaders .popup .iframefilepopupclosebtn', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            alert("hello");
             const appkey = this.getAttribute('data-appkey');
             const filekey = this.getAttribute('data-filekey');
             const filetype = this.getAttribute('data-filetype');
             const fileid = this.getAttribute('data-iframefile-id');
-            closeiframe(appkey,filekey,fileid,filetype);
+            const apptype = this.getAttribute('data-apptype');            
+            closeiframe(appkey,filekey,fileid,apptype);
         });
     
         
@@ -744,12 +747,12 @@ $(document).on('click', function(event) {
             });
         }
         
-        function closeiframe(appkey,filekey,fileid,filetype){
+        function closeiframe(appkey,filekey,fileid,apptype){
                $('#alliframelist #iframepopup'+fileid).removeClass('hidden');
                 $.ajax({
                 url: closeIframeRoute,
                 method: 'GET',
-                data: {appkey:appkey,filekey:filekey,filetype:filetype},
+                data: {appkey:appkey,filekey:filekey,apptype:apptype},
                 success: function (response) {
                     // Update the app list container with the updated list
                     $('#alliframelist').html(response.html);
@@ -1014,6 +1017,99 @@ $(document).on('click', function(event) {
     }
 });
 });
+
+
+//button press delete 
+ //for keypress delete
+  $('html').keyup(function(e){
+      if(e.keyCode == 46) {
+          //alert('Delete key released');
+                const filekey = $('.selectedfile').attr('data-filekey');
+                const appkey = $('.selectedfile').attr('data-appkey');
+                const filepath = $('.selectedfile').attr('data-path');
+                const filetype = $('.selectedfile').attr('data-filetype');
+                const fileid = this.getAttribute('data-iframefile-id');
+                deleteFunction(filekey);
+                closeiframe(appkey,filekey,fileid,filetype);
+                $('.selectapp').removeClass('.selectedfile');
+      }
+  });
+
+  $(document).ready(function() {
+    //For Share Model
+    $(document).on('change', '#Users, #Groups, #Roles', function() {
+        const targetId = $(this).attr('id');
+        if ($(this).is(':checked')) {
+            $('#Div' + targetId).show();
+        } else {
+            $('#Div' + targetId).hide();
+        }
+    });
+    $(document).on('change', '#Everyone', function() {
+        if ($(this).is(':checked')) {
+            $('#Users, #Groups, #Roles').prop('checked', false);
+            $('#DivUsers, #DivGroups, #DivRoles').hide();
+        }
+    });
+    $(document).on('change', '#EditUsers, #EditGroups, #EditRoles', function() {
+        const targetId = $(this).attr('id');
+        if ($(this).is(':checked')) {
+            $('#Div' + targetId).show();
+        } else {
+            $('#Div' + targetId).hide();
+        }
+    });
+    $(document).on('change', '#EditEveryone', function() {
+        if ($(this).is(':checked')) {
+            $('#EditUsers, #EditGroups, #EditRoles').prop('checked', false);
+            $('#DivUsers, #DivEditGroups, #DivEditRoles').hide();
+        }
+    });
+    $(document).on('click', '#RandomPassword', function() {
+        console.log('here');
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let password = '';
+        for (let i = 0; i < 6; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            password += characters.charAt(randomIndex);
+        }
+        $('#Password').val(password);
+    });
+
+    $(document).on('click', '#ClosePopup', function() {
+        $('#sharePopup').addClass('hidden');
+    });
+
+    //for copy share link
+    $(document).on("click", ".ClicktoCopy", function(e) {
+        e.preventDefault();
+        var copyText = $('input[name="url"]');
+        copyText.select();
+        document.execCommand('copy');
+    });
+
+    //for generate qr
+    // $(document).on("click", ".showqrcode", function(e) {
+    //     var elText = $('input[name="url"]').val();
+    //     var qrcode = new QRCode(document.getElementById("qrcode"), {
+    //         width: 100,
+    //         height: 100,
+    //     });
+
+    //     function makeCode() {
+    //         qrcode.makeCode(elText);
+    //     }
+    //     makeCode();
+    //     $('#QrCodeModal').removeClass('hidden');
+    // });
+    // $(document).on("click", ".hideqrmodal", function(e) {
+    //     $('#qrcode').html('');
+    //     $('#QrCodeModal').addClass('hidden');
+    // });
+});
+
+
+
 
 
 
