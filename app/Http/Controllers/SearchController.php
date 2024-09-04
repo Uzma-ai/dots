@@ -177,25 +177,27 @@ class SearchController extends Controller
 
     public function closeiframe(Request $request)
     {
-        if ($request->input('appkey')) {
+
+        if ($request->input('appkey') &&  $request->input('apptype') && $request->input('filekey')) {
             $filekey = $request->input('filekey');
             $appkey = $request->input('appkey');
-            $filetype = $request->input('filetype');
+            $apptype = $request->input('apptype');
+
             if (Session::has('iframeapp')) {
                 $iframearray = Session::get('iframeapp');
-    
-                if (isset($iframearray[$appkey])) {
-                    $currentApp = $iframearray[$appkey];
-    
-                    if (count($iframearray[$appkey]) == 1) {
-                        unset($iframearray[$appkey]);
+                
+
+                if (isset($iframearray[$apptype.$appkey])) {
+
+                    if (count($iframearray[$apptype.$appkey]) == 1) {
+                        unset($iframearray[$apptype.$appkey]);
                     } else {
-                            if ($iframearray[$appkey] == $appkey) {
-                                foreach($iframearray[$appkey] as $appkey=>$appval){
+
+
+                            if ($iframearray[$apptype.$appkey]) {
+                                foreach($iframearray[$apptype.$appkey] as $appkeys=>$appval){
                                     if($appval['filekey']==$filekey){
-                                        // print_r($appval['filekey']);die;
-                                        unset($iframearray[$appkey][$appkey]['filekey']);
-                                        $iframearray = array_values($iframearray);
+                                        unset($iframearray[$apptype.$appkey][$appkeys]);
                                         break;
                                     }
                                     
