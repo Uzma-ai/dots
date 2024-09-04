@@ -1046,6 +1046,79 @@ $(document).on('click', function(event) {
       }
   });
 
+  $(document).ready(function() {
+    //For Share Model
+    $(document).on('change', '#Users, #Groups, #Roles', function() {
+        const targetId = $(this).attr('id');
+        if ($(this).is(':checked')) {
+            $('#Div' + targetId).show();
+        } else {
+            $('#Div' + targetId).hide();
+        }
+    });
+    $(document).on('change', '#Everyone', function() {
+        if ($(this).is(':checked')) {
+            $('#Users, #Groups, #Roles').prop('checked', false);
+            $('#DivUsers, #DivGroups, #DivRoles').hide();
+        }
+    });
+    $(document).on('change', '#EditUsers, #EditGroups, #EditRoles', function() {
+        const targetId = $(this).attr('id');
+        if ($(this).is(':checked')) {
+            $('#Div' + targetId).show();
+        } else {
+            $('#Div' + targetId).hide();
+        }
+    });
+    $(document).on('change', '#EditEveryone', function() {
+        if ($(this).is(':checked')) {
+            $('#EditUsers, #EditGroups, #EditRoles').prop('checked', false);
+            $('#DivUsers, #DivEditGroups, #DivEditRoles').hide();
+        }
+    });
+    $(document).on('click', '#RandomPassword', function() {
+        console.log('here');
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let password = '';
+        for (let i = 0; i < 6; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            password += characters.charAt(randomIndex);
+        }
+        $('#Password').val(password);
+    });
+
+    $(document).on('click', '#ClosePopup', function() {
+        $('#sharePopup').addClass('hidden');
+    });
+
+    //for copy share link
+    $(document).on("click", ".ClicktoCopy", function(e) {
+        e.preventDefault();
+        var copyText = $('input[name="url"]');
+        copyText.select();
+        document.execCommand('copy');
+    });
+
+    //for generate qr
+    // $(document).on("click", ".showqrcode", function(e) {
+    //     var elText = $('input[name="url"]').val();
+    //     var qrcode = new QRCode(document.getElementById("qrcode"), {
+    //         width: 100,
+    //         height: 100,
+    //     });
+
+    //     function makeCode() {
+    //         qrcode.makeCode(elText);
+    //     }
+    //     makeCode();
+    //     $('#QrCodeModal').removeClass('hidden');
+    // });
+    // $(document).on("click", ".hideqrmodal", function(e) {
+    //     $('#qrcode').html('');
+    //     $('#QrCodeModal').addClass('hidden');
+    // });
+});
+
 
 
 
