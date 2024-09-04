@@ -113,7 +113,6 @@
       const uploadRoute =@json(route('upload'));
       const leftArrowClick =@json(route('leftarrowclick'));
       const rightArrowClick =@json(route('rightarrowclick'));
-      const searchFileExploreRoute =@json(route('fileExp-list'));
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

@@ -269,7 +269,7 @@ if(empty($updatedPath)){
   document.addEventListener("DOMContentLoaded", () => {
     //  document.querySelector('.newfiledropdown').addEventListener('click', function() {
     //   document.querySelector('.newfiledropdownoption').classList.toggle('hidden');
-    // });           
+     });           
     const links = {
       'desktop.html': 'link-desktop',
       'Recent.html': 'link-recent',
@@ -336,7 +336,7 @@ if(empty($updatedPath)){
     const popup = document.getElementById(popupId);
     if (popup) toggleClass(popup, "hidden");
     else console.error(`Popup with id ${popupId} not found.`);
-  }; 
+  };
     
   </script>
 
