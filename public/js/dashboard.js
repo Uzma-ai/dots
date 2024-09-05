@@ -113,7 +113,13 @@
               
                  // Hide context menus
                 hideContextMenus()
-              });
+            });
+              
+document.addEventListener("click", function (event) {
+  if (!event.target.closest("#notification") && !event.target.closest("#search") && !event.target.closest("#administrator")) {
+    closeotherContainers();
+  }
+});
     
           // draggble clock functionality
         dragElement(document.getElementById("clock"));
