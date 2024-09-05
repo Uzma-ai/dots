@@ -5,6 +5,7 @@
         @if(!empty($iframedetail))
         <?php //print_r($iframedetail['filetype']);die;?>
                <!--Iframe popup-->
+
                 <div id="iframepopup{{ $iframedetail['filetype'].$iframedetail['filekey'] }}" data-app-id="iframepopup{{$iframedetail['filetype'].$iframedetail['filekey'] }}" class="draggableelement draggable-clock box popupiframe fixed inset-0 bg-black-900 bg-opacity-50 flex items-center justify-center rounded-lg hidden">
                         <div class="draggable bg-opacity-70  shadow-lg w-full h-full relative">
                         <div class="flex justify-between items-center p-1 pr-2 border-b bg-c-gray-gradient">
@@ -18,7 +19,8 @@
                             <a href="#"  class="minimizeiframe-btn" data-iframe-id="{{$iframedetail['filetype'].$iframedetail['filekey'] }}"><img src="{{ asset($constants['IMAGEFILEPATH'].'minimize'.$constants['ICONEXTENSION'])}}"/></a>
                             <a href="#" class="maximizeiframe-btn" data-iframe-id="{{$iframedetail['filetype'].$iframedetail['filekey'] }}"><img src="{{ asset($constants['IMAGEFILEPATH'].'maximize'.$constants['ICONEXTENSION'])}}"/></a>
                             <a href="#" class="closeiframe-btn" data-filekey="{{$iframedetail['filekey'] }}" data-iframe-id = "{{$iframedetail['filetype'].$iframedetail['filekey'] }}" data-appkey="{{ $iframedetail['appkey'] }}" data-filetype="{{ $iframedetail['filetype'] }}" ><img src="{{ asset($constants['IMAGEFILEPATH'].'close'.$constants['ICONEXTENSION'])}}"/></a>
-                            </div>
+                            <input type="hidden" name="filekey" id="filekey" value="{{$iframedetail['filekey'] }}" />   
+                        </div>
                         </div>
                     
                         @if ($iframedetail['extension'] == 'editor')
@@ -208,8 +210,10 @@ fetchUsers();
 
 
 function fetchMessages() {
+    const fileID = $('#filekey').val();
+    // var url = "{{ route('getMessageData') }}";
+    const url = "{{ route('getMessageData') }}?fileID=" + encodeURIComponent(fileID);
 
-    var url = "{{ route('getMessageData') }}";
     
     fetch(url)
     .then((response) => response.json())
@@ -225,43 +229,59 @@ function fetchMessages() {
           // console.log('===================');
           var rec = '';
 
-          /*if(comment.receiver_type == "Group"){
-            console.log('ggggg', comment.receiver_type, comment.group)
-            rec = comment.group != null ? '@'+comment.group.name : '';
-          } else if(comment.receiver_type == "Role"){
-            console.log('rrrrr', comment.receiver_type, comment.role)
-            rec = comment.role != null ? '@'+comment.role.name : '';
-          } else {
-            rec = comment.comment_recivers.length > 0 ? comment.comment_recivers.map(r => `@${r.receiver.name}`).join(', ') : '' ;
-        }*/
-
+         
         const processedMessage = processMessage(comment.message);
           // console.log(rec);
           let messageHtml = `
-          <div class="grid gap-2 border-b">
-          <div class="flex items-start gap-3">
-          <div class="h-8 w-8 rounded-full">
-          <img src="images/avatar.png" alt="Avatar" class="h-8 w-8 rounded-full" />
-          </div>
-          <div class="flex-1 space-y-1">
-          <div class="flex items-center justify-between">
+  <div class="grid gap-2 border-b">
+    <div class="flex items-start gap-3">
+      <div class="h-8 w-8 rounded-full">
+        <img src="images/avatar.png" alt="Avatar" class="h-8 w-8 rounded-full" />
+      </div>
+      <div class="flex-1 space-y-1">
+        <div class="flex items-center justify-between">
           <div class="font-medium text-base">${comment.user.name}</div>
           <div class="text-xs">${new Date(comment.created_at).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
-          </div>
-          <p> <span style="color:blue; font-style: italic;">${rec}</span> ${processedMessage}</p>
-          <div class="flex items-center gap-2">
+        </div>
+        <p><span style="color:blue; font-style: italic;">${rec}</span> ${processedMessage}</p>
+        <div class="flex items-center gap-2">
           <button onclick="togglePane('.addcomment')" class="p-2 reply-button" data-type="reply" data-message-id="${comment.id}">
-          <i class="ri-reply-line"></i>
+            <i class="ri-reply-line"></i>
           </button>
           <button id="comments-iframe" class="p-2 delete-button" data-message-id="${comment.id}">
-          <i class="ri-delete-bin-line"></i>
+            <i class="ri-delete-bin-line"></i>
           </button>
-
-          </div>
-          </div>
-          </div>
-          </div>
-          `;
+        </div>
+        <div class="replies-container">
+          ${comment.replies.map(reply => `
+            <div class="reply">
+              <div class="flex items-start gap-3">
+                <div class="h-8 w-8 rounded-full">
+                  <img src="images/avatar.png" alt="Avatar" class="h-8 w-8 rounded-full" />
+                </div>
+                <div class="flex-1 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <div class="font-medium text-sm">Reply by ${reply.sender}</div>
+                    <div class="text-xs">${new Date(reply.created_at).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+                  </div>
+                  <p>${reply.message}</p>
+                  <div class="flex items-center gap-2">
+                    <button onclick="togglePane('.addcomment')" class="p-2 reply-button" data-type="reply" data-message-id="${comment.id}">
+                      <i class="ri-reply-line"></i>
+                    </button>
+                    <button class="p-2 delete-button" data-message-id="${reply.id}">
+                      <i class="ri-delete-bin-line"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  </div>
+`;
           $('#message_view').append(messageHtml);
       });
 
@@ -392,14 +412,15 @@ function addPostButtonClickListener() {
 
 function handlePostButtonClick(event) {
     const button = event.target.closest(".postButton");
-    let fileId = button.getAttribute("data-fileid");
+    // let fileId = button.getAttribute("data-fileid");
 
     if (!button) return;
 
     const authUserId = {{ auth()->user()->id }};
     console.log(authUserId);
     console.log("--------------------");
-   // const fileID = "MQ";
+    //const fileID = "MQ";
+    const fileID = $('#filekey').val();
 
     if (textarea) {
       // const message = textarea.value.replace(/@\w+\s/g, "").trim();
@@ -410,7 +431,7 @@ function handlePostButtonClick(event) {
       console.log("Selected mention:", selectedMention);
       */
       if (message) {
-        const parsedFileID = fileId
+        const parsedFileID = fileID
         const bodyData = {
           user_id: authUserId,
           receiver_id: selectedMention ? selectedMention.id : null,
@@ -450,6 +471,8 @@ var url = "{{ route('saveComment') }}";
               selectedMentionArr = [];
               mentionList.classList.add("hidden");
               textarea.dataset.parentMessageId = ""; // Clear parentMessageId after saving
+              bodyData.parent_message_id = "";
+
               if (addComment) {
                 addComment.classList.add("hidden");
             }

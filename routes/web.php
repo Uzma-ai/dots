@@ -103,7 +103,7 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('export-logins', [LoginLogController::class, 'export'])->name('export.logins');
     Route::get('export-operation', [OperationLogController::class, 'export'])->name('export.operations');
     //END
-    Route::delete('delete-message', [MessageController::class, 'destroy'])->name('delete-message');
+   
     // Light app start
     Route::get('lightapp', [LightAppController::class, 'index'])->name('lightapp');
     Route::post('createlightapp', [LightAppController::class, 'createLightApp'])->name('createlightapp');
@@ -207,6 +207,7 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('dotsdocumentviewer/{file}', [FileManagerController::class, 'dotsDocumentViewer'])->where('name', '.*')
     ->where('file', '.*')->name('dotsdocumentviewer');
     //comments
+     Route::delete('delete-message', [MessageController::class, 'destroy'])->name('delete-message');
     Route::get('getUsers', [MessageController::class, 'getUsers'])->name('getUsers');
     Route::post('saveComment', [MessageController::class, 'saveCommentOrReply'])->name('saveComment');
     // Route::post('sendReply', [MessageController::class, 'sendReply'])->name('sendReply');
