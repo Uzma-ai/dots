@@ -9,10 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/tailwindcss@^2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'global-root.css') }}" />
-    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'common.css') }}" />
-    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'as.css') }}" />
-    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'cs.css') }}" />
+    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'root.css') }}" />
+    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'common.css') }}" /> 
 </head>
 
 <body class="w-full h-screen">

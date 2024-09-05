@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'common.css') }}" />
+    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'semantic.min.css') }}" />
     <!-- <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'cs.css') }}" /> -->
 
 
