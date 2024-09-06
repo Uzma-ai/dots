@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,6 +6,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'semantic.min.css') }}" />
     <link href="https://unpkg.com/tailwindcss@^2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
     <link rel="shortcut icon" href="{{ asset($constants['IMAGEFILEPATH'] . 'logo.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'custom.css') }}" />
@@ -22,7 +22,7 @@
       <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Taskbar -->
-        <div class="navbar navbarhead h-16 flex items-center w-full absolute z-10">
+        <div class="navbar navbarhead h-16 flex items-center w-full absolute">
             <div class="flex justify-center ml-10 w-full relative h-full" id="toolbar">
             <div class="bg absolute w-full  bottom-0">
                 <img id="shelf" class="w-full" src="{{ asset($constants['IMAGEFILEPATH'].'shelf.png')}}" alt="">
@@ -34,7 +34,10 @@
             </div>
             <div class="flex items-center gap-8 w-48 justify-end pr-5">
                 <i id="search-icon" class="ri-search-line icon-color"></i>
-                 <i id="pinned" class="ri-pushpin-line"></i>
+                 <i id="pinned" class="ri-pushpin-line icon-color"></i>
+               <a href="https://desktop2.sizaf.com/docs" target="_blank">
+                    <i class="ri-question-line icon-color"></i>
+                </a>
                 <!-- <i id="notification-icon" class="ri-notification-3-line icon-color"></i> -->
             </div>
         </div>
@@ -94,6 +97,7 @@
 
     @yield('content')
 
+    <div id="shareFilesFolderModal"></div>
 
     <!--end here -->
 
@@ -114,8 +118,7 @@
       const uploadRoute =@json(route('upload'));
       const leftArrowClick =@json(route('leftarrowclick'));
       const rightArrowClick =@json(route('rightarrowclick'));
-
-
+      const shareRoute =@json(route('getUrl'));
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -128,7 +131,8 @@
 <script src="{{ asset($constants['JSFILEPATH'].'taskbar.js') }}" ></script>
 
 @yield('scripts')
-
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
 <!-- <script src="{{ asset($constants['JSFILEPATH'].'taskbar.js') }}" ></script> -->
 
 

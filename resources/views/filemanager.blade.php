@@ -269,7 +269,7 @@ if(empty($updatedPath)){
   document.addEventListener("DOMContentLoaded", () => {
     //  document.querySelector('.newfiledropdown').addEventListener('click', function() {
     //   document.querySelector('.newfiledropdownoption').classList.toggle('hidden');
-    // });           
+     });           
     const links = {
       'desktop.html': 'link-desktop',
       'Recent.html': 'link-recent',
@@ -309,23 +309,22 @@ if(empty($updatedPath)){
     // search functionality
     $('#searchFiles').on('keyup', function() {
       var query = $(this).val().trim();
-        if (query.length > 0) {
-            $.ajax({
-                url: "{{ route('fileExp-list') }}", 
-                method: 'GET',
-                data: { searchFiles: query, path: path },
-                success: function(data) {
-                  $('.loaddetails').html(data.html);
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
-        } else {
-          showapathdetail(path);
-        }
-      });            
-    }); 
+      if (query.length > 0) {
+          $.ajax({
+              url: searchFileExploreRoute, 
+              method: 'GET',
+              data: { searchFiles: query, path: path },
+              success: function(data) {
+                $('.loaddetails').html(data.html);
+              },
+              error: function (xhr, status, error) {
+                  console.error(xhr.responseText);
+              }
+          });
+      } else {
+        showapathdetail(path);
+      }
+    });
 
     // Toggle a class on an element
   const toggleClass = (element, className) => {
@@ -337,7 +336,7 @@ if(empty($updatedPath)){
     const popup = document.getElementById(popupId);
     if (popup) toggleClass(popup, "hidden");
     else console.error(`Popup with id ${popupId} not found.`);
-  }; 
+  };
     
   </script>
 

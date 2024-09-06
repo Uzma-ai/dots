@@ -5,37 +5,40 @@
         @if(!empty($iframedetail))
         <?php //print_r($iframedetail['filetype']);die;?>
                <!--Iframe popup-->
-                <div id="iframepopup{{ $iframedetail['filetype'].$iframedetail['filekey'] }}" data-app-id="iframepopup{{$iframedetail['filetype'].$iframedetail['filekey'] }}" class="draggableelement draggable-clock box popupiframe fixed inset-0 bg-black-900 bg-opacity-50 flex items-center justify-center rounded-lg hidden" style="z-index: 1;">
+                <div id="iframepopup{{ $iframedetail['filetype'].$iframedetail['filekey'] }}" data-app-id="iframepopup{{$iframedetail['filetype'].$iframedetail['filekey'] }}" class="draggableelement draggable-clock box popupiframe fixed inset-0 bg-black-900 bg-opacity-50 flex items-center justify-center rounded-lg hidden">
                         <div class="draggable bg-opacity-70  shadow-lg w-full h-full relative">
                         <div class="flex justify-between items-center p-1 pr-2 border-b bg-c-gray-gradient">
                             <span class="text-lg flex font-semibold">
                             <img class="w-5 h-5 mt-1" src="{{ checkIconExist($iframedetail['appicon'],'app') }}"/>
                             <h2 class="text-white ml-2 font-thin">
-                                {{$iframedetail['filename'] }}
+                                {{$iframedetail['appname'] }}
                             </h2>
                             </span>
                             <div class="flex space-x-1">
                             <a href="#"  class="minimizeiframe-btn" data-iframe-id="{{$iframedetail['filetype'].$iframedetail['filekey'] }}"><img src="{{ asset($constants['IMAGEFILEPATH'].'minimize'.$constants['ICONEXTENSION'])}}"/></a>
                             <a href="#" class="maximizeiframe-btn" data-iframe-id="{{$iframedetail['filetype'].$iframedetail['filekey'] }}"><img src="{{ asset($constants['IMAGEFILEPATH'].'maximize'.$constants['ICONEXTENSION'])}}"/></a>
-                            <a href="#" class="closeiframe-btn" data-filekey="{{$iframedetail['filekey'] }}" data-iframe-id = "{{$iframedetail['filetype'].$iframedetail['filekey'] }}" data-appkey="{{ $iframedetail['appkey'] }}" data-filetype="{{ $iframedetail['filetype'] }}" ><img src="{{ asset($constants['IMAGEFILEPATH'].'close'.$constants['ICONEXTENSION'])}}"/></a>
+                            <a href="#" class="closeiframe-btn" data-apptype="{{ $iframedetail['apptype'] }}" data-filekey="{{$iframedetail['filekey'] }}" data-iframe-id = "{{$iframedetail['filetype'].$iframedetail['filekey'] }}" data-appkey="{{ $iframedetail['appkey'] }}" data-filetype="{{ $iframedetail['filetype'] }}" ><img src="{{ asset($constants['IMAGEFILEPATH'].'close'.$constants['ICONEXTENSION'])}}"/></a>
                             </div>
                         </div>
                     
                         @if ($iframedetail['extension'] == 'editor')
                         <!--comment section-->
-                        <div class="commentssection absolute bottom-0 top-9 flex h-11/12 flex-col border-r bg-c-lighten-gray hidden md:w-1/3  font-size-14">
-                            <div class="resizer absolute top-0 right-0 w-1 h-full" style="cursor: ew-resize; background-color: #d1d5db"></div>
-                                <div class="sticky top-0 z-10 flex items-center justify-between border-b px-4 py-2">
-                                    <h3 class="font-medium font-size-16">Comments</h3>
-                                    <div>
-                                    <button class="pr-2 comment-button" onclick="togglePane('.addcomment')" data-type="comment">
-                                        <i class="ri-chat-new-line ri-lg"></i>
-                                    </button>
-                                    <button onclick="togglePane('.commentssection')">
-                                        <i class="ri-close-fill ri-lg"></i>
-                                    </button>
-                                </div>
-                            </div>
+
+                         <div class="commentssection absolute bottom-0 top-9 flex h-11/12 flex-col border-r bg-c-lighten-gray hidden md:w-1/3  font-size-14">
+          <div class="resizer absolute top-0 right-0 w-1 h-full" style="cursor: ew-resize; background-color: #d1d5db"></div>
+          <div class="sticky top-0 z-10 flex items-center justify-between border-b px-4 py-2">
+            <h3 class="font-medium font-size-16">Comments</h3>
+            <div>
+              <button class="pr-2 comment-button" onclick="togglePane('.addcomment')" data-type="comment">
+                <i class="ri-chat-new-line ri-lg"></i>
+            </button>
+            <button onclick="togglePane('.commentssection')">
+                <i class="ri-close-fill ri-lg"></i>
+            </button>
+        </div>
+    </div>
+
+       
                             <!--chat list-->
                             <div class="flex-1 overflow-auto comment-list">
                                 <div class="space-y-4 p-4" id="message_view">

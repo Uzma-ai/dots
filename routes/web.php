@@ -12,12 +12,13 @@ use App\Http\Controllers\OperationLogController;
 use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FileSharingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Jobs\ConfigClearJob;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\FileSharingController;
+
 
 Route::get('/', function () {
     return redirect(route('dashboard'));
@@ -60,6 +61,21 @@ Route::middleware(['blockIP'])->group(function () {
         Route::post('profilepic', [UserController::class, 'ProfilePic'])->name('ProfilePic');
         //search
         Route::get('search', [SearchController::class, 'search'])->name('search');
+
+        //file & folder sharing
+        Route::get('getUrl',[FileSharingController::class, 'getUrl'])->name('getUrl');
+        Route::resource('fileshare',FileSharingController::class);
+        Route::get('sharepathdetail', [FileSharingController::class, 'pathfiledetail'])->name('sharepathdetail');
+        Route::get('sharing/{id}',[FileSharingController::class,'FileView'])->middleware('filesharingpassword')->name('FileSharing');
+        Route::get('sharingp/{path?}', [FileSharingController::class, 'index2'])->where('path', '.*');
+        Route::get('sharing/password/{id}', [FileSharingController::class, 'showPasswordForm'])->name('showPasswordForm');
+        Route::post('sharing/password/verify/{id}', [FileSharingController::class, 'verifyPassword'])->name('verifyPassword');
+        Route::get('linkshare', [FileSharingController::class, 'shareLinks'])->name('linkshare');
+        Route::get('sharelogs', [FileSharingController::class, 'shareLogs'])->name('sharelogs');
+        Route::get('share-logs/filter', [FileSharingController::class, 'filter'])->name('shareLogs.filter');
+        Route::get('export-share', [FileSharingController::class, 'export'])->name('export.share');
+        Route::get('cancel-share/{id}', [FileSharingController::class, 'cancelShare'])->name('cancel.share');
+        Route::post('cancel-share2', [FileSharingController::class, 'cancelShare2'])->name('cancel.share2');
     });
 
     //Logs
@@ -110,7 +126,7 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('desktop', [HomeController::class, 'desktop'])->name('desktop');
-    //user routes
+    //user routes 
     Route::get('users', [UserController::class, 'index'])->name('users');
     Route::get('users/{id}', [UserController::class, 'index']);
     Route::get('user-add', [UserController::class, 'add'])->name('user-add');
@@ -156,7 +172,15 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('group-edit', [GroupController::class, 'edit'])->name('group-edit');
     Route::post('group-update/{id}', [GroupController::class, 'update'])->name('group-update');
     Route::get('group-delete/{id}', [GroupController::class, 'destroy'])->name('group-delete');
+    //Link Share
+    Route::get('linkshare/{path?}', [FileSharingController::class, 'shareLinks'])->name('linkshare');
+    Route::get('/cancel-share/{id}', [FileSharingController::class, 'cancelShare'])->name('cancel.share');
+
+    Route::post('/cancel-share2', [FileSharingController::class, 'cancelShare2'])->name('cancel.share2');
+    Route::get('showsharedetail', [FileManagerController::class, 'sharefiledetail'])->name('showsharedetail');
+    
     /// Filemanager
+
     Route::get('filemanager/{path?}', [FileManagerController::class, 'index'])
     ->where('path', '.*')->name('filemanager')->middleware('checkPermis.fileManager');
     Route::get('createfolder', [FileManagerController::class, 'createFolder'])->name('createfolder');
@@ -187,9 +211,11 @@ Route::middleware(['blockIP'])->group(function () {
     Route::post('saveComment', [MessageController::class, 'saveCommentOrReply'])->name('saveComment');
     // Route::post('sendReply', [MessageController::class, 'sendReply'])->name('sendReply');
     Route::get('getMessage', [MessageController::class, 'getMessageData'])->name('getMessageData');
+    Route::get('fileExpSearch', [FileManagerController::class, 'fileExpSearch'])->name('fileExp-list');
 });
 
-Route::get('fileExpSearch', [FileManagerController::class, 'fileExpSearch'])->name('fileExp-list');
+Route::get('expire-sharing',[FileSharingController::class, 'Expire']);
+
 Route::get('leftarrowclick', [FileManagerController::class, 'leftArrowClick'])->name('leftarrowclick');
 Route::get('rightarrowclick', [FileManagerController::class, 'rightArrowClick'])->name('rightarrowclick');
 

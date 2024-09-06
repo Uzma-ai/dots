@@ -4,6 +4,7 @@ use App\Http\Middleware\CspMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\FileSharingPasswordCheck;
 use Illuminate\Http\Request;
 use App\Exceptions\InvalidOrderException;
 
@@ -22,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->alias([
             'blockIP' => \App\Http\Middleware\BlockIpMiddleware::class,
+            'filesharingpassword' => FileSharingPasswordCheck::class,
             'checkPermis.fileManager' => \App\Http\Middleware\CheckPermission::class,
             'checkPermis.backendManagement' => \App\Http\Middleware\CheckPermission::class,
             'checkPermis.userManagement' => \App\Http\Middleware\CheckPermission::class,

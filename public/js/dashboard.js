@@ -1,24 +1,24 @@
 ///// desktopjs 
        /// dots logo admin click 
        function closeotherContainers(except = null) {
-        for (let key in containers) {
-          if (containers[key] !== except) {
-            containers[key].classList.add("hidden");
+        for (let key in allothercontainers) {
+          if (allothercontainers[key] !== except) {
+            allothercontainers[key].classList.add("hidden");
           }
         }
       }
        
-       const containers = {
+       const allothercontainers = {
         notification: document.getElementById("notification"),
         search: document.getElementById("search"),
         administrator: document.getElementById("administrator"),
       };
        document.getElementById("footer-logo").addEventListener("click", function (event) {
         event.stopPropagation();
-        if (containers.administrator.classList.contains("hidden")) {
-            closeotherContainers(containers.administrator);
+        if (allothercontainers.administrator.classList.contains("hidden")) {
+            closeotherContainers(allothercontainers.administrator);
         }
-        containers.administrator.classList.toggle("hidden");
+        allothercontainers.administrator.classList.toggle("hidden");
          // Hide context menus
         hideContextMenus()
       });
@@ -106,14 +106,20 @@
         
             document.getElementById("search-icon").addEventListener("click", function (event) {
                 event.stopPropagation();
-                if (containers.search.classList.contains("hidden")) {
-                    closeotherContainers(containers.search);
+                if (allothercontainers.search.classList.contains("hidden")) {
+                    closeotherContainers(allothercontainers.search);
                 }
-                containers.search.classList.toggle("hidden");
+                allothercontainers.search.classList.toggle("hidden");
               
                  // Hide context menus
                 hideContextMenus()
-              });
+            });
+              
+document.addEventListener("click", function (event) {
+  if (!event.target.closest("#notification") && !event.target.closest("#search") && !event.target.closest("#administrator")) {
+    closeotherContainers();
+  }
+});
     
           // draggble clock functionality
         dragElement(document.getElementById("clock"));
