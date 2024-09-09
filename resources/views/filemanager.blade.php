@@ -28,7 +28,7 @@ if(empty($updatedPath)){
       @include('layouts.sidebar')
       <div class="flex-grow h-100 main">
         <div class="flex w-full h-full flex-col content">
-          <div class="px-4 md:px-6 py-3 py-6 pb-2 md:pb-6">
+          <div class="px-9 md:px-6 py-6 md:pb-6">
             <div class="flex items-center gap-4">
               <span class="text-xl text-c-black">File</span>
             </div>

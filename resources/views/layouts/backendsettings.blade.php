@@ -39,7 +39,7 @@
         <!-- Sidebar -->
         <aside class="h-full relative">
             <input type="checkbox" class="hidden" id="sidebar-toggle" />
-            <label for="sidebar-toggle" class="absolute lg:hidden top-1 -right-8 px-1">
+            <label for="sidebar-toggle" class="absolute lg:hidden top-4 -right-8 px-1">
                 <i class="ri-bar-chart-horizontal-line"></i>
             </label>
             <div class="h-full sidebar">
