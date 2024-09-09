@@ -4,7 +4,7 @@
         <input type="checkbox" class="hidden" id="sidebar-toggle" />
         <label
           for="sidebar-toggle"
-          class="absolute lg:hidden top-1 -right-9 md:-right-10 px-1"
+          class="absolute lg:hidden top-6 -right-8 px-1"
         >
           <i class="ri-bar-chart-horizontal-line"></i>
         </label>
