@@ -22,6 +22,10 @@ console.log = (...args) => {
     originalConsoleLog(...args);
 };
 
+app.get('/', (req, res) => {
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.end("Hello\nNode is running\nMade with ❤️ from Dots....");
+});
 app.get('/node', (req, res) => {
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
     res.end("Hello\nNode is running\nMade with ❤️ from Dots....");
