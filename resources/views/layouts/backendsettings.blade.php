@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'nx.css') }}">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom.css') }}">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom-reusable-style.css') }}">
+    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'semantic.min.css') }}" />
     @yield('styles')
 </head>
 
