@@ -35,11 +35,6 @@ Route::get('dummydata',function(){
 });
 Route::post('voice',[UserController::class,'voice'])->name('voice');
 
-//docs route
-Route::get('docs',function(){
-    return view('docs.user');
-});
-
 Route::get('admindocs',function(){
     return view('docs.admin');
 });
@@ -126,7 +121,7 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('desktop', [HomeController::class, 'desktop'])->name('desktop');
-    //user routes 
+    //user routes
     Route::get('users', [UserController::class, 'index'])->name('users');
     Route::get('users/{id}', [UserController::class, 'index']);
     Route::get('user-add', [UserController::class, 'add'])->name('user-add');
@@ -178,7 +173,7 @@ Route::middleware(['blockIP'])->group(function () {
 
     Route::post('/cancel-share2', [FileSharingController::class, 'cancelShare2'])->name('cancel.share2');
     Route::get('showsharedetail', [FileManagerController::class, 'sharefiledetail'])->name('showsharedetail');
-    
+
     /// Filemanager
 
     Route::get('filemanager/{path?}', [FileManagerController::class, 'index'])

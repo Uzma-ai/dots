@@ -35,7 +35,7 @@
             <div class="flex items-center gap-8 w-48 justify-end pr-5">
                 <i id="search-icon" class="ri-search-line icon-color"></i>
                  <i id="pinned" class="ri-pushpin-line icon-color"></i>
-               <a href="https://desktop2.sizaf.com/docs" target="_blank">
+               <a href="http://dev-ubt-app06.dev.orientdots.net/books" target="_blank">
                     <i class="ri-question-line icon-color"></i>
                 </a>
                 <!-- <i id="notification-icon" class="ri-notification-3-line icon-color"></i> -->
