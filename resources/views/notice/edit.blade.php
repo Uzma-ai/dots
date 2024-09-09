@@ -65,7 +65,7 @@
                                 <option value="">Please choose the user</option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}"
-                                        {{ in_array($user->id, $data->users->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                        {{ in_array($user->id, $data->users->pluck('users_id')->toArray()) ? 'selected' : '' }}>
                                         {{ $user->name }}</option>
                                 @endforeach
                             </select>
@@ -79,7 +79,7 @@
                                 <option value="">Please choose the group</option>
                                 @foreach ($groups as $group)
                                     <option value="{{ $group->id }}"
-                                        {{ in_array($group->id, $data->groups->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                        {{ in_array($group->id, $data->groups->pluck('groups_id')->toArray()) ? 'selected' : '' }}>
                                         {{ $group->name }}</option>
                                 @endforeach
                             </select>
@@ -93,7 +93,7 @@
                                 <option value="">Please choose the role</option>
                                 @foreach ($roles as $role)
                                     <option value="{{ $role->id }}"
-                                        {{ in_array($role->id, $data->roles->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                        {{ in_array($role->id, $data->roles->pluck('roles_id')->toArray()) ? 'selected' : '' }}>
                                         {{ $role->name }}</option>
                                 @endforeach
                             </select>
