@@ -471,9 +471,7 @@
         });
         var url = "{{ $url }}";
         var host = "{{ $host }}";
-        if (host != "localhost") {
-            const socket = io(url);
-        }
+        var socket = io(url);
         $(document).on('submit', '.ajax-submit', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
@@ -494,9 +492,7 @@
                                     user: userId,
                                     data: response.data
                                 }
-                                if (host != "localhost") {
-                                    socket.emit('sendNotice', obj)
-                                }
+                                socket.emit('sendNotice', obj)
                             });
                         }
                         location.reload();
