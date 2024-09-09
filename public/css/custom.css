@@ -142,6 +142,52 @@
     z-index: 999999;
 }
 
+.navbar .taskbar-dropdown-menu {
+    border-radius: 5px;
+    overflow: hidden;
+    width: 160px;
+    display: none;
+    z-index: 1;
+    position: absolute;
+    right: 15px;
+    top: 44px;
+    background: #e7e5e5;
+    box-shadow: var(--box-shadow);
+    
+}
+
+.navbar .taskbar-dropdown-menu.show {
+    display: block;
+}
+
+.navbar .taskbar-dropdown-item {
+    width: 100%;
+    height: 35px;
+    line-height: 25px;
+    border: 0;
+    padding: 0 10px;
+    cursor: pointer;
+    transition: 0.1s ease-in;
+    font-weight: 500;
+    color: #282828;
+    text-align: left;
+    font-size: 13px;
+
+}
+
+.navbar .taskbar-dropdown-item i{
+    font-size: 15px;
+}
+
+.navbar .taskbar-dropdown-item:hover {
+    background-color: #fdcf01;
+}
+
+.navbar .taskbar-dropdown-item:not(:last-child) {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
 .taskbar-slide img {
     height: 45px;
     margin: 0 5px;

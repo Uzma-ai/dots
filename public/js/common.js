@@ -1108,9 +1108,30 @@ $(document).on('click', function(event) {
     // });
 });
 
+//for taskbar option of documention and onscreen guide
+$(document).ready(function () {
+    const trigger = $('.icon-trigger-dropdown');
+    const dropdownMenu = $('.taskbar-dropdown-menu');
+    let hideTimeout;
 
+    // Show dropdown on hover
+    trigger.on('mouseenter', function () {
+        clearTimeout(hideTimeout);
+        dropdownMenu.addClass('show');
+    });
 
+    trigger.add(dropdownMenu).on('mouseleave', function (e) {
+        hideTimeout = setTimeout(function () {
+            if (!$(e.relatedTarget).closest('.icon-trigger-dropdown, .taskbar-dropdown-menu').length) {
+                dropdownMenu.removeClass('show');
+            }
+        }, 100);
+    });
 
+    dropdownMenu.on('mouseenter', function () {
+        clearTimeout(hideTimeout);
+    });
+});
 
 
 
