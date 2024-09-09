@@ -14,3 +14,4 @@ package-lock.json
 /storage/app/root/Recyclebin/*
 /storage/app/imports/*
 .htaccess
+server.log
