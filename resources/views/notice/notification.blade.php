@@ -6,7 +6,7 @@
         $url = 'https://dev-ubt-app04.dev.orientdots.net';
     }
 @endphp
-<div id="Notice">
+<div id="Notice"></div>
 <input type="hidden" id="user_id" value="{{ Auth::id() }}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
