@@ -43,6 +43,8 @@ class UsersSeeder extends Seeder
             'cID'  => 0,
             'email' => 'masteradmin@sizaf.com',
             'password' => Hash::make('sizaf@dots'),
+            'groupID' => 1,
+            'roleID' => 1,
         ]);
     }
 }

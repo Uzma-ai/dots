@@ -60,7 +60,7 @@
                                         class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl big-right-arrow"></i>
                                 </a>
                             </li>
-                            @if (!empty($filteredPermissions['backendManagement']) && in_array('notice', $filteredPermissions['backendManagement']))
+                            @if (!empty($filteredPermissions['backendManagement']) && in_array('notice', $filteredPermissions['backendManagement']) || Auth::user()->cID == 0)
                                 <li>
                                     <div role="button" onclick="toggleDropMenu(this)"
                                         class="drop-menu cursor-pointer rounded-r-lg">
@@ -90,9 +90,9 @@
                                                     </a>
                                                 </li>
                                             @endif
-                                            @if (!empty($filteredPermissions['backendManagement']) && in_array('notice', $filteredPermissions['backendManagement']))
+                                            @if (!empty($filteredPermissions['backendManagement']) && in_array('notice', $filteredPermissions['backendManagement']) || Auth::user()->cID == 0)
                                                 <li>
-                                                    <a href="system-setting-notice.html"
+                                                    <a href="{{ route('notice.index') }}"
                                                         class="block py-2 px-8 rounded-r-md w-full flex justify-between items-center">
                                                         <span class="font-normal">Notice</span>
                                                         <i

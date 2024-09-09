@@ -12,6 +12,7 @@ use App\Http\Controllers\OperationLogController;
 use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\FileSharingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionsController;
@@ -71,6 +72,8 @@ Route::middleware(['blockIP'])->group(function () {
         Route::get('export-share', [FileSharingController::class, 'export'])->name('export.share');
         Route::get('cancel-share/{id}', [FileSharingController::class, 'cancelShare'])->name('cancel.share');
         Route::post('cancel-share2', [FileSharingController::class, 'cancelShare2'])->name('cancel.share2');
+
+        Route::resource('notice',NoticeController::class);
     });
 
     //Logs
