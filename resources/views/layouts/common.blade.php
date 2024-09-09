@@ -20,7 +20,7 @@
   </head>
   <body class="w-full h-screen">
       <meta name="csrf-token" content="{{ csrf_token() }}">
-
+        @include('notice.notification')
         <!-- Taskbar -->
         <div class="navbar navbarhead h-16 flex items-center w-full absolute">
             <div class="flex justify-center ml-10 w-full relative h-full" id="toolbar">

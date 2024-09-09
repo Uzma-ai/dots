@@ -307,6 +307,13 @@
             </div>
         </div>
     </div>
+    @php
+    if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
+        $url = "https://node.sizaf.com";
+    }else {
+        $url = "https://dev-ubt-app04.dev.orientdots.net";
+    }
+@endphp
 @endsection
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
@@ -461,7 +468,8 @@
                 });
             });
         });
-        // const socket = io('http://localhost:3000/');
+        var url = "{{ $url }}";
+        const socket = io(url);
         $(document).on('submit', '.ajax-submit', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
@@ -482,7 +490,7 @@
                                     user: userId,
                                     data: response.data
                                 }
-                                // socket.emit('sendNotice', obj)
+                                socket.emit('sendNotice', obj)
                             });
                         }
                         location.reload();

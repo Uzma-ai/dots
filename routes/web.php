@@ -74,6 +74,7 @@ Route::middleware(['blockIP'])->group(function () {
         Route::post('cancel-share2', [FileSharingController::class, 'cancelShare2'])->name('cancel.share2');
 
         Route::resource('notice',NoticeController::class);
+        Route::get('runnow/{id}',[NoticeController::class, 'RunNow']);
     });
 
     //Logs

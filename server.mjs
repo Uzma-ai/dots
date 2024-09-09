@@ -33,11 +33,14 @@ app.get('/node', (req, res) => {
 
 app.post('/sendNotice', (req, res) => {
     const { user, data } = req.body;
+    console.log(JSON.stringify(req.body));
     io.emit('receiveNotificationToUser_' + user, data);
     res.sendStatus(200);
 });
 
 io.on('connection', (socket) => {
+    console.log('a user connected');
+
     socket.on('sendNotice', (obj) => {
         socket.broadcast.emit('receiveNotificationToUser_' + obj.user, obj.data);
     });
