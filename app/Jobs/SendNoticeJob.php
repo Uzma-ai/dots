@@ -26,6 +26,11 @@ class SendNoticeJob implements ShouldQueue
 
     public function handle(): void
     {
+        if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
+            $url = 'https://node.sizaf.com';
+        } else {
+            $url = 'https://dev-ubt-app04.dev.orientdots.net';
+        }
         $notice = Notice::find($this->noticeId);
         if ($notice->is_enable) {
             if ($notice->send_at==null) {
@@ -39,7 +44,7 @@ class SendNoticeJob implements ShouldQueue
                     'user' => $userId,
                     'data' => $notice
                 ];
-                Http::post('http://localhost:3000/sendNotice', $data);
+                Http::post($url, $data);
             }
         }
     }
