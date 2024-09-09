@@ -12,6 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class SendNoticeJob implements ShouldQueue
 {
@@ -41,7 +42,11 @@ class SendNoticeJob implements ShouldQueue
                     'user' => $userId,
                     'data' => $notice
                 ];
-                Http::post($this->url, $data);
+                $client = new Client();
+                $response = $client->post($this->url, [
+                    'form_params' => $data
+                ]);
+                // Http::post($this->url, $data);
             }
         }
     }
