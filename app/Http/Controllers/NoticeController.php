@@ -30,6 +30,11 @@ class NoticeController extends Controller
 
     public function store(Request $request)
     {
+        if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
+            $url = 'https://node.sizaf.com';
+        } else {
+            $url = 'https://dev-ubt-app04.dev.orientdots.net';
+        }
         try {
             DB::beginTransaction();
             $notice = new Notice();
@@ -106,7 +111,7 @@ class NoticeController extends Controller
                     if ($notice->is_enable) {
                         SendWeakNoticeJob::dispatch($notice->id)->delay($time);
                     }
-                    SendNoticeJob::dispatch($notice->id)->delay($time);
+                    SendNoticeJob::dispatch($notice->id,$url)->delay($time);
                     DB::commit();
                     return json_encode(['schedule' => true]);
                 }
@@ -138,6 +143,11 @@ class NoticeController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
+            $url = 'https://node.sizaf.com';
+        } else {
+            $url = 'https://dev-ubt-app04.dev.orientdots.net';
+        }
         try {
             DB::beginTransaction();
             $notice = Notice::find($id);
@@ -217,7 +227,7 @@ class NoticeController extends Controller
                     if ($notice->is_enable) {
                         SendWeakNoticeJob::dispatch($notice->id)->delay($time);
                     }
-                    SendNoticeJob::dispatch($notice->id)->delay($time);
+                    SendNoticeJob::dispatch($notice->id,$url)->delay($time);
                     DB::commit();
                     return json_encode(['schedule' => true]);
                 }
@@ -280,6 +290,11 @@ class NoticeController extends Controller
 
     public function RunNow($id)
     {
+        if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
+            $url = 'https://node.sizaf.com';
+        } else {
+            $url = 'https://dev-ubt-app04.dev.orientdots.net';
+        }
         $notice = Notice::find($id);
         $users = $this->getUsers($notice);
         if ($notice->type == "Weak hint") {
@@ -292,7 +307,7 @@ class NoticeController extends Controller
                 $dbuser = User::find($value);
                 Notification::send($dbuser, new NoticeNotification($notice));
             }
-            SendNoticeJob::dispatch($id);
+            SendNoticeJob::dispatch($id,$url);
         }
         return true;
     }
