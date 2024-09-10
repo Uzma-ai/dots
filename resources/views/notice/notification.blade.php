@@ -3,7 +3,7 @@
     if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
         $url = 'https://node.sizaf.com';
     } else {
-        $url = 'https://dev-ubt-app04.dev.orientdots.net';
+        $url = 'https://dev-ubt-app04.dev.orientdots.net/node';
     }
 @endphp
 <div id="Notice"></div>
