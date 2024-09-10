@@ -8,7 +8,7 @@
             class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-xl w-full bg-c-lighten-gray modal-content"
           >
             <div
-              class="flex py-2 px-5 justify-between items-center border-b border-gray-3 text-c-black"
+              class="sticky top-0 flex py-2 px-5 justify-between items-center border-b border-gray-3 bg-white z-10 text-c-black"
             >
               <div class="text-lg font-normal">@if(!empty($company->name)){{ $company->name}} -- @endif Edit Group</div>
               <button
@@ -18,8 +18,8 @@
                 <i class="ri-close-circle-fill text-black ri-lg"></i>
               </button>
             </div>
-            <div class="p-5">
-              <form class="space-y-4 text-sm" action="{{ route('group-update',['id' => $group->id]) }}" method="POST">
+            <div div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 14rem)">
+              <form class="flex flex-col gap-4 text-sm" action="{{ route('group-update',['id' => $group->id]) }}" method="POST">
                  @csrf
                 <div class="flex flex-wrap w-full gap-y-4 items-center">
                   <label for="title" class="title font-bold text-c-black"
