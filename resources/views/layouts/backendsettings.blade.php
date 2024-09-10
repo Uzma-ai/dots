@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'nx.css') }}">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom.css') }}">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom-reusable-style.css') }}">
+    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'semantic.min.css') }}" />
     @yield('styles')
 </head>
 
@@ -39,7 +40,7 @@
         <!-- Sidebar -->
         <aside class="h-full relative">
             <input type="checkbox" class="hidden" id="sidebar-toggle" />
-            <label for="sidebar-toggle" class="absolute lg:hidden top-1 -right-8 px-1">
+            <label for="sidebar-toggle" class="absolute lg:hidden top-4 -right-8 px-1">
                 <i class="ri-bar-chart-horizontal-line"></i>
             </label>
             <div class="h-full sidebar">
@@ -60,7 +61,7 @@
                                         class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl big-right-arrow"></i>
                                 </a>
                             </li>
-                            @if (!empty($filteredPermissions['backendManagement']) && in_array('notice', $filteredPermissions['backendManagement']))
+                            @if (!empty($filteredPermissions['backendManagement']) && in_array('notice', $filteredPermissions['backendManagement']) || Auth::user()->cID == 0)
                                 <li>
                                     <div role="button" onclick="toggleDropMenu(this)"
                                         class="drop-menu cursor-pointer rounded-r-lg">
@@ -90,9 +91,9 @@
                                                     </a>
                                                 </li>
                                             @endif
-                                            @if (!empty($filteredPermissions['backendManagement']) && in_array('notice', $filteredPermissions['backendManagement']))
+                                            @if (!empty($filteredPermissions['backendManagement']) && in_array('notice', $filteredPermissions['backendManagement']) || Auth::user()->cID == 0)
                                                 <li>
-                                                    <a href="system-setting-notice.html"
+                                                    <a href="{{ route('notice.index') }}"
                                                         class="block py-2 px-8 rounded-r-md w-full flex justify-between items-center">
                                                         <span class="font-normal">Notice</span>
                                                         <i

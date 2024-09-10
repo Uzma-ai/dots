@@ -12,6 +12,7 @@ use App\Http\Controllers\OperationLogController;
 use App\Http\Controllers\OverviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\FileSharingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionsController;
@@ -34,11 +35,6 @@ Route::get('dummydata',function(){
     return view('dummy');
 });
 Route::post('voice',[UserController::class,'voice'])->name('voice');
-
-//docs route
-Route::get('docs',function(){
-    return view('docs.user');
-});
 
 Route::get('admindocs',function(){
     return view('docs.admin');
@@ -76,6 +72,9 @@ Route::middleware(['blockIP'])->group(function () {
         Route::get('export-share', [FileSharingController::class, 'export'])->name('export.share');
         Route::get('cancel-share/{id}', [FileSharingController::class, 'cancelShare'])->name('cancel.share');
         Route::post('cancel-share2', [FileSharingController::class, 'cancelShare2'])->name('cancel.share2');
+
+        Route::resource('notice',NoticeController::class);
+        Route::get('runnow/{id}',[NoticeController::class, 'RunNow']);
     });
 
     //Logs
@@ -126,7 +125,7 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('desktop', [HomeController::class, 'desktop'])->name('desktop');
-    //user routes 
+    //user routes
     Route::get('users', [UserController::class, 'index'])->name('users');
     Route::get('users/{id}', [UserController::class, 'index']);
     Route::get('user-add', [UserController::class, 'add'])->name('user-add');
@@ -178,7 +177,7 @@ Route::middleware(['blockIP'])->group(function () {
 
     Route::post('/cancel-share2', [FileSharingController::class, 'cancelShare2'])->name('cancel.share2');
     Route::get('showsharedetail', [FileManagerController::class, 'sharefiledetail'])->name('showsharedetail');
-    
+
     /// Filemanager
 
     Route::get('filemanager/{path?}', [FileManagerController::class, 'index'])

@@ -20,7 +20,7 @@
   </head>
   <body class="w-full h-screen">
       <meta name="csrf-token" content="{{ csrf_token() }}">
-
+        @include('notice.notification')
         <!-- Taskbar -->
         <div class="navbar navbarhead h-16 flex items-center w-full absolute">
             <div class="flex justify-center ml-10 w-full relative h-full" id="toolbar">
@@ -35,9 +35,21 @@
             <div class="flex items-center gap-8 w-48 justify-end pr-5">
                 <i id="search-icon" class="ri-search-line icon-color"></i>
                  <i id="pinned" class="ri-pushpin-line icon-color"></i>
-               <a href="https://desktop2.sizaf.com/docs" target="_blank">
-                    <i class="ri-question-line icon-color"></i>
-                </a>
+                 <button class="icon-trigger-dropdown cursor-default">
+                        <i class="ri-question-line icon-color"></i>
+                    </button>
+                    <div class="taskbar-dropdown-menu">
+                        <a href="https://desktop2.sizaf.com/docs">
+                            <button type="button" value="Documentation" tabindex="0" class="taskbar-dropdown-item flex items-center gap-2">
+                                <i class="ri-book-marked-line"></i>
+                               Documentation
+                            </button>
+                        </a>
+                        <button type="button" value="OnScreen" tabindex="0" class="taskbar-dropdown-item flex items-center gap-2">
+                            <i class="ri-guide-line"></i>
+                            OnScreen Guide
+                        </button>
+                    </div>
                 <!-- <i id="notification-icon" class="ri-notification-3-line icon-color"></i> -->
             </div>
         </div>

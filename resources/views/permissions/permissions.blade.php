@@ -5,7 +5,7 @@
  <!-- main content -->
       <div class="flex-grow border h-100 main">
         <div class="flex flex-col w-full h-full content">
-          <div class="px-2 lg:px-5 py-6">
+          <div class="px-9 py-3 lg:py-6 lg:px-5">
             <div class="flex items-center gap-4">
               <i class="ri-settings-3-fill ri-xl"></i>
               <span class="text-lg text-c-black font-normal">User Management</span>
