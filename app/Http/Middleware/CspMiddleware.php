@@ -17,8 +17,7 @@ class CspMiddleware
     {
         $response = $next($request);
 
-        // $response->headers->set('Content-Security-Policy', "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; media-src 'self' blob: data: https:");
-        $response->headers->set('Content-Security-Policy', "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; media-src 'self' blob: data:;");
+        $response->headers->set('Content-Security-Policy', "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; media-src 'self' blob: data: https:; connect-src 'self' http://localhost:3000 ws://localhost:3000 https://dev-ubt-app04.dev.orientdots.net/node https://node.sizaf.com; frame-ancestors 'self' http://dev-ubt-app01.dev.orientdots.net https://dev-ubt-app01.dev.orientdots.net");
 
         return $response;
     }
