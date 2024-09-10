@@ -142,12 +142,12 @@
                                 </th>
                                 <th class="text-c-white font-medium text-left pl-3 pr-3 md:pr-0">
                                     <button class="font-medium">
-                                        Role <i class="ri-arrow-down-s-fill"></i>
+                                        Role 
                                     </button>
                                 </th>
                                 <th class="text-c-white font-medium text-left pl-3 pr-3 md:pr-0">
                                     <button class="font-medium">
-                                        Space Usage <i class="ri-arrow-down-s-fill"></i>
+                                        Space Usage
                                     </button>
                                 </th>
                                 <th class="text-c-white font-medium text-left pl-3 pr-3 md:pr-0">

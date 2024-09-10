@@ -14,7 +14,7 @@
                       <td class="py-2 pl-3"> <input type="checkbox" class="c-checkbox"></td>
                       <td class="text-c-black pl-3">{{$role->name}}</td>
                       <td class="text-c-black pl-3">
-                       <span class="bg-system py-1.5 text-center px-5 font-normal text-dark-black rounded-sm">System</span>
+                       <span class="taskbar py-1.5 text-center px-5 font-normal text-dark-black rounded-sm">System</span>
                       </td>
                       <td class="text-c-black pl-3">{{$role->description}}</td>
                       <td class="text-c-black pl-3">{{$role->updated_at}}</td>
