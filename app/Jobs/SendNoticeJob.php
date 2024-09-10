@@ -21,7 +21,7 @@ class SendNoticeJob implements ShouldQueue
     protected $noticeId;
     protected $url;
 
-    public function __construct($noticeId,$url)
+    public function __construct($noticeId, $url)
     {
         $this->noticeId = $noticeId;
         $this->url = $url;
@@ -31,7 +31,7 @@ class SendNoticeJob implements ShouldQueue
     {
         $notice = Notice::find($this->noticeId);
         if ($notice->is_enable) {
-            if ($notice->send_at==null) {
+            if ($notice->send_at == null) {
                 $notice->is_send = 1;
                 $notice->send_at = now();
                 $notice->save();
@@ -42,11 +42,14 @@ class SendNoticeJob implements ShouldQueue
                     'user' => $userId,
                     'data' => $notice
                 ];
-                $client = new Client();
-                $response = $client->post($this->url, [
-                    'form_params' => $data
-                ]);
                 // Http::post($this->url, $data);
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $this->url);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $response = curl_exec($ch);
+                curl_close($ch);
             }
         }
     }
