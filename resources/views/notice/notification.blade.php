@@ -5,7 +5,7 @@
     } elseif ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
         $url = 'https://node.sizaf.com';
     } else {
-        $url = 'https://dev-ubt-app04.dev.orientdots.net/node';
+        $url = 'http://localhost:3000';
     }
 @endphp
 <div id="Notice"></div>

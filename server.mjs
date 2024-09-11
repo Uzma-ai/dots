@@ -2,7 +2,7 @@
 // import { createServer } from 'node:http';
 // import { Server } from 'socket.io';
 // import cors from 'cors';
-// import fs from 'fs';
+import fs from 'fs';
 
 // const app = express();
 // app.use(express.json());
@@ -64,6 +64,14 @@ const io = new Server(server, {
         methods: ["GET", "POST"]
     }
 });
+
+const logStream = fs.createWriteStream('server.log', { flags: 'a' });
+// Override console.log to write to both the file and the console
+const originalConsoleLog = console.log;
+console.log = (...args) => {
+    logStream.write(args.join(' ') + '\n');
+    originalConsoleLog(...args);
+};
 
 app.get('/', (req, res) => {
     res.send('<h1>Hello world</h1>');
