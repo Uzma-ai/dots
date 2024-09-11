@@ -36,9 +36,8 @@
         console.log('emit',abc);
 
     });
-    socket.on('chat message',(message)=>{
+    socket.on('chat',(message)=>{
         console.log(message);
-
     });
     socket.on('receiveNotificationToUser_' + user_id, (message) => {
         console.log(message);
