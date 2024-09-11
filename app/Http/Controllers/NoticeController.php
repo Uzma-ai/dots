@@ -30,10 +30,12 @@ class NoticeController extends Controller
 
     public function store(Request $request)
     {
-        if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
-            $url = 'https://node.sizaf.com';
+        if ($_SERVER['SERVER_NAME'] == 'localhost') {
+            $url = 'http://localhost:3000/received';
+        } elseif ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
+            $url = 'https://node.sizaf.com/received';
         } else {
-            $url = 'https://dev-ubt-app04.dev.orientdots.net';
+            $url = 'https://dev-ubt-app04.dev.orientdots.net/received';
         }
         try {
             DB::beginTransaction();
@@ -143,10 +145,12 @@ class NoticeController extends Controller
 
     public function update(Request $request, $id)
     {
-        if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
-            $url = 'https://node.sizaf.com';
+        if ($_SERVER['SERVER_NAME'] == 'localhost') {
+            $url = 'http://localhost:3000/received';
+        } elseif ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
+            $url = 'https://node.sizaf.com/received';
         } else {
-            $url = 'https://dev-ubt-app04.dev.orientdots.net';
+            $url = 'https://dev-ubt-app04.dev.orientdots.net/received';
         }
         try {
             DB::beginTransaction();
@@ -290,10 +294,12 @@ class NoticeController extends Controller
 
     public function RunNow($id)
     {
-        if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
-            $url = 'https://node.sizaf.com';
+        if ($_SERVER['SERVER_NAME'] == 'localhost') {
+            $url = 'http://localhost:3000/received';
+        } elseif ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
+            $url = 'https://node.sizaf.com/received';
         } else {
-            $url = 'https://dev-ubt-app04.dev.orientdots.net';
+            $url = 'https://dev-ubt-app04.dev.orientdots.net/received';
         }
         $notice = Notice::find($id);
         $users = $this->getUsers($notice);

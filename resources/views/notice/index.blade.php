@@ -492,7 +492,7 @@
                                     user: userId,
                                     data: response.data
                                 }
-                                socket.emit('sendNotice', obj)
+                                socket.emit('received', obj)
                             });
                         }
                         location.reload();

@@ -30,21 +30,11 @@
     socket.on('connect', () => {
         console.log('connected');
     });
-    $(document).ready(function () {
-        var abc = socket.emit('chat message', "hello");
-        socket.emit('chat message', "hello hii");
-        console.log('emit',abc);
-
-    });
-    socket.on('chat',(message)=>{
-        console.log(message);
-    });
-    socket.on('receiveNotificationToUser_' + user_id, (message) => {
-        console.log(message);
+    socket.on('receivedfor_' + user_id, (message) => {
         var NoticeDiv = $('#Notice');
         NoticeDiv.html('');
         var html = `<div id="preview-modal" role="dialog"
-                            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 previewmodal">
+                            class="fixed inset-0 flex items-center z-10 justify-center bg-black bg-opacity-50 previewmodal">
                             <div class="w-full max-w-md h-96 rounded-2xl bg-white overflow-hidden px-5 modal-content">
                                 <div class="flex pt-8 pb-1 border-b-2 justify-center items-center">
                                     <h2 class="text-lg text-c-black font-medium">${message.title}</h2>
