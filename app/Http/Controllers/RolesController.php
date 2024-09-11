@@ -38,8 +38,14 @@ class RolesController extends Controller
     public function roles()
     {
         $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
-        $permissions = Permissions::get();
-        $roles = Roles::paginate(10);
+        if(auth()->user()->cID == 0){
+            $permissions = Permissions::get();
+            $roles = Roles::paginate(10);
+        }else{
+             $cid = auth()->user()->cID;
+             $permissions = Permissions::where('cID',$cid)->get();
+             $roles = Roles::where('cID',$cid)->paginate(10);
+        }
         return view('roles.roles',compact('roles','permissions','filteredPermissions'));
     }
 
@@ -78,7 +84,12 @@ class RolesController extends Controller
         $role = Roles::find($id);
         $role->file_manage_settings = explode(',',$role->file_manage_settings);
         $role->user_settings = explode(',',$role->user_settings);
+        if(auth()->user()->cID == 0){
         $permissions = Permissions::get();
+        }else{
+        $cid = auth()->user()->cID;
+         $permissions = Permissions::where('cID',$cid)->get();
+        }
         $roles = view('appendview.editroles')->with('role',$role)->with('permissions',$permissions)->render();
         return response()->json($roles);
     }

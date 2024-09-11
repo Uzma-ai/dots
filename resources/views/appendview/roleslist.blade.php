@@ -30,14 +30,14 @@
                             <div
                               class="absolute text-xs dropdown-option z-10 min-w-full bg-gray-100 border rounded-md"
                             >
-                              @if(!empty($filteredPermissions['roleManagement']) && in_array('role-delete', $filteredPermissions['roleManagement'])) 
+                              @if(!empty($filteredPermissions['roleManagement']) && in_array('role-delete', $filteredPermissions['roleManagement']) || Auth::user()->cID == 0) 
                               <button class="delete-role block hover:bg-yellow-300 w-full px-2 py-1" data-id="{{ $role->id }}">
                                 Delete
                               </button>
                               @endif
                             </div>
                           </div>
-                          @if(!empty($filteredPermissions['roleManagement']) && in_array('role-edit', $filteredPermissions['roleManagement']))               
+                          @if(!empty($filteredPermissions['roleManagement']) && in_array('role-edit', $filteredPermissions['roleManagement']) || Auth::user()->cID == 0)               
                           <button class="editRoles text-c-sky openEditModalButton" data-id="{{$role->id}}">
                             Edit
                           </button>

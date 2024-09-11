@@ -160,12 +160,14 @@
           >
             <div class="flex ml-6 gap-x-5 lg:gap-x-4 xl:gap-x-6 my-2 context-menulist">
               <div class="relative flex items-center new">
+                @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
                 <button class="flex gap-x-2">
                   <i class="ri-add-circle-fill ri-xl mt-1"></i><span>New</span>
                 </button>
                 <button class="dropdown-btn mt-1">
                   <i class="ri-arrow-drop-down-line ri-lg"></i>
                 </button>
+                @endif
                 <div
                   id="new-dropdown"
                   class="dropdown-option absolute mt-2 z-10 bg-c-white border border-c-medium-gray rounded-lg shadow-md hidden w-52 top-full"

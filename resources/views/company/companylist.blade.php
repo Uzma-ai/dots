@@ -24,7 +24,7 @@
                                 Delete
                             </button>
                             <button  class="addSuperadmin block hover:bg-yellow-300 w-full px-2 py-1" data-company-id="{{$company->id}}">
-                                Add Superadmin
+                                Add Masteradmin
                                         </button>
                             </div>
                           </div>

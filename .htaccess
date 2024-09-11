@@ -21,11 +21,8 @@
 </IfModule>
 
 <IfModule mod_headers.c>
-    # Allow iframes from specific domains using CSP
-    Header always set Content-Security-Policy "frame-ancestors 'self' http://dev-ubt-app01.dev.orientdots.net https://dev-ubt-app01.dev.orientdots.net;"
-
-    # Allow popups from the same origin and other sites
-    Header always set Content-Security-Policy "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; media-src 'self' blob: data: https:"
+    # Combine Content-Security-Policy headers
+    Header always set Content-Security-Policy "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; media-src 'self' blob: data: https:; connect-src 'self' http://localhost:3000 ws://localhost:3000 https://node.sizaf.com https://dev-ubt-app04.dev.orientdots.net/node wss://node.sizaf.com wss://dev-ubt-app04.dev.orientdots.net/node;"
 
     # Set SameSite and Secure attributes for cookies
     Header always edit Set-Cookie (.*) "$1; SameSite=None; Secure"
