@@ -77,6 +77,9 @@ console.log = (...args) => {
 app.get('/', (req, res) => {
     res.send('<h1>Hello world</h1>');
 });
+app.get('/node', (req, res) => {
+    res.send('<h1>Hello world</h1>');
+});
 
 io.on('connection', (socket) => {
     console.log('a user connected');
