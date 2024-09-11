@@ -4,7 +4,7 @@
           class="user-edit-modal fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
         >
           <div
-            class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-2xl w-full bg-c-lighten-gray modal-content"
+            class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-xl w-full bg-c-lighten-gray modal-content"
           >
             <!-- Sticky header -->
             <div
@@ -19,8 +19,8 @@
               </button>
             </div>
             <!-- Scrollable content -->
-            <div class="p-5 overflow-y-auto max-h-[calc(100vh-6rem)] scroll">
-              <form class="space-y-4 text-sm" action="{{ route('user-update',['id' => $user->id]) }}" method="POST">
+            <div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 10rem)">
+              <form class="flex flex-col gap-4 text-sm" action="{{ route('user-update',['id' => $user->id]) }}" method="POST">
                  @csrf
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                   <div class="md:col-span-2 flex items-center">
@@ -72,7 +72,7 @@
                     />
                   </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="password" class="block font-bold text-c-black">
                       Password:<span class="text-red-500">*</span>
@@ -95,7 +95,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="space-size" class="block font-bold text-c-black">
                       Space size:<span class="text-red-500">*</span>
@@ -124,7 +124,7 @@
                   </div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="role" class="block font-bold text-c-black">
                       Role:
@@ -141,7 +141,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="group" class="block font-bold text-c-black">
                       Group:
@@ -159,7 +159,7 @@
                   </div>
                  
                 </div>
-                <div class="flex justify-end mt-3">
+                <div class="flex justify-end">
                   <button
                     type="submit"
                     class="bg-c-black hover:bg-c-black text-white rounded-full w-32 py-2 text-sm"

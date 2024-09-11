@@ -10,7 +10,7 @@
                 <p class="text-xs md:text-sm">
                     <span class="font-weight-500">Location:</span>
                     /Personal/{{ $file->path }}{{ $filetype == 'folder' ? '/' : '' }}
-                    <span class="font-weight-500">Share time:</span> {{ $today }},<span
+                    <span class="font-weight-500">Share time:</span> {{ $today }},<br/><span
                         class="font-weight-500">Downloads:</span> 0,
                     <span class="font-weight-500">Views:</span> 0
                 </p>
@@ -66,9 +66,7 @@
                         class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray-3 rounded-r-xl p-3 text-xs">
                         Random
                     </button>
-                </div></div> <p class="w-full md:w-3/4 md:ml-auto text-left font-light text-xs">
-                Only extract password to view, no privacy and security
-            </p>
+                </div></div> 
             </div>
            
             <div class="flex flex-wrap gap-y-2 items-center">

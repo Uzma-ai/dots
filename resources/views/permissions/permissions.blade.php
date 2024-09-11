@@ -31,7 +31,7 @@
 
             <div class="flex-grow md:w-1/2">
               <div class="flex items-center justify-end gap-6">
-                <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-5/12">
+                <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-8/12">
                   <input
                     type="text" id="searchterm"
                     class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none text-c-black outline-none"
@@ -139,7 +139,7 @@
           </button>
         </div>
         <div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 8rem)">
-          <form class="space-y-4 text-sm" action="{{ route('permission-create') }}" method="POST">
+          <form class="flex flex-col gap-4 text-sm" action="{{ route('permission-create') }}" method="POST">
              @csrf
             <div class="flex flex-wrap w-full gap-y-4 items-center">
               <label for="title" class="title font-bold text-c-black"
@@ -192,7 +192,7 @@
               Tip: The System built in permission does not support modifying.
               You can create a new.
             </div>
-            <div class="flex justify-center">
+            <div class="flex justify-center border-t border-gray-3 pt-4">
                   <button
                     type="button"
                     class="title-btn px-12 py-2 bg-c-yellow text-c-black rounded"
@@ -201,7 +201,7 @@
                   </button>
                 </div>
             <div
-              class="flex flex-wrap gap-y-2 items-start border-t border-gray-3 pt-4"
+              class="flex flex-wrap gap-y-2 items-start"
             >
               <div class="title font-bold text-c-black">
                 Description:<span class="text-red-500">*</span>
@@ -324,9 +324,8 @@
                 </div>
               </div>
             </div>
-            <hr class="my-4" />
               <div>
-                <div class="flex justify-center">
+                <div class="flex justify-center border-t border-gray-3 pt-4">
                   <button
                     type="button"
                     class="title-btn px-12 py-2 bg-c-yellow text-c-black rounded"
@@ -373,9 +372,8 @@
                   </div>
                 </div>
               </div>
-            <hr class="my-4" />
               <div>
-                <div class="flex justify-center">
+                <div class="flex justify-center border-t border-gray-3 pt-4">
                   <button
                     type="button"
                     class="title-btn px-12 py-2 bg-c-yellow text-c-black rounded"
@@ -421,9 +419,8 @@
                   </div>
                 </div>
               </div>
-            <hr class="my-4" />
               <div>
-                <div class="flex justify-center">
+                <div class="flex justify-center border-t border-gray-3 pt-4">
                   <button
                     type="button"
                     class="title-btn px-12 py-2 bg-c-yellow text-c-black rounded"
@@ -469,9 +466,8 @@
                   </div>
                 </div>
               </div>
-            <hr class="my-4" />
               <div>
-                <div class="flex justify-center">
+                <div class="flex justify-center border-t border-gray-3 pt-4">
                   <button
                     type="button"
                     class="title-btn px-12 py-2 bg-c-yellow text-c-black rounded"

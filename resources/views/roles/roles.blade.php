@@ -22,7 +22,7 @@
                @if(!empty($filteredPermissions['roleManagement']) && in_array('role-create', $filteredPermissions['roleManagement']) || Auth::user()->cID == 0)               
                <div class="flex-grow md:w-1/2">
                   <div class="flex items-center justify-end gap-2 md:gap-6">
-                  <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-5/12">
+                  <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-8/12">
                   <input
                     type="text" id="searchterm"
                     class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none text-c-black outline-none"
@@ -109,8 +109,8 @@
         role="dialog"
         class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 add"
       >
-        <div class="addModal bg-white mt-12 rounded-xl shadow-lg w-full mx-auto">
-          <div class="flex justify-between items-center p-4 border-b">
+        <div class=" bg-white rounded-xl max-w-xl shadow-lg w-full mx-auto">
+          <div class="flex justify-between items-center py-2 px-5 border-b">
             <h1 class="text-lg font-medium text-c-black" id="staticBackdropLabel">Add Role</h1>
             <i
               class="ri-close-circle-fill ri-lg cursor-pointer"
@@ -209,20 +209,20 @@
                     Permissions
                   </button>
                 </div>
-                <div class="grid grid-cols-1 gap-4 mt-10">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
                   <div class="md:col-span-2 flex items-start">
                     <h3 class="block font-bold text-c-black">Assign Permission:</h3>
                   </div>
+                  <div class="md:col-span-10 md:pr-28">
                       <select id="roleID" name="permissionID" class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                          @foreach($permissions as $permission)
                          <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                          @endforeach
                       </select>
-                    
+                  </div>
                 </div>
               </div>
-              <hr class="my-4" />
               <div class="flex justify-end p-4">
             <button class="bg-c-black text-white px-12 py-2 rounded-full">
               Save
