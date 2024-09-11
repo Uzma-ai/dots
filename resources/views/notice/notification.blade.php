@@ -31,7 +31,10 @@
         console.log('connected');
     });
     $(document).ready(function () {
-        socket.emit('chat message', "hello");
+        var abc = socket.emit('chat message', "hello");
+        socket.emit('chat message', "hello hii");
+        console.log('emit',abc);
+
     });
     socket.on('receiveNotificationToUser_' + user_id, (message) => {
         console.log(message);
