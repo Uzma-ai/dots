@@ -30,12 +30,12 @@
                     </div>
                 </div>
                 <div
-                    class="relative taskicon hidden md:flex md:w-6/12 xl:w-4/12 flex flex-row items-center justify-end gap-6">
+                    class="relative taskicon hidden md:flex md:w-5/12 flex flex-row items-center justify-end gap-6">
                     <div id="searchbutton"
                         class="flex items-center rounded overflow-hidden flex-shrink-0 flex-grow bg-c-white h-7 w-1/12 md:w-2/12 hidden md:flex">
                         <input type="text"
                             class="search pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none outline-none font-size-14 w-3/12"
-                            placeholder="Search users" id="searchterm" />
+                            placeholder="Search users..." id="searchterm" />
                         <div class="searchicon pt-3 pb-3 pr-4 flex items-center justify-center">
                             <i class="ri-search-line" id="search"></i>
                         </div>
@@ -67,7 +67,7 @@
                     <div class="flex items-center rounded overflow-hidden flex-shrink-0 flex-grow bg-c-white h-8 w-1/12">
                         <input type="text" id="searchterm"
                             class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none outline-none w-3/12"
-                            placeholder="Search users, groups..." />
+                            placeholder="Search users..." />
                         <div class="pt-3 pb-3 pr-4 flex items-center justify-center">
                             <i class="ri-search-line" id="search"></i>
                         </div>
@@ -108,7 +108,7 @@
                                 style="width: 11.4rem">
                                 @foreach ($groups as $group)
                                     <li>
-                                        <a class="rounded-t custom-bg-hover py-2 px-4 block whitespace-no-wrap px-4 flex justify-between font-normal"
+                                        <a class="{{ $loop->first ? 'rounded-t' : '' }} custom-bg-hover py-2 px-4 block whitespace-no-wrap px-4 flex justify-between font-normal"
                                             href="#">{{ $group->name }}
                                             @if (
                                                 !empty($filteredPermissions['groupsManagement']) &&
@@ -142,12 +142,12 @@
                                 </th>
                                 <th class="text-c-white font-medium text-left pl-3 pr-3 md:pr-0">
                                     <button class="font-medium">
-                                        Role <i class="ri-arrow-down-s-fill"></i>
+                                        Role 
                                     </button>
                                 </th>
                                 <th class="text-c-white font-medium text-left pl-3 pr-3 md:pr-0">
                                     <button class="font-medium">
-                                        Space Usage <i class="ri-arrow-down-s-fill"></i>
+                                        Space Usage
                                     </button>
                                 </th>
                                 <th class="text-c-white font-medium text-left pl-3 pr-3 md:pr-0">
@@ -175,14 +175,14 @@
     <div id="editModal" role="dialog"
         class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
         <div class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-xl w-full bg-c-lighten-gray modal-content">
-            <div class="flex py-2 px-5 justify-between items-center border-b border-gray-3 text-c-black">
+            <div class="sticky top-0 flex py-2 px-5 justify-between items-center border-b border-gray-3 bg-white z-10 text-c-black">
                 <div class="text-lg font-normal">Add Group</div>
                 <button type="button" id="closeModalButton" class="py-1.5 rounded-md" onclick="toggleModal('editModal')">
                     <i class="ri-close-circle-fill text-black ri-lg"></i>
                 </button>
             </div>
-            <div class="p-5">
-                <form class="space-y-4 text-sm" action="{{ route('group-create') }}" method="POST">
+            <div div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 14rem)">
+                <form class="flex flex-col gap-4 text-sm" action="{{ route('group-create') }}" method="POST">
                     @csrf
                     <div class="flex flex-wrap w-full gap-y-4 items-center">
                         <label for="title" class="title font-bold text-c-black">Name: <span
@@ -218,16 +218,20 @@
                             </p>
                         </div>
                     </div>
-                    <div class="mb-5">
-                        <label for="permissionID"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Permissions</label>
-                        <select id="roleID" name="permissionID"
+                    <div class="flex flex-wrap gap-y-4 items-start">
+                    <label for="permissionID"
+                    class="block mb-2 text-sm pt-3 font-bold text-gray-900 dark:text-white ">Permissions</label>
+                        <div class="w-full sm:w-3/4 ml-auto">
+                            <div class="relative w-full">
+                            <select id="roleID" name="permissionID"
                             class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                             @foreach ($permissions as $permission)
                                 <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                             @endforeach
                         </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="flex justify-end mt-3">
                         <button type="submit"
@@ -243,7 +247,7 @@
     <!-- new user modal -->
     <div id="newUserModal" role="dialog"
         class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
-        <div class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-2xl w-full bg-c-lighten-gray modal-content">
+        <div class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-xl w-full bg-c-lighten-gray modal-content">
             <!-- Sticky header -->
             <div
                 class="sticky top-0 flex py-2 px-5 justify-between items-center border-b border-gray-3 bg-white z-10 text-c-black">
@@ -254,10 +258,10 @@
                 </button>
             </div>
             <!-- Scrollable content -->
-            <div class="p-5 overflow-y-auto max-h-[calc(100vh-6rem)] scroll">
-                <form class="space-y-4 text-sm" action="{{ route('user-create') }}" method="POST">
+            <div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 10rem)">
+                <form class="flex flex-col gap-4 text-sm" action="{{ route('user-create') }}" method="POST">
                     @csrf
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                         <div class="md:col-span-2 flex items-center">
                             <label for="name" class="block font-bold text-c-black">
                                 Username:<span class="text-red-500">*</span>
@@ -270,7 +274,7 @@
                                 required />
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                         <div class="md:col-span-2 flex items-center">
                             <label for="nickname" class="block font-bold text-c-black">
                                 Name:
@@ -282,7 +286,7 @@
                                 type="text" placeholder="Please enter nickname" name="nickName" />
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                         <div class="md:col-span-2 flex items-center">
                             <label for="nickname" class="block font-bold text-c-black">
                                 Email:
@@ -295,7 +299,7 @@
                                 required />
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                         <div class="md:col-span-2 flex items-center">
                             <label for="password" class="block font-bold text-c-black">
                                 Password:<span class="text-red-500">*</span>
@@ -307,13 +311,13 @@
                                     class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
                                     type="password" placeholder="Please enter password" name="password" required />
                                 <div
-                                    class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3 pt-1">
-                                    <i class="ri-eye-close-line ri-xl" id="togglePassword"></i>
+                                    class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3 pt-1 cursor-pointer">
+                                    <i class="ri-eye-line ri-xl" id="togglePassword"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                         <div class="md:col-span-2 flex items-center">
                             <label for="space-size" class="block font-bold text-c-black">
                                 Space size:<span class="text-red-500">*</span>
@@ -338,7 +342,7 @@
                       </div> -->
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                         <div class="md:col-span-2 flex items-center">
                             <label for="role" class="block font-bold text-c-black">
                                 Role:
@@ -356,7 +360,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                         <div class="md:col-span-2 flex items-center">
                             <label for="group" class="block font-bold text-c-black">
                                 Group:
@@ -375,7 +379,7 @@
                         </div>
 
                     </div>
-                    <div class="flex justify-end mt-3">
+                    <div class="flex justify-end">
                         <button type="submit"
                             class="bg-c-black hover:bg-c-black text-white rounded-full w-32 py-2 text-sm">
                             Create
@@ -568,7 +572,7 @@
             password.setAttribute('type', type);
 
             // Toggle the eye slash icon
-            $('#togglePassword').toggleClass('ri-eye-line ri-xl');
+            $('#togglePassword').toggleClass('ri-eye-off-line ri-eye-line');
         });
 
         //edit group popup js
