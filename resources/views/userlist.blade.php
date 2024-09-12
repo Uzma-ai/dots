@@ -451,6 +451,9 @@
                     <input type="file" id="file-input" multiple class="hidden">
                     <label for="file-input" class="bg-black text-white px-4 py-2 mr-2 cursor-pointer">Upload File</label>
                 </div>
+                <a href="{{ url('/') }}/public/sampleFiles/importfile.xlsx" target="_blank" title="Download Sample">
+                <i class="ri-download-2-line "></i> 
+                </a>
             </div>
 
             <!-- Table Area -->

@@ -23,9 +23,9 @@ class UsersImport
         foreach ($rows as $row) {
 
             // Get roleID and groupID based on the name
-            $role = Roles::where('name', $row['role'])->first();
-            $group = Group::where('name', $row['group'])->first();
-            $duplicate = User::where('email', $row['email'])->exists();
+            $role = Roles::where('name', $row['role'])->where('cID',$cid)->first();
+            $group = Group::where('name', $row['group'])->where('cID',$cid)->first();
+            $duplicate = User::where('email', $row['email'])->where('cID',$cid)->exists();
             if ($duplicate == 1) {
                 $exist[] = $row['email'];
                 continue;

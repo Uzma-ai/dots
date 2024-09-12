@@ -1,5 +1,5 @@
 @foreach($users as $user)
- @if($user->name == "masteradmin")
+ @if($user->name == "masteradmin" || $user->type == "superadmin")
         @php continue;  @endphp
  @endif
 <tr class="h-16 border-t">

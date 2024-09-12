@@ -97,7 +97,8 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        $duplicate = User::where('email', $request->email)->exists();
+        $cid = auth()->user()->cID;
+        $duplicate = User::where('email', $request->email)->where('cID',$cid)->exists();
         if ($duplicate == 1) {
             return  redirect()->route('useradmin')->with('user-exist', 'test');
         }
@@ -302,6 +303,7 @@ class UserController extends Controller
         $input['roleID'] = $role->id;
         }
 
+        $input['type'] = 'superadmin';
         $user = User::create($input);
         if($user){
             $group = Group::find($user->groupID);
@@ -318,7 +320,7 @@ class UserController extends Controller
             }
 
         }
-        return redirect()->route('useradmin')->with('super-success', 'SuperAdmin created successfully!');
+        return redirect()->route('useradmin')->with('super-success', 'Masteradmin created successfully!');
     }
 }
 
