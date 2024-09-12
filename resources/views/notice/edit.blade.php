@@ -1,6 +1,6 @@
 <div id="EditModel" role="dialog"
     class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 hidemodal">
-    <div class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-xl w-full bg-c-lighten-gray modal-content">
+    <div class="bg-white rounded-2xl overflow-auto shadow-lg max-w-xl w-full bg-c-lighten-gray modal-content">
         <div class="flex py-4 px-5 justify-start items-center">
             <button type="button" id="closeModalButton" class="py-1.5 px-3 bg-c-lightest-gray rounded-md text-c-black"
                 onclick="hideModal('EditModel')">
