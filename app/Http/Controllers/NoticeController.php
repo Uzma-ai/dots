@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Notifications\NoticeNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 
@@ -32,10 +33,8 @@ class NoticeController extends Controller
     {
         if ($_SERVER['SERVER_NAME'] == 'localhost') {
             $url = 'http://localhost:3000/received';
-        } elseif ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
+        } else{
             $url = 'https://node.sizaf.com/received';
-        } else {
-            $url = 'https://dev-ubt-app04.dev.orientdots.net/received';
         }
         try {
             DB::beginTransaction();
@@ -113,7 +112,7 @@ class NoticeController extends Controller
                     if ($notice->is_enable) {
                         SendWeakNoticeJob::dispatch($notice->id)->delay($time);
                     }
-                    SendNoticeJob::dispatch($notice->id,$url)->delay($time);
+                    SendNoticeJob::dispatch($notice->id, $url)->delay($time);
                     DB::commit();
                     return json_encode(['schedule' => true]);
                 }
@@ -147,10 +146,8 @@ class NoticeController extends Controller
     {
         if ($_SERVER['SERVER_NAME'] == 'localhost') {
             $url = 'http://localhost:3000/received';
-        } elseif ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
+        } else{
             $url = 'https://node.sizaf.com/received';
-        } else {
-            $url = 'https://dev-ubt-app04.dev.orientdots.net/received';
         }
         try {
             DB::beginTransaction();
@@ -231,7 +228,7 @@ class NoticeController extends Controller
                     if ($notice->is_enable) {
                         SendWeakNoticeJob::dispatch($notice->id)->delay($time);
                     }
-                    SendNoticeJob::dispatch($notice->id,$url)->delay($time);
+                    SendNoticeJob::dispatch($notice->id, $url)->delay($time);
                     DB::commit();
                     return json_encode(['schedule' => true]);
                 }
@@ -296,10 +293,8 @@ class NoticeController extends Controller
     {
         if ($_SERVER['SERVER_NAME'] == 'localhost') {
             $url = 'http://localhost:3000/received';
-        } elseif ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
+        } else{
             $url = 'https://node.sizaf.com/received';
-        } else {
-            $url = 'https://dev-ubt-app04.dev.orientdots.net/received';
         }
         $notice = Notice::find($id);
         $users = $this->getUsers($notice);
@@ -313,8 +308,38 @@ class NoticeController extends Controller
                 $dbuser = User::find($value);
                 Notification::send($dbuser, new NoticeNotification($notice));
             }
-            SendNoticeJob::dispatch($id,$url);
+            SendNoticeJob::dispatch($id, $url);
         }
         return true;
+    }
+
+    public function ReadNoti($id)
+    {
+        $user = Auth::user();
+        // Find the notification by ID for the authenticated user
+        $notification = $user->notifications()->find($id);
+
+        if ($notification) {
+            $notification->markAsRead();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Notification marked as read.',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Notification not found.',
+            ], 404);
+        }
+    }
+
+    public function ReadAll()
+    {
+        $user = Auth::user();
+        $user->unreadNotifications->each->markAsRead();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'All notification marked as read.',
+        ]);
     }
 }

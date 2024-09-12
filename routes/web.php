@@ -75,6 +75,8 @@ Route::middleware(['blockIP'])->group(function () {
 
         Route::resource('notice',NoticeController::class);
         Route::get('runnow/{id}',[NoticeController::class, 'RunNow']);
+        Route::get('read-noti/{id}',[NoticeController::class, 'ReadNoti'])->name('ReadNoti');
+        Route::get('read-all',[NoticeController::class, 'ReadAll'])->name('ReadAll');
     });
 
     //Logs

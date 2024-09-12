@@ -309,10 +309,10 @@
     </div>
     @php
         $host = $_SERVER['SERVER_NAME'];
-        if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com') {
-            $url = 'https://node.sizaf.com';
+        if ($_SERVER['SERVER_NAME'] == 'localhost') {
+            $url = 'http://localhost:3000';
         } else {
-            $url = 'https://dev-ubt-app04.dev.orientdots.net/node';
+            $url = 'https://node.sizaf.com';
         }
     @endphp
 @endsection
