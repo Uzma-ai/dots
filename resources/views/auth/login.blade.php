@@ -167,8 +167,8 @@
                                         <fieldset>
                                             <div class="form-card voice1 space-y-5">
                                                 <div id="voice-error"
-                                                    class="flex gap-2 text-red-600 justify-center items-center mt-5 hidden">
-                                                    <i class="ri-error-warning-fill ri-xl"></i>
+                                                    class="flex gap-2 text-red-600 justify-center items-start pl-9 pr-5 hidden">
+                                                    <i class="ri-error-warning-fill ri-xl mt-2"></i>
                                                     <p>Failed to record voice</p>
                                                 </div>
                                                 <div
@@ -240,8 +240,8 @@
                                     <fieldset>
                                         <div class="form-card space-y-3">
                                             <div id="camera-error"
-                                                class="flex gap-2 text-red-600 justify-center items-center hidden">
-                                                <i class="ri-error-warning-fill ri-xl"></i>
+                                                class="flex gap-2 text-red-600 justify-center items-start pl-10 pr-2 hidden">
+                                                <i class="ri-error-warning-fill ri-xl mt-2"></i>
                                                 <p id="CamError">Failed to capture photo</p>
                                             </div>
                                             <div
@@ -273,12 +273,12 @@
                                     <fieldset class="voice2">
                                         <div class="form-card space-y-5">
                                             <div id="voice-error"
-                                                class="flex gap-2 text-red-600 justify-center items-center hidden">
-                                                <i class="ri-error-warning-fill ri-xl"></i>
+                                                class="flex gap-2 text-red-600 justify-center items-start pl-9 pr-5 hidden">
+                                                <i class="ri-error-warning-fill ri-xl mt-2"></i>
                                                 <p id="VoiceError">Failed to record voice</p>
                                             </div>
                                             <div class="container flex flex-col justify-center items-center space-y-5">
-                                                <p>Speak: On a foggy night, an old man found a glowing coin on the street. When he picked it up, he was transported to a world of endless wonder.</p>
+                                                <p class="pl-10 pr-5">Speak: On a foggy night, an old man found a glowing coin on the street. When he picked it up, he was transported to a world of endless wonder.</p>
                                                 <div class="mic-container mic-wrapper2 relative flex gap-3">
                                                     <button class="circle cursor-pointer has-tooltip"
                                                         id="recordButton2">
