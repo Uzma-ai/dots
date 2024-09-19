@@ -216,9 +216,9 @@
                     name="permissions[]"
                     value="view"
                   />
-                  <span class="text-c-black mt-0.5 font-normal"
-                    >Document list: File Manager view:</span
-                  >
+                  <span class="text-c-black mt-0.5 font-normal">
+                    View: View
+                  </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
@@ -227,8 +227,9 @@
                     name="permissions[]"
                     value="preview"
                   />
-                  <span class="text-c-black mt-0.5 font-normal"
-                    >Preview: File open preview: Preview</span
+                  <span class="text-c-black mt-0.5 font-normal">
+                  Preview: Preview
+                  </span
                   >
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -239,7 +240,7 @@
                     value="download"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Download / Copy Download / Copy / Preview / Print:Download
+                    >Download: Download
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -250,7 +251,7 @@
                     value="upload"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Upload: Upload / Remote download
+                    >Upload: Upload
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -261,8 +262,8 @@
                     value="edit"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Edit: New File 9Folder) / Rename / Paste / Edit / Set Notes
-                    / Copy / Unzip, Compress:Edit
+                    >Edit: Edit, New File, New Folder, Rename 
+                    <!-- unzip, compress -->
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -273,7 +274,7 @@
                     value="delete"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Delete: Cut / Copy / Move
+                    >Delete: Cut, Copy, Paste, Delete, Restore
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -284,7 +285,7 @@
                     value="share"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Share: Link sharing / Internal sharing
+                    >Share: Share 
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -295,11 +296,10 @@
                     value="comments"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Comments: View documents comments; add / delete your own
-                    comments(editing permission required)
+                    >Comments: Comments
                   </span>
                 </div>
-                <div class="flex items-start justify-start gap-1 sm:gap-3">
+                <!-- <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
                     class="c-checkbox mt-1"
@@ -309,8 +309,8 @@
                   <span class="text-c-black mt-0.5 font-normal"
                     >Dynamics: Document dynamic viewing, subscription dynamic
                   </span>
-                </div>
-                <div class="flex items-start justify-start gap-1 sm:gap-3">
+                </div> -->
+                <!-- <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
                     class="c-checkbox mt-1"
@@ -321,7 +321,7 @@
                     >Administration: Set member permission / Comment / History
                     version management
                   </span>
-                </div>
+                </div> -->
               </div>
             </div>
             <hr class="my-4" />

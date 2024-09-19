@@ -1,5 +1,4 @@
-<script src="{{ asset($constants['JSFILEPATH'].'common.js') }}" ></script>
-<div id="sharePopup" class="cm fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+<div id="sharePopup" class="cm fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 fmclose">
     <div
         class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-xl w-full modal-content">
         <div class="sticky top-0 bg-white z-10 flex p-4 px-5 justify-between items-center border-b border-gray-3 text-c-black">
@@ -10,29 +9,29 @@
                 <p class="text-xs md:text-sm">
                     <span class="font-weight-500">Location:</span>
                     /Personal/{{ $file->path }}{{ $filetype == 'folder' ? '/' : '' }}
-                    <span class="font-weight-500">Share time:</span> {{ $today }},<span
-                        class="font-weight-500">Downloads:</span> 0,
-                    <span class="font-weight-500">Views:</span> 0
+                    <br>
+                    <span class="font-weight-500">Share time:</span> {{ $today }}
+                    <br>
+                    <span
+                        class="font-weight-500">Downloads:</span> {{ $downloadCount }},
+                    <span class="font-weight-500">Views:</span> {{ $viewCount }}
                 </p>
             </div>
-            <!-- <button id="ClosePopup">
-                <img src="{{ asset($constants['IMAGEFILEPATH'] . 'cancel-fill.svg') }}" alt="Cancel"
-                    class="max-w-none" />
-            </button> -->
-            <button type="button" id="closeModalButton" class="py-1.5 rounded-md" onclick="fileModal('sharePopup')">
-                    <i class="ri-close-circle-fill text-black ri-lg"></i>
-                </button>
+            <button id="ClosePopup">
+            <i class="ri-close-circle-fill text-black ri-lg"></i>
+            </button>
+           
         </div>
         <div
             class="overflow-y-auto scroll"
             style="max-height: calc(100vh - 14rem)"
           >
-        <form class="space-y-4 m-5 text-sm" method="POST"
+        <form class="space-y-4 m-5 text-sm" method="POST" id="shareForm"
             action="{{ route('fileshare.store') }}">
             @csrf
             <input type="hidden" name="filetype" value="{{ $filetype }}">
             <input type="hidden" name="id" value="{{ $hashed }}">
-            <input type="hidden" name="oldId" value="">
+            <input type="hidden" name="oldId" value="{{ $oldId }}">
             <div class="flex flex-wrap items-center">
                 <label class="block w-full md:w-1/4 font-weight-500">URL:<span class="text-c-dark-red">*</span></label>
                 <div class="flex w-full md:w-3/4">
@@ -67,7 +66,7 @@
                         Random
                     </button>
                 </div></div> <p class="w-full md:w-3/4 md:ml-auto text-left font-light text-xs">
-                Only extract password to view, no privacy and security
+                <!-- Only extract password to view, no privacy and security -->
             </p>
             </div>
            
@@ -77,8 +76,8 @@
                 </div>
                 <div class="flex gap-2 ml-auto w-3/4 flex-wrap sm:flex-nowrap">
                     <label for="Users" class="cursor-pointer radio-button other-labels">
-                        <input type="checkbox" name="share_to[]" id="Users" value="users"
-                        {{ count($selectedUsers) > 0 ? 'checked' : '' }} />
+                        <input type="checkbox" name="share_to[]" id="Users"  value="users"
+                        {{ count($selectedUsers) > 0 ? 'checked' : '' }}  />
                         <span
                             class="flex items-center justify-center gap-1 px-2 py-1.5 w-24 rounded text-c-black bg-c-light-black1"><i
                                 class="ri-user-add-line text-c-black"></i>Users</span>
@@ -144,7 +143,8 @@
 
             <div class="flex flex-wrap gap-y-2 items-center">
                 <div class="w-1/4 font-medium text-c-black text-base">
-                    Share to Edit:<span class="text-red-500">*</span>
+                    Share to Edit:
+                    <!-- <span class="text-red-500">*</span> -->
                 </div>
                 <div class="flex gap-2 ml-auto w-3/4 flex-wrap sm:flex-nowrap">
                     <label for="EditUsers" class="cursor-pointer radio-button other-labels">
@@ -220,7 +220,7 @@
             </div>
             <div class="flex justify-end">
                 <button type="submit" class="bg-c-light-gray text-c-white px-6 py-2 rounded-full">
-                    Copy & Save
+                    Save
                 </button>
             </div>
         </form>
@@ -237,20 +237,7 @@
     </div>
 </div>
 
-<script>
-   
-function fileModal(id) {
-    const element = document.getElementById(id);
 
-    if (element.classList.contains('hidden')) {
-        element.classList.remove('hidden');
-        element.style.display = 'flex'; // Ensure the display is set properly
-    } else {
-        element.classList.add('hidden');
-        element.style.display = 'none'; // Hide the modal
-    }
-}
-</script>
 <script defer>
         $('.label.ui.dropdown')
             .dropdown();
@@ -266,4 +253,20 @@ function fileModal(id) {
         })
 
     </script>
+
+<script>   
+    document.getElementById('shareForm').addEventListener('submit', function (e) {
+        const shareToCheckboxes = document.querySelectorAll('input[name="share_to[]"]');
+        let isChecked = false;
+        shareToCheckboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                isChecked = true;
+            }
+        });
+        if (!isChecked) {
+            e.preventDefault(); 
+            alert('Please select at least one user from "Share to view" option.');
+        }
+    });
+</script>
 
