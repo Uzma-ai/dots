@@ -21,9 +21,9 @@ class MessageController extends Controller
     {
 
             $cid = auth()->user()->cID;
-        $users = User::where('cID',$cid)->get();
-        $groups = Group::where('cID',$cid)->get();
-        $roles = Roles::where('cID',$cid)->get();
+        $users = User::where('cID',$cid)->where('cID', '!=', 0)->get();
+        $groups = Group::where('cID',$cid)->where('cID', '!=', 0)->get();
+        $roles = Roles::where('cID',$cid)->where('cID', '!=', 0)->get();
         return response()->json([
             'users' => $users,
             'groups' => $groups,
@@ -36,7 +36,7 @@ class MessageController extends Controller
 
     public function saveCommentOrReply(Request $request)
     {
-        // dd($request->all());exit;
+        
         try {
             // fetching file key
              $fileKey = $request->input('fileID');
@@ -182,7 +182,7 @@ class MessageController extends Controller
             ->with('group')
             ->with('role')
             ->with('commentRecivers.receiver')
-            ->with('replies')
+            ->with('replies.user')
             ->get();
 
         return response()->json([
