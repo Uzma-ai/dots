@@ -36,8 +36,8 @@ return [
     ],
 
     'google'=>[
-        'client_id'=>"171880606165-dfkb9vme0g976th732laintkg1r3p2eu.apps.googleusercontent.com",
-        'client_secret'=>"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",
+        'client_id'=>env('GOOGLE_CLIENT_ID'),
+        'client_secret'=>env('GOOGLE_CLIENT_SECRET'),
         'redirect'=>'/auth/google/callback',
     ],
 
