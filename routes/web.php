@@ -213,12 +213,7 @@ Route::middleware(['blockIP'])->group(function () {
     ->where('file', '.*')->name('dotsvideoplayer');
     Route::get('dotsdocumentviewer/{file}', [FileManagerController::class, 'dotsDocumentViewer'])->where('name', '.*')
     ->where('file', '.*')->name('dotsdocumentviewer');
-<<<<<<< HEAD
-    //comments
-     Route::delete('delete-message', [MessageController::class, 'destroy'])->name('delete-message');
-=======
     //comments 
->>>>>>> 21ab3754e09b2f6eb78b0db5f078dfe6db20032e
     Route::get('getUsers', [MessageController::class, 'getUsers'])->name('getUsers');
     Route::post('saveComment', [MessageController::class, 'saveCommentOrReply'])->name('saveComment');
     // Route::post('sendReply', [MessageController::class, 'sendReply'])->name('sendReply');
