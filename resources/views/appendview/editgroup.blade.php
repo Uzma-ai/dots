@@ -31,7 +31,7 @@
                         class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
                         type="text"
                         placeholder="Group 1"
-                        name="name" value="{{ $group->name }}"
+                        name="name" value="{{ $group->name }}" maxlength="50"
                       />
                       <div
                         class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3"

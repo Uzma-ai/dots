@@ -35,7 +35,7 @@
                         class="flex items-center rounded overflow-hidden flex-shrink-0 flex-grow bg-c-white h-7 w-1/12 md:w-2/12 hidden md:flex">
                         <input type="text"
                             class="search pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none outline-none font-size-14 w-3/12"
-                            placeholder="Search users..." id="searchterm" />
+                            placeholder="Search users,roles & groups" id="searchterm" />
                         <div class="searchicon pt-3 pb-3 pr-4 flex items-center justify-center">
                             <i class="ri-search-line" id="search"></i>
                         </div>
@@ -182,7 +182,7 @@
                 </button>
             </div>
             <div div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 14rem)">
-                <form class="flex flex-col gap-4 text-sm" action="{{ route('group-create') }}" method="POST">
+                <form class="flex flex-col gap-4 text-sm" id="group-form" action="{{ route('group-create') }}" method="POST">
                     @csrf
                     <div class="flex flex-wrap w-full gap-y-4 items-center">
                         <label for="title" class="title font-bold text-c-black">Name: <span
@@ -191,7 +191,8 @@
                             <div class="relative w-full">
                                 <input
                                     class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
-                                    type="text" placeholder="Group 1" name="name" required />
+                                    type="text" placeholder="Group 1" name="name" required maxlength="25" data-validate="group-name" />
+                                <small class="text-red-500 mt-1 block"></small>
                                 <div
                                     class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3">
                                     <i class="ri-folder-5-fill ri-xl text-c-sky"></i>
@@ -207,7 +208,8 @@
                             <div class="relative w-full">
                                 <input
                                     class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
-                                    type="number" placeholder="3" name="sizeUse" min="0" max="500" />
+                                    type="number" placeholder="3" name="sizeUse" min="0" max="500" required />
+                                <small class="text-red-500 mt-1 block"></small>
                                 <div
                                     class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray-3 w-12 rounded-r-xl pl-3">
                                     <p class="font-normal">GB</p>
@@ -259,7 +261,7 @@
             </div>
             <!-- Scrollable content -->
             <div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 10rem)">
-                <form class="flex flex-col gap-4 text-sm" action="{{ route('user-create') }}" method="POST">
+                <form class="flex flex-col gap-4 text-sm" id="newUser" action="{{ route('user-create') }}" method="POST">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                         <div class="md:col-span-2 flex items-center">
@@ -271,7 +273,8 @@
                             <input id="name"
                                 class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
                                 type="text" placeholder="Please enter an username" autocomplete="name" name="name"
-                                required />
+                                 data-validate="name" />
+                            <small class="text-red-500 mt-1 block"></small>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
@@ -283,7 +286,8 @@
                         <div class="md:col-span-8">
                             <input id="nickname"
                                 class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
-                                type="text" placeholder="Please enter nickname" name="nickName" />
+                                type="text" placeholder="Please enter nickname" name="nickName" data-validate="nickname" />
+                            <small class="text-red-500 mt-1 block"></small>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
@@ -296,7 +300,8 @@
                             <input id="nickname"
                                 class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
                                 type="email" placeholder="Please enter email" autocomplete="email" name="email"
-                                required />
+                                data-validate="email" />
+                            <small class="text-red-500 mt-1 block"></small>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
@@ -309,7 +314,8 @@
                             <div class="relative w-full">
                                 <input id="password"
                                     class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
-                                    type="password" placeholder="Please enter password" name="password" required />
+                                    type="password" placeholder="Please enter password" name="password" data-validate="password" />
+                                <small class="text-red-500 mt-1 block"></small>
                                 <div
                                     class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3 pt-1 cursor-pointer">
                                     <i class="ri-eye-line ri-xl" id="togglePassword"></i>
@@ -329,6 +335,7 @@
                                     class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
                                     type="number" placeholder="Please enter space size" name="sizeMax" min="0"
                                     max="500" />
+                                <small class="text-red-500 mt-1 block"></small>
                                 <div
                                     class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray-3 w-12 rounded-r-xl pl-3">
                                     <p class="font-normal">GB</p>
@@ -710,6 +717,29 @@
         ///// upload end
 
         /// end import
+    //user add form validation
+    document.getElementById('newUser').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      if (FormValidation.validateForm(form)) {
+        console.log('Form submitted successfully');
+        document.getElementById("newUser").submit();
+      } else {
+        console.log('Form validation failed');
+      }
+    });
+
+    //group add form validation
+    document.getElementById('group-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      if (FormValidation.validateForm(form)) {
+        console.log('Form submitted successfully');
+        document.getElementById("group-form").submit();
+      } else {
+        console.log('Form validation failed');
+      }
+    });
     </script>
 
 @endsection

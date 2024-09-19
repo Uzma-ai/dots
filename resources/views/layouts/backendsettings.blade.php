@@ -340,6 +340,7 @@
     <script src="{{ asset($constants['JSFILEPATH'] . 'select-dropdown.js') }}"></script>
     <script src="{{ asset($constants['JSFILEPATH'] . 'tabs.js') }}"></script>
     <script src="{{ asset($constants['JSFILEPATH'] . 'taskbar.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'formValidation.js') }}"></script>
     @yield('scripts')
 </body>
 

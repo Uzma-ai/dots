@@ -108,7 +108,7 @@
                         class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
                         type="number"
                         placeholder="Please enter space size"
-                        name="sizeMax" value="{{ $user->sizeMax }}"
+                        name="sizeMax" value="{{ $user->sizeMax }}" min="0" max="500"
                       />
                       <div
                         class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray-3 w-12 rounded-r-xl pl-3"
