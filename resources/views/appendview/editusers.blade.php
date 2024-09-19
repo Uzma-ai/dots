@@ -131,9 +131,8 @@
                     </label>
                   </div>
                   <div class="md:col-span-8 flex items-center gap-2">
-                    <div class="dropdown inline-block relative w-full">
-                      <select id="roleID" name="roleID" class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
+                    <div class="custom-dropdown w-full">
+                      <select name="roleID" >
                          @foreach($roles as $role)
                          <option value="{{ $role->id }}" @php echo ($role->id == $user->roleID)?'selected':'' @endphp>{{ $role->name }}</option>
                          @endforeach
@@ -148,9 +147,8 @@
                     </label>
                   </div>
                   <div class="md:col-span-8 flex items-center gap-2">
-                    <div class="dropdown inline-block relative w-full">
-                       <select id="groupID" name=" groupID" class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
+                    <div class="custom-dropdown w-full">
+                       <select id="groupID" name=" groupID" >
                          @foreach($groups as $group)
                         <option value="{{ $group->id }}" @php echo ($group->id == $user->groupID)?'selected':'' @endphp>{{ $group->name }}</option>
                         @endforeach
@@ -171,6 +169,7 @@
             </div>
           </div>
         </div>
+<script src="{{ asset($constants['JSFILEPATH'] . 'custom-dropdown.js') }}"></script>
 <script>
   
   $('.user-edit-close').on('click', function (e) {

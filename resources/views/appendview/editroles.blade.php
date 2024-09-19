@@ -109,7 +109,8 @@
                     <h3 class="block font-bold text-c-black">Assign Permission:</h3>
                   </div>
                   <div class="md:col-span-10 md:pr-28">
-                      <select id="roleID" name="permissionID" class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <div class="custom-dropdown w-full">
+                      <select id="roleID" name="permissionID" >
                       <option value="">Select Permission</option>
                          @foreach($permissions as $permission)
                          <option value="{{ $permission->id }}" @php echo ($permission->id == $role->permissionID)?'selected':'' @endphp>{{ $permission->name }}</option>
@@ -127,7 +128,7 @@
           </form>
         </div>
       </div>
-
+<script src="{{ asset($constants['JSFILEPATH'] . 'custom-dropdown.js') }}"></script>
 <script>
   
   $('.roles-edit-close').on('click', function (e) {
