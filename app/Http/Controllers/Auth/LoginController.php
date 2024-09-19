@@ -14,6 +14,7 @@ use Jenssegers\Agent\Agent;
 use Stevebauman\Location\Facades\Location;
 use App\Helpers\ActivityHelper;
 use Illuminate\Support\Facades\Artisan;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -323,5 +324,27 @@ class LoginController extends Controller
         ];
 
         return $browserImages[$browser] ?? 'path/to/default/browser/image.png';
+    }
+
+    public function GoogleLogin()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function GoogleCallback(Request $request)
+    {
+        try {
+            $googleUser = Socialite::driver('google')->stateless()->user();
+        } catch (\Exception $e) {
+            return redirect()->route('login')->with('error', 'Google login was canceled or failed. Please try again.');
+        }
+        $user = User::where('email', $googleUser->email)->first();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Email not found in system.');
+        } else {
+            Auth::login($user);
+            setcookie('dotsusername', $user->name, time() + (86400 * 30), "/");
+            return redirect()->route('dashboard');
+        }
     }
 }

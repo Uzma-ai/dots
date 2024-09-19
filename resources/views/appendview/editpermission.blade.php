@@ -93,7 +93,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="view"  @php echo in_array('view', $permission->permissions) ? 'checked' : ''  @endphp
                   />
@@ -104,7 +104,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="preview"  @php echo in_array('preview', $permission->permissions) ? 'checked' : ''  @endphp
                   />
@@ -115,7 +115,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="download"  @php echo in_array('download', $permission->permissions) ? 'checked' : ''  @endphp
                   />
@@ -126,7 +126,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="upload"  @php echo in_array('upload', $permission->permissions) ? 'checked' : ''  @endphp
                   />
@@ -137,7 +137,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="edit"  @php echo in_array('edit', $permission->permissions) ? 'checked' : ''  @endphp
                   />
@@ -149,7 +149,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="delete"  @php echo in_array('delete', $permission->permissions) ? 'checked' : ''  @endphp
                   />
@@ -160,7 +160,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="share"  @php echo in_array('share', $permission->permissions) ? 'checked' : ''  @endphp
                   />
@@ -171,7 +171,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="comments"  @php echo in_array('comments', $permission->permissions) ? 'checked' : ''  @endphp
                   />
@@ -183,7 +183,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value=dynamic  @php echo in_array('dynamic', $permission->permissions) ? 'checked' : ''  @endphp
                   />
@@ -194,7 +194,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="admin"  @php echo in_array('admin', $permission->permissions) ? 'checked' : ''  @endphp
                   />
@@ -421,9 +421,9 @@ $(document).ready(function(){
   $('#editcheckall').change(function (e) {
   
     if($(this).prop("checked")) {
-            $(".d-checkbox,.c-checkbox").prop("checked", true);
+            $(".d-checkbox").prop("checked", true);
         } else {
-            $(".d-checkbox,.c-checkbox").prop("checked", false);
+            $(".d-checkbox").prop("checked", false);
         }     
 
   });

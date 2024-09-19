@@ -212,7 +212,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="view"
                   />
@@ -223,7 +223,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="preview"
                   />
@@ -234,7 +234,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="download"
                   />
@@ -245,7 +245,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="upload"
                   />
@@ -256,7 +256,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="edit"
                   />
@@ -268,7 +268,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="delete"
                   />
@@ -279,7 +279,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="share"
                   />
@@ -290,7 +290,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="comments"
                   />
@@ -302,7 +302,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value=dynamic
                   />
@@ -313,7 +313,7 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="admin"
                   />
@@ -625,9 +625,9 @@ function populateTable(term='') {
  $('#checkall').change(function (e) {
   
     if($(this).prop("checked")) {
-            $(".d-checkbox,.c-checkbox").prop("checked", true);
+            $(".d-checkbox").prop("checked", true);
         } else {
-            $(".d-checkbox,.c-checkbox").prop("checked", false);
+            $(".d-checkbox").prop("checked", false);
         }     
 
   });

@@ -27,7 +27,7 @@ Route::get('/', function () {
 Route::get('clear', function () {
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
-    ConfigClearJob::dispatch();
+    // ConfigClearJob::dispatch();
     return view('errors.clear');
 })->name('clear');
 
@@ -49,6 +49,9 @@ Route::middleware(['blockIP'])->group(function () {
     Route::post('imagelogin', [LoginController::class, 'ImageLogin'])->name('ImageLogin');
     Route::post('voicelogin', [LoginController::class, 'VoiceLogin'])->name('VoiceLogin');
     Route::get('checkfacedata', [LoginController::class, 'CheckFaceData'])->name('CheckFaceData');
+
+    Route::get('auth/google', [LoginController::class, 'GoogleLogin'])->name('GoogleLogin');
+    Route::get('auth/google/callback', [LoginController::class, 'GoogleCallback'])->name('GoogleCallback');
 
     //all routs which require authenticated user under this
     Route::middleware(['auth'])->group(static function () {

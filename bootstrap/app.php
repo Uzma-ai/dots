@@ -28,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'checkPermis.backendManagement' => \App\Http\Middleware\CheckPermission::class,
             'checkPermis.userManagement' => \App\Http\Middleware\CheckPermission::class,
             'checkPermis.roleManagement' => \App\Http\Middleware\CheckPermission::class,
+            'Socialite' => \Laravel\Socialite\Facades\Socialite::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

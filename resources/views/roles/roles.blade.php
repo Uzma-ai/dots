@@ -118,7 +118,7 @@
               aria-label="Close"
             ></i>
           </div>
-          <form autocomplete="on" action="{{ route('role-create') }}" method="POST">
+          <form autocomplete="on" action="{{ route('role-create') }}" method="POST" id="roles-form">
             @csrf
           <div
             class="p-4 overflow-y-auto scroll"
@@ -137,8 +137,9 @@
                     class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl outline-none pl-5 "
                     type="text"
                     placeholder="Please enter an username"
-                    autocomplete="name"  required
+                    autocomplete="name" data-validate="role-name" maxlength="25" required
                   />
+                  <small class="text-red-500 mt-1 block"></small>
                 </div>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
@@ -173,7 +174,7 @@
                       name="upload_limit"
                       class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl outline-none pl-4"
                       type="number"
-                      placeholder="Please upload file size" required
+                      placeholder="Please upload file size" required min="0" max="400"
                     />
                     <div
                       class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray w-10 rounded-r-xl pl-2"
@@ -300,8 +301,8 @@
                     <input
                       id="filesize"
                       class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl outline-none pl-5"
-                      type="text"
-                      placeholder="Please upload file size"
+                      type="number"
+                      placeholder="Please upload file size" min="0" max="400"
                     />
                     <div
                       class="absolute inset-y-0 right-0 flex items-center  bg-c-gray-4 border border-gray w-10 rounded-r-xl pl-2"
@@ -853,6 +854,19 @@ function populateTable(term='') {
  @endif
 
 });
+
+ //roles add form validation
+    document.getElementById('roles-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      if (FormValidation.validateForm(form)) {
+        console.log('Form submitted successfully');
+        document.getElementById("roles-form").submit();
+      } else {
+        console.log('Form validation failed');
+      }
+    });
+
 </script>
 
 @endsection
