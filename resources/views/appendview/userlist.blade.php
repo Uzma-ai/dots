@@ -1,5 +1,5 @@
 @foreach($users as $user)
- @if($user->name == "masteradmin")
+ @if($user->name == "masteradmin" || $user->type == "superadmin")
         @php continue;  @endphp
  @endif
 <tr class="h-16 border-t">
@@ -46,18 +46,18 @@
                                 <div class="absolute text-xs dropdown-option z-10 min-w-full bg-gray-100 border rounded-md">
                                 @if(!empty($filteredPermissions['userManagement']) && in_array('user-delete', $filteredPermissions['userManagement']) || Auth::user()->cID == 0)
                 
-                                    <button  class="suspend-user block  @php echo ($user->status == 0)?'bg-yellow-300':'' @endphp w-full px-2 py-1" data-id="{{ $user->id }}">
+                                    <button  class="suspend-user block rounded-t hover:bg-yellow-300 @php echo ($user->status == 0)?'bg-yellow-300':'' @endphp w-full px-2 py-1" data-id="{{ $user->id }}">
                                             Deactivated
                                     </button>
                                     
                                     <a href="{{ route('user-suspend',['id' => $user->id]) }}">
-                                        <button  class="block @php echo ($user->status == 1)?'bg-yellow-300':'' @endphp w-full px-2 py-1">
+                                        <button  class="block hover:bg-yellow-300 @php echo ($user->status == 1)?'bg-yellow-300':'' @endphp w-full px-2 py-1">
                                         Active
                                         </button>
                                       </a>
                                       @endif
                                       @if(!empty($filteredPermissions['userManagement']) && in_array('user-edit', $filteredPermissions['userManagement']) || Auth::user()->cID == 0)
-                                        <button  class="editUsers block bg-white-300 w-full px-2 py-1" data-id="{{$user->id}}">
+                                        <button  class="editUsers rounded-b block bg-white-300 w-full px-2 py-1 hover:bg-yellow-300" data-id="{{$user->id}}">
                                         Edit
                                         </button>
                                       @endif

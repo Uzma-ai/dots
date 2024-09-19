@@ -142,6 +142,51 @@
     z-index: 999999;
 }
 
+.navbar .taskbar-dropdown-menu {
+    border-radius: 5px;
+    overflow: hidden;
+    display: none;
+    z-index: 1;
+    position: absolute;
+    right: 21px;
+    top: 30px;
+    background: #e7e5e5;
+    box-shadow: var(--box-shadow);
+
+}
+
+.navbar .taskbar-dropdown-menu.show {
+    display: block;
+}
+
+.navbar .taskbar-dropdown-item {
+    width: 100%;
+    height: 35px;
+    line-height: 25px;
+    border: 0;
+    padding: 0 10px;
+    cursor: pointer;
+    transition: 0.1s ease-in;
+    font-weight: 500;
+    color: #282828;
+    text-align: left;
+    font-size: 13px;
+
+}
+
+.navbar .taskbar-dropdown-item i{
+    font-size: 15px;
+}
+
+.navbar .taskbar-dropdown-item:hover {
+    background-color: #fdcf01;
+}
+
+.navbar .taskbar-dropdown-item:not(:last-child) {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
 .taskbar-slide img {
     height: 45px;
     margin: 0 5px;
@@ -402,7 +447,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 /* Notification */
 
-.dashboard .Notification {
+.notification-container .Notification {
     width: 90%;
     max-width: 400px;
     border-radius: 20px;
@@ -411,7 +456,7 @@ input[type="search"]::-webkit-search-cancel-button {
     z-index: 99;
 }
 
-.Notification .scrollbar-div::-webkit-scrollbar {
+.notification-container .Notification .scrollbar-div::-webkit-scrollbar {
     display: none;
 }
 
@@ -1537,3 +1582,54 @@ input[type="button"]:focus {
         transform: translateX(0);
     }
 }
+
+/********* custom dropdown css for every page ********/
+
+/*the container must be positioned relative:*/
+.custom-dropdown {
+    position: relative;
+    font-family: Arial;
+    margin-bottom: 10px; /* added for spacing between dropdowns */
+  }
+  
+  .custom-dropdown select {
+    display: none; /*hide original SELECT element:*/
+  }
+  
+  .select-selected {
+      border-radius: 0.75rem;
+      background-color: #F9F9F9;
+      color: #282828;
+      padding: 8px 16px;
+      border: 1px solid #a3a3a3;
+      cursor: pointer;
+  }
+  
+  /*style the items (options), including the selected item:*/
+  .select-items div {
+      color: #282828;
+      padding: 6px 16px;
+      cursor: pointer;
+      user-select: none;
+  }
+  
+  /*style items (options):*/
+  .select-items {
+      border: 1px solid #a3a3a3;
+      border-radius: 5px;
+      position: absolute;
+      background-color: #F9F9F9;
+      top: 102%;
+      left: 0;
+      right: 0;
+      z-index: 99;
+  }
+  
+  /*hide the items when the select box is closed:*/
+  .select-hide {
+    display: none;
+  }
+  
+  .select-items div:hover, .same-as-selected {
+    background-color: #FDCF01;
+  }

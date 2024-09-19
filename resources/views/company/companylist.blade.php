@@ -4,7 +4,7 @@
                       <td class="py-2 pl-3"> <input type="checkbox" class="c-checkbox"></td>
                       <td class="text-c-black pl-3">{{$company->name}}</td>
                       <td class="text-c-black pl-3">
-                       <span class="bg-system py-1.5 text-center px-5 font-normal text-dark-black rounded-sm">System</span>
+                       <span class="taskbar py-1.5 text-center px-5 font-normal text-dark-black rounded-sm">System</span>
                       </td>
                       <td class="text-c-black pl-3">{{$company->industry}}</td>
                       <td class="text-c-black pl-3">{{$company->created_at}}</td>
@@ -24,7 +24,7 @@
                                 Delete
                             </button>
                             <button  class="addSuperadmin block hover:bg-yellow-300 w-full px-2 py-1" data-company-id="{{$company->id}}">
-                                Add Superadmin
+                                Add Masteradmin
                                         </button>
                             </div>
                           </div>
