@@ -24,7 +24,7 @@
             </a>
         </div>
     @endforeach
-    {{-- @foreach ($folders as $folder)
+    @foreach ($folders as $folder)
         <div class="app maindesktopapp w-21 h-28 cursor-pointer relative">
             <a href="{{ url('/sharingp/' . urlencode($folder->path)) }}" class="folders selectapp"
                 data-path =" {{ urldecode($folder->path) }}" data-appkey="{{ base64UrlEncode($folder->openwith) }}"
@@ -48,7 +48,7 @@
                 </div>
             </a>
         </div>
-    @endforeach --}}
+    @endforeach
     @foreach ($files as $file)
         <div class="app maindesktopapp w-21 h-28 cursor-pointer relative">
             <a href="#" class="files openiframe selectapp" data-path =" {{ urldecode($file->path) }}"
@@ -62,48 +62,18 @@
                     </div>
                 </div>
                 <div class="flex flex-col items-center">
-                    @if ($file->filetype == 'image')                    
-                        <a href="{{ url(Storage::url($constants['ROOTPATH'].$file->path)) }}" class="files openiframe selectapp" data-ext = "{{ $file->extension }}"
+                    @if ($file->filetype == 'image')
+                        <a href="#" class="files openiframe selectapp" data-ext = "{{ $file->extension }}"
                             data-image="{{ $file->path }}" data-title="{{ $file->name }}"
                             data-url="{{ $file->path }}">
-                            <img class="w-16 icondisplay" src="{{ url(Storage::url($constants['ROOTPATH'].$file->path)) }}" alt="{{ $file->name }}" />
+                            <img class="w-16 icondisplay" src="{{ $file->path }}" alt="{{ $file->name }}" />
                         </a>
-                        @elseif($file->filetype == 'application')
-                        @php
-                        $extension = strtolower($file->extension); 
-                        $iconPath = ''; 
-                        switch ($extension) {
-                            case 'pdf':
-                                $iconPath = asset('public/images/Docs.png');
-                                break;
-                            case 'doc':
-                            case 'docx':
-                                $iconPath = asset('public/images/docx.png');
-                                break;
-                            case 'xls':
-                            case 'xlsx':
-                                $iconPath = asset('public/images/xlsx.png');
-                                break;
-                            case 'ppt':
-                            case 'pptx':
-                                $iconPath = asset('public/images/pptx.png');
-                                break;
-                            default:
-                                $iconPath = asset('public/images/Docs.png'); 
-                                break;
-                        }
-                    @endphp
-
-                    <a href="{{ url(Storage::url($constants['ROOTPATH'].$file->path)) }}" target="_blank" class="files openiframe selectapp"
-                        data-ext="{{ $file->extension }}" data-title="{{ $file->name }}" data-url="{{ $file->path }}">
-                        <img class="w-16 icondisplay" src="{{ $iconPath }}" alt="{{ $file->name }}" />
-                    </a>
                     @elseif($file->filetype == 'video')
                         <a href="#" class="files openiframe selectapp" data-ext = "{{ $file->extension }}"
                             data-image="{{ $file->path }}" data-title="{{ $file->name }}"
-                            data-url="{{ url(Storage::url($constants['ROOTPATH'].$file->path)) }}">
+                            data-url="{{ url($parts[1]) }}">
                             <video class="w-16 icondisplay" alt="{{ $file->name }}" />
-                            <source src="{{ url(Storage::url($constants['ROOTPATH'].$file->path)) }}" type="video/mp4"></video>
+                            <source src="{{ $file->path }}" type="video/mp4"></video>
                         </a>
                     @else
                         <img class="w-16 icondisplay "

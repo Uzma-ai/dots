@@ -17,12 +17,12 @@
     <main class="w-full h-full bg-c-gray-5">
         <nav class="bg-c-white h-10 flex items-center justify-end">
             <div class="flex items-center justify-center cursor-pointer">
-                <span class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200 backButton"><i
-                        class="ri-arrow-left-line text-c-time"></i></span>
-                <span class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200"><i
-                        class="ri-download-2-line text-c-time"></i></span>
-                <span class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200 ShowQrCode"><i
-                        class="ri-qr-code-line text-c-time"></i></span>
+                <!-- <span class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200 backButton"><i
+                        class="ri-arrow-left-line text-c-time"></i></span> -->
+                <!-- <span class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200"><i
+                        class="ri-download-2-line text-c-time"></i></span> -->
+                <!-- <span class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200 ShowQrCode"><i
+                        class="ri-qr-code-line text-c-time"></i></span> -->
                 <a href="{{ route('dashboard') }}"><span
                         class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200"><i
                             class="ri-home-2-line text-c-time"></i></span></a>
@@ -48,22 +48,63 @@
                                 </div>
                                 <div class="flex flex-col items-center">
                                     @if ($files->filetype == 'image')
-                                        <a href="#" class="files openiframe selectapp"
-                                            data-ext = "{{ $files->extension }}" data-image="{{ $files->path }}"
-                                            data-title="{{ $files->name }}" data-url="{{ $files->path }}">
-                                            <img class="w-16 icondisplay" src="{{ $files->path }}"
-                                                alt="{{ $files->name }}" />
+                                        <a 
+                                        href = "{{ url(Storage::url($constants['ROOTPATH'].$files->path)) }}" 
+                                        class = "files openiframe selectapp" 
+                                        data-file-id = "{{ $files->id }}"
+                                        data-ext = "{{ $files->extension }}" 
+                                        data-image = "{{ $files->path }}"
+                                        data-title = "{{ $files->name }}" 
+                                        data-url = "{{ $files->path }}"
+                                        >
+                                        
+                                        <img class="w-16 icondisplay" 
+                                        src="{{ url(Storage::url($constants['ROOTPATH'].$files->path)) }}"
+                                        alt="{{ $files->name }}" />
                                         </a>
+                                    @elseif($files->filetype == 'application')
+                                    @php
+                                    $extension = strtolower($files->extension); 
+                                    $iconPath = ''; 
+                                    switch ($extension) {
+                                        case 'pdf':
+                                            $iconPath = asset('public/images/Docs.png');
+                                            break;
+                                        case 'doc':
+                                        case 'docx':
+                                            $iconPath = asset('public/images/docx.png');
+                                            break;
+                                        case 'xls':
+                                        case 'xlsx':
+                                            $iconPath = asset('public/images/xlsx.png');
+                                            break;
+                                        case 'ppt':
+                                        case 'pptx':
+                                            $iconPath = asset('public/images/pptx.png');
+                                            break;
+                                        default:
+                                            $iconPath = asset('public/images/Docs.png'); 
+                                            break;
+                                    }
+                                @endphp
+
+                                <a href="{{ url(Storage::url($constants['ROOTPATH'].$files->path)) }}" target="_blank" class="files openiframe selectapp" data-file-id="{{ $files->id }}"
+                                    data-ext="{{ $files->extension }}" data-title="{{ $files->name }}" data-url="{{ $files->path }}">
+                                    <img class="w-16 icondisplay" src="{{ $iconPath }}" alt="{{ $files->name }}" />
+                                </a>
+
+                               
                                     @elseif($files->filetype == 'video')
-                                        <a href="#" class="files openiframe selectapp"
+                                        <a href="{{ url(Storage::url($constants['ROOTPATH'].$files->path)) }}" class="files openiframe selectapp" data-file-id="{{ $files->id }}"
                                             data-ext = "{{ $files->extension }}" data-image="{{ $files->path }}"
-                                            data-title="{{ $files->name }}" data-url="{{ url($parts[1]) }}">
+                                            data-title="{{ $files->name }}" data-url="{{ url(Storage::url($constants['ROOTPATH'].$files->path)) }}">
                                             <video class="w-16 icondisplay" alt="{{ $files->name }}" />
-                                            <source src="{{ $files->path }}" type="video/mp4"></video>
+                                            <source src="{{ url(Storage::url($constants['ROOTPATH'].$files->path)) }}" type="video/mp4"></video>
                                         </a>
                                     @else
+                                    
                                         <img class="w-16 icondisplay "
-                                            src="{{ asset($constants['FILEICONPATH'] . $files->extension . '.png') }}"
+                                            src="{{ url(Storage::url($constants['ROOTPATH'].$files->extension . '.png')) }}"
                                             alt="{{ $files->name }}" />
                                     @endif
                                     <div class="input-wrapper"
@@ -76,42 +117,42 @@
                             </a>
                         </div>
                     </div>
-                    <div id="alliframelist">
+                    <!-- <div id="alliframelist">
 
                     </div>
                     <header id="iframeheaders"
                         class="transparent p-2 text-white flex justify-center items-center fixed top-0 left-0 right-0 mainiframeiconheader mainscreen">
 
-                    </header>
+                    </header> -->
                 </div>
                 <div class="bg-c-white w-60 h-full float-right px-2 hidden lg:block">
                     <div class="flex flex-col items-center justify-center gap-2 border-b border-c-lightgray py-8">
                         <img class="rounded-full w-20 shadow-current" style="object-fit: none"
                             src="{{ asset($constants['IMAGEFILEPATH'] . 'folder.png') }}" alt="user-img">
-                        <h3 class="text-c-black text-base font-normal">Ad*** <span class="text-sm text-c-medium-gray">Of
-                                sharing</span></h3>
+                        <h3 class="text-c-black text-base font-normal">File <span class="text-sm text-c-medium-gray">
+                                Sharing</span></h3>
                     </div>
                     <div class="mt-3">
                         <div class="flex items-start flex-wrap p-1">
                             <h5 class="text-xs text-c-time w-1/3">Title:</h5>
                             <span class="text-xs text-c-black font-bold break-words w-2/3">{{ $path }}</span>
-                        </div>
-                        <div class="flex items-center p-1">
+                        </div>  
+                        <!-- <div class="flex items-center p-1">
                             <h5 class="text-xs text-c-time w-1/3">Time:</h5>
-                            <span class="text-xs text-c-black font-normal break-words w-2/3">8 Minutes ago</span>
+                            <span class="text-xs text-c-black font-normal break-words w-2/3"></span>
                         </div>
                         <div class="flex items-center p-1">
                             <h5 class="text-xs text-c-time w-1/3">Size:</h5>
-                            <span class="text-xs text-c-black font-normal break-words w-2/3">0B</span>
+                            <span class="text-xs text-c-black font-normal break-words w-2/3"></span>
                         </div>
                         <div class="flex items-center p-1">
                             <h5 class="text-xs text-c-time w-1/3">Browse:</h5>
-                            <span class="text-xs text-c-black font-normal break-words w-2/3">2</span>
+                            <span class="text-xs text-c-black font-normal break-words w-2/3"></span>
                         </div>
                         <div class="flex items-center p-1">
                             <h5 class="text-xs text-c-time w-1/3">Download:</h5>
-                            <span class="text-xs text-c-black font-normal break-words w-2/3">0</span>
-                        </div>
+                            <span class="text-xs text-c-black font-normal break-words w-2/3"></span>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -142,6 +183,7 @@
 <script src="{{ asset($constants['JSFILEPATH'] . 'qrcode.js') }}"></script>
 <script>
     const showFileDetail = @json(route('sharepathdetail'));
+    const updateFileDownloadCount = @json(route('updateFileDownloadCount'));
     $(document).ready(function() {
         const appkey = $('#app-key').val();
         const filekey = $('#file-key').val();
@@ -156,7 +198,7 @@
             isfile: isfile
         };
         console.log(iframedata);
-        openiframe(iframedata);
+        //openiframe(iframedata);
     });
 
     function openiframe(data) {
@@ -226,26 +268,64 @@
         $(document).on('click', '.backButton', function(e) {
             e.preventDefault();
             window.history.back();
+        });        
+    });
+
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
-        $(document).on('click', '.ShowQrCode', function(e) {
-            e.preventDefault();
-            var elText = $('input[name="url"]').val();
-            var qrcode = new QRCode(document.getElementById("qrcode"), {
-                width: 100,
-                height: 100,
+
+        $(document).on('click', '.files', function(e) {
+            var fileId = $(this).data('file-id');
+            var fileUrl = $(this).attr('href');  
+
+            $.ajax({
+                url: updateFileDownloadCount,  
+                method: 'POST',
+                data: {                    
+                    fileId: fileId
+                },
+                success: function(response) {
+                    window.location.href = fileUrl; 
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
             });
 
-            function makeCode() {
-                qrcode.makeCode(elText);
-            }
-            makeCode();
-            $('#QrCodeModal').removeClass('hidden');
-        });
-        $(document).on("click", ".hideqrmodal", function(e) {
-            $('#qrcode').html('');
-            $('#QrCodeModal').addClass('hidden');
+            e.preventDefault();  
         });
     });
+
+
+    // $(document).ready(function() {
+    //     $.ajaxSetup({
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         }
+    //     });
+    //     $(document).on('click', '.files', function(e) {
+    //         e.preventDefault(); 
+    //         var fileId = $(this).data('file-id');
+    //         $.ajax({
+    //             url: updateFileDownloadCount,
+    //             method: 'POST',
+    //             data: {                    
+    //                 fileId: fileId
+    //             },
+    //             success: function(response) {
+    //                 // location.reload();
+    //                 // $('#loaddetails').html(response.html);
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 console.error(xhr.responseText);
+    //             }
+    //         });
+    //     });
+    // });
 </script>
 
 </html>

@@ -160,7 +160,8 @@
           >
             <div class="flex ml-6 gap-x-5 lg:gap-x-4 xl:gap-x-6 my-2 context-menulist">
               <div class="relative flex items-center new">
-                @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
+            @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
+
                 <button class="flex gap-x-2">
                   <i class="ri-add-circle-fill ri-xl mt-1"></i><span>New</span>
                 </button>
@@ -210,11 +211,12 @@
               </button></a>
               @endif
 
-              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
+              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
               <a href="#" class="clickmenu pasteFunction disabledicon fimanagertoolpanel"><button class="paste">
                 <i class="ri-clipboard-line ri-lg"></i>
               </button></a>
-              
+              @endif
+              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
               <a href="#" class="clickmenu renameFunction disabledicon fimanagertoolpanel"><button class="edit">
                 <i class="ri-edit-line ri-lg"></i>
               </button></a>
