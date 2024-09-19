@@ -4,7 +4,7 @@
            <!-- Main content -->
         <div class="flex-grow border h-100 main">
           <div class="flex w-full h-full flex-col content">
-            <div class=" px-2 lg:px-5 py-6">
+            <div class=" px-9 py-3 lg:py-6 lg:px-5">
                <div class="flex items-center gap-4">
                 <i class="ri-settings-3-fill ri-xl"></i>
                 <span class="text-lg text-c-black">User Management</span>
@@ -22,7 +22,7 @@
                @if(!empty($filteredPermissions['roleManagement']) && in_array('role-create', $filteredPermissions['roleManagement']) || Auth::user()->cID == 0)               
                <div class="flex-grow md:w-1/2">
                   <div class="flex items-center justify-end gap-2 md:gap-6">
-                  <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-5/12">
+                  <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-8/12">
                   <input
                     type="text" id="searchterm"
                     class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none text-c-black outline-none"
@@ -109,8 +109,8 @@
         role="dialog"
         class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 add"
       >
-        <div class="addModal bg-white mt-12 rounded-xl shadow-lg w-full mx-auto">
-          <div class="flex justify-between items-center p-4 border-b">
+        <div class=" bg-white rounded-xl max-w-xl shadow-lg w-full mx-auto">
+          <div class="flex justify-between items-center py-2 px-5 border-b">
             <h1 class="text-lg font-medium text-c-black" id="staticBackdropLabel">Add Role</h1>
             <i
               class="ri-close-circle-fill ri-lg cursor-pointer"
@@ -118,7 +118,7 @@
               aria-label="Close"
             ></i>
           </div>
-          <form autocomplete="on" action="{{ route('role-create') }}" method="POST">
+          <form autocomplete="on" action="{{ route('role-create') }}" method="POST" id="roles-form">
             @csrf
           <div
             class="p-4 overflow-y-auto scroll"
@@ -137,8 +137,9 @@
                     class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl outline-none pl-5 "
                     type="text"
                     placeholder="Please enter an username"
-                    autocomplete="name"  required
+                    autocomplete="name" data-validate="role-name" maxlength="25" required
                   />
+                  <small class="text-red-500 mt-1 block"></small>
                 </div>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
@@ -173,7 +174,7 @@
                       name="upload_limit"
                       class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl outline-none pl-4"
                       type="number"
-                      placeholder="Please upload file size" required
+                      placeholder="Please upload file size" required min="0" max="400"
                     />
                     <div
                       class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray w-10 rounded-r-xl pl-2"
@@ -209,20 +210,21 @@
                     Permissions
                   </button>
                 </div>
-                <div class="grid grid-cols-1 gap-4 mt-10">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
                   <div class="md:col-span-2 flex items-start">
                     <h3 class="block font-bold text-c-black">Assign Permission:</h3>
                   </div>
-                      <select id="roleID" name="permissionID" class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
+                  <div class="md:col-span-10 md:pr-28">
+                    <div class="custom-dropdown w-full">
+                      <select id="roleID" name="permissionID">
                          @foreach($permissions as $permission)
                          <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                          @endforeach
                       </select>
-                    
+                    </div>
+                  </div>
                 </div>
               </div>
-              <hr class="my-4" />
               <div class="flex justify-end p-4">
             <button class="bg-c-black text-white px-12 py-2 rounded-full">
               Save
@@ -299,8 +301,8 @@
                     <input
                       id="filesize"
                       class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl outline-none pl-5"
-                      type="text"
-                      placeholder="Please upload file size"
+                      type="number"
+                      placeholder="Please upload file size" min="0" max="400"
                     />
                     <div
                       class="absolute inset-y-0 right-0 flex items-center  bg-c-gray-4 border border-gray w-10 rounded-r-xl pl-2"
@@ -852,6 +854,19 @@ function populateTable(term='') {
  @endif
 
 });
+
+ //roles add form validation
+    document.getElementById('roles-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      if (FormValidation.validateForm(form)) {
+        console.log('Form submitted successfully');
+        document.getElementById("roles-form").submit();
+      } else {
+        console.log('Form validation failed');
+      }
+    });
+
 </script>
 
 @endsection

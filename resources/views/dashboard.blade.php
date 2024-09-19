@@ -9,14 +9,6 @@
 
     <div class="w-full h-full dashboard cs pt-20 relative">
 
-
-        <!-- Desktop apps   -->
-        <!-- <div class="desktopapps-div w-full overflow-x-auto">
-                                            <div id="desktopapps" class="desktop-apps allapplist p-2 pt-3 w-min h-full flex flex-col gap-1 flex-wrap">
-
-                                            </div>
-                                        </div> -->
-        <!--w-min :- giving issue || removed by: laxmi || date: 15-aug-24 -->
         <div class="desktopapps-div w-full overflow-x-auto">
             <div id="desktopapps"
                 class="desktop-apps  content-start allapplist gap-4 p-2 pt-3 h-full flex flex-col  flex-wrap">
@@ -82,7 +74,9 @@
         <div class="dashboardefaultdapp allapplist dashboard-sidebar w-16 px-2 hidden sm:block" data-option="app">
             @foreach ($apps as $app)
                 <a href="#" data-path ="{{ base64UrlEncode($app->path) }}" class="openiframe selectapp" data-appkey="{{ base64UrlEncode($app->id) }}" data-filekey="{{ base64UrlEncode($app->id) }}" data-filetype="app" data-apptype="app">
-                    <img class="mb-2 icondisplay"src="{{ checkIconExist($app->icon,'app') }}" alt="{{ $app->name }}" />
+                    <img class="mb-2 icondisplay"src="{{ checkIconExist($app->icon,'app') }}" alt="{{ $app->name }}" style="transition: transform 0.2s ease-in-out;"
+            onmouseover="this.style.transform='scale(1.2)';"
+            onmouseout="this.style.transform='scale(1)';" />
                 </a>
             @endforeach
         </div>

@@ -7,7 +7,7 @@
 @if(!empty($iframeapp))
 @foreach($iframeapp as $iframekey=>$iframeval)
     <div class="relative parentiframe draggable-element">
-                <div id="iframeicon{{ $iframeval[0]['filetype'].$iframeval[0]['appkey'] }}" data-popup-count="{{ count($iframeval) }}" data-iframefile-id = "{{ $iframeval[0]['filetype'].$iframeval[0]['filekey'] }}" data-iframe-id = "{{ $iframeval[0]['apptype'].$iframeval[0]['appkey'] }}" class="iframemainheadericon flex items-center justify-center text-white cursor-pointer">
+                <div id="iframeicon{{ $iframeval[0]['filetype'].$iframeval[0]['appkey'] }}" data-popup-count="{{ count($iframeval) }}" data-iframefile-id = "{{ $iframeval[0]['filetype'].$iframeval[0]['filekey'] }}" data-iframe-id = "{{ $iframeval[0]['apptype'].$iframeval[0]['appkey'] }}" class="iframemainheadericon flex items-center justify-center text-white cursor-pointer"  style="transition: transform 0.2s ease-in-out;"  onmouseover="this.style.transform='scale(1.2)';" onmouseout="this.style.transform='scale(1)';">
                     <img class="app-icon" id ="iframeiconimage{{ $iframeval[0]['filetype'].$iframeval[0]['appkey'] }}" data-app-id ="iframeiconimage{{ $iframeval[0]['filetype'].$iframeval[0]['appkey'] }}" src="{{ checkIconExist($iframeval[0]['appicon'],'app') }}" >
                 </div>
             @if(count($iframeval)>1)
@@ -24,7 +24,7 @@
                                             <img class="w-6" src="{{ checkIconExist($iframefile['appicon'],'app') }}"><span>{{ $iframefile['filename'] }}</span>
                                         </div>
                                     </div>
-                                    <button class="iframefilepopupclosebtn -mt-6 text-gray-900 hover:text-gray-700" data-filekey="{{ $iframefile['filekey'] }}" data-iframefile-id = "{{ $iframefile['filetype'].$iframefile['filekey'] }}" data-appkey="{{ $iframeval[0]['appkey'] }}" data-filetype="{{ $iframefile['filetype'] }}">
+                                    <button class="iframefilepopupclosebtn -mt-6 text-gray-900 hover:text-gray-700" data-apptype="{{ $iframefile['apptype'] }}" data-filekey="{{ $iframefile['filekey'] }}" data-iframefile-id = "{{ $iframefile['filetype'].$iframefile['filekey'] }}" data-appkey="{{ $iframeval[0]['appkey'] }}" data-filetype="{{ $iframefile['filetype'] }}">
                                         <i class="ri-close-line"></i>
                                     </button>
                                 </div>

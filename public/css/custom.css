@@ -116,11 +116,7 @@
 .navbar {
     transition: top 0.2s ease-in-out;
     top: -100%;
-    background: linear-gradient(90deg,
-                rgba(138, 131, 125, 1) 8%,
-                rgba(174, 160, 148, 1) 39%,
-                rgba(196, 174, 161, 1) 60%);
-    backdrop-filter: blur(2px);
+    background: transparent;
     border-bottom: 1px solid #978a82;
     box-shadow: 0px 1px 18px -6px rgba(189, 170, 157, 0.7);
     z-index: 99999;
@@ -143,6 +139,51 @@
 
 .navbar.show {
     top: 0;
+    z-index: 999999;
+}
+
+.navbar .taskbar-dropdown-menu {
+    border-radius: 5px;
+    overflow: hidden;
+    display: none;
+    z-index: 1;
+    position: absolute;
+    right: 21px;
+    top: 30px;
+    background: #e7e5e5;
+    box-shadow: var(--box-shadow);
+
+}
+
+.navbar .taskbar-dropdown-menu.show {
+    display: block;
+}
+
+.navbar .taskbar-dropdown-item {
+    width: 100%;
+    height: 35px;
+    line-height: 25px;
+    border: 0;
+    padding: 0 10px;
+    cursor: pointer;
+    transition: 0.1s ease-in;
+    font-weight: 500;
+    color: #282828;
+    text-align: left;
+    font-size: 13px;
+
+}
+
+.navbar .taskbar-dropdown-item i{
+    font-size: 15px;
+}
+
+.navbar .taskbar-dropdown-item:hover {
+    background-color: #fdcf01;
+}
+
+.navbar .taskbar-dropdown-item:not(:last-child) {
+    border-bottom: 1px solid #e5e5e5;
 }
 
 
@@ -295,7 +336,7 @@
     border-radius: 5px;
 }
 
-.context-menu ul li:hover>.submenu {
+.context-menu ul li:hover > .submenu {
     display: block;
 }
 
@@ -406,7 +447,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 /* Notification */
 
-.dashboard .Notification {
+.notification-container .Notification {
     width: 90%;
     max-width: 400px;
     border-radius: 20px;
@@ -415,7 +456,7 @@ input[type="search"]::-webkit-search-cancel-button {
     z-index: 99;
 }
 
-.Notification .scrollbar-div::-webkit-scrollbar {
+.notification-container .Notification .scrollbar-div::-webkit-scrollbar {
     display: none;
 }
 
@@ -666,7 +707,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 @media (max-width: 768px) {
-
     .login .blur-container,
     .login .blur-popup-container,
     .login .login-container {
@@ -705,7 +745,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 @media (max-width: 480px) {
-
     .login .blur-container,
     .login .blur-popup-container,
     .login .login-container {
@@ -1455,7 +1494,7 @@ input[type="button"]:focus {
     display: none;
 }
 
-.has-tooltip1:hover~.tooltip1 {
+.has-tooltip1:hover ~ .tooltip1 {
     display: block;
 }
 
@@ -1523,7 +1562,6 @@ input[type="button"]:focus {
   ********** */
 
 @keyframes left-curtain-opening {
-
     /* 4s */
     from {
         transform: translateX(-100%);
@@ -1535,7 +1573,6 @@ input[type="button"]:focus {
 }
 
 @keyframes right-curtain-opening {
-
     /* 4s */
     from {
         transform: translateX(100%);
@@ -1545,3 +1582,54 @@ input[type="button"]:focus {
         transform: translateX(0);
     }
 }
+
+/********* custom dropdown css for every page ********/
+
+/*the container must be positioned relative:*/
+.custom-dropdown {
+    position: relative;
+    font-family: Arial;
+    margin-bottom: 10px; /* added for spacing between dropdowns */
+  }
+  
+  .custom-dropdown select {
+    display: none; /*hide original SELECT element:*/
+  }
+  
+  .select-selected {
+      border-radius: 0.75rem;
+      background-color: #F9F9F9;
+      color: #282828;
+      padding: 8px 16px;
+      border: 1px solid #a3a3a3;
+      cursor: pointer;
+  }
+  
+  /*style the items (options), including the selected item:*/
+  .select-items div {
+      color: #282828;
+      padding: 6px 16px;
+      cursor: pointer;
+      user-select: none;
+  }
+  
+  /*style items (options):*/
+  .select-items {
+      border: 1px solid #a3a3a3;
+      border-radius: 5px;
+      position: absolute;
+      background-color: #F9F9F9;
+      top: 102%;
+      left: 0;
+      right: 0;
+      z-index: 99;
+  }
+  
+  /*hide the items when the select box is closed:*/
+  .select-hide {
+    display: none;
+  }
+  
+  .select-items div:hover, .same-as-selected {
+    background-color: #FDCF01;
+  }

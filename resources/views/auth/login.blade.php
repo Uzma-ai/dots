@@ -16,6 +16,7 @@
 </head>
 
 <body class="login">
+    @include('layouts.alert')
     <div class="login-screen w-full h-screen flex items-center justify-center gap-2 relative cs">
         <!-- Curtains   -->
         <div id="curtain" class="hidden">
@@ -61,6 +62,9 @@
                             onclick="showModal('#login')" id="BtnLogoDirectLogin">
                             Login
                         </button>
+                        <a class="bg-c-black text-white rounded-full px-12 py-2" href="{{ route('GoogleLogin') }}">
+                            Login with Google
+                        </a>
                         <button class="text-c-black px-12 py-2 rounded-full"
                             style="background: rgba(0, 0, 0, 0.16);box-shadow: var(--box-shadow);" id="ChangeUsername">
                             Change username
@@ -167,13 +171,16 @@
                                         <fieldset>
                                             <div class="form-card voice1 space-y-5">
                                                 <div id="voice-error"
-                                                    class="flex gap-2 text-red-600 justify-center items-center mt-5 hidden">
-                                                    <i class="ri-error-warning-fill ri-xl"></i>
+                                                    class="flex gap-2 text-red-600 justify-center items-start pl-9 pr-5 hidden">
+                                                    <i class="ri-error-warning-fill ri-xl mt-2"></i>
                                                     <p>Failed to record voice</p>
                                                 </div>
                                                 <div
                                                     class="container flex flex-col justify-center items-center space-y-5">
-                                                    <p id="VoiceInfo" class="pl-10 pr-5">Here's a quick story. Ready? Start recording now:<br />On a foggy night, an old man found a glowing coin on the street. When he picked it up, he was transported to a world of endless wonder.</p>
+                                                    <p id="VoiceInfo" class="pl-10 pr-5">Here's a quick story. Ready?
+                                                        Start recording now:<br />On a foggy night, an old man found a
+                                                        glowing coin on the street. When he picked it up, he was
+                                                        transported to a world of endless wonder.</p>
                                                     <div class="mic-container mic-wrapper1 relative flex gap-3">
                                                         <button class="circle cursor-pointer has-tooltip"
                                                             id="recordButton1">
@@ -240,8 +247,8 @@
                                     <fieldset>
                                         <div class="form-card space-y-3">
                                             <div id="camera-error"
-                                                class="flex gap-2 text-red-600 justify-center items-center hidden">
-                                                <i class="ri-error-warning-fill ri-xl"></i>
+                                                class="flex gap-2 text-red-600 justify-center items-start pl-10 pr-2 hidden">
+                                                <i class="ri-error-warning-fill ri-xl mt-2"></i>
                                                 <p id="CamError">Failed to capture photo</p>
                                             </div>
                                             <div
@@ -273,12 +280,14 @@
                                     <fieldset class="voice2">
                                         <div class="form-card space-y-5">
                                             <div id="voice-error"
-                                                class="flex gap-2 text-red-600 justify-center items-center hidden">
-                                                <i class="ri-error-warning-fill ri-xl"></i>
+                                                class="flex gap-2 text-red-600 justify-center items-start pl-9 pr-5 hidden">
+                                                <i class="ri-error-warning-fill ri-xl mt-2"></i>
                                                 <p id="VoiceError">Failed to record voice</p>
                                             </div>
                                             <div class="container flex flex-col justify-center items-center space-y-5">
-                                                <p>Speak: On a foggy night, an old man found a glowing coin on the street. When he picked it up, he was transported to a world of endless wonder.</p>
+                                                <p class="pl-10 pr-5">Speak: On a foggy night, an old man found a
+                                                    glowing coin on the street. When he picked it up, he was transported
+                                                    to a world of endless wonder.</p>
                                                 <div class="mic-container mic-wrapper2 relative flex gap-3">
                                                     <button class="circle cursor-pointer has-tooltip"
                                                         id="recordButton2">
@@ -382,15 +391,15 @@
 <script>
     // Dashboard opening animation
     $('.getStartedBtn').on('click', function(event) {
-            event.preventDefault();
-            $('#curtain').removeClass('hidden');
+        event.preventDefault();
+        $('#curtain').removeClass('hidden');
 
-            $('#curtain').addClass('open');
+        $('#curtain').addClass('open');
 
-            setTimeout(() => {
-                window.location.href = $(this).attr('href');
-            }, 4000);
-        });
+        setTimeout(() => {
+            window.location.href = $(this).attr('href');
+        }, 4000);
+    });
 </script>
 <script>
     var avilable_facedata = false;

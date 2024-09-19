@@ -33,7 +33,7 @@ $(document).ready(function () {
    closeAllContainers();
   menu.css("display", "block").css("visibility", "hidden");
    // Calculate positions and available space
-      
+
    const menuRect = menu[0].getBoundingClientRect();
    const viewportWidth = $(window).width();
    const viewportHeight = $(window).height();
@@ -69,7 +69,7 @@ $(document).ready(function () {
      left: left + "px",
      visibility: "visible"
    }).removeClass("hidden").css("display", "block");
-   
+
  }
    // Show submenu on hover
        $(document).on('mouseenter', '.context-menu li', function() {
@@ -117,21 +117,10 @@ $(document).ready(function () {
        $("#context-menu").addClass("hidden").css("display", "none");
 
    });
-    
-    const containers = {
-        notification: document.getElementById("notification"),
-        search: document.getElementById("search"),
-        administrator: document.getElementById("administrator"),
-    };
 
     function closeAllContainers(except = null) {
    appContextMenu.hide();
         dashboardContextMenu.hide();
-        $.each(containers, function (key, container) {
-            if (container !== except) {
-                $(container).addClass("hidden");
-            }
-        });
  }
 
     $(document).on("click", function (event) {
@@ -141,19 +130,19 @@ $(document).ready(function () {
             closeAllContainers();
         }
     });
-    
+
  $(document).on("contextmenu", function (event) {
    event.preventDefault();
-   
+
    const target = $(event.target);
 
-  
+
 
    if (target.closest(".allapplist .app").length) {
       let contexttypes = target.closest(".allapplist .app").attr('data-option');
       $('.fimanagertoolpanel').addClass('disabledicon');
 
-// select app 
+// select app
    let thisApp = target.closest('.allapplist .app');
    let selectapp = target.closest(".allapplist .app .openiframe");
    $('.allapplist .app .selectapp').removeClass("selectedfile");
@@ -183,7 +172,7 @@ $(document).ready(function () {
  $(document).on('click', '.allapplist .app-tools i', function(event) {
        event.stopPropagation();
        $('.fimanagertoolpanel').addClass('disabledicon');
-       // select app 
+       // select app
        let thisApp = $(this).closest('.app');
        let selectapp = $(this).closest('.openiframe');
        $('.allapplist .app .selectapp').removeClass("selectedfile");
@@ -198,14 +187,14 @@ $(document).ready(function () {
         }
         let contexttypes = $(this).closest(".app").attr('data-option');
         contextMenuList(contexttypes);
-        
+
        // Hide dashboard context menu
        $('#context-menu').addClass('hidden').css('display', 'none');
        // Show the app context menu and position it
        positionAndShowMenu(appContextMenu, event);
    });
 
- 
+
  $(document).on("click", function () {
    closeAllContainers();
  });
@@ -234,8 +223,8 @@ $(document).ready(function () {
                    console.error(xhr.responseText);
                }
            });
-           
-           
+
+
        }
        function showapathdetail(path,sort_by = null, sort_order = null){
         const data = {};
@@ -260,8 +249,8 @@ $(document).ready(function () {
                 console.error(xhr.responseText);
             }
         });
-        
-        
+
+
     }
 
 
@@ -278,13 +267,13 @@ $(document).ready(function () {
                    }else{
                        $('#app-contextmenu').html(response.html);
                    }
-                   
+
                },
                error: function (xhr, status, error) {
                    console.error(xhr.responseText);
                }
-           });           
-           
+           });
+
        }
 
        /// end context menu
@@ -351,7 +340,7 @@ $(document).ready(function () {
                 animateIcon(imgicon, originalIcon, function() {
                     const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype};
                     openiframe(iframedata)
-                }); 
+                });
             }else{
                 let url = $('.selectedfile').attr('href');
                 window.location.href = url;
@@ -372,8 +361,8 @@ $(document).ready(function () {
                 animateIcon(imgicon, originalIcon, function() {
                     const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype};
                     openiframe(iframedata);
-                 
-                });           
+
+                });
              }else{
                     let url = $(this).attr('href');
                     window.location.href = url;
@@ -392,46 +381,46 @@ $(document).ready(function () {
         //         animateIcon(imgicon, originalIcon, function() {
         //             const iframedata = {appkey:appkey,filekey:filekey,filetype:filetype,apptype:apptype};
         //             openiframe(iframedata);
-                 
-        //         });           
+
+        //         });
         //      }
         // });
 
 
 
-        // cut file 
-         // rename 
+        // cut file
+         // rename
          $(document).on('click', '.context-menulist .renameFunction', function (e) {
             e.preventDefault();
             const filekey = $('.selectedfile').attr('data-filekey');
             const filetype = $('.selectedfile').attr('data-filetype');
-            
+
             // Target the input elements based on filekey and filetype
             const inputWrapper = $('#inputWrapper' + filetype + filekey);
             const inputField = $('#inputField' + filetype + filekey);
-            
+
             // Modify the input field for renaming
             inputField.removeClass('text-white').addClass('text-black');
             inputField.removeAttr('disabled').removeClass('appinputtext').show().focus();
-        
+
             // Handle click outside the input to finalize renaming
             $(document).one('click', function(event) {
                 if (!inputWrapper.is(event.target) && inputWrapper.has(event.target).length === 0) {
                     // Disable the input field and add the necessary classes back
                     inputField.attr('disabled', true).addClass('appinputtext');
                     $('.openiframe').removeClass('selectedfile');
-                    
+
                     // Call the rename function with the new name
-                    renameFunction(filekey, filetype, inputField.val()); 
+                    renameFunction(filekey, filetype, inputField.val());
                 }
             });
-        
+
             // Stop the propagation to avoid immediate closing
             inputWrapper.on('click', function(event) {
                 event.stopPropagation();
             });
         });
-        
+
 
         // $(document).one('click', function(event) {
         //     const filekey = $('.selectedfile').attr('data-filekey');
@@ -443,13 +432,13 @@ $(document).ready(function () {
         //         inputField.attr('disabled'," ");
         //         inputField.addClass('appinputtext');
         //         $('.selectapp').removeClass('.selectedfile');
-        //         renameFunction(filekey,filetype,inputField.val()); 
-                 
+        //         renameFunction(filekey,filetype,inputField.val());
+
         //         // Update text display with input value
         //     }
         // });
-        //// cut copy paste 
-        
+        //// cut copy paste
+
         $(document).on('click', '.context-menulist .copyFunction', function (e) {
             e.preventDefault();
                 const filekey = $('.selectedfile').attr('data-filekey');
@@ -466,8 +455,9 @@ $(document).ready(function () {
                 const filepath = $('.selectedfile').attr('data-path');
                 const filetype = $('.selectedfile').attr('data-filetype');
                 const fileid = this.getAttribute('data-iframefile-id');
+                const apptype = $('.selectedfile').attr('data-apptype');
                 deleteFunction(filekey);
-                closeiframe(appkey,filekey,fileid,filetype);
+                closeiframe(appkey,filekey,fileid,apptype);
                 $('.selectapp').removeClass('.selectedfile');
          });
          $(document).on('click', '.context-menulist .cutFunction', function (e) {
@@ -496,9 +486,9 @@ $(document).ready(function () {
             //    iframe.addClass("hidden");
             }, 600);
         }
-        
+
     });
-    
+
     // Close button functionality
         $(document).on('click', '#alliframelist .closeiframe-btn', function(e) {
             e.preventDefault();
@@ -507,22 +497,24 @@ $(document).ready(function () {
             const filekey = this.getAttribute('data-filekey');
             const filetype = this.getAttribute('data-filetype');
             const fileid = this.getAttribute('data-iframefile-id');
-            closeiframe(appkey,filekey,fileid,filetype);
+            const apptype = this.getAttribute('data-apptype');
+            closeiframe(appkey,filekey,fileid,apptype);
+
         });
 
         // Close button functionality
         $(document).on('click', '#iframeheaders .popup .iframefilepopupclosebtn', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            alert("hello");
             const appkey = this.getAttribute('data-appkey');
             const filekey = this.getAttribute('data-filekey');
             const filetype = this.getAttribute('data-filetype');
             const fileid = this.getAttribute('data-iframefile-id');
-            closeiframe(appkey,filekey,fileid,filetype);
+            const apptype = this.getAttribute('data-apptype');
+            closeiframe(appkey,filekey,fileid,apptype);
         });
-    
-        
+
+
 
         // Maximize button functionality
         $(document).on('click', '#alliframelist .maximizeiframe-btn', function() {
@@ -533,7 +525,7 @@ $(document).ready(function () {
             if (iframePopup.hasClass('maximized')) {
                 if (pinIcon.hasClass('ri-unpin-line')) {
                     iframePopup.removeClass('reduced-height')
-                    
+
                 } else {
                     iframePopup.addClass('reduced-height')
                 }
@@ -541,7 +533,7 @@ $(document).ready(function () {
         });
 
 
-        /// click iframe icon 
+        /// click iframe icon
         $(document).on('click', '#iframeheaders .iframemainheadericon', function() {
             var iframeId = $(this).data('iframe-id');
             var iframefileId = $(this).data('iframefile-id');
@@ -568,7 +560,7 @@ $(document).ready(function () {
             }
 
         });
-        
+
         let isHoveringPopup = false;
 let isPopupClicked = false;
 
@@ -605,15 +597,15 @@ $(document).on('click', function(event) {
     }
 });
 
-        
-        
-        /// click iframe icon 
+
+
+        /// click iframe icon
          $(document).on('click', '#iframeheaders .iframemainheaderpopup', function(e) {
             e.preventDefault();
             var iframeId = $(this).data('iframe-id');
             var iframefileId = $(this).data('iframefile-id');
             //var popupcount = $(this).data('popup-count');
-           
+
                 $('#alliframelist #iframepopup'+iframefileId).removeClass('hidden');
                 $('#alliframelist #iframepopup'+iframefileId).removeClass('minimized');
                 $('#alliframelist #iframepopup'+iframefileId).addClass('fall-down');
@@ -623,11 +615,11 @@ $(document).on('click', function(event) {
                 //     $('#alliframelist #iframepopup'+iframefileId).removeClass('show');
 
                 // }
-                
+
 
         });
 
-        /// animate function 
+        /// animate function
         function animateIcon(icon, originalIcon, callback) {
             const $originalIcon = $(originalIcon);
             const $toolbar = $('#iframeheaders');
@@ -673,8 +665,8 @@ $(document).on('click', function(event) {
             }, 10);
         }
 
-      
-          /// Upload files 
+
+          /// Upload files
           $(document).on('click', '.context-menulist .uploadFiles', function (e) {
                 e.preventDefault();
                 $('#popupuploadfiles').removeClass('hidden');
@@ -684,8 +676,8 @@ $(document).on('click', function(event) {
                 $('#popupuploadfiles').addClass('hidden');
           });
 
-       
-      
+
+
        function createFolderFunction(){
             $.ajax({
                 url: createFolderRoute,
@@ -694,7 +686,7 @@ $(document).on('click', function(event) {
                 success: function (response) {
                     if(response.status){
                         toastr.success(response.message);
-                        
+
                     }else{
                         toastr.error(response.message);
                     }
@@ -714,7 +706,7 @@ $(document).on('click', function(event) {
             success: function (response) {
                 if(response.status){
                     toastr.success(response.message);
-                    
+
                 }else{
                     toastr.error(response.message);
                 }
@@ -738,7 +730,7 @@ $(document).on('click', function(event) {
                             closeallpopup();
                         $('#alliframelist').html(response.html);
                             $('#sortable-apps').html(response.html2);
-                            
+
                         if(response.filekey!=''){
                         $('#alliframelist #'+response.filekey).removeClass('hidden');
                         $('#alliframelist #'+response.filekey).addClass('show');
@@ -746,7 +738,7 @@ $(document).on('click', function(event) {
                     }else{
                         toastr.error(response.message);
                     }
-                    
+
 
                 },
                 error: function (xhr, status, error) {
@@ -754,13 +746,13 @@ $(document).on('click', function(event) {
                 }
             });
         }
-        
-        function closeiframe(appkey,filekey,fileid,filetype){
+
+        function closeiframe(appkey,filekey,fileid,apptype){
                $('#alliframelist #iframepopup'+fileid).removeClass('hidden');
                 $.ajax({
                 url: closeIframeRoute,
                 method: 'GET',
-                data: {appkey:appkey,filekey:filekey,filetype:filetype},
+                data: {appkey:appkey,filekey:filekey,apptype:apptype},
                 success: function (response) {
                     // Update the app list container with the updated list
                     $('#alliframelist').html(response.html);
@@ -771,7 +763,7 @@ $(document).on('click', function(event) {
                 }
             });
         }
-        
+
        function copyFunction(filepath,type,filetype,filekey){
             $.ajax({
             url: copyRoute,
@@ -792,7 +784,7 @@ $(document).on('click', function(event) {
                 console.error(xhr.responseText);
             }
         });
-         
+
        }
        function renameFunction(filekey,filetype,name){
             $.ajax({
@@ -802,7 +794,7 @@ $(document).on('click', function(event) {
             success: function (response) {
                 if(response.status){
                     toastr.success(response.message);
-                    
+
                 }else{
                     toastr.error(response.message);
                 }
@@ -841,7 +833,7 @@ $(document).on('click', function(event) {
             }
         });
      }
-     
+
 
        function deleteFunction(filekey){
             $.ajax({
@@ -854,11 +846,11 @@ $(document).on('click', function(event) {
                     showapathdetail(path);
                     toastr.success(response.message);
 
-                    
+
                 }else{
                     toastr.error(response.message);
                 }
-                
+
 
             },
             error: function (xhr, status, error) {
@@ -867,7 +859,7 @@ $(document).on('click', function(event) {
             });
        }
        function sortFunction(){
-         
+
        }
        function pasteFunction(filepath){
             $.ajax({
@@ -890,13 +882,13 @@ $(document).on('click', function(event) {
             }
         });
        }
-      
 
 
-       /// end file functions 
+
+       /// end file functions
 
 
-       ///upload code 
+       ///upload code
        $(document).ready(function() {
         $('#dropzone').on('click', function() {
             $('#file-input').click();
@@ -983,7 +975,7 @@ $(document).on('click', function(event) {
        // upload code end
 
 
-       // close all popup 
+       // close all popup
        function closeallpopup(){
             $('#search').addClass('hidden');
             $('#administrator').addClass('hidden');
@@ -1027,8 +1019,153 @@ $(document).on('click', function(event) {
 });
 
 
+//button press delete
+ //for keypress delete
+  $('html').keyup(function(e){
+      if(e.keyCode == 46) {
+          //alert('Delete key released');
+                const filekey = $('.selectedfile').attr('data-filekey');
+                const appkey = $('.selectedfile').attr('data-appkey');
+                const filepath = $('.selectedfile').attr('data-path');
+                const filetype = $('.selectedfile').attr('data-filetype');
+                const fileid = this.getAttribute('data-iframefile-id');
+                deleteFunction(filekey);
+                closeiframe(appkey,filekey,fileid,filetype);
+                $('.selectapp').removeClass('.selectedfile');
+      }
+  });
 
+  $(document).ready(function() {
+    //For Share Model
+    $(document).on('change', '#Users, #Groups, #Roles', function() {
+        const targetId = $(this).attr('id');
+        if ($(this).is(':checked')) {
+            $('#Div' + targetId).show();
+        } else {
+            $('#Div' + targetId).hide();
+        }
+    });
+    $(document).on('change', '#Everyone', function() {
+        if ($(this).is(':checked')) {
+            $('#Users, #Groups, #Roles').prop('checked', false);
+            $('#DivUsers, #DivGroups, #DivRoles').hide();
+        }
+    });
+    $(document).on('change', '#EditUsers, #EditGroups, #EditRoles', function() {
+        const targetId = $(this).attr('id');
+        if ($(this).is(':checked')) {
+            $('#Div' + targetId).show();
+        } else {
+            $('#Div' + targetId).hide();
+        }
+    });
+    $(document).on('change', '#EditEveryone', function() {
+        if ($(this).is(':checked')) {
+            $('#EditUsers, #EditGroups, #EditRoles').prop('checked', false);
+            $('#DivUsers, #DivEditGroups, #DivEditRoles').hide();
+        }
+    });
+    $(document).on('click', '#RandomPassword', function() {
+        console.log('here');
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let password = '';
+        for (let i = 0; i < 6; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            password += characters.charAt(randomIndex);
+        }
+        $('#Password').val(password);
+    });
 
-     
+    $(document).on('click', '#ClosePopup', function() {
+        $('#sharePopup').addClass('hidden');
+    });
 
+    //for copy share link
+    $(document).on("click", ".ClicktoCopy", function(e) {
+        e.preventDefault();
+        var copyText = $('input[name="url"]');
+        copyText.select();
+        document.execCommand('copy');
+    });
 
+    //for generate qr
+    // $(document).on("click", ".showqrcode", function(e) {
+    //     var elText = $('input[name="url"]').val();
+    //     var qrcode = new QRCode(document.getElementById("qrcode"), {
+    //         width: 100,
+    //         height: 100,
+    //     });
+
+    //     function makeCode() {
+    //         qrcode.makeCode(elText);
+    //     }
+    //     makeCode();
+    //     $('#QrCodeModal').removeClass('hidden');
+    // });
+    // $(document).on("click", ".hideqrmodal", function(e) {
+    //     $('#qrcode').html('');
+    //     $('#QrCodeModal').addClass('hidden');
+    // });
+});
+
+//for taskbar option of documention and onscreen guide
+$(document).ready(function () {
+    const trigger = $('.icon-trigger-dropdown');
+    const dropdownMenu = $('.taskbar-dropdown-menu');
+    let hideTimeout;
+
+    // Show dropdown on hover
+    trigger.on('mouseenter', function () {
+        clearTimeout(hideTimeout);
+        dropdownMenu.addClass('show');
+    });
+
+    trigger.add(dropdownMenu).on('mouseleave', function (e) {
+        hideTimeout = setTimeout(function () {
+            if (!$(e.relatedTarget).closest('.icon-trigger-dropdown, .taskbar-dropdown-menu').length) {
+                dropdownMenu.removeClass('show');
+            }
+        }, 100);
+    });
+
+    dropdownMenu.on('mouseenter', function () {
+        clearTimeout(hideTimeout);
+    });
+});
+
+//notification
+$(document).on('click','#notification-icon',function(event){
+    event.stopPropagation(); // Prevent event from bubbling up
+    console.log('clicked');
+    var notification = $('#NotiContainer');
+    if (notification.hasClass('hidden')) {
+        notification.removeClass('hidden'); // Remove 'hidden' class if it exists
+    } else {
+        notification.addClass('hidden'); // Add 'hidden' class if it doesn't exist
+    }
+});
+$(document).on('click', '.ReadThisNoti', function (event) {
+    var id = $(this).attr('data-id');
+    var listItem = $(this).closest('li');
+    $.ajax({
+        type: "GET",
+        url: base_url + "/read-noti/" + id,
+        success: function (response) {
+            if (response.status === 'success') {
+                listItem.remove();
+            }
+        }
+    });
+});
+$(document).on('click', '#MarkAllRead', function (event) {
+    $.ajax({
+        type: "GET",
+        url: base_url + "/read-all",
+        success: function (response) {
+            if (response.status === 'success') {
+                $('#ULNoti').html('');
+                $('#NotiContainer').addClass('hidden');
+            }
+        }
+    });
+});
