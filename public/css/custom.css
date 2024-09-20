@@ -1540,7 +1540,7 @@ input[type="button"]:focus {
 #curtain.open .left {
     animation-fill-mode: forwards;
     animation-name: left-curtain-opening;
-    animation-duration: 4s;
+    animation-duration: 2s;
     animation-timing-function: ease-in-out;
     animation-delay: 0s;
     animation-iteration-count: 1;
@@ -1550,7 +1550,7 @@ input[type="button"]:focus {
 #curtain.open .right {
     animation-fill-mode: forwards;
     animation-name: right-curtain-opening;
-    animation-duration: 4s;
+    animation-duration: 2s;
     animation-timing-function: ease-in-out;
     animation-delay: 0s;
     animation-iteration-count: 1;
