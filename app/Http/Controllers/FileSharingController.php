@@ -34,17 +34,26 @@ use Illuminate\Support\Facades\Log;
 class FileSharingController extends Controller
 {
     public function GetUrl(Request $request)
-    {
+    {       
         $groups = Group::get();
         $roles = Roles::get();
         $users = User::get();
         $now = Carbon::now();
+        // $viewCount = $downloadCount = 0;
         $today = $now->format('Y-m-d H:i:s');
         $filetype = $request->input('filetype');
         $id = base64UrlDecode($request->input('filekey'));  // file-id
         if ($filetype == "folder") {
             $file = File::find($id);
             $check = FileSharing::where('folders_id', $id)->first();
+            if($check){
+                $viewCount = $check->views;
+                $downloadCount = $check->downloads;
+                //$expiryDate = $check->expiry;
+            }else{
+                $viewCount = 0;
+                $downloadCount = 0;
+            } 
             if ($check) {
                 $paths = explode('/', $check->url);
                 $hashed = $paths[2];
@@ -55,6 +64,21 @@ class FileSharingController extends Controller
         else {
             $file = File::find($id);
             $check = FileSharing::where('files_id', $id)->first();
+            if($check){
+                $viewCount = $check->views;
+                $downloadCount = $check->downloads;
+                //$expiryDate = $check->expiry;
+                // $expiryDate = Carbon::parse($expiryDate);
+                // if ($expiryDate <= Carbon::parse($today)) {
+                //     $check->is_expired = 1;
+                //     $check->save();
+                // }
+            }else{
+                $viewCount = 0;
+                $downloadCount = 0;
+                // $expiryDate = 0;
+            }            
+            
             if ($check) {
                 $paths = explode('/', $check->url);
                 $hashed = $paths[2];
@@ -99,7 +123,9 @@ class FileSharingController extends Controller
             'selectedRolesEdit',
             'expiry',
             'password',
-            'oldId'
+            'oldId',
+            'viewCount',
+            'downloadCount'
         ))->render();
 
         return response()->json(['html' => $html]);
@@ -107,20 +133,20 @@ class FileSharingController extends Controller
 
     public function store(Request $request)
     {
-        try {
+        try {                     
             DB::beginTransaction();
             $filetype = $request->filetype; 
             $hashed = $request->id;
-
+            
             // Split by 'i' or 'o' and get the first part (the encoded ID part)
             $encodedPart = explode('i', $hashed)[0];
             $encodedPart = explode('o', $encodedPart)[0];
             
             // Decode the extracted part
             $decodedArray = Hashids::decode($encodedPart);
-            $id = $decodedArray[0];
+            $id = $decodedArray[0];   
             // $id = Hashids::decode(substr($hashed, 0, 8))[0]; 
-
+            
             if ($request->oldId == null) {
                 $share = new FileSharing();
                 if ($filetype == "folder") {
@@ -155,7 +181,7 @@ class FileSharingController extends Controller
                     $users[] = $value;
                 }
             }
-            foreach ($request->groups ?? [] as $value) {
+            foreach ($request->groups ?? [] as $value) {                
                 $Groups = new FileSharingGroups();
                 $Groups->groups_id = $value;
                 $Groups->file_sharing_id = $share->id;
@@ -165,14 +191,23 @@ class FileSharingController extends Controller
                 $Groups->save();
 
                 //push all users to array
-                $dbgroup = Group::find($value);
-                foreach ($dbgroup->users ?? [] as $user) {
+                // $dbgroup = Group::find($value);
+                // foreach ($dbgroup->users ?? [] as $user) {
+                //     if (!in_array($user->id, $users)) {
+                //         $users[] = $user->id;
+                //     }
+                // }
+
+                $dbgroup = User::where('groupID', $value)->get();
+                foreach ($dbgroup ?? [] as $user) {
                     if (!in_array($user->id, $users)) {
                         $users[] = $user->id;
                     }
                 }
+                
             }
             foreach ($request->roles ?? [] as $value) {
+                //echo 'ok';die;
                 $Roles = new FileSharingRoles();
                 $Roles->roles_id = $value;
                 $Roles->file_sharing_id = $share->id;
@@ -180,10 +215,17 @@ class FileSharingController extends Controller
                     $Roles->is_write = 1;
                 }
                 $Roles->save();
-
+                
                 //push all users to array
-                $dbrole = Roles::find($value);
-                foreach ($dbrole->users ?? [] as $user) {
+                // $dbrole = Roles::find($value);
+                // foreach ($dbrole->users ?? [] as $user) {
+                //     if (!in_array($user->id, $users)) {
+                //         $users[] = $user->id;
+                //     }
+                // }
+               
+                $dbrole = User::where('roleID', $value)->get();
+                foreach ($dbrole ?? [] as $user) {
                     if (!in_array($user->id, $users)) {
                         $users[] = $user->id;
                     }
@@ -240,16 +282,14 @@ class FileSharingController extends Controller
                     }
                 }
             }  
-            
-            if ($request->oldId == null) {
-                $url = url('/') . '/sharing/' . $hashed;
-                // $qrcode = QrCode::size(150)->generate($url);
+             
+            //if ($request->oldId == null) {                
+                $url = url('/') . '/sharing/' . $hashed; 
                 foreach ($users as $user) {
-                    // FileSharingMailSend::dispatch($user, $share, $qrcode, $url);
                     FileSharingMailSend::dispatch($user, $share, $url);
                 }
-            }
-
+            //}
+            
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
@@ -259,27 +299,40 @@ class FileSharingController extends Controller
         return redirect()->back()->with('success', "File shared successfully.");
     }
 
+    
+    public function updateFileDownloadCount(Request $request){
+        $id = $request->fileId; 
+        $file = FileSharing::where('files_id', $id)->first();
+        $viewDownload = ($file->downloads) + 1;
+        $file->downloads = $viewDownload;
+        $file->save();          
+        //return view('dashboard');       
+    }
+
+    public function updateFolderDownloadCount(Request $request){
+        $id = $request->fileId; 
+        $file = FileSharing::where('folders_id', $id)->first();
+        $viewDownload = ($file->downloads) + 1;
+        $file->downloads = $viewDownload;
+        $file->save();          
+        //return view('dashboard');       
+    }
+    
     public function FileView($id)
-    {
-        $data = FileSharing::where('url', 'LIKE', '%' . $id . '%')->first();
-        
-        //echo $type = substr($id, 8, 1) == 'i' ? "File" : "Folder"; die;
+    {     
+        $data = FileSharing::where('url', 'LIKE', '%' . $id . '%')->first();        
+        //$type = substr($id, 8, 1) == 'i' ? "File" : "Folder"; die;
         $encodedPart = explode('i', $id)[0];
         $encodedPart = explode('o', $encodedPart)[0];
         
         $decodedArray = Hashids::decode($encodedPart);
         $id = $decodedArray[0]; 
-
+        
         $file = File::find($id);
         $fileType = $file->folder;
-        if ($fileType == "1") {
-            $type = "Folder";
-        } else {
-            $type = "File";
-        }
-        // echo $id; die;
-        // $data = FileSharing::where('url', 'LIKE', '%' . $id . '%')->first();
-        // echo "<pre>"; print_r($data);die;
+
+        if ($fileType == "1") { $type = "Folder"; } else { $type = "File";}
+
         if ($data) {            
             $users = [];
             $users[] = $data->sharedby_users_id;
@@ -293,6 +346,7 @@ class FileSharingController extends Controller
                     }
                 }
             }
+
             $roles = FileSharingRoles::where('file_sharing_id', $id)->get();
             foreach ($roles ?? [] as $role) {
                 $dbrole = Roles::find($role->roles_id);
@@ -302,6 +356,7 @@ class FileSharingController extends Controller
                     }
                 }
             }
+
             $dbusers = FileSharingUsers::where('file_sharing_id', $id)->get();
             foreach ($dbusers ?? [] as $user) {
                 if (!in_array($user->users_id, $users)) {
@@ -313,21 +368,45 @@ class FileSharingController extends Controller
             if (in_array($currentuser->id, $users)) {
                 // return true;
                if ($id != null && $type == "File") {
+                    $fileShare = FileSharing::where('files_id', $id)->first();
+                    $today = Carbon::now();
+                    FileSharing::where('expiry', '<', $today)->where('expiry', '!=', null)->where('files_id', $id)->delete();
+                    FileSharingGroups::where('file_sharing_id', $fileShare->id)->delete();
+                    FileSharingRoles::where('file_sharing_id', $fileShare->id)->delete();
+                    FileSharingUsers::where('file_sharing_id', $fileShare->id)->delete();                  
+
                     $files = File::where('id', $id)->first();
                     $path = $files->path;
+
+                    $viewCount = ($fileShare->views) + 1;
+                    $fileShare->views = $viewCount;
+                    $fileShare->save();
                     return view('sharing.fileview', compact('data', 'files', 'path', 'id'));
                 } 
                 elseif ($id != null && $type == "Folder") {
+                    $fileShare = FileSharing::where('folders_id', $id)->first();
+                    $today = Carbon::now();
+                    FileSharing::where('expiry', '<', $today)->where('expiry', '!=', null)->where('files_id', $id)->delete();
+                    // FileSharingGroups::where('file_sharing_id', $fileShare->id)->delete();
+                    // FileSharingRoles::where('file_sharing_id', $fileShare->id)->delete();
+                    // FileSharingUsers::where('file_sharing_id', $fileShare->id)->delete();
+
                     $files = File::where('id', $id)->first();
                     $path = $files->path;
+
+                    //$file = FileSharing::where('folders_id', $id)->first();
+                    $viewCount = ($fileShare->views) + 1;
+                    $fileShare->views = $viewCount;
+                    $fileShare->save();                    
                     return view('sharing.folderview', compact('data', 'path', 'id'));
                 }
-            } else {
+            } 
+            else {
                 return response("You don't have permission to access this file or folder.", 200);
             }
         } 
         elseif (Auth::id() == $file->created_by) {
-            // echo $type; die;
+            $data = $file;
             if ($id != null && $type == "File") {
                 $files = File::where('id', $id)->first();
                 $path = $files->path;
@@ -337,10 +416,7 @@ class FileSharingController extends Controller
                 $files = File::where('id', $id)->first();
                 $path = $files->path;
                 return view('sharing.folderview', compact('data', 'path', 'id'));
-            }
-            // $data = $file;
-            // $path = $file->path;
-            // return view('sharing.folderview', compact('data', 'path'));
+            }           
         } 
         else {
             return response('Link not exist or expired.', 400);
@@ -367,7 +443,7 @@ class FileSharingController extends Controller
 
     public function pathfiledetail(Request $request)
     {
-        // Get the updated app list HTML
+        // Get the updated app list HTML 
         $filepath = urldecode($request->input('path'));
         $parentPath = empty($filepath) ? '/' : $filepath; // Adjust this path as needed
         $defaultfolders = array();
