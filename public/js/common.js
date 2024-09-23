@@ -313,8 +313,8 @@ $(document).ready(function () {
         $(document).on('click', '.context-menulist .resizeFunction', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            let filetype = $(this).data('type');
-            let sizeclasses = ['tiny','small','big','medium','oversize'];
+            let filetype = $(this).data('type');            
+            let sizeclasses = ['tiny','small','big','medium','oversize','list','detail','preview'];
             sizeclasses.forEach(element => {
                 $('.allapplist .app').removeClass(element+'-wraper');
                 $('.allapplist .app .imagewraper').removeClass(element);
