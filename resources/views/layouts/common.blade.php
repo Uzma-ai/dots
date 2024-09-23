@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'common.css') }}" />
+    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'tour.min.css') }}" />
+    
     <!-- <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'cs.css') }}" /> -->
     <script>
         var base_url = "{{ url('/') }}";
@@ -51,7 +53,7 @@
                         Documentation
                     </button>
                 </a>
-                <button type="button" value="OnScreen" tabindex="0"
+                <button type="button" value="OnScreen" tabindex="0" onclick="startGuide()"
                     class="taskbar-dropdown-item flex items-center gap-2">
                     <i class="ri-guide-line"></i>
                     OnScreen Guide
@@ -187,6 +189,9 @@
 
     <script src="{{ asset($constants['JSFILEPATH'] . 'common.js') }}"></script>
     <script src="{{ asset($constants['JSFILEPATH'] . 'taskbar.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'tourguidejs/tour.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'tourguidejs/desktop-tour.js') }}"></script>
+   
 
     @yield('scripts')
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
