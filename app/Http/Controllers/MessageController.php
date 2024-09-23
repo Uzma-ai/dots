@@ -20,28 +20,29 @@ class MessageController extends Controller
     public function getUsers()
     {
 
-        $users = User::all();
-        $groups = Group::all();
-        $roles = Roles::all();
+            $cid = auth()->user()->cID;
+        $users = User::where('cID',$cid)->where('cID', '!=', 0)->get();
+        $groups = Group::where('cID',$cid)->where('cID', '!=', 0)->get();
+        $roles = Roles::where('cID',$cid)->where('cID', '!=', 0)->get();
         return response()->json([
             'users' => $users,
             'groups' => $groups,
             'roles' => $roles,
         ]);
+
+
+
     }
 
     public function saveCommentOrReply(Request $request)
     {
-        // dd($request->all());exit;
+        
         try {
             // fetching file key
              $fileKey = $request->input('fileID');
-             dd($fileKey);
             if (!empty($fileKey)) {
             
             $fileKey = base64UrlDecode($fileKey);
-
-
 
             $group_id = $request->receiver_type == 'Group' ? $request->input('receiver_id') : null;
             $role_id = $request->receiver_type == 'Role' ? $request->input('receiver_id') : null;
@@ -60,10 +61,7 @@ class MessageController extends Controller
             $comment->sender = $request->input('user_id');
             $comment->message = $request->input('message');
             $comment->file_id = $fileKey;
-            // $comment->file_id = $request->input('fileID') ?: null;
-            // $comment->receiver_id = $request->input('receiver_id') ?: null;
             $comment->receiver_type = $request->input('receiver_type') ?: null;
-            
             $comment->group_id = $group_id;
             $comment->role_id = $role_id;
 
@@ -73,7 +71,6 @@ class MessageController extends Controller
             } else {
                 $responseMessage = 'Comment saved successfully.';
             }
-            // dd($comment);exit;
             $comment->save();
 
             if($request->receiver_type == 'User' && $request->input('receiver_id') != null){
@@ -84,77 +81,39 @@ class MessageController extends Controller
                     'comment_id' => $comment->id
                 ]);
 
-                /*$user = User::find($request->receiver_id);
-               $email = $user->email;
-              $cmt = $request->message;
-
-                //dd('>>>>>>>>>>');
-                Mail::send('mail-templates.Comment', compact('user','cmt'), function ($message) use ($email) {    
-            $message->to($email);
-            $message->subject("You are Tagged in a Comment.");
-            //CommentMailSend::dispatch($user, $email,$cmt);
-        });*/
-        //CommentMailSend::dispatch($request->input('receiver_id'),$request->input('message'));/
-
-
+                
     } else if($request->receiver_type == 'Role'){
-                //get list of role according to id 
         $list = User::where('roleID', $request->input('receiver_id'))->get();
         foreach ($list as $key) {
             $commentReciver = CommentReciver::create([
                 'receiver_id' => $key->id,
                 'comment_id' => $comment->id
             ]);
-
-             /*$user = User::find($key->id);
-               $email = $user->email;
-              $cmt = $request->message;
-
-                //dd('>>>>>>>>>>');
-                Mail::send('mail-templates.Comment', compact('user','cmt'), function ($message) use ($email) {    
-            $message->to($email);
-            $message->subject("You are Tagged in a Comment.");
-        });*/
     }
 
-} else if($request->receiver_type == 'Group'){
-                // dd(Auth::user()->name, $comment);
-                //get list of role according to id 
+    } else if($request->receiver_type == 'Group'){
     $list = User::where('groupID', $request->input('receiver_id'))->get();
     foreach ($list as $key) {
         $commentReciver = CommentReciver::create([
             'receiver_id' => $key->id,
             'comment_id' => $comment->id
         ]);
-                 //CommentMailSend::dispatch($key->id ,$request->input('message'));
-                     /*$user = User::find($key->id);
-               $email = $user->email;
-              $cmt = $request->message;
-
-                //dd('>>>>>>>>>>');
-                Mail::send('mail-templates.Comment', compact('user','cmt'), function ($message) use ($email) {    
-            $message->to($email);
-            $message->subject("You are Tagged in a Comment.");
-        });*/
-
+                 
     }
-
-}
+ 
+ }
 
             //sending mail 
-$cmt = $request->message;
-$auth = Auth::user()->name;
+                            $cmt = $request->message;
+                            $auth = Auth::user()->name;
 
-foreach ($request->user_array as $el) {
-    if ($el['type'] == 'User') {
-        $user = User::find($el['id']);
-        $email = $user->email;
+                            foreach ($request->user_array as $el) {
+                                if ($el['type'] == 'User') {
+                                    $user = User::find($el['id']);
+                                    $email = $user->email;
 
-                    /*Mail::send('mail-templates.Comment', compact('user', 'cmt'), function ($message) use ($email) {
-                        $message->to($email);
-                        $message->subject("You are Tagged in a Comment.");
-                    });*/
-                                        CommentMailSend::dispatch($user, $cmt, $auth);
+                   
+                                CommentMailSend::dispatch($user, $cmt, $auth);
 
                     //dump($email,'user',$el['id']);/
                 }
@@ -172,12 +131,7 @@ foreach ($request->user_array as $el) {
 
                         CommentMailSend::dispatch($user, $cmt, $auth);
 
-                        /*Mail::send('mail-templates.Comment', compact('user', 'cmt'), function ($message) use ($email) {
-                            $message->to($email);
-                            $message->subject("You are Tagged in a Comment.");
-                        });*/
-                       //dump($email,'role',$key->id);/
-                    }
+                         }
                 }
 
                 if ($el['type'] == 'Group') {
@@ -192,12 +146,7 @@ foreach ($request->user_array as $el) {
                         // $email = $user->email;
 
                         CommentMailSend::dispatch($user, $cmt, $auth);
-                        
-                        /*Mail::send('mail-templates.Comment', compact('user', 'cmt'), function ($message) use ($email) {
-                            $message->to($email);
-                            $message->subject("You are Tagged in a Comment.");
-                        });*/
-                        //dump($email,'group',$key->id);/
+                    
                     }
                 }
             }
@@ -210,7 +159,7 @@ foreach ($request->user_array as $el) {
             ]);
          }
         } catch (\Exception $e) {
-           dd($e);
+           
            Log::error("Error saving comment or reply: " . $e->getMessage());
            return response()->json([
             'success' => false,
@@ -220,64 +169,45 @@ foreach ($request->user_array as $el) {
        }
    }
 
-   public function getMessageData()
-   {
+    public function getMessageData(Request $request) {
+        
+        $fileKey = $request->input('fileID');
 
-    $fileKey = array();
-    if (Session::has('iframeapp')) {
-        $fileKey = Session('iframeapp');
-    
-    
+        $fileKey = base64UrlDecode($fileKey);   
 
-    if (array_key_exists('Mw', $fileKey)) {
-        $app = 'Mw';
-    } elseif (array_key_exists('Mg', $fileKey)) {
-        $app = 'Mg';
-    } elseif (array_key_exists('MQ', $fileKey)) {
-        $app = 'MQ';
-    } else {
-        $app = null;
-    }
-
-    if($app){
-        $fileKey = $fileKey[$app];
-        $fileKey = count($fileKey) > 0 ? base64UrlDecode($fileKey[0]['filekey']) : null;
-        /*  dd($fileKey);*/
-
-        $messages = Comment::where('file_id', $fileKey)->with('user')->with('group')->with('role')->with('commentRecivers.receiver')->get();
+        // Fetch messages based on fileKey
+        $messages = Comment::where('file_id', $fileKey)
+            ->where('parent', 0)
+            ->with('user')
+            ->with('group')
+            ->with('role')
+            ->with('commentRecivers.receiver')
+            ->with('replies.user')
+            ->get();
 
         return response()->json([
             'messages' => $messages,
         ]);
-    } 
-
-    
-
-
-}
-    return response()->json([
-        'messages' => null,
-
-    ]);
-}
-
-
-
-public function destroy(Request $request)
-{
-    $message = Comment::find($request->id);
-        // $message_2 = CommentReciver::select('comment_id', $request->id);
-// dump($message->toArray());
-    if ($message) {
-            // dd('88');
-            // $message_2->delete();
-        $message->delete();
-        return response()->json(['success' => true, 'message' => 'Message deleted successfully']);
     }
 
-    return response()->json(['success' => true, 'message' => 'Message not found']);
-        // return response()->json(['success' => false, 'message' => 'Message not found'], 404);
-}
+
+
+
+                    public function destroy(Request $request) 
+            {
+                $message = Comment::find($request->id);
+                if ($message) {
+                        // dd('88');
+                        // $message_2->delete();
+                    $message->delete();
+                    return response()->json(['success' => true, 'message' => 'Message deleted successfully']);
+                }
+
+                return response()->json(['success' => true, 'message' => 'Message not found']);
+                    // return response()->json(['success' => false, 'message' => 'Message not found'], 404);
+            }
+
+
 
 
 
