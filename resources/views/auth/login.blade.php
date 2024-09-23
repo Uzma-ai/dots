@@ -177,10 +177,7 @@
                                                 </div>
                                                 <div
                                                     class="container flex flex-col justify-center items-center space-y-5">
-                                                    <p id="VoiceInfo" class="pl-10 pr-5">Here's a quick story. Ready?
-                                                        Start recording now:<br />On a foggy night, an old man found a
-                                                        glowing coin on the street. When he picked it up, he was
-                                                        transported to a world of endless wonder.</p>
+                                                    <p id="VoiceInfo" class="pl-10 pr-5"></p>
                                                     <div class="mic-container mic-wrapper1 relative flex gap-3">
                                                         <button class="circle cursor-pointer has-tooltip"
                                                             id="recordButton1">
@@ -285,9 +282,7 @@
                                                 <p id="VoiceError">Failed to record voice</p>
                                             </div>
                                             <div class="container flex flex-col justify-center items-center space-y-5">
-                                                <p class="pl-10 pr-5">Speak: On a foggy night, an old man found a
-                                                    glowing coin on the street. When he picked it up, he was transported
-                                                    to a world of endless wonder.</p>
+                                                <p class="pl-10 pr-5">Speak: <span id="Quotes"></span></p>
                                                 <div class="mic-container mic-wrapper2 relative flex gap-3">
                                                     <button class="circle cursor-pointer has-tooltip"
                                                         id="recordButton2">
@@ -411,6 +406,17 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        //for random Quotes
+        $.ajax({
+            method: 'GET',
+            url: "{{ route('Quote') }}",
+            contentType: 'application/json',
+            success: function(result) {
+                $('#Quotes').html(result.quote);
+                $('#VoiceInfo').html(result.quote);
+            },
         });
 
         //for change username
@@ -1056,7 +1062,8 @@
                             success: function(response) {
                                 if (response.status == true) {
                                     if (response.user.avatar != null) {
-                                        var image = "{{ url('/') }}" + "/" + response.user.avatar;
+                                        var image = "{{ url('/') }}" + "/" + response.user
+                                            .avatar;
                                         $('#LoginImage').attr('src', image);
                                     }
                                     $('#WODAudio').get(0).play();

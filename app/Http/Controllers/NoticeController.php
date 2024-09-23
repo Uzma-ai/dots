@@ -31,11 +31,9 @@ class NoticeController extends Controller
 
     public function store(Request $request)
     {
-        if ($_SERVER['SERVER_NAME'] == 'localhost') {
-            $url = 'http://localhost:3000/received';
-        } else{
-            $url = 'https://node.sizaf.com/received';
-        }
+
+        $url = 'https://node.sizaf.com/received';
+
         try {
             DB::beginTransaction();
             $notice = new Notice();
@@ -144,11 +142,8 @@ class NoticeController extends Controller
 
     public function update(Request $request, $id)
     {
-        if ($_SERVER['SERVER_NAME'] == 'localhost') {
-            $url = 'http://localhost:3000/received';
-        } else{
-            $url = 'https://node.sizaf.com/received';
-        }
+        $url = 'https://node.sizaf.com/received';
+
         try {
             DB::beginTransaction();
             $notice = Notice::find($id);
@@ -291,11 +286,8 @@ class NoticeController extends Controller
 
     public function RunNow($id)
     {
-        if ($_SERVER['SERVER_NAME'] == 'localhost') {
-            $url = 'http://localhost:3000/received';
-        } else{
-            $url = 'https://node.sizaf.com/received';
-        }
+        $url = 'https://node.sizaf.com/received';
+
         $notice = Notice::find($id);
         $users = $this->getUsers($notice);
         if ($notice->type == "Weak hint") {

@@ -49,6 +49,7 @@ Route::middleware(['blockIP'])->group(function () {
     Route::post('imagelogin', [LoginController::class, 'ImageLogin'])->name('ImageLogin');
     Route::post('voicelogin', [LoginController::class, 'VoiceLogin'])->name('VoiceLogin');
     Route::get('checkfacedata', [LoginController::class, 'CheckFaceData'])->name('CheckFaceData');
+    Route::get('quote', [LoginController::class, 'Quote'])->name('Quote');
 
     Route::get('auth/google', [LoginController::class, 'GoogleLogin'])->name('GoogleLogin');
     Route::get('auth/google/callback', [LoginController::class, 'GoogleCallback'])->name('GoogleCallback');
@@ -63,7 +64,7 @@ Route::middleware(['blockIP'])->group(function () {
 
         //file & folder sharing
         Route::resource('fileshare',FileSharingController::class);
-        Route::get('getUrl',[FileSharingController::class, 'getUrl'])->name('getUrl');        
+        Route::get('getUrl',[FileSharingController::class, 'getUrl'])->name('getUrl');
         Route::get('sharepathdetail', [FileSharingController::class, 'pathfiledetail'])->name('sharepathdetail');
         Route::get('sharing/{id}',[FileSharingController::class,'FileView'])->middleware('filesharingpassword')->name('FileSharing');
         Route::get('sharingp/{path?}', [FileSharingController::class, 'index2'])->where('path', '.*');
@@ -77,7 +78,7 @@ Route::middleware(['blockIP'])->group(function () {
         Route::post('cancel-share2', [FileSharingController::class, 'cancelShare2'])->name('cancel.share2');
         Route::post('updateFileDownloadCount', [FileSharingController::class, 'updateFileDownloadCount'])->name('updateFileDownloadCount');
         Route::post('updateFolderDownloadCount', [FileSharingController::class, 'updateFolderDownloadCount'])->name('updateFolderDownloadCount');
-        
+
 
         Route::resource('notice',NoticeController::class);
         Route::get('runnow/{id}',[NoticeController::class, 'RunNow']);
@@ -111,7 +112,7 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('export-operation', [OperationLogController::class, 'export'])->name('export.operations');
     //END
     Route::delete('delete-message', [MessageController::class, 'destroy'])->name('delete-message');
-    // Light app start 
+    // Light app start
     Route::get('lightapp', [LightAppController::class, 'index'])->name('lightapp');
     Route::post('createlightapp', [LightAppController::class, 'createLightApp'])->name('createlightapp');
     Route::post('updatelightapp', [LightAppController::class, 'updateLightApp'])->name('updatelightapp');
@@ -213,7 +214,7 @@ Route::middleware(['blockIP'])->group(function () {
     ->where('file', '.*')->name('dotsvideoplayer');
     Route::get('dotsdocumentviewer/{file}', [FileManagerController::class, 'dotsDocumentViewer'])->where('name', '.*')
     ->where('file', '.*')->name('dotsdocumentviewer');
-    //comments 
+    //comments
     Route::get('getUsers', [MessageController::class, 'getUsers'])->name('getUsers');
     Route::post('saveComment', [MessageController::class, 'saveCommentOrReply'])->name('saveComment');
     // Route::post('sendReply', [MessageController::class, 'sendReply'])->name('sendReply');
