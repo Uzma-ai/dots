@@ -77,21 +77,20 @@
                             <div class="flex-grow border-t border-c-light-gray w-16 sm:w-20"></div>
                         </div>
                         <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-
                             @if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com' || $_SERVER['SERVER_NAME'] == 'localhost')
-                                <a href="{{ url('/') }}/public/apps/Sizaf Server/Dots.apk" download
+                                <a href="https://sizaf.com/DotsApkAndExe/Sizaf_Server.apk" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
                                     mobile</a>
-                                <a href="{{ url('/') }}/public/apps/Sizaf Server/Sizaf Dots.zip" download
+                                <a href="https://sizaf.com/DotsApkAndExe/Sizaf_server_windows.exe" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
                             @elseif ($_SERVER['SERVER_NAME'] == 'dev-ubt-app04.dev.orientdots.net')
-                                <a href="{{ url('/') }}/public/apps/Dots Server/Dots.apk" download
+                                <a href="https://sizaf.com/DotsApkAndExe/Dots_Server.apk" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
                                     mobile</a>
-                                <a href="{{ url('/') }}/public/apps/Dots Server/Sizaf Dots.zip" download
+                                <a href="https://sizaf.com/DotsApkAndExe/Dots_server_windows.exe" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
                             @endif
