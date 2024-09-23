@@ -13,7 +13,7 @@
               aria-label="Close"
             ></i>
           </div>
-          <form autocomplete="on" action="{{ route('role-update',['id' => $role->id]) }}" method="POST">
+          <form autocomplete="on" id="editroles-form" action="{{ route('role-update',['id' => $role->id]) }}" method="POST">
             @csrf
           <div
             class="p-4 overflow-y-auto scroll"
@@ -69,6 +69,7 @@
                       class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl outline-none pl-4"
                       type="number"
                       placeholder="Please upload file size" value="{{ $role->upload_limit }}" required
+                      min="0" max="400"
                     />
                     <div
                       class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray w-10 rounded-r-xl pl-2"
@@ -91,7 +92,7 @@
                      name="description"
                     class="w-full p-2 bg-c-lighten-gray border border-gray rounded-xl"
                     rows="4" 
-                  >{{ $role->description }}"</textarea>
+                  >{{ $role->description }}</textarea>
                 </div>
               </div>
               <hr class="my-4" />
@@ -109,7 +110,8 @@
                     <h3 class="block font-bold text-c-black">Assign Permission:</h3>
                   </div>
                   <div class="md:col-span-10 md:pr-28">
-                      <select id="roleID" name="permissionID" class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <div class="custom-dropdown w-full">
+                      <select id="roleID" name="permissionID" >
                       <option value="">Select Permission</option>
                          @foreach($permissions as $permission)
                          <option value="{{ $permission->id }}" @php echo ($permission->id == $role->permissionID)?'selected':'' @endphp>{{ $permission->name }}</option>
@@ -127,10 +129,22 @@
           </form>
         </div>
       </div>
-
+<script src="{{ asset($constants['JSFILEPATH'] . 'custom-dropdown.js') }}"></script>
 <script>
   
   $('.roles-edit-close').on('click', function (e) {
           $('.role-edit-modal').hide();
+    });
+ 
+ //roles edit form validation
+    document.getElementById('editroles-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      if (FormValidation.validateForm(form)) {
+        console.log('Form submitted successfully');
+        document.getElementById("editroles-form").submit();
+      } else {
+        console.log('Form validation failed');
+      }
     });
 </script>

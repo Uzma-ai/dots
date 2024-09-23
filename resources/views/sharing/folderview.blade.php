@@ -19,12 +19,12 @@
     <main class="w-full h-full bg-c-gray-5">
         <nav class="bg-c-white h-10 flex items-center justify-end">
             <div class="flex items-center justify-center cursor-pointer">
-                <span class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200 backButton"><i
+                <!-- <span class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200 backButton"><i
                         class="ri-arrow-left-line text-c-time"></i></span>
                 <span class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200"><i
-                        class="ri-download-2-line text-c-time"></i></span>
-                <span class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200 ShowQrCode"><i
-                        class="ri-qr-code-line text-c-time"></i></span>
+                        class="ri-download-2-line text-c-time"></i></span> -->
+                <!-- <span class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200 ShowQrCode"><i
+                        class="ri-qr-code-line text-c-time"></i></span> -->
                 <a href="{{ route('dashboard') }}"><span
                         class="border-l border-c-lightgray py-2 px-4 hover:bg-gray-200"><i
                             class="ri-home-2-line text-c-time"></i></span></a>
@@ -37,27 +37,27 @@
                     <div class="loaddetails">
 
                     </div>
-                    <div id="alliframelist">
+                    <!-- <div id="alliframelist">
 
                     </div>
                     <header id="iframeheaders"
                         class="transparent p-2 text-white flex justify-center items-center fixed top-0 left-0 right-0 mainiframeiconheader mainscreen">
 
-                    </header>
+                    </header> -->
                 </div>
                 <div class="bg-c-white w-60 h-full float-right px-2 hidden lg:block">
                     <div class="flex flex-col items-center justify-center gap-2 border-b border-c-lightgray py-8">
                         <img class="rounded-full w-20 shadow-current" style="object-fit: none"
                             src="{{ asset($constants['IMAGEFILEPATH'] . 'folder.png') }}" alt="user-img">
-                        <h3 class="text-c-black text-base font-normal">Ad*** <span class="text-sm text-c-medium-gray">Of
-                                sharing</span></h3>
+                        <h3 class="text-c-black text-base font-normal">Folder <span class="text-sm text-c-medium-gray">
+                                Sharing</span></h3>
                     </div>
                     <div class="mt-3">
                         <div class="flex items-start flex-wrap p-1">
                             <h5 class="text-xs text-c-time w-1/3">Title:</h5>
                             <span class="text-xs text-c-black font-bold break-words w-2/3">{{ $path }}</span>
                         </div>
-                        <div class="flex items-center p-1">
+                        <!-- <div class="flex items-center p-1">
                             <h5 class="text-xs text-c-time w-1/3">Time:</h5>
                             <span class="text-xs text-c-black font-normal break-words w-2/3">8 Minutes ago</span>
                         </div>
@@ -72,19 +72,19 @@
                         <div class="flex items-center p-1">
                             <h5 class="text-xs text-c-time w-1/3">Download:</h5>
                             <span class="text-xs text-c-black font-normal break-words w-2/3">0</span>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
-        <div id="QrCodeModal" class="fixed inset-0 flex items-center justify-center hidden bg-gray-800 bg-opacity-50">
+        <!-- <div id="QrCodeModal" class="fixed inset-0 flex items-center justify-center hidden bg-gray-800 bg-opacity-50">
             <div class="bg-c-white rounded-xl p-10 shadow-lg max-w-7xl max-h-screen overflow-y-auto">
                 <div id="qrcode" style="width: 100px; height: 100px; margin-bottom: 15px"></div>
                 <div class="flex items-center justify-center">
                     <button class="bg-c-light-gray text-c-white px-6 py-2 rounded-full hideqrmodal">Close</button>
                 </div>
             </div>
-        </div>
+        </div> -->
         <footer class="w-full h-8 bg-c-white flex items-center justify-center">
             <span class="text-c-time font-light text-xs">- Powered by DOTS</span>
         </footer>
@@ -95,6 +95,7 @@
 <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
 <script src="{{ asset($constants['JSFILEPATH'] . 'qrcode.js') }}"></script>
 <script>
+    const updateFolderDownloadCount = @json(route('updateFolderDownloadCount'));
     const showFileDetail = @json(route('sharepathdetail'));
     let path = @json($path);
     document.addEventListener("DOMContentLoaded", () => {
@@ -131,7 +132,7 @@
                     apptype: apptype,
                     isfile: isfile
                 };
-                openiframe(iframedata)
+                //openiframe(iframedata)
             } else {
                 let url = $(this).attr('href');
                 window.location.href = url;
@@ -209,24 +210,35 @@
         $(document).on('click', '.backButton', function(e) {
             e.preventDefault();
             window.history.back();
+        });        
+    });
+
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
-        $(document).on('click', '.ShowQrCode', function(e) {
-            e.preventDefault();
-            var elText = $('input[name="url"]').val();
-            var qrcode = new QRCode(document.getElementById("qrcode"), {
-                width: 100,
-                height: 100,
+
+        $(document).on('click', '.files', function(e) {
+            var fileId = $(this).data('file-id');
+            var fileUrl = $(this).attr('href');  
+
+            $.ajax({
+                url: updateFolderDownloadCount,  
+                method: 'POST',
+                data: {                    
+                    fileId: fileId
+                },
+                success: function(response) {
+                    window.location.href = fileUrl; 
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
             });
 
-            function makeCode() {
-                qrcode.makeCode(elText);
-            }
-            makeCode();
-            $('#QrCodeModal').removeClass('hidden');
-        });
-        $(document).on("click", ".hideqrmodal", function(e) {
-            $('#qrcode').html('');
-            $('#QrCodeModal').addClass('hidden');
+            e.preventDefault();  
         });
     });
 </script>

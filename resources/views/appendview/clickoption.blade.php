@@ -1,9 +1,9 @@
 @php
     $mergedPermissionContextMapping = [
-        'download' => ['download'],
+        'download' => ['download', 'print'],
         'upload' => ['upload'],
-        'edit' => ['new folder','new file', 'rename', 'paste', 'unzip', 'compress'],
-        'delete' => ['cut', 'copy', 'move','delete'],
+        'edit' => ['new folder','new file', 'rename', 'unzip', 'compress'],
+        'delete' => ['cut', 'copy', 'paste', 'delete', 'restore'],
         'share' => ['share'],
         'comments' => ['comments'],
     ];

@@ -39,27 +39,30 @@
                 </div>
             </header>
         </div>
-        <div class="flex items-center gap-8 w-48 justify-end pr-5">
+        <div class="flex items-center gap-8 w-48 justify-end pr-5 relative">
             <i id="search-icon" class="ri-search-line icon-color"></i>
             <i id="pinned" class="ri-pushpin-line icon-color"></i>
+            <i id="notification-icon" class="ri-notification-3-line icon-color"></i>
             <button class="icon-trigger-dropdown cursor-default">
                 <i class="ri-question-line icon-color"></i>
             </button>
             <div class="taskbar-dropdown-menu">
                 <a href="https://desktop2.sizaf.com/docs">
-                    <button type="button" value="Documentation" tabindex="0"
-                        class="taskbar-dropdown-item flex items-center gap-2">
+                    <button id="doc-button" type="button" value="Documentation" tabindex="0" class="taskbar-dropdown-item flex items-center gap-2">
                         <i class="ri-book-marked-line"></i>
-                        Documentation
                     </button>
                 </a>
-                <button type="button" value="OnScreen" tabindex="0" onclick="startGuide()"
+                <button id='guide-button' type="button" value="OnScreen" tabindex="0" onclick="startGuide()"
                     class="taskbar-dropdown-item flex items-center gap-2">
                     <i class="ri-guide-line"></i>
-                    OnScreen Guide
                 </button>
             </div>
-            <i id="notification-icon" class="ri-notification-3-line icon-color"></i>
+            <div id="doc-tooltip" class="hidden absolute py-1 px-2 text-start text-xs top-9 right-12 z-10 bg-white border rounded-md border-c-yellow font-normal">
+                Documentation
+            </div>
+            <div id="guide-tooltip" class="hidden absolute py-1 px-2 text-start text-xs right-12 z-10 bg-white border rounded-md border-c-yellow font-normal" style="top: 4.3rem;">
+                Guide
+            </div>
         </div>
     </div>
     <!-- Taskbar End -->
@@ -157,11 +160,7 @@
 
     @yield('content')
 
-    <div id="shareFilesFolderModal"></div>
-
     <!--end here -->
-
-
 
     <script>
         const desktopapp = @json(route('desktopapp'));
@@ -185,7 +184,7 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
 
-    <script src="{{ asset($constants['JSFILEPATH'] . 'animation.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'].'animation.js') }}"></script>
 
     <script src="{{ asset($constants['JSFILEPATH'] . 'common.js') }}"></script>
     <script src="{{ asset($constants['JSFILEPATH'] . 'taskbar.js') }}"></script>
@@ -193,14 +192,92 @@
     <script src="{{ asset($constants['JSFILEPATH'] . 'tourguidejs/desktop-tour.js') }}"></script>
    
 
-    @yield('scripts')
+    <!------------------------------------------------share start ---------------------------------------->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
-    <!-- <script src="{{ asset($constants['JSFILEPATH'] . 'taskbar.js') }}"></script> -->
 
+    <div id="shareFilesFolderModal"></div>
 
+    <script>
+        $(document).ready(function() {
+            //For Share Model
+            $(document).on('change', '#Users, #Groups, #Roles', function() {
+                const targetId = $(this).attr('id');
+                if ($(this).is(':checked')) {
+                    $('#Div' + targetId).show();
+                } else {
+                    $('#Div' + targetId).hide();
+                }
+            });
+            $(document).on('change', '#Everyone', function() {
+                if ($(this).is(':checked')) {
+                    $('#Users, #Groups, #Roles').prop('checked', false);
+                    $('#DivUsers, #DivGroups, #DivRoles').hide();
+                }
+            });
+            $(document).on('change', '#EditUsers, #EditGroups, #EditRoles', function() {
+                const targetId = $(this).attr('id');
+                if ($(this).is(':checked')) {
+                    $('#Div' + targetId).show();
+                } else {
+                    $('#Div' + targetId).hide();
+                }
+            });
+            $(document).on('change', '#EditEveryone', function() {
+                if ($(this).is(':checked')) {
+                    $('#EditUsers, #EditGroups, #EditRoles').prop('checked', false);
+                    $('#DivUsers, #DivEditGroups, #DivEditRoles').hide();
+                }
+            });
+            $(document).on('click', '#RandomPassword', function() {
+                console.log('here');
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let password = '';
+                for (let i = 0; i < 6; i++) {
+                    const randomIndex = Math.floor(Math.random() * characters.length);
+                    password += characters.charAt(randomIndex);
+                }
+                $('#Password').val(password);
+            });
 
+            $(document).on('click', '#ClosePopup', function() {
+                $('#sharePopup').addClass('hidden');
+            });
 
+            //for copy share link
+            $(document).on("click", ".ClicktoCopy", function(e) {
+                e.preventDefault();
+                var copyText = $('input[name="url"]');
+                copyText.select();
+                document.execCommand('copy');
+            });
+        });
+    </script>
+    <!------------------------------------------------share end ---------------------------------------->
+
+    
+
+    @yield('scripts')
+   
+    <script>
+     $('#doc-button').hover(
+                function() {
+                    $('#doc-tooltip').stop(true, true).fadeIn();
+                },
+                function() {
+                    $('#doc-tooltip').stop(true, true).fadeOut();
+                }
+            );
+
+            $('#guide-button').hover(
+                function() {
+                    $('#guide-tooltip').stop(true, true).fadeIn();
+                },
+                function() {
+                    $('#guide-tooltip').stop(true, true).fadeOut();
+                }
+            );
+    </script>
 </body>
 
 </html>

@@ -338,8 +338,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="{{ asset($constants['JSFILEPATH'] . 'sidebar.js') }}"></script>
     <script src="{{ asset($constants['JSFILEPATH'] . 'select-dropdown.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'custom-dropdown.js') }}"></script>
     <script src="{{ asset($constants['JSFILEPATH'] . 'tabs.js') }}"></script>
     <script src="{{ asset($constants['JSFILEPATH'] . 'taskbar.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'formValidation.js') }}"></script>
     @yield('scripts')
 </body>
 
