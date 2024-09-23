@@ -86,7 +86,7 @@
                                 <a href="{{ url('/') }}/public/apps/Sizaf Server/Sizaf Dots.zip" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
-                            @elseif ($_SERVER['SERVER_NAME'] == 'dev-ubt-app04.dev.orientdots.net1')
+                            @elseif ($_SERVER['SERVER_NAME'] == 'dev-ubt-app04.dev.orientdots.net')
                                 <a href="{{ url('/') }}/public/apps/Dots Server/Dots.apk" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
