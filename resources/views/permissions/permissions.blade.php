@@ -217,7 +217,7 @@
                     value="view"
                   />
                   <span class="text-c-black mt-0.5 font-normal">
-                    View: View
+                  View
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -228,7 +228,7 @@
                     value="preview"
                   />
                   <span class="text-c-black mt-0.5 font-normal">
-                  Preview: Preview
+                  Preview
                   </span
                   >
                 </div>
@@ -240,7 +240,7 @@
                     value="download"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Download: Download
+                    >Download
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -251,7 +251,7 @@
                     value="upload"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Upload: Upload
+                    >Upload
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -262,7 +262,7 @@
                     value="edit"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Edit: Edit, New File, New Folder, Rename 
+                    >Add / Edit : Edit, New File, New Folder, Rename 
                     <!-- unzip, compress -->
                   </span>
                 </div>
@@ -274,7 +274,7 @@
                     value="delete"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Delete: Cut, Copy, Paste, Delete, Restore
+                    >Action : Cut, Copy, Paste, Delete, Restore
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -282,10 +282,10 @@
                     type="checkbox"
                     class="d-checkbox mt-1"
                     name="permissions[]"
-                    value="share"
+                    value="share" 
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Share: Share 
+                    >Share
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -296,7 +296,7 @@
                     value="comments"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Comments: Comments
+                    >Comments
                   </span>
                 </div>
                 <!-- <div class="flex items-start justify-start gap-1 sm:gap-3">
@@ -350,7 +350,7 @@
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-view">
-                    <p class="text-c-black">View/Preview</p>
+                    <p class="text-c-black">View</p>
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-delete">
@@ -360,14 +360,14 @@
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-mass-upload">
                     <p class="text-c-black">Bulk-Upload</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
+                    <!-- <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-rollback">
                     <p class="text-c-black">Rollback</p>
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-permanent-delete">
                     <p class="text-c-black">Hard Delete</p>
-                  </div>
+                  </div> -->
                    
                   </div>
                 </div>
@@ -398,13 +398,13 @@
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-view">
-                    <p class="text-c-black">View/Preview</p>
+                    <p class="text-c-black">View</p>
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-delete">
                     <p class="text-c-black">Delete</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
+                    <!-- <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-mass-upload">
                     <p class="text-c-black">Bulk-Upload</p>
                   </div>
@@ -415,7 +415,7 @@
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-permanent-delete">
                     <p class="text-c-black">Hard Delete</p>
-                  </div>
+                  </div> -->
                   </div>
                 </div>
               </div>
@@ -445,13 +445,13 @@
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-view">
-                    <p class="text-c-black">View/Preview</p>
+                    <p class="text-c-black">View</p>
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-delete">
                     <p class="text-c-black">Delete</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
+                    <!-- <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-mass-upload">
                     <p class="text-c-black">Bulk-Upload</p>
                   </div>
@@ -462,7 +462,7 @@
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-permanent-delete">
                     <p class="text-c-black">Hard Delete</p>
-                  </div>
+                  </div> -->
                   </div>
                 </div>
               </div>
