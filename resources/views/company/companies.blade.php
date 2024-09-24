@@ -122,7 +122,7 @@
             </div>
             <!-- Scrollable content -->
             <div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 10rem)">
-              <form class="flex flex-col gap-4 text-sm" action="{{ route('company-create') }}" method="POST">
+              <form class="flex flex-col gap-4 text-sm" id="company-form" action="{{ route('company-create') }}" method="POST">
                  @csrf
                 <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                   <div class="md:col-span-2 flex items-center">
@@ -137,8 +137,9 @@
                       type="text"
                       placeholder="Please enter company name"
                       autocomplete="name"
-                      name="name" required
+                      name="name" data-validate="name"
                     />
+                    <small class="text-red-500 mt-1 block"></small>
                   </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
@@ -153,7 +154,7 @@
                       class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
                       type="text"
                       placeholder="www.example.com"
-                      name="website" 
+                      name="website" required
                     />
                   </div>
                 </div>
@@ -170,8 +171,9 @@
                       type="email"
                       placeholder="Please enter email"
                       autocomplete="email"
-                      name="email" required
+                      name="email" data-validate="email"
                     />
+                    <small class="text-red-500 mt-1 block"></small>
                   </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
@@ -488,6 +490,19 @@ function populateTable(term='') {
  @endif
 
 });
+
+
+//group add form validation
+    document.getElementById('company-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      if (FormValidation.validateForm(form)) {
+        console.log('Form submitted successfully');
+        document.getElementById("company-form").submit();
+      } else {
+        console.log('Form validation failed');
+      }
+    });
 </script>
 
 @endsection
