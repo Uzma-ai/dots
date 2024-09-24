@@ -77,21 +77,20 @@
                             <div class="flex-grow border-t border-c-light-gray w-16 sm:w-20"></div>
                         </div>
                         <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-
                             @if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com' || $_SERVER['SERVER_NAME'] == 'localhost')
-                                <a href="{{ url('/') }}/public/apps/Sizaf Server/Dots.apk" download
+                                <a href="https://sizaf.com/DotsApkAndExe/Sizaf_Server.apk" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
                                     mobile</a>
-                                <a href="{{ url('/') }}/public/apps/Sizaf Server/Sizaf Dots.zip" download
+                                <a href="https://sizaf.com/DotsApkAndExe/Sizaf_server_windows.exe" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
-                            @elseif ($_SERVER['SERVER_NAME'] == 'dev-ubt-app04.dev.orientdots.net1')
-                                <a href="{{ url('/') }}/public/apps/Dots Server/Dots.apk" download
+                            @elseif ($_SERVER['SERVER_NAME'] == 'dev-ubt-app04.dev.orientdots.net')
+                                <a href="https://sizaf.com/DotsApkAndExe/Dots_Server.apk" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
                                     mobile</a>
-                                <a href="{{ url('/') }}/public/apps/Dots Server/Sizaf Dots.zip" download
+                                <a href="https://sizaf.com/DotsApkAndExe/Dots_server_windows.exe" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
                             @endif
@@ -177,10 +176,7 @@
                                                 </div>
                                                 <div
                                                     class="container flex flex-col justify-center items-center space-y-5">
-                                                    <p id="VoiceInfo" class="pl-10 pr-5">Here's a quick story. Ready?
-                                                        Start recording now:<br />On a foggy night, an old man found a
-                                                        glowing coin on the street. When he picked it up, he was
-                                                        transported to a world of endless wonder.</p>
+                                                    <p id="VoiceInfo" class="pl-10 pr-5"></p>
                                                     <div class="mic-container mic-wrapper1 relative flex gap-3">
                                                         <button class="circle cursor-pointer has-tooltip"
                                                             id="recordButton1">
@@ -285,9 +281,7 @@
                                                 <p id="VoiceError">Failed to record voice</p>
                                             </div>
                                             <div class="container flex flex-col justify-center items-center space-y-5">
-                                                <p class="pl-10 pr-5">Speak: On a foggy night, an old man found a
-                                                    glowing coin on the street. When he picked it up, he was transported
-                                                    to a world of endless wonder.</p>
+                                                <p class="pl-10 pr-5">Speak: <span id="Quotes"></span></p>
                                                 <div class="mic-container mic-wrapper2 relative flex gap-3">
                                                     <button class="circle cursor-pointer has-tooltip"
                                                         id="recordButton2">
@@ -411,6 +405,17 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        //for random Quotes
+        $.ajax({
+            method: 'GET',
+            url: "{{ route('Quote') }}",
+            contentType: 'application/json',
+            success: function(result) {
+                $('#Quotes').html(result.quote);
+                $('#VoiceInfo').html(result.quote);
+            },
         });
 
         //for change username
@@ -1056,7 +1061,8 @@
                             success: function(response) {
                                 if (response.status == true) {
                                     if (response.user.avatar != null) {
-                                        var image = "{{ url('/') }}" + "/" + response.user.avatar;
+                                        var image = "{{ url('/') }}" + "/" + response.user
+                                            .avatar;
                                         $('#LoginImage').attr('src', image);
                                     }
                                     $('#WODAudio').get(0).play();

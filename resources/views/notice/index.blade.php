@@ -308,12 +308,7 @@
         </div>
     </div>
     @php
-        $host = $_SERVER['SERVER_NAME'];
-        if ($_SERVER['SERVER_NAME'] == 'localhost') {
-            $url = 'http://localhost:3000';
-        } else {
-            $url = 'https://node.sizaf.com';
-        }
+        $url = 'https://node.sizaf.com';
     @endphp
 @endsection
 @section('scripts')

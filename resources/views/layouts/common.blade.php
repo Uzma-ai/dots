@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'common.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'tour.min.css') }}" /> --}}
+
     <!-- <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'cs.css') }}" /> -->
     <script>
         var base_url = "{{ url('/') }}";
@@ -50,7 +52,8 @@
                         <i class="ri-book-marked-line"></i>
                     </button>
                 </a>
-                <button id="guide-button" type="button" value="OnScreen" tabindex="0" class="taskbar-dropdown-item flex items-center gap-2">
+                <button id='guide-button' type="button" value="OnScreen" tabindex="0" onclick="startGuide()"
+                    class="taskbar-dropdown-item flex items-center gap-2">
                     <i class="ri-guide-line"></i>
                 </button>
             </div>
@@ -183,8 +186,11 @@
 
     <script src="{{ asset($constants['JSFILEPATH'].'animation.js') }}"></script>
 
-    <script src="{{ asset($constants['JSFILEPATH'].'common.js') }}"></script>
-    <script src="{{ asset($constants['JSFILEPATH'].'taskbar.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'common.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'taskbar.js') }}"></script>
+    {{-- <script src="{{ asset($constants['JSFILEPATH'] . 'tourguidejs/tour.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'tourguidejs/desktop-tour.js') }}"></script> --}}
+
 
     <!------------------------------------------------share start ---------------------------------------->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
@@ -249,10 +255,10 @@
     </script>
     <!------------------------------------------------share end ---------------------------------------->
 
-    
+
 
     @yield('scripts')
-   
+
     <script>
      $('#doc-button').hover(
                 function() {
