@@ -20,6 +20,7 @@ use App\Http\Controllers\RolesController;
 use App\Jobs\ConfigClearJob;
 use Illuminate\Support\Facades\Artisan;
 
+date_default_timezone_set('Asia/Calcutta');
 
 Route::get('/', function () {
     return redirect(route('dashboard'));

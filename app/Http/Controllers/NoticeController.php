@@ -31,9 +31,7 @@ class NoticeController extends Controller
 
     public function store(Request $request)
     {
-
         $url = 'https://node.sizaf.com/received';
-
         try {
             DB::beginTransaction();
             $notice = new Notice();

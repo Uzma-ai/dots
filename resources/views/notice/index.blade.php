@@ -465,7 +465,6 @@
             });
         });
         var url = "{{ $url }}";
-        var host = "{{ $host }}";
         var socket = io(url);
         $(document).on('submit', '.ajax-submit', function(e) {
             e.preventDefault();

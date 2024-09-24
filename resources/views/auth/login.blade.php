@@ -374,8 +374,8 @@
         $randomNumber = rand(1, 3);
     @endphp
     <div class="hidden">
-        <audio src="{{ asset($constants['IMAGEFILEPATH'] . 'hhay' . $randomNumber . '.mp3') }}"
-            id="HHAYAudio"></audio>
+        <audio src="{{ asset($constants['IMAGEFILEPATH'] . 'read_' . $randomNumber . '.mp3') }}"
+            id="ReadBelow"></audio>
         <audio src="{{ asset($constants['IMAGEFILEPATH'] . 'wod' . $randomNumber . '.mp3') }}"
             id="WODAudio"></audio>
     </div>
@@ -864,7 +864,7 @@
                                     if (response.flag == true) {
                                         toastr.success("Face authentication match, Check Voice.");
                                     }
-                                    $('#HHAYAudio').get(0).play();
+                                    $('#ReadBelow').get(0).play();
                                     setTimeout(() => {
                                         startRecording(2);
                                     }, 2000);

@@ -84,10 +84,9 @@
                     @if (Auth::user()->notifications()->whereNull('read_at')->count() > 0)
                         @foreach (Auth::user()->notifications()->whereNull('read_at')->pluck('data', 'id') as $id => $data)
                             @php
-                                // Check if $data is a string and needs decoding
                                 $notification = is_string($data) ? json_decode($data, true) : $data;
                             @endphp
-                            <li class="border-b-2 border-c-gray px-4 py-2.5">
+                            <li class="border-b-2 border-c-gray px-4 py-2.5 notification-item" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">
                                 <div class="flex items-start justify-between gap-20">
                                     <p class="text-sm text-c-black font-normal">
                                         {{ $notification['title'] ?? 'No Title' }}
