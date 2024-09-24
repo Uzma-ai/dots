@@ -81,7 +81,7 @@ class UserController extends Controller
              $users = User::select('users.*')->join('roles', 'users.roleID', '=', 'roles.id')->where('users.cID',$cid)->where('roles.name', 'LIKE', '%' . $search . '%')->get();
             }
             if(count($users) == 0){
-             $users = User::select('users.*')->join('groups', 'users.groupID', '=', 'groups.id')->where('users.cID',$cid)->where('goups.name', 'LIKE', '%' . $search . '%')->get();
+             $users = User::select('users.*')->join('groups', 'users.groupID', '=', 'groups.id')->where('users.cID',$cid)->where('groups.name', 'LIKE', '%' . $search . '%')->get();
             }
             
         } else {
