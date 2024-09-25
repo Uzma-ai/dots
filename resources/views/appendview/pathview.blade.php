@@ -1,5 +1,6 @@
+<!-- pathview  -->
 <div class="flex flex-wrap gap-4 p-6 ">
-
+<!-- shows default folders; desktop, document, download, recyclebin -->
 @foreach ($defaultfolders as $dfolder)
 
     <div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="all">
@@ -22,6 +23,7 @@
 </div>
 @endforeach
 
+<!-- shows folders and files -->
 @foreach ($files as $file)
 @if($file->folder==1)
 <div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="file">

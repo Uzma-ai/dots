@@ -74,14 +74,25 @@ class UserController extends Controller
         $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $input = $request->all();
         if ($input['searchTerm']) {
-            $cid = auth()->user()->cID;
-            $search = $input['searchTerm'];
-            $users = User::where('name', 'LIKE', '%' . $search . '%')->where('cID',$cid)->where('id','!=',Auth::id())->get();
-            if(count($users) == 0){
-             $users = User::select('users.*')->join('roles', 'users.roleID', '=', 'roles.id')->where('users.cID',$cid)->where('roles.name', 'LIKE', '%' . $search . '%')->get();
-            }
-            if(count($users) == 0){
-             $users = User::select('users.*')->join('groups', 'users.groupID', '=', 'groups.id')->where('users.cID',$cid)->where('groups.name', 'LIKE', '%' . $search . '%')->get();
+            if(auth()->user()->cID == 0){
+                    $search = $input['searchTerm'];
+                    $users = User::where('name', 'LIKE', '%' . $search . '%')->where('id','!=',Auth::id())->get();
+                    if(count($users) == 0){
+                     $users = User::select('users.*')->join('roles', 'users.roleID', '=', 'roles.id')->where('roles.name', 'LIKE', '%' . $search . '%')->get();
+                    }
+                    if(count($users) == 0){
+                     $users = User::select('users.*')->join('groups', 'users.groupID', '=', 'groups.id')->where('groups.name', 'LIKE', '%' . $search . '%')->get();
+                    }
+            }else{
+                    $cid = auth()->user()->cID;
+                    $search = $input['searchTerm'];
+                    $users = User::where('name', 'LIKE', '%' . $search . '%')->where('cID',$cid)->where('id','!=',Auth::id())->get();
+                    if(count($users) == 0){
+                     $users = User::select('users.*')->join('roles', 'users.roleID', '=', 'roles.id')->where('users.cID',$cid)->where('roles.name', 'LIKE', '%' . $search . '%')->get();
+                    }
+                    if(count($users) == 0){
+                     $users = User::select('users.*')->join('groups', 'users.groupID', '=', 'groups.id')->where('users.cID',$cid)->where('groups.name', 'LIKE', '%' . $search . '%')->get();
+                    }
             }
             
         } else {

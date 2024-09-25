@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Group;
 use App\Models\Permissions;
 use App\Models\Roles;
+use App\Helpers\PermissionHelper;
 
 use Validator;
 
@@ -20,8 +21,10 @@ class CompanyController extends Controller
 
      public function index()
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
+
         $companies = Company::paginate(10);
-        return view('company.companies',compact('companies'));
+        return view('company.companies',compact('companies','filteredPermissions'));
     }
 
       public function companyList(Request $request)
