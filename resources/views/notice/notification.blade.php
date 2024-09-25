@@ -33,7 +33,7 @@
                             <div class="flex pt-8 pb-1 border-b-2 justify-center items-center">
                                 <h2 class="text-lg text-c-black font-medium">${data.title}</h2>
                             </div>
-                            <div class="py-2">
+                            <div class="py-2 max-h-72 overflow-y-auto">
                                 <p>${data.content}</p>
                                 <p>Date : ${moment(data.schedule_time).format('YYYY-MM-DD')}</p>
                                 <p>Time : ${moment(data.schedule_time).format('H:mm:ss')}</p>
@@ -56,7 +56,7 @@
                             <div class="flex pt-8 pb-1 border-b-2 justify-center items-center">
                                 <h2 class="text-lg text-c-black font-medium">${title}</h2>
                             </div>
-                            <div class="py-2">
+                            <div class="py-2 max-h-72 overflow-y-auto">
                                 <p>${content}</p>
                                 <p>Date : ${moment(time).format('YYYY-MM-DD')}</p>
                                 <p>Time : ${moment(time).format('H:mm:ss')}</p>
