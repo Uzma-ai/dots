@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'common.css') }}" />
-    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'tour.min.css') }}" />
-    
+    {{-- <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'tour.min.css') }}" /> --}}
+
     <!-- <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'cs.css') }}" /> -->
     <script>
         var base_url = "{{ url('/') }}";
@@ -84,10 +84,9 @@
                     @if (Auth::user()->notifications()->whereNull('read_at')->count() > 0)
                         @foreach (Auth::user()->notifications()->whereNull('read_at')->pluck('data', 'id') as $id => $data)
                             @php
-                                // Check if $data is a string and needs decoding
                                 $notification = is_string($data) ? json_decode($data, true) : $data;
                             @endphp
-                            <li class="border-b-2 border-c-gray px-4 py-2.5">
+                            <li class="border-b-2 border-c-gray px-4 py-2.5 notification-item" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">
                                 <div class="flex items-start justify-between gap-20">
                                     <p class="text-sm text-c-black font-normal">
                                         {{ $notification['title'] ?? 'No Title' }}
@@ -188,9 +187,9 @@
 
     <script src="{{ asset($constants['JSFILEPATH'] . 'common.js') }}"></script>
     <script src="{{ asset($constants['JSFILEPATH'] . 'taskbar.js') }}"></script>
-    <script src="{{ asset($constants['JSFILEPATH'] . 'tourguidejs/tour.js') }}"></script>
-    <script src="{{ asset($constants['JSFILEPATH'] . 'tourguidejs/desktop-tour.js') }}"></script>
-   
+    {{-- <script src="{{ asset($constants['JSFILEPATH'] . 'tourguidejs/tour.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'tourguidejs/desktop-tour.js') }}"></script> --}}
+
 
     <!------------------------------------------------share start ---------------------------------------->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
@@ -255,10 +254,10 @@
     </script>
     <!------------------------------------------------share end ---------------------------------------->
 
-    
+
 
     @yield('scripts')
-   
+
     <script>
      $('#doc-button').hover(
                 function() {

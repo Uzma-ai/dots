@@ -162,7 +162,7 @@
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (auth()->user()->cID == 0)
+                                        @if (auth()->user()->cID == 0 || auth()->user()->type == "superadmin")
                                             <li>
                                                 <a href="{{ route('companies') }}"
                                                     class="block py-2 px-8 rounded-r-md w-full flex justify-between items-center">

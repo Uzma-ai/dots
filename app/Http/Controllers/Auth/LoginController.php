@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Jenssegers\Agent\Agent;
 use Stevebauman\Location\Facades\Location;
 use App\Helpers\ActivityHelper;
+use App\Models\Quotes;
 use Illuminate\Support\Facades\Artisan;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -343,8 +344,14 @@ class LoginController extends Controller
             return redirect()->route('login')->with('error', 'Email not found in system.');
         } else {
             Auth::login($user);
-            setcookie('dotsusername', $user->name, time() + (86400 * 30), "/");
+            setcookie('dotsusername', $user->name, time() + (86400 * 30), '/dots');
             return redirect()->route('dashboard');
         }
+    }
+
+    public function Quote()
+    {
+        $randomQuote = Quotes::inRandomOrder()->first();
+        return response()->json($randomQuote);
     }
 }
