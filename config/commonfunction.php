@@ -1,4 +1,5 @@
 <?php 
+use Illuminate\Support\Facades\File;
 
 function base64UrlEncode($data) {
     // Standard base64 encode
@@ -120,6 +121,40 @@ function checkLightApp($ext){
         return "DotsDocumentViewer";
     }
 
+}
+
+//get size
+function getFileSize($filePath)
+{
+    if (File::exists($filePath)) {
+        $size = File::size($filePath);
+        return $size;
+    } else {
+        return false;
+    }
+}
+
+function folderSize($directory)
+{
+    $size = 0;
+    foreach (File::allFiles($directory) as $file) {
+        $size += $file->getSize();
+    }
+    return $size;
+}
+
+// Convert file size format
+function convertSizeToReadableFormat($size) {
+    if ($size >= 1073741824) {
+        $size = number_format($size / 1073741824, 2) . ' GB';
+    } elseif ($size >= 1048576) {
+        $size = number_format($size / 1048576, 2) . ' MB';
+    } elseif ($size >= 1024) {
+        $size = number_format($size / 1024, 2) . ' KB';
+    } else {
+        $size = $size . ' bytes';
+    }
+    return $size;
 }
 
 

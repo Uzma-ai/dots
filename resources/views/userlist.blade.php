@@ -220,19 +220,6 @@
                             </p>
                         </div>
                     </div>
-                    <div class="flex flex-wrap gap-y-4 items-start">
-                    <label for="permissionID"
-                    class="block mb-2 text-sm pt-3 font-bold text-gray-900 dark:text-white ">Permissions</label>
-                        <div class="w-full sm:w-3/4 ml-auto">
-                            <div class="custom-dropdown w-full">
-                            <select id="roleID" name="permissionID">
-                            @foreach ($permissions as $permission)
-                                <option value="{{ $permission->id }}">{{ $permission->name }}</option>
-                            @endforeach
-                        </select>
-                            </div>
-                        </div>
-                    </div>
                     <div class="flex justify-end">
                         <button type="submit"
                             class="bg-c-black hover-bg-c-black text-white rounded-full w-32 py-2 text-sm">

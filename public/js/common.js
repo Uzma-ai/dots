@@ -124,7 +124,7 @@ $(document).ready(function () {
  }
 
     $(document).on("click", function (event) {
-        if (!$(event.target).closest("#notification").length &&
+        if (!$(event.target).closest("#NotiContainer").length &&
             !$(event.target).closest("#search").length &&
             !$(event.target).closest("#administrator").length) {
             closeAllContainers();
@@ -309,12 +309,13 @@ $(document).ready(function () {
             desktoplightapp(filetypearr[0],filetypearr[1]);
             showapathdetail(path,filetypearr[0],filetypearr[1]);
         });
-
-        $(document).on('click', '.context-menulist .resizeFunction', function (e) {
+        
+        $(document).on('click', '.context-menulist .resizeFunction', function (e) {            
             e.preventDefault();
             e.stopPropagation();
-            let filetype = $(this).data('type');
-            let sizeclasses = ['tiny','small','big','medium','oversize'];
+            let filetype = $(this).data('type'); 
+            // showapathdetail(path, 0);
+            let sizeclasses = ['tiny','small','big','medium','oversize'];                
             sizeclasses.forEach(element => {
                 $('.allapplist .app').removeClass(element+'-wraper');
                 $('.allapplist .app .imagewraper').removeClass(element);
@@ -323,6 +324,14 @@ $(document).ready(function () {
             $('.allapplist .app .imagewraper').addClass(filetype);
         });
 
+        $(document).on('click', '.context-menulist .listFunction', function (e) {     
+            showapathdetail(path, 1);
+        });
+    
+        $(document).on('click', '.context-menulist .detailsFunction', function (e) {     
+            showapathdetail(path, 2);
+        });  
+         
 
         // app menus
 
@@ -978,7 +987,8 @@ $(document).on('click', function(event) {
        // close all popup
        function closeallpopup(){
             $('#search').addClass('hidden');
-            $('#administrator').addClass('hidden');
+           $('#administrator').addClass('hidden');
+           $('#NotiContainer').addClass('hidden');
             $('#iframeheaders .parentiframe .iframetabselement').addClass('hidden');
        }
 
@@ -1133,17 +1143,6 @@ $(document).ready(function () {
     });
 });
 
-//notification
-$(document).on('click','#notification-icon',function(event){
-    event.stopPropagation(); // Prevent event from bubbling up
-    console.log('clicked');
-    var notification = $('#NotiContainer');
-    if (notification.hasClass('hidden')) {
-        notification.removeClass('hidden'); // Remove 'hidden' class if it exists
-    } else {
-        notification.addClass('hidden'); // Add 'hidden' class if it doesn't exist
-    }
-});
 $(document).on('click', '.ReadThisNoti', function (event) {
     var id = $(this).attr('data-id');
     var listItem = $(this).closest('li');
@@ -1163,9 +1162,16 @@ $(document).on('click', '#MarkAllRead', function (event) {
         url: base_url + "/read-all",
         success: function (response) {
             if (response.status === 'success') {
-                $('#ULNoti').html('');
-                $('#NotiContainer').addClass('hidden');
+                var html = `<li class="text-center mt-3">
+                                No new notifications
+                            </li>`;
+                $('#ULNoti').html(html);
             }
         }
     });
+});
+$(document).on('click', function(event) {
+    if (!$(event.target).closest('#NotiContainer').length) {
+        $('#NotiContainer').addClass('hidden');
+    }
 });

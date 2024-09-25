@@ -14,6 +14,7 @@ use App\Models\ContextType;
 use App\Models\App;
 use App\Models\RecycleBin;
 use App\Helpers\PermissionHelper;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -30,9 +31,10 @@ class FileManagerController extends Controller
     }
 
     public function index($path=null)
-    {
+    {        
         $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         //$path = $path ? base64UrlDecode($path) : '/';
+
         $contextTypes = ContextType::with(['contextOptions' => function($query) {
             $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
         }])
@@ -40,6 +42,7 @@ class FileManagerController extends Controller
         ->where('function','createFileFunction')
         ->orderBy('sort_order', 'asc') // Sort context types by sort_order
         ->get();
+
         $resizecontextTypes = ContextType::with(['contextOptions' => function($query) {
             $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
         }])
@@ -47,6 +50,7 @@ class FileManagerController extends Controller
         ->where('function','resizeFunction')
         ->orderBy('sort_order', 'asc') // Sort context types by sort_order
         ->get();
+
         $sortcontextTypes = ContextType::with(['contextOptions' => function($query) {
             $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
         }])
@@ -55,6 +59,7 @@ class FileManagerController extends Controller
         ->orderBy('sort_order', 'asc') // Sort context types by sort_order
         ->get();
         $path = $path ? $path : '/';
+
         return view('filemanager',compact('path','contextTypes','resizecontextTypes','sortcontextTypes', 'filteredPermissions'));
     }
     
@@ -177,27 +182,55 @@ class FileManagerController extends Controller
         }
     }
     
-     public function pathfiledetail(Request $request){
-            $filepath = base64UrlDecode($request->input('path'));
-            $parentPath = empty($filepath) ? '/' : $filepath ; 
-            $defaultfolders = array();
-            $files = array();
-            $sortby= !empty($request->input('sort_by')) ? $request->input('sort_by') : 'name';
-            $sortorder= !empty($request->input('sort_order')) ? $request->input('sort_order') : 'asc';
-            $sortsession = ['sortby'=>$sortby,'sortorder'=>$sortorder];
-            Session::put('sortfiles', $sortsession);
-            $sortsessionorder = (Session::has('sortfiles')) ? Session::get('sortfiles') : ['sortby'=>'name','sortorder'=>'asc'] ;
-            if($filepath != 'RecycleBin'){
-                $defaultfolders = App::where('parentpath',$parentPath)->where('filemanager_display', 1)->where('status', 1)->orderBy('name')->get();
-                $files = FileModel::where('parentpath', $parentPath)->where('status', 1)->where('created_by', auth()->id())->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])->get();
-            }else{
-                $files = FileModel::where('status', 0)->where('created_by', auth()->id())->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])->get();
-            }
-            $html = view('appendview.pathview')->with('defaultfolders', $defaultfolders)->with('files', $files)->render();
-        return response()->json(['html' => $html,'parentPath'=>$parentPath]);
+    public function pathfiledetail(Request $request){
+        //get user name
+        $user = User::find(auth()->id());
+        $userName = "";
+        if ($user) {  $userName = $user->name;  }
+        
+        //file path details
+        $filepath = base64UrlDecode($request->input('path'));
+        $parentPath = empty($filepath) ? '/' : $filepath ; 
+        $defaultfolders = array();
+        $files = array();
+        $sortby= !empty($request->input('sort_by')) ? $request->input('sort_by') : 'name';
+        $sortorder= !empty($request->input('sort_order')) ? $request->input('sort_order') : 'asc';
+        $sortsession = ['sortby'=>$sortby,'sortorder'=>$sortorder];
+        Session::put('sortfiles', $sortsession);
+        $sortsessionorder = (Session::has('sortfiles')) ? Session::get('sortfiles') : ['sortby'=>'name','sortorder'=>'asc'] ;
+        if($filepath != 'RecycleBin'){
+            $defaultfolders = App::where('parentpath',$parentPath)->where('filemanager_display', 1)->where('status', 1)->orderBy('name')->get();
+            $files = FileModel::where('parentpath', $parentPath)->where('status', 1)->where('created_by', auth()->id())->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])->get();
+        }else{
+            $files = FileModel::where('status', 0)->where('created_by', auth()->id())->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])->get();
+        }
 
+        // Calculate sizes for files and convert them
+        foreach ($files as $file) {
+            $file->size = convertSizeToReadableFormat($file->size); //convertSizeToReadableFormat fron config folder -> commonfunction file
+        }
+
+        // Grouping parent paths and calculating total size
+        $parentPathSize = FileModel::select('parentpath', DB::raw('SUM(size) as total_size'))
+        ->groupBy('parentpath')
+        ->get();
+
+        //check view list
+        if($request->input('list') == 1){
+            $html = view('appendview.listview')->with('defaultfolders', $defaultfolders)->with('files', $files)->with('userName', $userName)->with('parentPathSize', $parentPathSize)->render();
+        } 
+        elseif($request->input('list') == 2){
+            $html = view('appendview.detailsview')->with('defaultfolders', $defaultfolders)->with('files', $files)->with('userName', $userName)->with('parentPathSize', $parentPathSize)->render();
+        }
+        else {
+            $html = view('appendview.pathview')->with('defaultfolders', $defaultfolders)->with('files', $files)->render();
+        }
+        return response()->json(['html' => $html,'parentPath'=>$parentPath]);
     }
-       public function upload(Request $request)
+
+    
+
+    public function upload(Request $request)
     {
         $uploadDirectorypath = base64UrlDecode($request->header('Upload-Directory'));
 
