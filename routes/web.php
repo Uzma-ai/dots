@@ -204,6 +204,8 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('download/{id}', [FileManagerController::class, 'downloadFile']);
     Route::get('renamefile', [FileManagerController::class, 'renameFile'])->name('renamefile');
     Route::get('deletefile', [FileManagerController::class, 'deleteFile'])->name('deletefile');
+    Route::get('restorefile', [FileManagerController::class, 'restoreFile'])->name('restorefile');
+    Route::get('restoreAdmin', [FileManagerController::class, 'restoreAdmin'])->name('restoreAdmin');
     Route::get('copyfile', [FileManagerController::class, 'copyFile'])->name('copyfile');
     Route::get('pastefile', [FileManagerController::class, 'pasteFile'])->name('pastefile');
     Route::get('contextmenu', [FileManagerController::class, 'contextMenu'])->name('contextmenu');

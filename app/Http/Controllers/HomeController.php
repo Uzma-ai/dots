@@ -34,6 +34,7 @@ class HomeController extends Controller
     {
         $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $apps = App::where('desktop_display', 1)->where('status', 1)->get();
+        // dd($apps->toArray());
         $lightApps = LightApp::with('category')->get();
        $path = url();
         //$path = $path ? urldecode($path) : '/';

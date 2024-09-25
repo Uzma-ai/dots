@@ -8,7 +8,7 @@
             'download' => ['download'],
             'upload' => ['upload'],
             'edit' => ['new folder','new file', 'rename', 'paste', 'unzip', 'compress'],
-            'delete' => ['cut', 'copy', 'move','delete'],
+           'delete' => ['cut', 'copy', 'move','delete','restore'],
             'share' => ['share'],
             'comments' => ['comments'],
         ];
