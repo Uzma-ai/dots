@@ -16,8 +16,7 @@
             </div>
         </div>
 
-        <!-- Clock -->
-        <div class="clock flex flex-col items-center gap-2" id="clock"></div>
+       
 
         <!-- Notification -->
         <div id="notification" class="Notification h-80 absolute right-5 sm:right-20 top-16 hidden overflow-hidden">
@@ -86,7 +85,7 @@
             <div class="flex items-center gap-5 pl-10 pt-5">
                 <form action="{{ route('ProfilePic') }}" id="FormProfilePic" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="logo">
+                    <div class="logo mb-2">
                         <input type="file" name="profile" accept="image/*" id="ProfilePic" class="hidden">
                         <label for="ProfilePic">
                             @if (Auth::user()->avatar != null)
@@ -156,11 +155,15 @@
         <!-- Footer -->
 
         <!-- Footer -->
-        <div class="absolute bottom-4 right-4 px-5 has-tooltip">
+        <div class="absolute bottom-4 right-4 px-5 has-tooltip flex justify-center items-center gap-4">
+             <!-- Clock -->
+            <div class="clock flex flex-col items-center" id="clock"></div>
             <img id="footer-logo" class="w-10 h-10" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
                 alt="Logo" />
         </div>
-
+        <div class="absolute py-1 px-2 text-start text-xs tooltip bottom-2 right-20 z-10 bg-white border rounded-md border-c-yellow font-normal">
+                Administrator
+        </div>
 
 
     </div>

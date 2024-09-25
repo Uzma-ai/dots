@@ -124,7 +124,7 @@ $(document).ready(function () {
  }
 
     $(document).on("click", function (event) {
-        if (!$(event.target).closest("#notification").length &&
+        if (!$(event.target).closest("#NotiContainer").length &&
             !$(event.target).closest("#search").length &&
             !$(event.target).closest("#administrator").length) {
             closeAllContainers();
@@ -978,7 +978,8 @@ $(document).on('click', function(event) {
        // close all popup
        function closeallpopup(){
             $('#search').addClass('hidden');
-            $('#administrator').addClass('hidden');
+           $('#administrator').addClass('hidden');
+           $('#NotiContainer').addClass('hidden');
             $('#iframeheaders .parentiframe .iframetabselement').addClass('hidden');
        }
 
@@ -1133,17 +1134,6 @@ $(document).ready(function () {
     });
 });
 
-//notification
-$(document).on('click','#notification-icon',function(event){
-    event.stopPropagation(); // Prevent event from bubbling up
-    console.log('clicked');
-    var notification = $('#NotiContainer');
-    if (notification.hasClass('hidden')) {
-        notification.removeClass('hidden'); // Remove 'hidden' class if it exists
-    } else {
-        notification.addClass('hidden'); // Add 'hidden' class if it doesn't exist
-    }
-});
 $(document).on('click', '.ReadThisNoti', function (event) {
     var id = $(this).attr('data-id');
     var listItem = $(this).closest('li');
