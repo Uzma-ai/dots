@@ -38,9 +38,10 @@
                         </button>
                     </div>
                   </div>
-               </div>
-               <!-- searchbar in mobile-->
-              <div
+               </div>  
+            </div>
+            <!-- searchbar in mobile-->
+            <div
                 class="pl-4 pt-3 mt-3 pb-3 pr-4 w-full flex flex-row justify-between items-center bg-c-light-white-smoke md:hidden"
                 id="mobiletaskbar"
               >
@@ -61,7 +62,6 @@
                   </div>
                 </div>
               </div>
-            </div>
 
             <!-- info table -->
              <div class="p-4 relative h-full flex flex-col scroll overflow-y-scroll">
