@@ -42,11 +42,11 @@ class SendNoticeJob implements ShouldQueue
                     'user' => $userId,
                     'data' => $notice
                 ];
-                // Http::post($this->url, $data);
-                $client = Client::create($this->url);
-                $client->connect();
-                $client->of('/');
-                $client->emit('received', $data);
+                Http::post($this->url, $data);
+                // $client = Client::create($this->url);
+                // $client->connect();
+                // $client->of('/');
+                // $client->emit('received', $data);
             }
         }
     }
