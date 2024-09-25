@@ -1238,17 +1238,19 @@ $(document).ready(function () {
 
 
 $(document).on('click', '.ReadThisNoti', function (event) {
-  var id = $(this).attr('data-id');
-  var listItem = $(this).closest('li');
-  $.ajax({
-    type: "GET",
-    url: base_url + "/read-noti/" + id,
-    success: function (response) {
-      if (response.status === 'success') {
-        listItem.remove();
-      }
-    }
-  });
+    event.stopPropagation(); 
+    
+    var id = $(this).attr('data-id');
+    var listItem = $(this).closest('li');
+    $.ajax({
+        type: "GET",
+        url: base_url + "/read-noti/" + id,
+        success: function (response) {
+            if (response.status === 'success') {
+                listItem.remove();
+            }
+        }
+    });
 });
 $(document).on('click', '#MarkAllRead', function (event) {
   $.ajax({
