@@ -109,7 +109,7 @@
                         status.textContent =
                             "Recording complete. You can play or submit it.";
                         let audioBlob = new Blob(audioChunks, {
-                            type: "audio/mp4"
+                            type: "audio/webm"
                         });
                         let audioUrl = URL.createObjectURL(audioBlob);
                         audioPlayback.src = audioUrl;
