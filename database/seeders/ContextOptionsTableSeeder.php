@@ -25,7 +25,10 @@ class ContextOptionsTableSeeder extends Seeder
             ['id' => 10, 'contexttype' => 12, 'name' => 'Name', 'icon' => NULL, 'image' => NULL, 'function' => 'name-asc', 'shortcut' => NULL, 'sort_order' => 2, 'status' => 1],
             ['id' => 11, 'contexttype' => 12, 'name' => 'Type', 'icon' => NULL, 'image' => NULL, 'function' => 'extension-asc', 'shortcut' => NULL, 'sort_order' => 3, 'status' => 1],
             ['id' => 12, 'contexttype' => 12, 'name' => 'Creation', 'icon' => NULL, 'image' => NULL, 'function' => 'created_at-asc', 'shortcut' => NULL, 'sort_order' => 4, 'status' => 1],
-            ['id' => 13, 'contexttype' => 12, 'name' => 'Modification', 'icon' => NULL, 'image' => NULL, 'function' => 'updated_at-asc', 'shortcut' => NULL, 'sort_order' => 5, 'status' => 1]
+            ['id' => 13, 'contexttype' => 12, 'name' => 'Modification', 'icon' => NULL, 'image' => NULL, 'function' => 'updated_at-asc', 'shortcut' => NULL, 'sort_order' => 5, 'status' => 1],
+            ['id' => 14, 'contexttype' => 5, 'name' => 'List View', 'icon' => '<i class="ri-function-add-line ri-xl"></i>', 'image' => '', 'function' => 'list', 'shortcut' => NULL, 'sort_order' => 6, 'status' => 1],
+            ['id' => 15, 'contexttype' => 5, 'name' => 'Detail Pane', 'icon' => '<i class="ri-function-add-line ri-xl"></i>', 'image' => '', 'function' => 'detail', 'shortcut' => NULL, 'sort_order' => 7, 'status' => 1],
+            ['id' => 16, 'contexttype' => 5, 'name' => 'Preview Pane', 'icon' => '<i class="ri-function-add-line ri-xl"></i>', 'image' => '', 'function' => 'preview', 'shortcut' => NULL, 'sort_order' => 8, 'status' => 1]
         ]);
     }
 }
