@@ -71,7 +71,7 @@
     <!-- <header id="iframeheaders" class="transparent p-2 text-white flex justify-center items-center fixed top-0 left-0 right-0 mainiframeiconheader mainscreen"> -->
 
     <div class="notification-container">
-        <div id="NotiContainer" class="Notification h-80 absolute right-5 top-16 hidden overflow-hidden">
+        <div id="NotiContainer" class="Notification h-64 absolute right-5 top-16 hidden overflow-hidden">
             <div class="h-16 border-b-2 border-c-gray py-4 px-4 flex items-center justify-between">
                 <h1 class="text-sm sm:text-lg text-c-black font-normal">Notification Center</h1>
                 @if (Auth::user()->notifications()->whereNull('read_at')->count() > 0)
