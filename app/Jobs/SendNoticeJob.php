@@ -6,13 +6,13 @@ use App\Models\Group;
 use App\Models\Notice;
 use App\Models\Roles;
 use App\Models\User;
+use ElephantIO\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use GuzzleHttp\Client;
 
 class SendNoticeJob implements ShouldQueue
 {
@@ -42,7 +42,11 @@ class SendNoticeJob implements ShouldQueue
                     'user' => $userId,
                     'data' => $notice
                 ];
-                Http::post($this->url, $data);
+                // Http::post($this->url, $data);
+                $client = Client::create($this->url);
+                $client->connect();
+                $client->of('/');
+                $client->emit('received', $data);
             }
         }
     }
