@@ -1144,6 +1144,8 @@ $(document).ready(function () {
 });
 
 $(document).on('click', '.ReadThisNoti', function (event) {
+    event.stopPropagation(); 
+    
     var id = $(this).attr('data-id');
     var listItem = $(this).closest('li');
     $.ajax({
