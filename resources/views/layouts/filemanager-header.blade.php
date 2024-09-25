@@ -155,17 +155,21 @@
           </div>
 
           <!-- actionbar -->
+          
           <div
             class="border-b border-c-light-gray1 flex justify-between items-center hidden md:flex text-c-black actionbar"
           >
             <div class="flex ml-6 gap-x-5 lg:gap-x-4 xl:gap-x-6 my-2 context-menulist">
               <div class="relative flex items-center new">
+            @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
+
                 <button class="flex gap-x-2">
                   <i class="ri-add-circle-fill ri-xl mt-1"></i><span>New</span>
                 </button>
                 <button class="dropdown-btn mt-1">
                   <i class="ri-arrow-drop-down-line ri-lg"></i>
                 </button>
+                @endif
                 <div
                   id="new-dropdown"
                   class="dropdown-option absolute mt-2 z-10 bg-c-white border border-c-medium-gray rounded-lg shadow-md hidden w-52 top-full"
@@ -208,11 +212,12 @@
               </button></a>
               @endif
 
-              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
+              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
               <a href="#" class="clickmenu pasteFunction disabledicon fimanagertoolpanel"><button class="paste">
                 <i class="ri-clipboard-line ri-lg"></i>
               </button></a>
-              
+              @endif
+              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
               <a href="#" class="clickmenu renameFunction disabledicon fimanagertoolpanel"><button class="edit">
                 <i class="ri-edit-line ri-lg"></i>
               </button></a>
@@ -268,7 +273,8 @@
                   id="view-dropdown"
                   class="dropdown-option absolute top-full mt-2 z-10 bg-c-white border border-c-medium-gray rounded-lg shadow-md hidden md:w-44 xl:w-68"
                 >
-                @if(!empty($resizecontextTypes))
+              
+                 @if(!empty($resizecontextTypes))
                   @foreach ($resizecontextTypes as $rcontextType)
                     @if(!empty($rcontextType->contextOptions))
                       @foreach ($rcontextType->contextOptions as $roption)
@@ -276,16 +282,39 @@
                         <div class="hover-bg-c-yellow rounded-t-lg">
                           <a
                             href="#"
-                            class="flex items-center block p-2 pl-4 dropdown-item clickmenu {{ $rcontextType->function }} " data-type="{{ $roption->function }}"
+                            class="flex items-center block p-2 pl-4 dropdown-item clickmenu {{ $rcontextType->function }} " 
+                            data-type="{{ $roption->function }}"
                           >
                             <i class="ri-gallery-view-2 text-sm mt-1 w-1/4"></i>
-                            <span>{{ $roption->name }}</span>
+                            <span>{{ $roption->name }}</span> 
                           </a>
                         </div>
                         @endforeach
                       @endif
                     @endforeach
-                  @endif
+                  @endif 
+                  <div class="hover-bg-c-yellow rounded-t-lg">
+                    <a
+                      href="#"
+                      class="flex items-center block p-2 pl-4 dropdown-item clickmenu listFunction" 
+                      data-type=""
+                    >
+                    <i class="ri-list-check ri-lg w-1/4"></i>
+                      <span>List View</span> 
+                    </a>
+                  </div>
+
+                  <div class="hover-bg-c-yellow rounded-t-lg">
+                    <a
+                      href="#"
+                      class="flex items-center block p-2 pl-4 dropdown-item clickmenu detailsFunction" 
+                      data-type=""
+                    >
+                    <i class="ri-profile-line ri-lg w-1/4"></i>
+                    <span>Detail pane</span>
+                    </a>
+                  </div>
+                  
 
                   {{-- <div class="hover-bg-c-yellow">
                     <a
@@ -322,3 +351,4 @@
             </div>
             
           </div>
+        

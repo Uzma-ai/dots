@@ -54,15 +54,13 @@
 <body>
     <div class="container mx-auto px-4 py-8 email-container">
         <div class="text-center font-medium text-3xl mb-4 email-header">
-            <img src="{{ url('/') }}/public/images/dots-logo.png" alt="logo" />
-            Hi {{ $user->name }},
-            <br />
+            <img src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.ico') }}" alt="logo" />
+             Hi {{ $user->name }},
+            <br /> 
         </div>
         <div class="prose email-content-wrap px-20">
-           
-            <!--<div> Link : {{ $link }}</div> -->
-
             <div>password : {{ $data->password ?? 'N/A' }}</div>
+            <div>link : {{ $link }}</div>
             <div>
                 <p>
                     <i class="font-bold">Support:</i> If you have any questions or need
@@ -76,15 +74,14 @@
                 We are committed to providing you with the best experience possible.
             </p>
             <p class="font-bold text-sm">
-                Should you have any questions, <br />feel free to reach out to our
+                Should you have any questions, feel free to reach out to our
                 support team at
                 <span class="cstm-text-teal cursor-pointer"><a href="mailto:dots@support.in">dots@support.in</a></span>
                 or call us at 1800-02-2222
             </p>
             <p class="my-2 flex items-center gap-2 sm:text-left">
                 <i class="font-bold text-sm">Thank you for choosing</i><img
-                    src="{{ url('/') }}/public/images/dot2.svg" alt="lgo" /><i class="font-bold text-sm">We
-                    look forward to working with you!</i>
+                    src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.ico') }}" alt="logo" /><i class="font-bold text-sm"> We look forward to working with you!</i>
             </p>
         </div>
     </div>

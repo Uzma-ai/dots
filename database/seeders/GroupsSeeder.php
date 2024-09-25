@@ -19,7 +19,7 @@ class GroupsSeeder extends Seeder
             'sort' => 1,
             'sizeMax' => 250,
             'sizeUse' => 250,
-            'permissionID' => 2,
+            'permissionID' => 1,
             'created_at' => now(),
             'updated_at' => now()
         ]);

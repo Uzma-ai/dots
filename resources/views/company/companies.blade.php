@@ -22,6 +22,16 @@
 
                <div class="flex-grow md:w-1/2">
                   <div class="flex items-center justify-end gap-2 md:gap-6">
+                    <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-8/12">
+                      <input
+                        type="text" id="searchterm"
+                        class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none text-c-black outline-none"
+                        placeholder="Search companies..."
+                      />
+                      <div class="pt-3 pb-3 pr-4 flex items-center justify-center">
+                      <i class="ri-search-line"></i>
+                      </div>
+                    </div>
                     <div>
                         <button type="button" class=" flex items-center justify-center gap-2 bg-c-black text-c-yellow px-4 py-1.5 rounded-md openAddModalButton">
                           <i class="ri-add-circle-fill"></i><span class="text-sm">Add</span>
@@ -29,27 +39,29 @@
                     </div>
                   </div>
                </div>
-               
-            </div>
-             <div class="mt-3 flex items-center justify-end px-4 gap-2">
-            <div
-                class="flex items-center rounded overflow-hidden bg-c-white h-8"
+               <!-- searchbar in mobile-->
+              <div
+                class="pl-4 pt-3 mt-3 pb-3 pr-4 w-full flex flex-row justify-between items-center bg-c-light-white-smoke md:hidden"
+                id="mobiletaskbar"
               >
-                <input id="searchterm"
-                  type="text"
-                  class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none text-c-black outline-none"
-                  placeholder="Search Companies"
-                />
-                <div class="pt-3 pb-3 pr-4 flex items-center justify-center">
-                 <i class="ri-search-line"></i>
+                <div
+                  class="relative w-full flex flex-row items-center justify-end gap-2"
+                >
+                  <div
+                    class="flex items-center rounded overflow-hidden flex-shrink-0 flex-grow bg-c-white h-8 w-1/12"
+                  >
+                    <input
+                      type="text" id="searchterm"
+                      class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none outline-none w-3/12"
+                      placeholder="Search companies..."
+                    />
+                    <div class="pt-3 pb-3 pr-4 flex items-center justify-center">
+                      <i class="ri-search-line"></i>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <button
-                  class="text-c-light-black bg-c-gray-3 rounded px-6 py-1 mr-1" id='search'
-                >
-                  Search
-                </button>
-          </div>
+            </div>
 
             <!-- info table -->
              <div class="p-4 relative h-full flex flex-col scroll overflow-y-scroll">
@@ -95,7 +107,7 @@
           class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
         >
           <div
-            class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-2xl w-full bg-c-lighten-gray modal-content"
+            class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-xl w-full bg-c-lighten-gray modal-content"
           >
             <!-- Sticky header -->
             <div
@@ -109,10 +121,10 @@
             ></i>
             </div>
             <!-- Scrollable content -->
-            <div class="p-5 overflow-y-auto max-h-[calc(100vh-6rem)] scroll">
-              <form class="space-y-4 text-sm" action="{{ route('company-create') }}" method="POST">
+            <div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 10rem)">
+              <form class="flex flex-col gap-4 text-sm" id="company-form" action="{{ route('company-create') }}" method="POST">
                  @csrf
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="name" class="block font-bold text-c-black">
                       Name:<span class="text-red-500">*</span>
@@ -125,11 +137,12 @@
                       type="text"
                       placeholder="Please enter company name"
                       autocomplete="name"
-                      name="name" required
+                      name="name" data-validate="name"
                     />
+                    <small class="text-red-500 mt-1 block"></small>
                   </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="nickname" class="block font-bold text-c-black">
                       Website:<span class="text-red-500">*</span>
@@ -141,11 +154,11 @@
                       class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
                       type="text"
                       placeholder="www.example.com"
-                      name="website" 
+                      name="website" required
                     />
                   </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="nickname" class="block font-bold text-c-black">
                       Email:<span class="text-red-500">*</span>
@@ -158,11 +171,12 @@
                       type="email"
                       placeholder="Please enter email"
                       autocomplete="email"
-                      name="email" required
+                      name="email" data-validate="email"
                     />
+                    <small class="text-red-500 mt-1 block"></small>
                   </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="space-size" class="block font-bold text-c-black">
                       Contact:<span class="text-red-500">*</span>
@@ -180,7 +194,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="nickname" class="block font-bold text-c-black">
                       Industry:
@@ -195,12 +209,9 @@
                       name="industry" 
                     />
                   </div>
+                </div>          
                 </div>
-                
-                
-                 
-                </div>
-                <div class="flex justify-end mt-3">
+                <div class="flex justify-end mb-5 mr-5">
                   <button
                     type="submit"
                     class="bg-c-black hover:bg-c-black text-white rounded-full w-32 py-2 text-sm"
@@ -271,7 +282,7 @@
           class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
         >
           <div
-            class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-2xl w-full bg-c-lighten-gray modal-content"
+            class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-xl w-full bg-c-lighten-gray modal-content"
           >
             <!-- Sticky header -->
             <div
@@ -285,10 +296,10 @@
             ></i>
             </div>
             <!-- Scrollable content -->
-            <div class="p-5 overflow-y-auto max-h-[calc(100vh-6rem)] scroll">
-              <form class="space-y-4 text-sm" action="{{ route('superadmin-create') }}" method="POST">
+            <div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 10rem)">
+              <form class="flex flex-col gap-4 text-sm" id="companyadmin-form" action="{{ route('superadmin-create') }}" method="POST">
                  @csrf
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="name" class="block font-bold text-c-black">
                       UserName:<span class="text-red-500">*</span>
@@ -300,11 +311,12 @@
                       class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
                       type="text"
                       placeholder="Please enter company name"
-                      name="name" required
+                      name="name" data-validate="name"
                     />
+                    <small class="text-red-500 mt-1 block"></small>
                   </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="password" class="block font-bold text-c-black">
                       Password:<span class="text-red-500">*</span>
@@ -316,11 +328,11 @@
                       class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
                       type="password"
                       placeholder="password"
-                      name="password" 
+                      name="password" data-validate="password"
                     />
                   </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                   <div class="md:col-span-2 flex items-center">
                     <label for="email" class="block font-bold text-c-black">
                       Email:<span class="text-red-500">*</span>
@@ -332,13 +344,14 @@
                       class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
                       type="email"
                       placeholder="Please enter email"
-                      name="email" required
+                      name="email" data-validate="email"
                     />
+                    <small class="text-red-500 mt-1 block"></small>
                   </div>
                 </div>
                 <input type="hidden" name="cID" id="company-id" value="">
                 </div>
-                <div class="flex justify-end mt-3">
+                <div class="flex justify-end mb-5 mr-5">
                   <button
                     type="submit"
                     class="bg-c-black hover:bg-c-black text-white rounded-full w-32 py-2 text-sm"
@@ -479,6 +492,30 @@ function populateTable(term='') {
  @endif
 
 });
+
+
+//company add form validation
+    document.getElementById('company-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      if (FormValidation.validateForm(form)) {
+        console.log('Form submitted successfully');
+        document.getElementById("company-form").submit();
+      } else {
+        console.log('Form validation failed');
+      }
+    });
+//company masteradmin add form validation
+    document.getElementById('companyadmin-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      if (FormValidation.validateForm(form)) {
+        console.log('Form submitted successfully');
+        document.getElementById("companyadmin-form").submit();
+      } else {
+        console.log('Form validation failed');
+      }
+    });
 </script>
 
 @endsection

@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append(CspMiddleware::class);
+        // $middleware->append(CspMiddleware::class);
         $middleware->validateCsrfTokens(except: [
             'registerfacedata',
             'logout'
@@ -28,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'checkPermis.backendManagement' => \App\Http\Middleware\CheckPermission::class,
             'checkPermis.userManagement' => \App\Http\Middleware\CheckPermission::class,
             'checkPermis.roleManagement' => \App\Http\Middleware\CheckPermission::class,
+            'Socialite' => \Laravel\Socialite\Facades\Socialite::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

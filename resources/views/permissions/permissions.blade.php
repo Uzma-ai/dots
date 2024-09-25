@@ -5,7 +5,7 @@
  <!-- main content -->
       <div class="flex-grow border h-100 main">
         <div class="flex flex-col w-full h-full content">
-          <div class="px-2 lg:px-5 py-6">
+          <div class="px-9 py-3 lg:py-6 lg:px-5">
             <div class="flex items-center gap-4">
               <i class="ri-settings-3-fill ri-xl"></i>
               <span class="text-lg text-c-black font-normal">User Management</span>
@@ -31,7 +31,7 @@
 
             <div class="flex-grow md:w-1/2">
               <div class="flex items-center justify-end gap-6">
-                <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-5/12">
+                <div class="flex items-center rounded overflow-hidden bg-c-white h-8 hidden md:flex w-8/12">
                   <input
                     type="text" id="searchterm"
                     class="pl-4 pt-2.5 pb-2.5 flex-shrink flex-grow border-none text-c-black outline-none"
@@ -139,7 +139,7 @@
           </button>
         </div>
         <div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 8rem)">
-          <form class="space-y-4 text-sm" action="{{ route('permission-create') }}" method="POST">
+          <form class="flex flex-col gap-4 text-sm" action="{{ route('permission-create') }}" method="POST">
              @csrf
             <div class="flex flex-wrap w-full gap-y-4 items-center">
               <label for="title" class="title font-bold text-c-black"
@@ -192,7 +192,7 @@
               Tip: The System built in permission does not support modifying.
               You can create a new.
             </div>
-            <div class="flex justify-center">
+            <div class="flex justify-center border-t border-gray-3 pt-4">
                   <button
                     type="button"
                     class="title-btn px-12 py-2 bg-c-yellow text-c-black rounded"
@@ -201,7 +201,7 @@
                   </button>
                 </div>
             <div
-              class="flex flex-wrap gap-y-2 items-start border-t border-gray-3 pt-4"
+              class="flex flex-wrap gap-y-2 items-start"
             >
               <div class="title font-bold text-c-black">
                 Description:<span class="text-red-500">*</span>
@@ -212,108 +212,108 @@
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="view"
                   />
-                  <span class="text-c-black mt-0.5 font-normal"
-                    >Document list: File Manager view:</span
-                  >
+                  <span class="text-c-black mt-0.5 font-normal">
+                  View
+                  </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="preview"
                   />
-                  <span class="text-c-black mt-0.5 font-normal"
-                    >Preview: File open preview: Preview</span
+                  <span class="text-c-black mt-0.5 font-normal">
+                  Preview
+                  </span
                   >
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="download"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Download / Copy Download / Copy / Preview / Print:Download
+                    >Download
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="upload"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Upload: Upload / Remote download
+                    >Upload
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="edit"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Edit: New File 9Folder) / Rename / Paste / Edit / Set Notes
-                    / Copy / Unzip, Compress:Edit
+                    >Add / Edit : Edit, New File, New Folder, Rename 
+                    <!-- unzip, compress -->
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="delete"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Delete: Cut / Copy / Move
+                    >Action : Cut, Copy, Paste, Delete, Restore
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
-                    value="share"
+                    value="share" 
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Share: Link sharing / Internal sharing
+                    >Share
                   </span>
                 </div>
                 <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="comments"
                   />
                   <span class="text-c-black mt-0.5 font-normal"
-                    >Comments: View documents comments; add / delete your own
-                    comments(editing permission required)
+                    >Comments
                   </span>
                 </div>
-                <div class="flex items-start justify-start gap-1 sm:gap-3">
+                <!-- <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value=dynamic
                   />
                   <span class="text-c-black mt-0.5 font-normal"
                     >Dynamics: Document dynamic viewing, subscription dynamic
                   </span>
-                </div>
-                <div class="flex items-start justify-start gap-1 sm:gap-3">
+                </div> -->
+                <!-- <div class="flex items-start justify-start gap-1 sm:gap-3">
                   <input
                     type="checkbox"
-                    class="c-checkbox mt-1"
+                    class="d-checkbox mt-1"
                     name="permissions[]"
                     value="admin"
                   />
@@ -321,12 +321,11 @@
                     >Administration: Set member permission / Comment / History
                     version management
                   </span>
-                </div>
+                </div> -->
               </div>
             </div>
-            <hr class="my-4" />
               <div>
-                <div class="flex justify-center">
+                <div class="flex justify-center border-t border-gray-3 pt-4">
                   <button
                     type="button"
                     class="title-btn px-12 py-2 bg-c-yellow text-c-black rounded"
@@ -351,7 +350,7 @@
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-view">
-                    <p class="text-c-black">View/Preview</p>
+                    <p class="text-c-black">View</p>
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-delete">
@@ -361,21 +360,20 @@
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-mass-upload">
                     <p class="text-c-black">Bulk-Upload</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
+                    <!-- <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-rollback">
                     <p class="text-c-black">Rollback</p>
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="user-permanent-delete">
                     <p class="text-c-black">Hard Delete</p>
-                  </div>
+                  </div> -->
                    
                   </div>
                 </div>
               </div>
-            <hr class="my-4" />
               <div>
-                <div class="flex justify-center">
+                <div class="flex justify-center border-t border-gray-3 pt-4">
                   <button
                     type="button"
                     class="title-btn px-12 py-2 bg-c-yellow text-c-black rounded"
@@ -400,13 +398,13 @@
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-view">
-                    <p class="text-c-black">View/Preview</p>
+                    <p class="text-c-black">View</p>
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-delete">
                     <p class="text-c-black">Delete</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
+                    <!-- <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-mass-upload">
                     <p class="text-c-black">Bulk-Upload</p>
                   </div>
@@ -417,13 +415,12 @@
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="role-permanent-delete">
                     <p class="text-c-black">Hard Delete</p>
-                  </div>
+                  </div> -->
                   </div>
                 </div>
               </div>
-            <hr class="my-4" />
               <div>
-                <div class="flex justify-center">
+                <div class="flex justify-center border-t border-gray-3 pt-4">
                   <button
                     type="button"
                     class="title-btn px-12 py-2 bg-c-yellow text-c-black rounded"
@@ -448,13 +445,13 @@
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-view">
-                    <p class="text-c-black">View/Preview</p>
+                    <p class="text-c-black">View</p>
                   </div>
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-delete">
                     <p class="text-c-black">Delete</p>
                   </div>
-                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
+                    <!-- <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-mass-upload">
                     <p class="text-c-black">Bulk-Upload</p>
                   </div>
@@ -465,13 +462,12 @@
                    <div class="checkbox-container rounded w-full md:w-32 flex items-center justify-start pl-2 gap-3 h-9">
                     <input type="checkbox" class="d-checkbox" name="permissions[]" value="group-permanent-delete">
                     <p class="text-c-black">Hard Delete</p>
-                  </div>
+                  </div> -->
                   </div>
                 </div>
               </div>
-            <hr class="my-4" />
               <div>
-                <div class="flex justify-center">
+                <div class="flex justify-center border-t border-gray-3 pt-4">
                   <button
                     type="button"
                     class="title-btn px-12 py-2 bg-c-yellow text-c-black rounded"
@@ -629,9 +625,9 @@ function populateTable(term='') {
  $('#checkall').change(function (e) {
   
     if($(this).prop("checked")) {
-            $(".d-checkbox,.c-checkbox").prop("checked", true);
+            $(".d-checkbox").prop("checked", true);
         } else {
-            $(".d-checkbox,.c-checkbox").prop("checked", false);
+            $(".d-checkbox").prop("checked", false);
         }     
 
   });

@@ -28,6 +28,7 @@ class User extends Authenticatable
         // 'avatar',
         'sizeMax',
         'cID',
+        'type',
     ];
 
     /**

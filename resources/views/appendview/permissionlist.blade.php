@@ -12,7 +12,7 @@
                       class="font-normal text-c-black text-left pl-3 pr-5 align-top pt-4"
                     >
                       <span
-                        class="bg-system py-1.5 text-center px-5 font-normal rounded-sm text-dark-black"
+                        class="taskbar py-1.5 text-center px-5 font-normal rounded-sm text-dark-black"
                         >System</span
                       >
                     </td>

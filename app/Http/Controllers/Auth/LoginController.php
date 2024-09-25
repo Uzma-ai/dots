@@ -13,7 +13,9 @@ use Carbon\Carbon;
 use Jenssegers\Agent\Agent;
 use Stevebauman\Location\Facades\Location;
 use App\Helpers\ActivityHelper;
+use App\Models\Quotes;
 use Illuminate\Support\Facades\Artisan;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -170,47 +172,47 @@ class LoginController extends Controller
 
     public function VoiceLogin(Request $request)
     {
-        // $audio = $request->file('audio');
-        // $audioContents = file_get_contents($audio->getPathName());
-        // $encodedaudio = base64_encode($audioContents);
-        // $payload = [
-        //     'audio' => $encodedaudio
-        // ];
+        $audio = $request->file('audio');
+        $audioContents = file_get_contents($audio->getPathName());
+        $encodedaudio = base64_encode($audioContents);
+        $payload = [
+            'audio' => $encodedaudio
+        ];
         $username = $request->username;
         $user = User::where('name', $username)->first();
-        // if (!$user) {
-        //     return response()->json(['status' => false, 'msg' => "Username not found."]);
-        // }
-        // if (!$user->is_facedata) {
-        //     return response()->json(['status' => false, 'msg' => "Facedata not register for this user."]);
-        // }
-        // if ($user->status == 0) {
-        //     return response()->json(['status' => false, 'msg' => "User is Suspended."]);
-        // }
-        // $curl = curl_init();
-        // curl_setopt_array($curl, array(
-        //     CURLOPT_URL => 'http://dev-ubt-app05.dev.orientdots.net/api/authenticate_voice?username=' . base64UrlEncode($_SERVER['SERVER_NAME'] . $user->id),
-        //     CURLOPT_RETURNTRANSFER => true,
-        //     CURLOPT_ENCODING => '',
-        //     CURLOPT_MAXREDIRS => 10,
-        //     CURLOPT_TIMEOUT => 0,
-        //     CURLOPT_FOLLOWLOCATION => true,
-        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        //     CURLOPT_CUSTOMREQUEST => 'POST',
-        //     CURLOPT_POSTFIELDS => json_encode($payload),
-        //     CURLOPT_HTTPHEADER => array(
-        //         'Content-Type: application/json'
-        //     ),
-        // ));
-        // $response = curl_exec($curl);
-        // $res = json_decode($response);
-        // curl_close($curl);
-        // if (isset($res->status) && $res->status == true) {
-        Auth::login($user);
-        return response()->json(['status' => true, 'user' => $user]);
-        // } else {
-        //     return response()->json(['status' => false, 'msg' => $res->message ?? "Can't login using voice."]);
-        // }
+        if (!$user) {
+            return response()->json(['status' => false, 'msg' => "Username not found."]);
+        }
+        if (!$user->is_facedata) {
+            return response()->json(['status' => false, 'msg' => "Facedata not register for this user."]);
+        }
+        if ($user->status == 0) {
+            return response()->json(['status' => false, 'msg' => "User is Suspended."]);
+        }
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://dev-ubt-app05.dev.orientdots.net/api/authenticate_voice?username=' . base64UrlEncode($_SERVER['SERVER_NAME'] . $user->id),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'
+            ),
+        ));
+        $response = curl_exec($curl);
+        $res = json_decode($response);
+        curl_close($curl);
+        if (isset($res->status) && $res->status == true) {
+            Auth::login($user);
+            return response()->json(['status' => true, 'user' => $user]);
+        } else {
+            return response()->json(['status' => false, 'msg' => $res->message ?? "Can't login using voice."]);
+        }
     }
 
     public function destroy(Request $request)
@@ -323,5 +325,33 @@ class LoginController extends Controller
         ];
 
         return $browserImages[$browser] ?? 'path/to/default/browser/image.png';
+    }
+
+    public function GoogleLogin()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function GoogleCallback(Request $request)
+    {
+        try {
+            $googleUser = Socialite::driver('google')->stateless()->user();
+        } catch (\Exception $e) {
+            return redirect()->route('login')->with('error', 'Google login was canceled or failed. Please try again.');
+        }
+        $user = User::where('email', $googleUser->email)->first();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Email not found in system.');
+        } else {
+            Auth::login($user);
+            setcookie('dotsusername', $user->name, time() + (86400 * 30), '/dots');
+            return redirect()->route('dashboard');
+        }
+    }
+
+    public function Quote()
+    {
+        $randomQuote = Quotes::inRandomOrder()->first();
+        return response()->json($randomQuote);
     }
 }

@@ -62,7 +62,7 @@ class UserController extends Controller
                     $cid = auth()->user()->cID;
                     $groups = Group::where('cID',$cid)->get();
                     $roles = Roles::where('cID',$cid)->get();
-                    $permissions = Permissions::get();
+                    $permissions = Permissions::where('cID',$cid)->get();
                     $company = Company::find($cid);
                     $users = User::where('cID',$cid)->with(['roles', 'group'])->paginate(10);
         }
@@ -74,10 +74,34 @@ class UserController extends Controller
         $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $input = $request->all();
         if ($input['searchTerm']) {
-            $search = $input['searchTerm'];
-            $users = User::where('name', 'LIKE', '%' . $search . '%')->where('id','!=',Auth::id())->get();
+            if(auth()->user()->cID == 0){
+                    $search = $input['searchTerm'];
+                    $users = User::where('name', 'LIKE', '%' . $search . '%')->where('id','!=',Auth::id())->get();
+                    if(count($users) == 0){
+                     $users = User::select('users.*')->join('roles', 'users.roleID', '=', 'roles.id')->where('roles.name', 'LIKE', '%' . $search . '%')->get();
+                    }
+                    if(count($users) == 0){
+                     $users = User::select('users.*')->join('groups', 'users.groupID', '=', 'groups.id')->where('groups.name', 'LIKE', '%' . $search . '%')->get();
+                    }
+            }else{
+                    $cid = auth()->user()->cID;
+                    $search = $input['searchTerm'];
+                    $users = User::where('name', 'LIKE', '%' . $search . '%')->where('cID',$cid)->where('id','!=',Auth::id())->get();
+                    if(count($users) == 0){
+                     $users = User::select('users.*')->join('roles', 'users.roleID', '=', 'roles.id')->where('users.cID',$cid)->where('roles.name', 'LIKE', '%' . $search . '%')->get();
+                    }
+                    if(count($users) == 0){
+                     $users = User::select('users.*')->join('groups', 'users.groupID', '=', 'groups.id')->where('users.cID',$cid)->where('groups.name', 'LIKE', '%' . $search . '%')->get();
+                    }
+            }
+            
         } else {
-            $users = User::where('id','!=',Auth::id())->paginate(10);
+            if(auth()->user()->cID == 0){
+             $users = User::where('id','!=',Auth::id())->paginate(10);
+            }else{
+            $cid = auth()->user()->cID;
+            $users = User::where('cID',$cid)->where('id','!=',Auth::id())->paginate(10);
+             }
         }
         $user = view('appendview.userlist')->with('users', $users)->with('filteredPermissions',$filteredPermissions)->render();
         return response()->json($user);
@@ -92,7 +116,8 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        $duplicate = User::where('email', $request->email)->exists();
+        $cid = auth()->user()->cID;
+        $duplicate = User::where('email', $request->email)->where('cID',$cid)->exists();
         if ($duplicate == 1) {
             return  redirect()->route('useradmin')->with('user-exist', 'test');
         }
@@ -152,8 +177,9 @@ class UserController extends Controller
 
     public function edit(Request $request)
     {
-        $groups = Group::get();
-        $roles = Roles::get();
+        $cid = auth()->user()->cID;
+        $groups = Group::where('cID',$cid)->get();
+        $roles = Roles::where('cID',$cid)->get();
 
         $id = $request->id;
         $user = User::find($id);
@@ -279,6 +305,11 @@ class UserController extends Controller
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
+        $duplicate = User::where('email', $request->email)->exists();
+        if ($duplicate == 1) {
+            return  redirect()->route('useradmin')->with('user-exist', 'test');
+        }
+
         $input = $request->all();
         $input['ip_address'] =  $request->ip();
         $input['upload_limit'] = 0;
@@ -292,6 +323,7 @@ class UserController extends Controller
         $input['roleID'] = $role->id;
         }
 
+        $input['type'] = 'superadmin';
         $user = User::create($input);
         if($user){
             $group = Group::find($user->groupID);
@@ -308,7 +340,7 @@ class UserController extends Controller
             }
 
         }
-        return redirect()->route('useradmin')->with('super-success', 'SuperAdmin created successfully!');
+        return redirect()->route('useradmin')->with('super-success', 'Masteradmin created successfully!');
     }
 }
 

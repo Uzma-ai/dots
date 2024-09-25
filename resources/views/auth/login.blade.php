@@ -16,6 +16,7 @@
 </head>
 
 <body class="login">
+    @include('layouts.alert')
     <div class="login-screen w-full h-screen flex items-center justify-center gap-2 relative cs">
         <!-- Curtains   -->
         <div id="curtain" class="hidden">
@@ -61,6 +62,9 @@
                             onclick="showModal('#login')" id="BtnLogoDirectLogin">
                             Login
                         </button>
+                        <a class="bg-c-black text-white rounded-full px-12 py-2" href="{{ route('GoogleLogin') }}">
+                            Login with Google
+                        </a>
                         <button class="text-c-black px-12 py-2 rounded-full"
                             style="background: rgba(0, 0, 0, 0.16);box-shadow: var(--box-shadow);" id="ChangeUsername">
                             Change username
@@ -73,21 +77,20 @@
                             <div class="flex-grow border-t border-c-light-gray w-16 sm:w-20"></div>
                         </div>
                         <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-
                             @if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com' || $_SERVER['SERVER_NAME'] == 'localhost')
-                                <a href="{{ url('/') }}/public/apps/Sizaf Server/Dots.apk" download
+                                <a href="https://sizaf.com/DotsApkAndExe/Sizaf_Server.apk" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
                                     mobile</a>
-                                <a href="{{ url('/') }}/public/apps/Sizaf Server/Sizaf Dots.zip" download
+                                <a href="https://sizaf.com/DotsApkAndExe/Sizaf_server_windows.exe" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
-                            @elseif ($_SERVER['SERVER_NAME'] == 'dev-ubt-app04.dev.orientdots.net1')
-                                <a href="{{ url('/') }}/public/apps/Dots Server/Dots.apk" download
+                            @elseif ($_SERVER['SERVER_NAME'] == 'dev-ubt-app04.dev.orientdots.net')
+                                <a href="https://sizaf.com/DotsApkAndExe/Dots_Server.apk" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-mobile-download-line ri-lg pr-1 text-c-yellow"></i>Download on
                                     mobile</a>
-                                <a href="{{ url('/') }}/public/apps/Dots Server/Sizaf Dots.zip" download
+                                <a href="https://sizaf.com/DotsApkAndExe/Dots_server_windows.exe" download
                                     class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"><i
                                         class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
                             @endif
@@ -167,13 +170,13 @@
                                         <fieldset>
                                             <div class="form-card voice1 space-y-5">
                                                 <div id="voice-error"
-                                                    class="flex gap-2 text-red-600 justify-center items-center mt-5 hidden">
-                                                    <i class="ri-error-warning-fill ri-xl"></i>
+                                                    class="flex gap-2 text-red-600 justify-center items-start pl-9 pr-5 hidden">
+                                                    <i class="ri-error-warning-fill ri-xl mt-2"></i>
                                                     <p>Failed to record voice</p>
                                                 </div>
                                                 <div
                                                     class="container flex flex-col justify-center items-center space-y-5">
-                                                    <p id="VoiceInfo" class="pl-10 pr-5">Here's a quick story. Ready? Start recording now:<br />On a foggy night, an old man found a glowing coin on the street. When he picked it up, he was transported to a world of endless wonder.</p>
+                                                    <p id="VoiceInfo" class="pl-10 pr-5"></p>
                                                     <div class="mic-container mic-wrapper1 relative flex gap-3">
                                                         <button class="circle cursor-pointer has-tooltip"
                                                             id="recordButton1">
@@ -240,8 +243,8 @@
                                     <fieldset>
                                         <div class="form-card space-y-3">
                                             <div id="camera-error"
-                                                class="flex gap-2 text-red-600 justify-center items-center hidden">
-                                                <i class="ri-error-warning-fill ri-xl"></i>
+                                                class="flex gap-2 text-red-600 justify-center items-start pl-10 pr-2 hidden">
+                                                <i class="ri-error-warning-fill ri-xl mt-2"></i>
                                                 <p id="CamError">Failed to capture photo</p>
                                             </div>
                                             <div
@@ -273,12 +276,12 @@
                                     <fieldset class="voice2">
                                         <div class="form-card space-y-5">
                                             <div id="voice-error"
-                                                class="flex gap-2 text-red-600 justify-center items-center hidden">
-                                                <i class="ri-error-warning-fill ri-xl"></i>
+                                                class="flex gap-2 text-red-600 justify-center items-start pl-9 pr-5 hidden">
+                                                <i class="ri-error-warning-fill ri-xl mt-2"></i>
                                                 <p id="VoiceError">Failed to record voice</p>
                                             </div>
                                             <div class="container flex flex-col justify-center items-center space-y-5">
-                                                <p>Speak: On a foggy night, an old man found a glowing coin on the street. When he picked it up, he was transported to a world of endless wonder.</p>
+                                                <p class="pl-10 pr-5">Speak: <span id="Quotes"></span></p>
                                                 <div class="mic-container mic-wrapper2 relative flex gap-3">
                                                     <button class="circle cursor-pointer has-tooltip"
                                                         id="recordButton2">
@@ -371,8 +374,8 @@
         $randomNumber = rand(1, 3);
     @endphp
     <div class="hidden">
-        <audio src="{{ asset($constants['IMAGEFILEPATH'] . 'hhay' . $randomNumber . '.mp3') }}"
-            id="HHAYAudio"></audio>
+        <audio src="{{ asset($constants['IMAGEFILEPATH'] . 'read_' . $randomNumber . '.mp3') }}"
+            id="ReadBelow"></audio>
         <audio src="{{ asset($constants['IMAGEFILEPATH'] . 'wod' . $randomNumber . '.mp3') }}"
             id="WODAudio"></audio>
     </div>
@@ -382,15 +385,15 @@
 <script>
     // Dashboard opening animation
     $('.getStartedBtn').on('click', function(event) {
-            event.preventDefault();
-            $('#curtain').removeClass('hidden');
+        event.preventDefault();
+        $('#curtain').removeClass('hidden');
 
-            $('#curtain').addClass('open');
+        $('#curtain').addClass('open');
 
-            setTimeout(() => {
-                window.location.href = $(this).attr('href');
-            }, 4000);
-        });
+        setTimeout(() => {
+            window.location.href = $(this).attr('href');
+        }, 4000);
+    });
 </script>
 <script>
     var avilable_facedata = false;
@@ -402,6 +405,17 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        //for random Quotes
+        $.ajax({
+            method: 'GET',
+            url: "{{ route('Quote') }}",
+            contentType: 'application/json',
+            success: function(result) {
+                $('#Quotes').html(result.quote);
+                $('#VoiceInfo').html(result.quote);
+            },
         });
 
         //for change username
@@ -850,7 +864,7 @@
                                     if (response.flag == true) {
                                         toastr.success("Face authentication match, Check Voice.");
                                     }
-                                    $('#HHAYAudio').get(0).play();
+                                    $('#ReadBelow').get(0).play();
                                     setTimeout(() => {
                                         startRecording(2);
                                     }, 2000);
@@ -1047,7 +1061,8 @@
                             success: function(response) {
                                 if (response.status == true) {
                                     if (response.user.avatar != null) {
-                                        var image = "{{ url('/') }}" + "/" + response.user.avatar;
+                                        var image = "{{ url('/') }}" + "/" + response.user
+                                            .avatar;
                                         $('#LoginImage').attr('src', image);
                                     }
                                     $('#WODAudio').get(0).play();

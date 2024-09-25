@@ -22,13 +22,15 @@ if(empty($updatedPath)){
     $updatedPath = '';
 }
 //$pathnew = base64UrlEncode($path);
+
 @endphp
+
     <main class="flex w-full h-full flex cm font-size-14">
       <!-- Sidebar -->
       @include('layouts.sidebar')
       <div class="flex-grow h-100 main">
         <div class="flex w-full h-full flex-col content">
-          <div class="px-4 md:px-6 py-3 py-6 pb-2 md:pb-6">
+          <div class="px-9 md:px-6 py-6 md:pb-6">
             <div class="flex items-center gap-4">
               <span class="text-xl text-c-black">File</span>
             </div>
@@ -36,12 +38,13 @@ if(empty($updatedPath)){
           <!-- topTaskbar in desktops -->
           @include('layouts.filemanager-header')
           <!--Main content -->
-          <div class="relative loaddetails allapplist h-full overflow-y-auto scroll">
+          <div class="relative loaddetails allapplist h-full overflow-y-auto scroll" >
             <!--grid container -->
             <!-- <div id="gridContainer" class="grid grid-cols-12 gap-4 transition-all duration-300 p-4 overflow-y-auto">
               
-            </div> -->
+            </div> --> 
             <!--table container -->
+            
             @include('layouts.columnview')
             <!--panes-->
             <div id="panel" class="resizable-sidebar hidden md:w-4/12 xl:w-1/5">
@@ -52,14 +55,15 @@ if(empty($updatedPath)){
               @include('layouts.previewpan')
             </div>
           </div>
+
           <!--upload popup-->
           <!--share popup-->
                  <!--share popup-->
           <div
-            id="sharePopup"
-            role="dialog"
-            class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
-          >
+              id="sharePopup"
+              role="dialog"
+              class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
+            >
             <div
               class="bg-c-white rounded-xl shadow-lg w-11/12 md:w-3/4 lg:w-7/12 xl:w-1/2 2xl:w-2/5 max-w-7xl max-h-screen modal-content overflow-y-auto"
             >
@@ -291,12 +295,14 @@ if(empty($updatedPath)){
       
     // Show path details based on the given path
     showapathdetail(path);
-        
-    function showapathdetail(path){
+    function showapathdetail(path, list = ''){
         $.ajax({
             url: showFileDetail,
             method: 'GET',
-            data: {path:path},
+            data: {
+              path:path, 
+              list:list
+            },
             success: function (response) {
                 $('.loaddetails').html(response.html);
             },
@@ -304,7 +310,7 @@ if(empty($updatedPath)){
                 console.error(xhr.responseText);
             }
         }); 
-    }
+    }     
         
     // search functionality
     $('#searchFiles').on('keyup', function() {
