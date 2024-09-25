@@ -24,7 +24,7 @@
         console.log('connected');
     });
     socket.on('receivedfor_' + user_id, (data) => {
-        console.log(data.data);
+        console.log(data);
         var NoticeDiv = $('#Notice');
         NoticeDiv.html('');
         var html = `<div id="preview-modal" role="dialog"
