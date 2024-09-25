@@ -9,10 +9,13 @@
       }
 
        const allothercontainers = {
-        notification: document.getElementById("notification"),
+        notification: document.getElementById("NotiContainer"),
         search: document.getElementById("search"),
         administrator: document.getElementById("administrator"),
-      };
+};
+        
+      //Administrator Panel click
+
        document.getElementById("footer-logo").addEventListener("click", function (event) {
         event.stopPropagation();
         if (allothercontainers.administrator.classList.contains("hidden")) {
@@ -21,7 +24,20 @@
         allothercontainers.administrator.classList.toggle("hidden");
          // Hide context menus
         hideContextMenus()
-      });
+       });
+
+      //  Notification icon click
+
+      document.getElementById("notification-icon").addEventListener("click", function (event) {
+        event.stopPropagation();
+        if (allothercontainers.notification.classList.contains("hidden")) {
+            closeotherContainers(allothercontainers.notification);
+        }
+        allothercontainers.notification.classList.toggle("hidden");
+         // Hide context menus
+        hideContextMenus()
+       });
+      
       function hideContextMenus() {
         const appContextMenu = document.getElementById("app-contextmenu");
         const dashboardContextMenu = document.getElementById("context-menu");
@@ -45,13 +61,13 @@
             const minutes = String(now.getMinutes()).padStart(2, "0");
 
             const days = [
-              "Sunday",
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
+              "Sun",
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
             ];
             const months = [
               "January",
@@ -74,7 +90,7 @@
             const timeString = `${hours}:${minutes}`;
             const dateString = `${day}, ${month} ${date}`;
 
-            clock.innerHTML = `<div class="time text-c-white text-5xl font-normal">${timeString}</div><div class="date text-sm flex font-normal">${dateString}</div>`;
+            clock.innerHTML = `<div class="time text-c-black text-2xl font-normal">${timeString}</div><div class="date text-sm flex font-normal">${dateString}</div>`;
           }
 
           updateClock();
@@ -117,7 +133,7 @@
             });
 
 document.addEventListener("click", function (event) {
-  if (!event.target.closest("#notification") && !event.target.closest("#search") && !event.target.closest("#administrator")) {
+  if (!event.target.closest("#NotiContainer") && !event.target.closest("#search") && !event.target.closest("#administrator")) {
     closeotherContainers();
   }
 });

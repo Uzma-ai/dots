@@ -71,7 +71,7 @@
     <!-- <header id="iframeheaders" class="transparent p-2 text-white flex justify-center items-center fixed top-0 left-0 right-0 mainiframeiconheader mainscreen"> -->
 
     <div class="notification-container">
-        <div id="NotiContainer" class="Notification h-80 absolute right-5 top-16 hidden overflow-hidden">
+        <div id="NotiContainer" class="Notification h-64 absolute right-5 top-16 hidden overflow-hidden">
             <div class="h-16 border-b-2 border-c-gray py-4 px-4 flex items-center justify-between">
                 <h1 class="text-sm sm:text-lg text-c-black font-normal">Notification Center</h1>
                 @if (Auth::user()->notifications()->whereNull('read_at')->count() > 0)
@@ -86,16 +86,16 @@
                             @php
                                 $notification = is_string($data) ? json_decode($data, true) : $data;
                             @endphp
-                            <li class="border-b-2 border-c-gray px-4 py-2.5 notification-item" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">
+                            <li class="border-b-2 border-c-gray px-4 py-2.5">
                                 <div class="flex items-start justify-between gap-20">
-                                    <p class="text-sm text-c-black font-normal">
+                                    <p class="text-sm text-c-black font-normal notification-item" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">
                                         {{ $notification['title'] ?? 'No Title' }}
                                     </p>
                                     <i class="ri-close-circle-fill ri-1x cursor-pointer ReadThisNoti"
                                         data-id="{{ $id }}"></i>
                                 </div>
                                 <span
-                                    class="text-c-time font-normal text-sm">{{ \Carbon\Carbon::parse($notification['time'] ?? now())->diffForHumans(['short' => true]) }}</span>
+                                    class="text-c-time font-normal text-sm notification-item" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">{{ \Carbon\Carbon::parse($notification['time'] ?? now())->diffForHumans(['short' => true]) }}</span>
                             </li>
                         @endforeach
                     @else

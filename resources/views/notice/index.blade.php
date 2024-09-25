@@ -502,7 +502,7 @@
                 type: "GET",
                 url: "{{ url('/') }}/runnow/" + id,
                 success: function(response) {
-                    alert('Notice send successfully.')
+                    toastr["success"]("Notice send successfully");
                 }
             });
         }

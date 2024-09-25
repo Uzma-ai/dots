@@ -37,12 +37,21 @@ class UsersSeeder extends Seeder
         //     'last_seen' => 0
         // ]);
 
-        //Masteradmin
+        //AibuzzSuperSuperadmin
         User::factory()->create([
-            'name' => 'masteradmin',
+            'name' => 'aibuzzadmin',
             'cID'  => 0,
-            'email' => 'masteradmin@sizaf.com',
+            'email' => 'aibuzzadmin@sizaf.com',
             'password' => Hash::make('sizaf@dots'),
+            'groupID' => 1,
+            'roleID' => 1,
+        ]);
+        //DotsSuperadmin
+        User::factory()->create([
+            'name' => 'dotsadmin',
+            'cID'  => 0,
+            'email' => 'admin@dots.com',
+            'password' => Hash::make('admin@dots'),
             'groupID' => 1,
             'roleID' => 1,
         ]);
