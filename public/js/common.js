@@ -1163,9 +1163,16 @@ $(document).on('click', '#MarkAllRead', function (event) {
         url: base_url + "/read-all",
         success: function (response) {
             if (response.status === 'success') {
-                $('#ULNoti').html('');
-                $('#NotiContainer').addClass('hidden');
+                var html = `<li class="text-center mt-3">
+                                No new notifications
+                            </li>`;
+                $('#ULNoti').html(html);
             }
         }
     });
+});
+$(document).on('click', function(event) {
+    if (!$(event.target).closest('#NotiContainer').length) {
+        $('#NotiContainer').addClass('hidden');
+    }
 });
