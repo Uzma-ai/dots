@@ -24,7 +24,7 @@
                         @if ($iframedetail['extension'] == 'editor')
                         <!--comment section-->
 
-                         <div class="commentssection absolute bottom-0 top-9 flex h-11/12 flex-col border-r bg-c-lighten-gray hidden md:w-1/3  font-size-14">
+        <div class="commentssection absolute bottom-0 top-9 flex h-11/12 flex-col border-r bg-c-lighten-gray hidden md:w-1/3  font-size-14">
           <div class="resizer absolute top-0 right-0 w-1 h-full" style="cursor: ew-resize; background-color: #d1d5db"></div>
           <div class="sticky top-0 z-10 flex items-center justify-between border-b px-4 py-2">
             <h3 class="font-medium font-size-16">Comments</h3>
@@ -70,7 +70,11 @@
                         @endif
 
                         <!--Iframe-->
-                        <iframe id="iframe{{ $iframedetail['filetype'].$iframedetail['filekey'] }}" src="{{ $iframedetail['iframeurl'] }}" class="w-full h-full frame"></iframe>
+                        @if($iframedetail['iframetype']!='popup')
+                            <iframe id="iframe{{ $iframedetail['filetype'].$iframedetail['filekey'] }}" src="{{ $iframedetail['iframeurl'] }}" class="w-full h-full frame"></iframe>\
+                        @else
+                            
+                        @endif
                         <!--chat button-->
                         @if ($iframedetail['extension'] == 'editor')
                             <div class="absolute bottom-5 left-5 bg-gray-300 rounded-full px-2 py-1 commentbutton">
