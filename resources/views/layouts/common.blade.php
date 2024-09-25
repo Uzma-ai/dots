@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'custom.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'root.css') }}" />
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'common.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'tour.min.css') }}" /> --}}
+
     <!-- <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'] . 'cs.css') }}" /> -->
     <script>
         var base_url = "{{ url('/') }}";
@@ -50,7 +52,8 @@
                         <i class="ri-book-marked-line"></i>
                     </button>
                 </a>
-                <button id="guide-button" type="button" value="OnScreen" tabindex="0" class="taskbar-dropdown-item flex items-center gap-2">
+                <button id='guide-button' type="button" value="OnScreen" tabindex="0" onclick="startGuide()"
+                    class="taskbar-dropdown-item flex items-center gap-2">
                     <i class="ri-guide-line"></i>
                 </button>
             </div>
@@ -68,7 +71,7 @@
     <!-- <header id="iframeheaders" class="transparent p-2 text-white flex justify-center items-center fixed top-0 left-0 right-0 mainiframeiconheader mainscreen"> -->
 
     <div class="notification-container">
-        <div id="NotiContainer" class="Notification h-80 absolute right-5 top-16 hidden overflow-hidden">
+        <div id="NotiContainer" class="Notification h-64 absolute right-5 top-16 hidden overflow-hidden">
             <div class="h-16 border-b-2 border-c-gray py-4 px-4 flex items-center justify-between">
                 <h1 class="text-sm sm:text-lg text-c-black font-normal">Notification Center</h1>
                 @if (Auth::user()->notifications()->whereNull('read_at')->count() > 0)
@@ -81,19 +84,18 @@
                     @if (Auth::user()->notifications()->whereNull('read_at')->count() > 0)
                         @foreach (Auth::user()->notifications()->whereNull('read_at')->pluck('data', 'id') as $id => $data)
                             @php
-                                // Check if $data is a string and needs decoding
                                 $notification = is_string($data) ? json_decode($data, true) : $data;
                             @endphp
                             <li class="border-b-2 border-c-gray px-4 py-2.5">
                                 <div class="flex items-start justify-between gap-20">
-                                    <p class="text-sm text-c-black font-normal">
+                                    <p class="text-sm text-c-black font-normal notification-item" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">
                                         {{ $notification['title'] ?? 'No Title' }}
                                     </p>
                                     <i class="ri-close-circle-fill ri-1x cursor-pointer ReadThisNoti"
                                         data-id="{{ $id }}"></i>
                                 </div>
                                 <span
-                                    class="text-c-time font-normal text-sm">{{ \Carbon\Carbon::parse($notification['time'] ?? now())->diffForHumans(['short' => true]) }}</span>
+                                    class="text-c-time font-normal text-sm notification-item" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">{{ \Carbon\Carbon::parse($notification['time'] ?? now())->diffForHumans(['short' => true]) }}</span>
                             </li>
                         @endforeach
                     @else
@@ -186,8 +188,11 @@
 
     <script src="{{ asset($constants['JSFILEPATH'].'animation.js') }}"></script>
 
-    <script src="{{ asset($constants['JSFILEPATH'].'common.js') }}"></script>
-    <script src="{{ asset($constants['JSFILEPATH'].'taskbar.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'common.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'taskbar.js') }}"></script>
+    {{-- <script src="{{ asset($constants['JSFILEPATH'] . 'tourguidejs/tour.js') }}"></script>
+    <script src="{{ asset($constants['JSFILEPATH'] . 'tourguidejs/desktop-tour.js') }}"></script> --}}
+
 
     <!------------------------------------------------share start ---------------------------------------->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
@@ -252,10 +257,10 @@
     </script>
     <!------------------------------------------------share end ---------------------------------------->
 
-    
+
 
     @yield('scripts')
-   
+
     <script>
      $('#doc-button').hover(
                 function() {

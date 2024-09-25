@@ -14,6 +14,7 @@ use App\Models\ContextType;
 use App\Models\App;
 use App\Models\RecycleBin;
 use App\Helpers\PermissionHelper;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -30,9 +31,10 @@ class FileManagerController extends Controller
     }
 
     public function index($path=null)
-    {
+    {        
         $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         //$path = $path ? base64UrlDecode($path) : '/';
+
         $contextTypes = ContextType::with(['contextOptions' => function($query) {
             $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
         }])
@@ -40,6 +42,7 @@ class FileManagerController extends Controller
         ->where('function','createFileFunction')
         ->orderBy('sort_order', 'asc') // Sort context types by sort_order
         ->get();
+
         $resizecontextTypes = ContextType::with(['contextOptions' => function($query) {
             $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
         }])
@@ -47,6 +50,7 @@ class FileManagerController extends Controller
         ->where('function','resizeFunction')
         ->orderBy('sort_order', 'asc') // Sort context types by sort_order
         ->get();
+
         $sortcontextTypes = ContextType::with(['contextOptions' => function($query) {
             $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
         }])
@@ -55,6 +59,7 @@ class FileManagerController extends Controller
         ->orderBy('sort_order', 'asc') // Sort context types by sort_order
         ->get();
         $path = $path ? $path : '/';
+
         return view('filemanager',compact('path','contextTypes','resizecontextTypes','sortcontextTypes', 'filteredPermissions'));
     }
     
@@ -178,6 +183,12 @@ class FileManagerController extends Controller
     }
     
     public function pathfiledetail(Request $request){
+        //get user name
+        $user = User::find(auth()->id());
+        $userName = "";
+        if ($user) {  $userName = $user->name;  }
+        
+        //file path details
         $filepath = base64UrlDecode($request->input('path'));
         $parentPath = empty($filepath) ? '/' : $filepath ; 
         $defaultfolders = array();

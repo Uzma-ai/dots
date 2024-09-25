@@ -35,6 +35,6 @@
 @endif
 @if (count($results['folders']) <= 0 && count($results['files']) <= 0)
     <div class="image-file mt-1 p-3">
-        <h3 class="text-lg font-medium mb-2">No result</h3>
+        <h3 class="text-base font-medium mb-2">No result</h3>
     </div>
 @endif

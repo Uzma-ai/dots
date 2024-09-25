@@ -308,12 +308,7 @@
         </div>
     </div>
     @php
-        $host = $_SERVER['SERVER_NAME'];
-        if ($_SERVER['SERVER_NAME'] == 'localhost') {
-            $url = 'http://localhost:3000';
-        } else {
-            $url = 'https://node.sizaf.com';
-        }
+        $url = 'https://node.sizaf.com';
     @endphp
 @endsection
 @section('scripts')
@@ -470,7 +465,6 @@
             });
         });
         var url = "{{ $url }}";
-        var host = "{{ $host }}";
         var socket = io(url);
         $(document).on('submit', '.ajax-submit', function(e) {
             e.preventDefault();
@@ -508,7 +502,7 @@
                 type: "GET",
                 url: "{{ url('/') }}/runnow/" + id,
                 success: function(response) {
-                    alert('Notice send successfully.')
+                    toastr["success"]("Notice send successfully");
                 }
             });
         }
