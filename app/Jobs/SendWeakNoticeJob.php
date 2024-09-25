@@ -37,7 +37,7 @@ class SendWeakNoticeJob implements ShouldQueue
             $users = $this->getUsers($notice);
             foreach ($users ?? [] as $userId) {
                 $dbuser = User::find($userId);
-                Notification::send($dbuser, new NoticeNotification($data));
+                Notification::send($dbuser, new NoticeNotification($notice));
             }
         }
     }
