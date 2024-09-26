@@ -70,7 +70,7 @@ class LightAppsSeeder extends Seeder
         LightApp::create([
             'id' => 4,
             'group' => 1,
-            'name' => 'Dots Chat',
+            'name' => 'Chat',
             'link' => 'https://zulip.sizaf.com/',
             'description' => NULL,
             'function' => NULL,
@@ -89,7 +89,7 @@ class LightAppsSeeder extends Seeder
         LightApp::create([
             'id' => 5,
             'group' => 1,
-            'name' => 'Dots Erp',
+            'name' => 'Erp',
             'link' => 'https://erp.sizaf.com/login#login',
             'description' => NULL,
             'function' => NULL,
@@ -108,7 +108,7 @@ class LightAppsSeeder extends Seeder
         LightApp::create([
             'id' => 6,
             'group' => 1,
-            'name' => 'Dots Mail',
+            'name' => 'Mail',
             'link' => 'https://snappymail.sizaf.com/',
             'description' => NULL,
             'function' => NULL,
@@ -127,7 +127,7 @@ class LightAppsSeeder extends Seeder
         LightApp::create([
             'id' => 7,
             'group' => 1,
-            'name' => 'Dots Social',
+            'name' => 'Social',
             'link' => 'https://social.sizaf.com/html/user/login',
             'description' => NULL,
             'function' => NULL,
