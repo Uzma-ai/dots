@@ -87,14 +87,18 @@ placeholder="Search" id="searchFiles"
     <i class="ri-home-4-line pr-2"></i>Home
     {!! (count($pathComponents)>=1) ? '<span>/</span>' : '' !!}
 
-          <!-- actionbar -->
-          
-          <div
-            class="border-b border-c-light-gray1 flex justify-between items-center hidden md:flex text-c-black actionbar"
-          >
-            <div class="flex ml-6 gap-x-5 lg:gap-x-4 xl:gap-x-6 my-2 context-menulist">
-              <div class="relative flex items-center new">
-            @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
+  </button>
+  @if(!empty($pathComponents))
+  @foreach($pathComponents as $pckey=> $pcomponent) 
+  @if($pcomponent !='/' && !empty($pcomponent))
+  <button class="flex items-center">
+    <span class="truncate">{{$pcomponent}}</span>
+    {!! ($pckey!=(count($pathComponents)-1)) ? '<span>/</span>' :'' !!}
+  </button>
+  @endif
+  @endforeach
+  @endif
+</div>
 
 <div class="flex items-center space-x-2">
   <button
@@ -267,106 +271,14 @@ class="border-b border-c-light-gray1 flex justify-between items-center hidden md
                 class="dropdown-option absolute top-full mt-2 z-10 bg-c-white border border-c-medium-gray rounded-lg shadow-md hidden md:w-40 lg:w-44 xl:w-68"
                 >
                 @if(!empty($sortcontextTypes))
-                  @foreach ($sortcontextTypes as $scontextType)
-                    @if(!empty($scontextType->contextOptions))
-                      @foreach ($scontextType->contextOptions as $soption)
-                      <div class="hover-bg-c-yellow rounded-t-lg">
-                        <a href="#" class="flex block p-2 pl-4 dropdown-item clickmenu {{ $scontextType->function }} " data-type="{{ $soption->function }}">
-                          <i class="ri-check-line pr-3 ri-lg mt-1 sortingcheck sorting{{ $soption->function }} {{ (session()->has('sortfiles') && session('sortfiles')['sortby'].'-'.session('sortfiles')['sortorder'] == $soption->function) ? : 'hidden'}}"></i>
-                          <span>{{ $soption->name }}</span>
-                        </a>
-                      </div>
-                       @endforeach
-                      @endif
-                    @endforeach
-                  @endif
-                </div>
-              </div>
-              <div class="relative flex items-center view">
-                <button class="flex gap-x-2" onclick="toggleView()">
-                  <i class="ri-gallery-view-2 ri-lg mt-1"></i>
-                  <span>View</span>
-                </button>
-                <button class="dropdown-btn">
-                  <i class="ri-arrow-drop-down-line ri-lg"></i>
-                </button>
-                <div
-                  id="view-dropdown"
-                  class="dropdown-option absolute top-full mt-2 z-10 bg-c-white border border-c-medium-gray rounded-lg shadow-md hidden md:w-44 xl:w-68"
-                >
-              
-                 @if(!empty($resizecontextTypes))
-                  @foreach ($resizecontextTypes as $rcontextType)
-                    @if(!empty($rcontextType->contextOptions))
-                      @foreach ($rcontextType->contextOptions as $roption)
-
-                        <div class="hover-bg-c-yellow rounded-t-lg">
-                          <a
-                            href="#"
-                            class="flex items-center block p-2 pl-4 dropdown-item clickmenu {{ $rcontextType->function }} " 
-                            data-type="{{ $roption->function }}"
-                          >
-                            <i class="ri-gallery-view-2 text-sm mt-1 w-1/4"></i>
-                            <span>{{ $roption->name }}</span> 
-                          </a>
-                        </div>
-                        @endforeach
-                      @endif
-                    @endforeach
-                  @endif 
-                  <div class="hover-bg-c-yellow rounded-t-lg">
-                    <a
-                      href="#"
-                      class="flex items-center block p-2 pl-4 dropdown-item clickmenu listFunction" 
-                      data-type=""
-                    >
-                    <i class="ri-list-check ri-lg w-1/4"></i>
-                      <span>List View</span> 
-                    </a>
-                  </div>
-
-                  <div class="hover-bg-c-yellow rounded-t-lg">
-                    <a
-                      href="#"
-                      class="flex items-center block p-2 pl-4 dropdown-item clickmenu detailsFunction" 
-                      data-type=""
-                    >
-                    <i class="ri-profile-line ri-lg w-1/4"></i>
-                    <span>Detail pane</span>
-                    </a>
-                  </div>
-                  
-
-                  {{-- <div class="hover-bg-c-yellow">
-                    <a
-                      href="#"
-                      class="flex items-center block p-2 pl-4 dropdown-item"
-                      onclick="toggleView();"
-                    >
-                      <i class="ri-list-check ri-lg w-1/4"></i
-                      ><span>List View</span>
-                    </a>
-                  </div>
-                  <div class="hover-bg-c-yellow">
-                    <a
-                      href="#"
-                      class="flex items-center block p-2 pl-4 dropdown-item"
-                      onclick="togglePanel('detail');"
-                    >
-                      <i class="ri-profile-line ri-lg w-1/4"></i
-                      ><span>Detail pane</span>
-                    </a>
-                  </div>
-                  <div class="hover-bg-c-yellow rounded-b-lg">
-                    <a
-                      href="#"
-                      class="flex items-center block p-2 pl-4 dropdown-item"
-                      onclick="togglePanel('preview');"
-                    >
-                      <i class="ri-eye-line ri-lg w-1/4"></i>
-                      <span>Preview pane</span>
-                    </a>
-                  </div> --}}
+                @foreach ($sortcontextTypes as $scontextType)
+                @if(!empty($scontextType->contextOptions))
+                @foreach ($scontextType->contextOptions as $soption)
+                <div class="hover-bg-c-yellow rounded-t-lg">
+                  <a href="#" class="flex block p-2 pl-4 dropdown-item clickmenu {{ $scontextType->function }} " data-type="{{ $soption->function }}">
+                    <i class="ri-check-line pr-3 ri-lg mt-1 sortingcheck sorting{{ $soption->function }} {{ (session()->has('sortfiles') && session('sortfiles')['sortby'].'-'.session('sortfiles')['sortorder'] == $soption->function) ? : 'hidden'}}"></i>
+                    <span>{{ $soption->name }}</span>
+                  </a>
                 </div>
                 @endforeach
                 @endif
@@ -374,6 +286,83 @@ class="border-b border-c-light-gray1 flex justify-between items-center hidden md
                 @endif
               </div>
             </div>
-            
+            <div class="relative flex items-center view">
+              <button class="flex gap-x-2" onclick="toggleView()">
+                <i class="ri-gallery-view-2 ri-lg mt-1"></i>
+                <span>View</span>
+              </button>
+              <button class="dropdown-btn">
+                <i class="ri-arrow-drop-down-line ri-lg"></i>
+              </button>
+              <div
+              id="view-dropdown"
+              class="dropdown-option absolute top-full mt-2 z-10 bg-c-white border border-c-medium-gray rounded-lg shadow-md hidden md:w-44 xl:w-68"
+              >
+              @if(!empty($resizecontextTypes))
+              @foreach ($resizecontextTypes as $rcontextType)
+              @if(!empty($rcontextType->contextOptions))
+              @foreach ($rcontextType->contextOptions as $roption)
+
+              <div class="hover-bg-c-yellow rounded-t-lg">
+                <a
+                href="#"
+                class="flex items-center block p-2 pl-4 dropdown-item clickmenu {{ $rcontextType->function }} " data-type="{{ $roption->function }}"
+                >
+                <i class="ri-gallery-view-2 text-sm mt-1 w-1/4"></i>
+                <span>{{ $roption->name }}</span>
+              </a>
+            </div>
+            @endforeach
+            @endif
+            @endforeach
+            @endif
+
+             <div class="hover-bg-c-yellow">
+              <a
+              href="#"
+              class="flex items-center block p-2 pl-4 dropdown-item"
+              onclick="toggleView();"
+              >
+              <i class="ri-list-check ri-lg w-1/4"></i
+                ><span>List View</span>
+              </a>
+            </div>
+            <div class="hover-bg-c-yellow">
+              <a
+              href="#"
+              class="flex items-center block p-2 pl-4 dropdown-item"
+              onclick="togglePanel('detail');"
+              >
+              <i class="ri-profile-line ri-lg w-1/4"></i
+                ><span>Detail pane</span>
+              </a>
+            </div>
+            <div class="hover-bg-c-yellow rounded-b-lg">
+              <a
+              href="#"
+              class="flex items-center block p-2 pl-4 dropdown-item"
+              onclick="togglePanel('preview');"
+              >
+              <i class="ri-eye-line ri-lg w-1/4"></i>
+              <span>Preview pane</span>
+            </a>
           </div>
-        
+        </div>
+      </div>
+     <!--  @if(auth()->id() == 1)
+      @if(in_array('RecycleBin', $pathComponents))
+      <a href="#" class="restoreAdminFunction">
+        <i>Deleted By User</i>
+      </a>
+
+      @endif
+      @endif -->
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+
+
+
+  </script>
