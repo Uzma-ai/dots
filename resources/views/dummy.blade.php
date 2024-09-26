@@ -68,16 +68,22 @@
         // Timer function to display recording time
         function startTimer() {
             recordingTime = 0;
-            timer.textContent = `Recording time: 0s`;
+            timer.textContent = Recording time: 0 s;
             interval = setInterval(() => {
                 recordingTime++;
-                timer.textContent = `Recording time: ${recordingTime}s`;
+                timer.textContent = Recording time: $ {
+                    recordingTime
+                }
+                s;
             }, 1000);
         }
 
         function stopTimer() {
             clearInterval(interval);
-            timer.textContent = `Final recording time: ${recordingTime}s`;
+            timer.textContent = Final recording time: $ {
+                recordingTime
+            }
+            s;
         }
 
         // Start recording
@@ -110,14 +116,14 @@
                             "Recording complete. You can play or submit it.";
                         let audioBlob = new Blob(audioChunks, {
                             type: "audio/webm"
-                        });
+                        }); // Changed to WebM format
                         let audioUrl = URL.createObjectURL(audioBlob);
                         audioPlayback.src = audioUrl;
 
                         // Convert the audio blob to Base64
                         let reader = new FileReader();
                         reader.readAsDataURL(audioBlob);
-                        reader.onloadend = function () {
+                        reader.onloadend = function() {
                             voiceData.value = reader.result;
                             submitBtn.disabled = false;
                         };
