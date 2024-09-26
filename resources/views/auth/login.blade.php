@@ -1020,13 +1020,10 @@
                         if (recorderNumber === 1) {
                             $("#previewContainer1").empty().append(preview);
                             recorders[1].count = 1;
-                            $("#recordButton1").prop("disabled", true);
                             $('#SubmitRegister').removeClass('hidden');
-                            $(`.mic-wrapper${recorderNumber}`).find(".circle").removeClass(
-                                "has-tooltip").removeClass("cursor-pointer");
-                            $(`.mic-wrapper${recorderNumber}`).find(".mic").removeClass("ri-mic-line")
-                                .removeClass("ri-user-voice-fill").removeClass("ri-voiceprint-line")
-                                .addClass("ri-mic-off-line");
+                            $(`.mic-wrapper${recorderNumber}`).find(".mic").removeClass("ri-mic-line").addClass("ri-user-voice-fill")
+                                .removeClass("ri-voiceprint-line");
+                            $(`.mic-wrapper${recorderNumber}`).find("#voice-retake").html("Retry");
                         } else if (recorderNumber === 2) {
                             $("#previewContainer2").empty().append(preview);
                             setTimeout(() => {
