@@ -11,10 +11,7 @@
           <th class="px-4 py-2">Creation</th>
         </tr>
       </thead>
-      @php
-  // Convert $parentPathSize to an associative array for easy lookup
-  $sizeMap = collect($parentPathSize)->pluck('total_size', 'parentpath')->toArray();
-@endphp
+     
       @foreach ($defaultfolders as $dfolder)
       <tbody>
         <tr class="cursor-pointer text-left">
@@ -43,8 +40,23 @@
           </td>
           <td class="px-4 py-2">{{$dfolder->type}}</td>
           <td class="px-4 py-2">
-            {{ isset($sizeMap[$dfolder->path]) ? convertSizeToReadableFormat($sizeMap[$dfolder->path]) : 'NA' }}
-          </td>          
+          @php            
+            $folderSize = ''; // Default size
+            if ($dfolder->path === 'Desktop') {
+              $folderSize = $sizeMap['desktop'];
+            } elseif ($dfolder->path === 'Document') {
+              $folderSize = $sizeMap['documents'];
+            } elseif ($dfolder->path === 'RecycleBin') {
+              $folderSize = $sizeMap['recyclebin'];
+            } elseif ($dfolder->path === 'Download') {
+              if($sizeMap['downloads'] >= 00)             
+              $folderSize = $sizeMap['downloads'];
+              else
+              $folderSize = '';
+            }
+          @endphp
+          {{ $folderSize }}
+        </td>        
           <td class="px-4 py-2">{{ $dfolder->updated_at->format('Y-m-d H:i:s') }}</td>
           <td class="px-4 py-2">
             <div class="flex items-center">
@@ -90,16 +102,18 @@
               </a>
             </div>
           </td>
-          <td class="px-4 py-2">{{$file->extension}}</td>
-          <td class="px-4 py-2">{{ $file->size !== false ? $file->size : 'NA' }}</td>                
+          <td class="px-4 py-2">{{ $file->extension }}</td>
+          <td class="px-4 py-2">{{ $file->size }}</td>                
           <td class="px-4 py-2">{{ $file->updated_at->format('Y-m-d H:i:s') }}</td>
           <td class="px-4 py-2">
             <div class="flex items-center">
-              <img
-                src="images/me.png"
-                alt=""
-                class="w-6 h-6 pr-1"
-              />
+            @if (Auth::user()->avatar != null)
+                  <img class="w-6 h-6 pr-1"
+                      src="{{ url('/') }}/{{ Auth::user()->avatar }}" alt="user image" />
+              @else
+                  <img class="w-6 h-6 pr-1" src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
+                      alt="user image" />
+              @endif 
               {{$userName}}
             </div>
           </td>
@@ -137,8 +151,8 @@
               </a>
             </div>
           </td>
-          <td class="px-4 py-2">{{$file->extension}}</td>
-          <td class="px-4 py-2">{{ $file->size !== false ? $file->size : 'NA' }}</td>                
+          <td class="px-4 py-2">{{ $file->extension }}</td>
+          <td class="px-4 py-2">{{ $file->size }}</td>                
           <td class="px-4 py-2">{{ $file->updated_at->format('Y-m-d H:i:s') }}</td>
           <td class="px-4 py-2">
             <div class="flex items-center">
@@ -149,7 +163,7 @@
                   <img class="w-6 h-6 pr-1" src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}"
                       alt="user image" />
               @endif             
-              {{$userName}}
+              {{ $userName }}
             </div>
           </td>
           <td class="px-4 py-2">{{ $file->created_at->format('Y-m-d H:i:s') }}</td>

@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\DB;
 
 
 
-
 class FileManagerController extends Controller
 {
     protected $filefunctions;
@@ -188,6 +187,7 @@ class FileManagerController extends Controller
         $userName = "";
         if ($user) {  $userName = $user->name;  }
         
+        $path = $request->input('path');
         //file path details
         $filepath = base64UrlDecode($request->input('path'));
         $parentPath = empty($filepath) ? '/' : $filepath ; 
@@ -205,26 +205,67 @@ class FileManagerController extends Controller
             $files = FileModel::where('status', 0)->where('created_by', auth()->id())->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])->get();
         }
 
-        // Calculate sizes for files and convert them
+        // Calculate sizes for files and convert them        
         foreach ($files as $file) {
-            $file->size = convertSizeToReadableFormat($file->size); //convertSizeToReadableFormat fron config folder -> commonfunction file
+            $file->size = convertSizeToReadableFormat($file->size); 
         }
 
-        // Grouping parent paths and calculating total size
-        $parentPathSize = FileModel::select('parentpath', DB::raw('SUM(size) as total_size'))
-        ->groupBy('parentpath')
-        ->get();
+        //get total sum of files
+        $totalSize = FileModel::where('status', 1)
+        ->where('created_by', auth()->id())
+        ->sum('size');
 
+        $totalFileCount = FileModel::where('status', 1)
+        ->where('created_by', auth()->id())
+        ->count('id');
+
+        // Convert the total size to a readable format
+        $totalSizeFormatted = convertSizeToReadableFormat($totalSize);
+
+        // Prepare sizes for specific directories
+        $sizeMap = [
+            'desktop' => FileModel::where('parentpath', 'Desktop')->where('status', 1)->where('created_by', auth()->id())->sum('size'),
+            'documents' => FileModel::where('parentpath', 'Document')->where('status', 1)->where('created_by', auth()->id())->sum('size'),
+            'recyclebin' => FileModel::where('status', 0)->where('created_by', auth()->id())->sum('size'),
+            'downloads' => FileModel::where('parentpath', 'Download')->where('status', 1)->where('created_by', auth()->id())->sum('size')
+        ];
+
+        // Convert sizes to a readable format
+        foreach ($sizeMap as $key => $size) {
+            $sizeMap[$key] = convertSizeToReadableFormat($size);
+        }
         //check view list
         if($request->input('list') == 1){
-            $html = view('appendview.listview')->with('defaultfolders', $defaultfolders)->with('files', $files)->with('userName', $userName)->with('parentPathSize', $parentPathSize)->render();
+            $html = view('appendview.listview')
+            ->with('defaultfolders', $defaultfolders)
+            ->with('files', $files)
+            ->with('userName', $userName)
+            ->with('sizeMap', $sizeMap)
+            ->with('totalSize', $totalSizeFormatted)
+            ->with('totalFileCount', $totalFileCount)
+            ->render();
         } 
         elseif($request->input('list') == 2){
-            $html = view('appendview.detailsview')->with('defaultfolders', $defaultfolders)->with('files', $files)->with('userName', $userName)->with('parentPathSize', $parentPathSize)->render();
+            $html = view('appendview.detailsview')
+            ->with('defaultfolders', $defaultfolders)
+            ->with('files', $files)
+            ->with('userName', $userName)
+            ->with('sizeMap', $sizeMap)
+            ->with('totalSize', $totalSizeFormatted)
+            ->with('totalFileCount', $totalFileCount)
+            ->with('filepath', $filepath)
+            ->with('path', $path)
+            ->render();
         }
         else {
-            $html = view('appendview.pathview')->with('defaultfolders', $defaultfolders)->with('files', $files)->render();
+            $html = view('appendview.pathview')
+            ->with('defaultfolders', $defaultfolders)
+            ->with('files', $files)
+            ->with('totalSize', $totalSizeFormatted)
+            ->with('totalFileCount', $totalFileCount)
+            ->render();
         }
+        // print_r($files);
         return response()->json(['html' => $html,'parentPath'=>$parentPath]);
     }
 

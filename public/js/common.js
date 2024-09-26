@@ -357,7 +357,7 @@ $(document).ready(function () {
             $('.selectapp').removeClass('.selectedfile');
         });
 
-        // open app by dblclick
+        // open app by dblclick 
         $(document).on('dblclick', '.allapplist .selectapp', function (e) {
             e.preventDefault();
             if($(this).hasClass('openiframe')){

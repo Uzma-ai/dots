@@ -1,3 +1,4 @@
+   
       <div
             class="py-4 w-full hidden md:flex flex-row items-center gap-2 taskbar"
           >
@@ -156,12 +157,16 @@
 
           <!-- actionbar -->
           
-          <div
-            class="border-b border-c-light-gray1 flex justify-between items-center hidden md:flex text-c-black actionbar"
-          >
+          <div class="border-b border-c-light-gray1 flex justify-between items-center hidden md:flex text-c-black actionbar" >
+            
+          <!--------------- end icon bar  --------------------------------------------------------------------------------->
+           
             <div class="flex ml-6 gap-x-5 lg:gap-x-4 xl:gap-x-6 my-2 context-menulist">
+            @if($path == "/")
+            
+            @else
               <div class="relative flex items-center new">
-            @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
+              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
 
                 <button class="flex gap-x-2">
                   <i class="ri-add-circle-fill ri-xl mt-1"></i><span>New</span>
@@ -261,6 +266,10 @@
                   @endif
                 </div>
               </div>
+
+              @endif
+
+
               <div class="relative flex items-center view">
                 <button class="flex gap-x-2" onclick="toggleView()">
                   <i class="ri-gallery-view-2 ri-lg mt-1"></i>
@@ -315,40 +324,11 @@
                     </a>
                   </div>
                   
-
-                  {{-- <div class="hover-bg-c-yellow">
-                    <a
-                      href="#"
-                      class="flex items-center block p-2 pl-4 dropdown-item"
-                      onclick="toggleView();"
-                    >
-                      <i class="ri-list-check ri-lg w-1/4"></i
-                      ><span>List View</span>
-                    </a>
-                  </div>
-                  <div class="hover-bg-c-yellow">
-                    <a
-                      href="#"
-                      class="flex items-center block p-2 pl-4 dropdown-item"
-                      onclick="togglePanel('detail');"
-                    >
-                      <i class="ri-profile-line ri-lg w-1/4"></i
-                      ><span>Detail pane</span>
-                    </a>
-                  </div>
-                  <div class="hover-bg-c-yellow rounded-b-lg">
-                    <a
-                      href="#"
-                      class="flex items-center block p-2 pl-4 dropdown-item"
-                      onclick="togglePanel('preview');"
-                    >
-                      <i class="ri-eye-line ri-lg w-1/4"></i>
-                      <span>Preview pane</span>
-                    </a>
-                  </div> --}}
                 </div>
               </div>
             </div>
+           
+          <!------ end icon bar  ------------------------------------------------------>
             
           </div>
         

@@ -37,14 +37,13 @@ if(empty($updatedPath)){
           </div>
           <!-- topTaskbar in desktops -->
           @include('layouts.filemanager-header')
+          
           <!--Main content -->
           <div class="relative loaddetails allapplist h-full overflow-y-auto scroll" >
             <!--grid container -->
-            <!-- <div id="gridContainer" class="grid grid-cols-12 gap-4 transition-all duration-300 p-4 overflow-y-auto">
-              
+            <!-- <div id="gridContainer" class="grid grid-cols-12 gap-4 transition-all duration-300 p-4 overflow-y-auto">              
             </div> --> 
-            <!--table container -->
-            
+            <!--table container -->            
             @include('layouts.columnview')
             <!--panes-->
             <div id="panel" class="resizable-sidebar hidden md:w-4/12 xl:w-1/5">
@@ -54,11 +53,15 @@ if(empty($updatedPath)){
               <!--preview pane-->
               @include('layouts.previewpan')
             </div>
+            
+            <div class="loadDetailsViewPan">
+            </div>
           </div>
 
+
           <!--upload popup-->
+          
           <!--share popup-->
-                 <!--share popup-->
           <div
               id="sharePopup"
               role="dialog"
@@ -305,6 +308,7 @@ if(empty($updatedPath)){
             },
             success: function (response) {
                 $('.loaddetails').html(response.html);
+                $('.loadDetailsViewPan').html(response.html);                
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
