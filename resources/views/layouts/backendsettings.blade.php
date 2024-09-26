@@ -46,10 +46,23 @@
             <div class="h-full sidebar">
                 <div class="sidebar-container">
                     <div class="p-6">
+                        <!-- hide show -->
+                      @if(Session::get('iframeapp') == null)
+
+
                         <a href="{{ route('dashboard') }}">
                             <img class="w-20" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
                                 alt="Dots Logo" />
                         </a>
+
+                        @else
+                            <a href="#">
+                            <img class="w-20" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
+                                alt="Dots Logo" />
+                        </a>
+
+                        @endif
+
                     </div>
                     <div class="sidebar-content">
                         <ul class="space-y-1">

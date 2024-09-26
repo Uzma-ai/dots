@@ -162,6 +162,7 @@
     <!--end here -->
 
     <script>
+       
         const desktopapp = @json(route('desktopapp'));
         const contextmenu = @json(route('contextmenu'));
         const createFolderRoute = @json(route('createfolder'));
@@ -169,6 +170,8 @@
         const showFileDetail = @json(route('showpathdetail'));
         const renameroute = @json(route('renamefile'));
         const deleteRoute = @json(route('deletefile'));
+        const restoreRoute = @json(route('restorefile'));
+        const restoreAdminRoute = @json(route('restoreAdmin'));
         const copyRoute = @json(route('copyfile'));
         const pasteRoute = @json(route('pastefile'));
         const closeIframeRoute = @json(route('closeiframe'));

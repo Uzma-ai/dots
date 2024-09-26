@@ -248,7 +248,7 @@
             <div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 10rem)">
                 <form class="flex flex-col gap-4 text-sm" id="newUser" action="{{ route('user-create') }}" method="POST">
                     @csrf
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="name" class="block font-bold text-c-black">
                                 Username:<span class="text-red-500">*</span>
@@ -262,7 +262,7 @@
                             <small class="text-red-500 mt-1 block"></small>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="nickname" class="block font-bold text-c-black">
                                 Name:
@@ -275,7 +275,7 @@
                             <small class="text-red-500 mt-1 block"></small>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="nickname" class="block font-bold text-c-black">
                                 Email:
@@ -289,7 +289,7 @@
                             <small class="text-red-500 mt-1 block"></small>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="password" class="block font-bold text-c-black">
                                 Password:<span class="text-red-500">*</span>
@@ -302,13 +302,13 @@
                                     type="password" placeholder="Please enter password" name="password" data-validate="password" />
                                 <small class="text-red-500 mt-1 block"></small>
                                 <div
-                                    class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3 pt-1 cursor-pointer">
+                                    class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3 pt-1 cursor-pointer" style="height: 2.35rem;">
                                     <i class="ri-eye-line ri-xl" id="togglePassword"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="space-size" class="block font-bold text-c-black">
                                 Space size:<span class="text-red-500">*</span>
@@ -322,7 +322,7 @@
                                     max="500" />
                                 <small class="text-red-500 mt-1 block"></small>
                                 <div
-                                    class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray-3 w-12 rounded-r-xl pl-3">
+                                    class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray-3 w-12 rounded-r-xl pl-3" style="height: 2.35rem;">
                                     <p class="font-normal">GB</p>
                                 </div>
                             </div>
@@ -334,7 +334,7 @@
                       </div> -->
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="role" class="block font-bold text-c-black">
                                 Role:
@@ -350,7 +350,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="group" class="block font-bold text-c-black">
                                 Group:
