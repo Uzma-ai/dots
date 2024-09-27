@@ -36,12 +36,15 @@
         <br /><br />
         <input type="hidden" name="voice_data" id="voiceData" />
         <button type="submit" disabled id="submitBtn">Submit Recording</button>
+        <br /><br />
+        <a id="downloadBtn" download="recording.webm" style="display: none">Download as WebM</a>
     </form>
 
     <script>
         let recordButton = document.getElementById("recordButton");
         let stopButton = document.getElementById("stopButton");
         let submitBtn = document.getElementById("submitBtn");
+        let downloadBtn = document.getElementById("downloadBtn");
         let audioPlayback = document.getElementById("audioPlayback");
         let voiceData = document.getElementById("voiceData");
         let status = document.getElementById("status");
@@ -93,7 +96,22 @@
                     audio: true
                 })
                 .then((stream) => {
-                    mediaRecorder = new MediaRecorder(stream);
+                    let mimeType = "audio/webm";
+                    // Check for supported MIME types
+                    if (!MediaRecorder.isTypeSupported(mimeType)) {
+                        mimeType = "audio/ogg";
+                        if (!MediaRecorder.isTypeSupported(mimeType)) {
+                            mimeType = "audio/mp4";
+                            if (!MediaRecorder.isTypeSupported(mimeType)) {
+                                throw new Error(
+                                    "No supported MIME type found for MediaRecorder."
+                                );
+                            }
+                        }
+                    }
+                    mediaRecorder = new MediaRecorder(stream, {
+                        mimeType
+                    });
                     mediaRecorder.start();
                     startTimer();
                     status.textContent = "Recording...";
@@ -107,9 +125,9 @@
                     mediaRecorder.addEventListener("stop", () => {
                         stopTimer();
                         status.textContent =
-                            "Recording complete. You can play or submit it.";
+                            "Recording complete. You can play, download, or submit it.";
                         let audioBlob = new Blob(audioChunks, {
-                            type: "audio/webm"
+                            type: mimeType
                         });
                         let audioUrl = URL.createObjectURL(audioBlob);
                         audioPlayback.src = audioUrl;
@@ -117,10 +135,14 @@
                         // Convert the audio blob to Base64
                         let reader = new FileReader();
                         reader.readAsDataURL(audioBlob);
-                        reader.onloadend = function () {
+                        reader.onloadend = function() {
                             voiceData.value = reader.result;
                             submitBtn.disabled = false;
                         };
+
+                        // Set up the download button
+                        downloadBtn.href = audioUrl;
+                        downloadBtn.style.display = "inline"; // Make the download button visible
                     });
                 })
                 .catch((error) => {

@@ -76,12 +76,25 @@ class UserController extends Controller
         if ($input['searchTerm']) {
             if(auth()->user()->cID == 0){
                     $search = $input['searchTerm'];
-                    $users = User::where('name', 'LIKE', '%' . $search . '%')->where('id','!=',Auth::id())->get();
-                    if(count($users) == 0){
-                     $users = User::select('users.*')->join('roles', 'users.roleID', '=', 'roles.id')->where('roles.name', 'LIKE', '%' . $search . '%')->get();
-                    }
-                    if(count($users) == 0){
-                     $users = User::select('users.*')->join('groups', 'users.groupID', '=', 'groups.id')->where('groups.name', 'LIKE', '%' . $search . '%')->get();
+
+                    if(auth()->user()->type == 'client'){
+                        $cid = Company::select('id')->where('userID',Auth::id())->first();
+                        $users = User::where('name', 'LIKE', '%' . $search . '%')->where('cID',$cid->id)->where('id','!=',Auth::id())->get();
+                            if(count($users) == 0){
+                             $users = User::select('users.*')->join('roles', 'users.roleID', '=', 'roles.id')->where('roles.name', 'LIKE', '%' . $search . '%')->where('cID',$cid->id)->get();
+                            }
+                            if(count($users) == 0){
+                             $users = User::select('users.*')->join('groups', 'users.groupID', '=', 'groups.id')->where('groups.name', 'LIKE', '%' . $search . '%')->where('cID',$cid->id)->get();
+                            }
+
+                    }else{
+                            $users = User::where('name', 'LIKE', '%' . $search . '%')->where('id','!=',Auth::id())->get();
+                            if(count($users) == 0){
+                             $users = User::select('users.*')->join('roles', 'users.roleID', '=', 'roles.id')->where('roles.name', 'LIKE', '%' . $search . '%')->get();
+                            }
+                            if(count($users) == 0){
+                             $users = User::select('users.*')->join('groups', 'users.groupID', '=', 'groups.id')->where('groups.name', 'LIKE', '%' . $search . '%')->get();
+                            }
                     }
             }else{
                     $cid = auth()->user()->cID;
@@ -97,7 +110,14 @@ class UserController extends Controller
             
         } else {
             if(auth()->user()->cID == 0){
-             $users = User::where('id','!=',Auth::id())->paginate(10);
+                
+               if(auth()->user()->type == 'client'){ 
+               $cid = Company::select('id')->where('userID',Auth::id())->first();
+               $users = User::where('id','!=',Auth::id())->where('type','!=','client')->where('cID',$cid->id)->paginate(10);
+               } else{
+               $users = User::where('id','!=',Auth::id())->paginate(10);
+               }
+           
             }else{
             $cid = auth()->user()->cID;
             $users = User::where('cID',$cid)->where('id','!=',Auth::id())->paginate(10);
@@ -177,9 +197,14 @@ class UserController extends Controller
 
     public function edit(Request $request)
     {
-        $cid = auth()->user()->cID;
-        $groups = Group::where('cID',$cid)->get();
-        $roles = Roles::where('cID',$cid)->get();
+        if(auth()->user()->cID == 0){
+            $groups = Group::get();
+            $roles = Roles::get();
+        }else{   
+            $cid = auth()->user()->cID;
+            $groups = Group::where('cID',$cid)->get();
+            $roles = Roles::where('cID',$cid)->get();
+        }
 
         $id = $request->id;
         $user = User::find($id);
@@ -341,6 +366,52 @@ class UserController extends Controller
 
         }
         return redirect()->route('useradmin')->with('super-success', 'Masteradmin created successfully!');
+    }
+
+    public function createClient(Request $request)
+    {
+
+         $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $duplicate = User::where('email', $request->email)->exists();
+        if ($duplicate == 1) {
+            return  redirect()->route('useradmin')->with('user-exist', 'test');
+        }
+
+        $input = $request->all();
+        $input['ip_address'] =  $request->ip();
+        $input['upload_limit'] = 0;
+        $input['password'] = bcrypt($input['password']);
+        $input['groupID'] = 1;
+        $input['cID'] = 0;
+        $input['roleID'] = 1;
+
+        $input['type'] = 'client';
+        $user = User::create($input);
+        if($user){
+            $group = Group::find($user->groupID);
+            $username = $input['name'];
+            $basePath = storage_path('app/root/'.$group->name.'/'.$username);
+            $folders = ['Desktop', 'Documents', 'Downloads', 'Gallery', 'Recyclebin'];
+
+            // Create the folders
+            foreach ($folders as $folder) {
+                $folderPath = $basePath . '/' . $folder;
+                if (!File::exists($folderPath)) {
+                    File::makeDirectory($folderPath, 0755, true);
+                }
+            }
+
+        }
+        return redirect()->route('useradmin')->with('client-success', 'Client created successfully!');
     }
 }
 
