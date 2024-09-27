@@ -142,5 +142,24 @@ class LightAppsSeeder extends Seeder
             'created_at' => '2024-06-02 14:27:35',
             'updated_at' => '2024-06-02 14:27:35'
         ]);
+
+        LightApp::create([
+            'id' => 8,
+            'group' => 1,
+            'name' => 'Documents',
+            'link' => 'https://dev-ubt-app06.dev.orientdots.net',
+            'description' => NULL,
+            'function' => NULL,
+            'fileextension' => NULL,
+            'icon' => 'help-64.png',
+            'open_type' => 1,
+            'width' => 700,
+            'height' => 700,
+            'sort_order' => 0,
+            'status' => 1,
+            'add_app' => 1,
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
+        ]);
     }
 }
