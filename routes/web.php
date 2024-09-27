@@ -155,6 +155,8 @@ Route::middleware(['blockIP'])->group(function () {
     ->name('permissionsadmin')->middleware('checkPermis.roleManagement');
     //Superadmin routs
     Route::post('superadmin-create', [App\Http\Controllers\UserController::class, 'createSuperadmin'])->name('superadmin-create');
+    //client user route
+     Route::post('client-create', [App\Http\Controllers\UserController::class, 'createClient'])->name('client-create');
     //roles routes
     Route::get('roles', [RolesController::class, 'index'])->name('roles');
     Route::get('roles/{id}', [RolesController::class, 'index']);
