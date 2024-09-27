@@ -86,16 +86,16 @@
                             @php
                                 $notification = is_string($data) ? json_decode($data, true) : $data;
                             @endphp
-                            <li class="border-b-2 border-c-gray px-4 py-2.5">
+                            <li class="border-b-2 border-c-gray px-4 py-2.5 notification-item" data-id="{{ $id }}" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">
                                 <div class="flex items-start justify-between gap-20">
-                                    <p class="text-sm text-c-black font-normal notification-item" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">
+                                    <p class="text-sm text-c-black font-normal " >
                                         {{ $notification['title'] ?? 'No Title' }}
                                     </p>
                                     <i class="ri-close-circle-fill ri-1x cursor-pointer ReadThisNoti"
                                         data-id="{{ $id }}"></i>
                                 </div>
                                 <span
-                                    class="text-c-time font-normal text-sm notification-item" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">{{ \Carbon\Carbon::parse($notification['time'] ?? now())->diffForHumans(['short' => true]) }}</span>
+                                    class="text-c-time font-normal text-sm">{{ \Carbon\Carbon::parse($notification['time'] ?? now())->diffForHumans(['short' => true]) }}</span>
                             </li>
                         @endforeach
                     @else
@@ -162,7 +162,7 @@
     <!--end here -->
 
     <script>
-       
+
         const desktopapp = @json(route('desktopapp'));
         const contextmenu = @json(route('contextmenu'));
         const createFolderRoute = @json(route('createfolder'));
