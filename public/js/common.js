@@ -1236,6 +1236,19 @@ $(document).ready(function () {
   });
 });
 
+function checkNotifications() {
+  if ($('#ULNoti li').length > 0 && $('#ULNoti li').text().trim() !== 'No new notifications') {
+    $('#notification-icon').removeClass('icon-color').addClass('bell');
+  } else {
+    $('#notification-icon').removeClass('bell').addClass('icon-color');
+  }
+}
+
+$(document).ready(function () {
+  checkNotifications();
+});
+
+
 
 $(document).on('click', '.ReadThisNoti', function (event) {
     event.stopPropagation(); 
@@ -1247,7 +1260,12 @@ $(document).on('click', '.ReadThisNoti', function (event) {
         url: base_url + "/read-noti/" + id,
         success: function (response) {
             if (response.status === 'success') {
-                listItem.remove();
+              listItem.remove();
+              
+              if ($('#ULNoti li').length === 0) {
+                $('#ULNoti').html(`<li class="text-center mt-16">No new notifications</li>`);
+                $('#notification-icon').removeClass('bell').addClass('icon-color');
+              }
             }
         }
     });
@@ -1258,14 +1276,18 @@ $(document).on('click', '#MarkAllRead', function (event) {
     url: base_url + "/read-all",
     success: function (response) {
       if (response.status === 'success') {
-        var html = `<li class="text-center mt-3">
+        var html = `<li class="text-center mt-16">
                                 No new notifications
                             </li>`;
+        $('#notification-icon').removeClass('bell').addClass('icon-color');
         $('#ULNoti').html(html);
       }
     }
   });
 });
+
+
+
 $(document).on('click', function (event) {
   if (!$(event.target).closest('#NotiContainer').length) {
     $('#NotiContainer').addClass('hidden');

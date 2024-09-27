@@ -53,14 +53,32 @@
             $('#NotiContainer').addClass('hidden');
             var html = `<div id="preview-modal" role="dialog"
                             class="fixed inset-0 flex items-center z-10 justify-center bg-black bg-opacity-50 previewmodal">
-                            <div class="w-full max-w-md h-96 rounded-2xl bg-white overflow-hidden px-5 modal-content">
-                                <div class="flex pt-8 pb-1 border-b-2 justify-center items-center">
-                                    <h2 class="text-lg text-c-black font-medium">${title}</h2>
+                            <div class="w-full max-w-md rounded-2xl bg-white overflow-hidden modal-content" style="height: 400px;">
+                                 <div class="flex justify-between py-4 border-b-2 items-center relative">
+                                    <div class="flex mx-auto gap-2">
+                                        <i class="ri-message-2-line"></i>
+                                        <h2 class="text-base text-c-black font-bold"> You've got a new message!</h2>
+                                    </div>
+                                    <i class="ri-close-circle-fill ri-lg cursor-pointer absolute right-3 top-3"></i>
                                 </div>
-                                <div class="py-2">
-                                    <p>${content}</p>
-                                    <p>Date : ${moment(time).format('YYYY-MM-DD')}</p>
-                                    <p>Time : ${moment(time).format('H:mm:ss')}</p>
+                                 <div class="border-b-2">
+                                    <div class="flex items-center justify-between py-3 px-6">
+                                        <div class="flex items-center gap-2">
+                                            <img src="{{ asset($constants['IMAGEFILEPATH'] . 'profile.png') }}" alt="profile" class="w-10">
+                                            <span class="text-c-black font-medium">${title}</span>
+                                        </div>
+                                        <button class="text-c-yellow">Mark as read</button>
+                                    </div>
+                                    <div class="px-6 pb-2">
+                                        <label for="message" class="text-c-black mb-1">Message:</label>
+                                        <div id="message" class="h-48 text-sm overflow-y-scroll mini-scroll leading-normal pr-1">
+                                           ${content}
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="footer px-6 py-3">
+                                    <span class="date text-c-black text-sm">${moment(time).format('YYYY-MM-DD')} at ${moment(time).format('H:mm:ss')}</span>
+                                    
                                 </div>
                             </div>
                         </div>`;

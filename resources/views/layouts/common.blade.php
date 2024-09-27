@@ -42,7 +42,7 @@
         <div class="flex items-center gap-8 w-48 justify-end pr-5 relative">
             <i id="search-icon" class="ri-search-line icon-color"></i>
             <i id="pinned" class="ri-pushpin-line icon-color"></i>
-            <i id="notification-icon" class="ri-notification-3-line icon-color"></i>
+            <i id="notification-icon" class="ri-notification-3-line"></i>
             <button class="icon-trigger-dropdown cursor-default">
                 <i class="ri-question-line icon-color"></i>
             </button>
@@ -99,7 +99,7 @@
                             </li>
                         @endforeach
                     @else
-                        <li class="text-center mt-3">
+                        <li class="text-center mt-16">
                             No new notifications
                         </li>
                     @endif
