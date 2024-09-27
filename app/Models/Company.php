@@ -18,5 +18,6 @@ class Company extends Model
         'industry',
         'country',
         'contact',
+        'userID',
     ];
 }
