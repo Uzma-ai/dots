@@ -17,22 +17,7 @@ class QuotesSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'quote' => 'Man must search for what is right, and let happiness come on its own.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'quote' => 'The white man\'s happiness cannot be purchased by the black man\'s misery.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
                 'quote' => 'So, my happiness doesn\'t come from money or fame. My happiness comes from seeing life without struggle.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'quote' => 'The only way to find true happiness is to risk being completely cut open.',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -43,11 +28,6 @@ class QuotesSeeder extends Seeder
             ],
             [
                 'quote' => 'I have two younger sisters and I\'m such an advocate of owning who you are as a person. Don\'t be ashamed or intimidated. Never feel like you are not amazing.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'quote' => 'It\'s amazing what ordinary people can do if they set out without preconceived notions.',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -67,22 +47,7 @@ class QuotesSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'quote' => 'For every quarrel a man and wife have before others, they have a hundred when alone.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'quote' => 'I was just doing my job in the ring and doing my best to make people happy.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
                 'quote' => 'Do you remember when you were 10 or 11 years old and you really thought your folks were the best? They were completely omniscient and you took their word for everything.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'quote' => 'First gain the victory and then make the best use of it you can.',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -98,21 +63,6 @@ class QuotesSeeder extends Seeder
             ],
             [
                 'quote' => 'You can\'t escape the taste of the food you had as a child. In times of stress, what do you dream about?',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'quote' => 'He who surpasses or subdues mankind, must look down on the hate of those below.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'quote' => 'The only way to succeed is to make people hate you. That way, they remember you.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'quote' => 'If at first you don\'t succeed, blame it on the teach',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
