@@ -1,5 +1,5 @@
 @foreach($users as $user)
- @if($user->cID == 0)
+ @if( ($user->cID == 0) && empty($user->type))
         @php continue;  @endphp
  @endif
  @if((Auth::user()->cID != 0) && ($user->type == "superadmin"))

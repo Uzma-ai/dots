@@ -46,14 +46,6 @@ class UsersSeeder extends Seeder
             'groupID' => 1,
             'roleID' => 1,
         ]);
-        //DotsSuperadmin
-        User::factory()->create([
-            'name' => 'dotsadmin',
-            'cID'  => 0,
-            'email' => 'admin@dots.com',
-            'password' => Hash::make('admin@dots'),
-            'groupID' => 1,
-            'roleID' => 1,
-        ]);
+
     }
 }
