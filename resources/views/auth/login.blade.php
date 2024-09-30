@@ -56,6 +56,7 @@
                             <hr class="border-t-4 -mt-1 border-c-yellow rounded-full" />
                         </div>
                     </div>
+                    <span>{{ $_SERVER['SERVER_NAME'] }}</span>
                     <img class="h-24" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}" alt="Logo" />
                     <div class="flex flex-col items-center justify-center gap-6 mt-2">
                         <button class="bg-c-black text-white rounded-full px-24 py-2" type="submit"
