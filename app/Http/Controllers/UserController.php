@@ -278,6 +278,9 @@ class UserController extends Controller
             if ($test && !is_array($test) ) {
                 return response()->json(['success' => true, 'files' => $uploadedFiles, 'test' => $test]);
             } elseif(is_array($test)){
+                if(array_key_exists('invalid', $test))
+                return response()->json(['success' => false, 'message' => 'Invalid password!! Password must be at least 6 characters, contain 1 uppercase letter, 1 number, and 1 special character', 'test' => $test]);
+                else
                 return response()->json(['success' => false, 'message' => 'Email already exists', 'test' => $test]);
             }else {
                 return response()->json(['success' => false, 'message' => 'Roles or Group not found']);

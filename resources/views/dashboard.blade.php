@@ -72,7 +72,7 @@
         <!-- Right Sidebar -->
         <div class="dashboardefaultdapp allapplist dashboard-sidebar w-16 px-2 hidden sm:block" data-option="app">
             @foreach ($apps as $app)
-                <a href="#" data-path ="{{ base64UrlEncode($app->path) }}" class="openiframe selectapp" data-appkey="{{ base64UrlEncode($app->id) }}" data-filekey="{{ base64UrlEncode($app->id) }}" data-filetype="app" data-apptype="app">
+                <a href="#" data-path ="{{ base64UrlEncode($app->path) }}" class="openiframe selectapp {{ !empty($app->app_function) ? 'customfunction' : '' }} " data-customfunction="{{ $app->app_function}}" data-appkey="{{ base64UrlEncode($app->id) }}" data-filekey="{{ base64UrlEncode($app->id) }}" data-filetype="app" data-apptype="app">
                     <img class="mb-2 icondisplay"src="{{ checkIconExist($app->icon,'app') }}" alt="{{ $app->name }}" style="transition: transform 0.2s ease-in-out;"
             onmouseover="this.style.transform='scale(1.2)';"
             onmouseout="this.style.transform='scale(1)';" />
