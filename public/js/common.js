@@ -362,23 +362,33 @@ $(document).on('click', '.context-menulist .openFunction', function (e) {
 $(document).on('dblclick', '.allapplist .selectapp', function (e) {
   e.preventDefault();
 
-  if ($(this).hasClass('openiframe')) {
-    const appkey = this.getAttribute('data-appkey');
-    const filekey = this.getAttribute('data-filekey');
-    const filetype = this.getAttribute('data-filetype');
-    const apptype = this.getAttribute('data-apptype');
-    const originalIcon = $(this).find('.icondisplay');
-    const imgicon = $('#iframeheaders #iframeiconimage' + filetype + appkey);
-    animateIcon(imgicon, originalIcon, function () {
-      const iframedata = { appkey: appkey, filekey: filekey, filetype: filetype, apptype: apptype };
-      openiframe(iframedata);
-
-    });
-  } else {
-    let url = $(this).attr('href');
-    window.location.href = url;
+  if ($(this).hasClass('customfunction')) {
+    const customfunction = this.getAttribute('data-customfunction');
+    customfunctions();
   }
+  else {
+      if ($(this).hasClass('openiframe')) {
+        const appkey = this.getAttribute('data-appkey');
+        const filekey = this.getAttribute('data-filekey');
+        const filetype = this.getAttribute('data-filetype');
+        const apptype = this.getAttribute('data-apptype');
+        const originalIcon = $(this).find('.icondisplay');
+        const imgicon = $('#iframeheaders #iframeiconimage' + filetype + appkey);
+        animateIcon(imgicon, originalIcon, function () {
+          const iframedata = { appkey: appkey, filekey: filekey, filetype: filetype, apptype: apptype };
+          openiframe(iframedata);
+
+        });
+      } else {
+        let url = $(this).attr('href');
+        window.location.href = url;
+      }
+    }
 });
+
+function customfunctions() {
+  $('.popupiframe').removeClass('hidden').addClass('show');
+}
 
 // $(document).on('dblclick', '.dashboardefaultdapp .selectapp', function (e) {
 //     e.preventDefault();
