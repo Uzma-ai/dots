@@ -366,16 +366,6 @@
     min-width: 250px;
 }
 
-/* Clock */
-
-.dashboard .clock {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: move;
-}
-
 /* Search Input */
 
 .dashboard .Search {
@@ -449,7 +439,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .notification-container .Notification {
     width: 90%;
-    max-width: 400px;
+    max-width: 350px;
     border-radius: 20px;
     background: var(--color-lighten-gray);
     box-shadow: var(--box-shadow);
@@ -557,7 +547,7 @@ input[type="search"]::-webkit-search-cancel-button {
     left: 1px;
 }
 
-@media (max-width: 900px) {
+/* @media (max-width: 900px) {
     .dashboard .clock {
         top: 28px;
         left: 70px;
@@ -573,7 +563,7 @@ input[type="search"]::-webkit-search-cancel-button {
     .clock .date {
         font-size: 1.5vw;
     }
-}
+} */
 
 @media (max-width: 480px) {
     .cs .app-tools input[type="checkbox"]:checked::after {
@@ -598,12 +588,12 @@ input[type="search"]::-webkit-search-cancel-button {
         background: var(--color-lighten-gray);
     }
 
-    .dashboard .clock {
+    /* .dashboard .clock {
         top: 28px;
         left: 50px;
         align-items: start;
         gap: 0px;
-    }
+    } */
 
     .clock .time {
         font-size: 4vw;

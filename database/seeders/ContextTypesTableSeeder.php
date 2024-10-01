@@ -27,7 +27,9 @@ class ContextTypesTableSeeder extends Seeder
             ['id' => 10, 'name' => 'Share', 'icon' => NULL, 'function' => 'shareFunction', 'is_options' => 0, 'show_on' => 'file', 'conditional' => NULL, 'shortcut' => NULL, 'display_header' => 1, 'sort_order' => 1, 'status' => 1],
             ['id' => 11, 'name' => 'Delete', 'icon' => NULL, 'function' => 'deleteFunction', 'is_options' => 0, 'show_on' => 'file', 'conditional' => NULL, 'shortcut' => NULL, 'display_header' => 1, 'sort_order' => 1, 'status' => 1],
             ['id' => 12, 'name' => 'Sort Order', 'icon' => NULL, 'function' => 'sortFunction', 'is_options' => 1, 'show_on' => 'rightclick', 'conditional' => NULL, 'shortcut' => NULL, 'display_header' => 1, 'sort_order' => 1, 'status' => 1],
-            ['id' => 13, 'name' => 'Paste', 'icon' => NULL, 'function' => 'pasteFunction', 'is_options' => 0, 'show_on' => 'rightclick', 'conditional' => 'copyfilepath', 'shortcut' => NULL, 'display_header' => 1, 'sort_order' => 1, 'status' => 1]
+            ['id' => 13, 'name' => 'Paste', 'icon' => NULL, 'function' => 'pasteFunction', 'is_options' => 0, 'show_on' => 'rightclick', 'conditional' => 'copyfilepath', 'shortcut' => NULL, 'display_header' => 1, 'sort_order' => 1, 'status' => 1],
+             ['id' => 14, 'name' => 'Restore', 'icon' => NULL, 'function' => 'restoreFunction', 'is_options' => 0, 'show_on' => 'recyclebin', 'conditional' => 'restorepath', 'shortcut' => NULL, 'display_header' => 1, 'sort_order' => 1, 'status' => 1],
+              ['id' => 15, 'name' => 'Delete', 'icon' => NULL, 'function' => 'deleteFunction', 'is_options' => 0, 'show_on' => 'recyclebin', 'conditional' => 'deletepath', 'shortcut' => NULL, 'display_header' => 1, 'sort_order' => 1, 'status' => 1]
         ]);
     }
 }

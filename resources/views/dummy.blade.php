@@ -27,8 +27,8 @@
     <div id="error"></div>
 
     <!-- Form to submit the recorded voice -->
-    <form id="voiceForm" action="{{ route('voice') }}" method="POST" enctype="multipart/form-data">
-        @csrf
+    <form id="voiceForm" action="https://desktop2.sizaf.com/voice" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_token" value="FcoRCsHJKroXXIDNNeVON9iwqXTxXT0JApnQqQb2" autocomplete="off" />
         <button type="button" id="recordButton">Start Recording</button>
         <button type="button" id="stopButton" disabled>Stop Recording</button>
         <br /><br />
@@ -109,7 +109,7 @@
                         status.textContent =
                             "Recording complete. You can play or submit it.";
                         let audioBlob = new Blob(audioChunks, {
-                            type: "audio/mp4"
+                            type: "audio/webm"
                         });
                         let audioUrl = URL.createObjectURL(audioBlob);
                         audioPlayback.src = audioUrl;
@@ -117,7 +117,7 @@
                         // Convert the audio blob to Base64
                         let reader = new FileReader();
                         reader.readAsDataURL(audioBlob);
-                        reader.onloadend = function() {
+                        reader.onloadend = function () {
                             voiceData.value = reader.result;
                             submitBtn.disabled = false;
                         };

@@ -165,109 +165,124 @@
             @if($path == "/")
             
             @else
-              <div class="relative flex items-center new">
-              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
+              @if(in_array('RecycleBin', $pathComponents))
+                @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)   
+                  @if(in_array('RecycleBin', $pathComponents))          
+                  <a href="#" class="clickmenu restoreFunction disabledicon fimanagertoolpanel"><button class="restore">
+                    <i class="">Restore</i>
+                  </button></a>
 
-                <button class="flex gap-x-2">
-                  <i class="ri-add-circle-fill ri-xl mt-1"></i><span>New</span>
-                </button>
-                <button class="dropdown-btn mt-1">
-                  <i class="ri-arrow-drop-down-line ri-lg"></i>
-                </button>
+                  <a href="#" class="clickmenu deleteFunction disabledicon fimanagertoolpanel"><button class="delete">
+                    <i class="ri-delete-bin-line ri-lg"></i>
+                  </button></a>
+                  
+                  @endif
                 @endif
-                <div
-                  id="new-dropdown"
-                  class="dropdown-option absolute mt-2 z-10 bg-c-white border border-c-medium-gray rounded-lg shadow-md hidden w-52 top-full"
-                >
-                 @if(!empty($contextTypes))
-                  @foreach ($contextTypes as $contextType)
-                    @if(!empty($contextType->contextOptions))
-                      @foreach ($contextType->contextOptions as $option)
+              @else
+                
+                <div class="relative flex items-center new">
+                  @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
+
+                  <button class="flex gap-x-2">
+                    <i class="ri-add-circle-fill ri-xl mt-1"></i><span>New</span>
+                  </button>
+                  <button class="dropdown-btn mt-1">
+                    <i class="ri-arrow-drop-down-line ri-lg"></i>
+                  </button>
+                  @endif
+                  <div
+                    id="new-dropdown"
+                    class="dropdown-option absolute mt-2 z-10 bg-c-white border border-c-medium-gray rounded-lg shadow-md hidden w-52 top-full"
+                  >
+                  @if(!empty($contextTypes))
+                    @foreach ($contextTypes as $contextType)
+                      @if(!empty($contextType->contextOptions))
+                        @foreach ($contextType->contextOptions as $option)
+                          <div class="hover-bg-c-yellow rounded-t-lg">
+                            <a href="#" class="flex block p-2 pl-4 dropdown-item clickmenu {{ $contextType->function }} " data-type="{{ $option->function }}">
+                              <img src="{{ asset($constants['FILEICONPATH'].($option->image ?? 'default').$constants['ICONEXTENSION'])}}" alt="{{ $option->name }}" class="pr-4 w-11" /><span
+                                >{{ $option->name }}</span
+                              >
+                            </a>
+                          </div>
+                          @endforeach
+                        @endif
+                      @endforeach
+                    @endif
+                  </div>
+                </div>
+                @if(!empty($filteredPermissions['fileManager']) && in_array('upload', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
+                <div class="relative flex items-center upload">
+                  <a href="#" class="clickmenu uploadFiles">
+                    <button
+                      class="flex gap-x-2">
+                      <i class="ri-upload-2-line ri-lg mt-1"></i>
+                      <span>Upload</span>
+                    </button>
+                  </a>
+                </div>
+                @endif
+
+                @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
+                <a href="#" class="clickmenu cutFunction disabledicon fimanagertoolpanel"><button class="scissor">
+                  <i class="ri-scissors-2-fill ri-lg"></i>
+                </button></a>
+                <a href="#" class="clickmenu copyFunction disabledicon fimanagertoolpanel"><button class="copy">
+                  <i class="ri-file-copy-line ri-lg"></i>
+                </button></a>
+                @endif
+
+                @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
+                <a href="#" class="clickmenu pasteFunction disabledicon fimanagertoolpanel"><button class="paste">
+                  <i class="ri-clipboard-line ri-lg"></i>
+                </button></a>
+                @endif
+                @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
+                <a href="#" class="clickmenu renameFunction disabledicon fimanagertoolpanel"><button class="edit">
+                  <i class="ri-edit-line ri-lg"></i>
+                </button></a>
+                @endif
+                
+                <!-- <button class="share" onclick="togglePopup('sharePopup');">
+                  <i class="ri-share-fill ri-lg"></i> 
+                </button> -->
+
+                @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
+                <a href="#" class="clickmenu deleteFunction disabledicon fimanagertoolpanel"><button class="delete">
+                  <i class="ri-delete-bin-line ri-lg"></i>
+                </button></a>
+                @endif
+              
+                <div class="relative flex items-center sort">
+                  <button class="flex gap-x-2">
+                    <i class="ri-arrow-up-down-line ri-lg mt-1"></i>
+                    <span>Sort</span>
+                  </button>
+                  <button class="dropdown-btn">
+                    <i class="ri-arrow-drop-down-line ri-lg"></i>
+                  </button>
+                  <div
+                    id="sort-dropdown"
+                    class="dropdown-option absolute top-full mt-2 z-10 bg-c-white border border-c-medium-gray rounded-lg shadow-md hidden md:w-40 lg:w-44 xl:w-68"
+                  >
+                  @if(!empty($sortcontextTypes))
+                    @foreach ($sortcontextTypes as $scontextType)
+                      @if(!empty($scontextType->contextOptions))
+                        @foreach ($scontextType->contextOptions as $soption)
                         <div class="hover-bg-c-yellow rounded-t-lg">
-                          <a href="#" class="flex block p-2 pl-4 dropdown-item clickmenu {{ $contextType->function }} " data-type="{{ $option->function }}">
-                            <img src="{{ asset($constants['FILEICONPATH'].($option->image ?? 'default').$constants['ICONEXTENSION'])}}" alt="{{ $option->name }}" class="pr-4 w-11" /><span
-                              >{{ $option->name }}</span
-                            >
+                          <a href="#" class="flex block p-2 pl-4 dropdown-item clickmenu {{ $scontextType->function }} " data-type="{{ $soption->function }}">
+                            <i class="ri-check-line pr-3 ri-lg mt-1 sortingcheck sorting{{ $soption->function }} {{ (session()->has('sortfiles') && session('sortfiles')['sortby'].'-'.session('sortfiles')['sortorder'] == $soption->function) ? : 'hidden'}}"></i>
+                            <span>{{ $soption->name }}</span>
                           </a>
                         </div>
                         @endforeach
-                      @endif
-                    @endforeach
-                  @endif
+                        @endif
+                      @endforeach
+                    @endif
+                  </div>
                 </div>
-              </div>
-              @if(!empty($filteredPermissions['fileManager']) && in_array('upload', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
-              <div class="relative flex items-center upload">
-                <a href="#" class="clickmenu uploadFiles">
-                  <button
-                    class="flex gap-x-2">
-                    <i class="ri-upload-2-line ri-lg mt-1"></i>
-                    <span>Upload</span>
-                  </button>
-                </a>
-              </div>
               @endif
-
-              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
-              <a href="#" class="clickmenu cutFunction disabledicon fimanagertoolpanel"><button class="scissor">
-                <i class="ri-scissors-2-fill ri-lg"></i>
-              </button></a>
-              <a href="#" class="clickmenu copyFunction disabledicon fimanagertoolpanel"><button class="copy">
-                <i class="ri-file-copy-line ri-lg"></i>
-              </button></a>
-              @endif
-
-              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
-              <a href="#" class="clickmenu pasteFunction disabledicon fimanagertoolpanel"><button class="paste">
-                <i class="ri-clipboard-line ri-lg"></i>
-              </button></a>
-              @endif
-              @if(!empty($filteredPermissions['fileManager']) && in_array('edit', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)
-              <a href="#" class="clickmenu renameFunction disabledicon fimanagertoolpanel"><button class="edit">
-                <i class="ri-edit-line ri-lg"></i>
-              </button></a>
-              @endif
-              
-              <!-- <button class="share" onclick="togglePopup('sharePopup');">
-                <i class="ri-share-fill ri-lg"></i> 
-              </button> -->
-
-              @if(!empty($filteredPermissions['fileManager']) && in_array('delete', $filteredPermissions['fileManager']) || Auth::user()->cID == 0)             
-              <a href="#" class="clickmenu deleteFunction disabledicon fimanagertoolpanel"><button class="delete">
-                <i class="ri-delete-bin-line ri-lg"></i>
-              </button></a>
-              @endif
-             
-              <div class="relative flex items-center sort">
-                <button class="flex gap-x-2">
-                  <i class="ri-arrow-up-down-line ri-lg mt-1"></i>
-                  <span>Sort</span>
-                </button>
-                <button class="dropdown-btn">
-                  <i class="ri-arrow-drop-down-line ri-lg"></i>
-                </button>
-                <div
-                  id="sort-dropdown"
-                  class="dropdown-option absolute top-full mt-2 z-10 bg-c-white border border-c-medium-gray rounded-lg shadow-md hidden md:w-40 lg:w-44 xl:w-68"
-                >
-                @if(!empty($sortcontextTypes))
-                  @foreach ($sortcontextTypes as $scontextType)
-                    @if(!empty($scontextType->contextOptions))
-                      @foreach ($scontextType->contextOptions as $soption)
-                      <div class="hover-bg-c-yellow rounded-t-lg">
-                        <a href="#" class="flex block p-2 pl-4 dropdown-item clickmenu {{ $scontextType->function }} " data-type="{{ $soption->function }}">
-                          <i class="ri-check-line pr-3 ri-lg mt-1 sortingcheck sorting{{ $soption->function }} {{ (session()->has('sortfiles') && session('sortfiles')['sortby'].'-'.session('sortfiles')['sortorder'] == $soption->function) ? : 'hidden'}}"></i>
-                          <span>{{ $soption->name }}</span>
-                        </a>
-                      </div>
-                       @endforeach
-                      @endif
-                    @endforeach
-                  @endif
-                </div>
-              </div>
-
-              @endif
+            @endif
 
 
               <div class="relative flex items-center view">
@@ -323,6 +338,17 @@
                     <span>Detail pane</span>
                     </a>
                   </div>
+
+                  <div class="hover-bg-c-yellow rounded-t-lg">
+                    <a
+                      href="#"
+                      class="flex items-center block p-2 pl-4 dropdown-item clickmenu previewFunction" 
+                      data-type=""
+                    >
+                    <i class="ri-eye-line ri-lg w-1/4"></i>
+                    <span>Preview pane</span>
+                    </a>
+                  </div>
                   
                 </div>
               </div>
@@ -332,3 +358,4 @@
             
           </div>
         
+

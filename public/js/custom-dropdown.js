@@ -6,7 +6,7 @@ $('.custom-dropdown').each(function() {
     var $selected = $('<div class="select-selected"></div>')
       .text($select.find('option:selected').text())
       .append('<span class="absolute right-3 top-2.5 font-bold arrow transform transition-transform"><i class="ri-arrow-down-s-line ri-lg"></i></span>');
-    var $items = $('<div class="select-items select-hide"></div>');
+    var $items = $('<div class="select-items select-hide overflow-y-auto max-h-16 scroll"></div>');
 
     // Create custom dropdown items for all options, including the first
     $select.find('option').each(function(index) {
