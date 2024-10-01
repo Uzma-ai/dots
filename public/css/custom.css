@@ -11,6 +11,8 @@
 
 .icon-color {
     color: var(--color-white);
+
+    
 }
 
 .Ad-iconcolor {
@@ -1128,7 +1130,13 @@ input[type="search"]::-webkit-search-cancel-button {
     gap: 35px;
 }
 
-.account #add-div {
+.account #add-login{
+    max-width: 196px;
+    height: 136px;
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+}
+.account #add-desktop {
     max-width: 196px;
     height: 136px;
     border-radius: 20px;

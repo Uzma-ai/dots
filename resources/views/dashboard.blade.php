@@ -135,6 +135,10 @@
                             <a href="#">Downloads</a>
                         </li>
                         <li class="flex items-center gap-8 mb-4">
+                        <i class="ri-settings-3-line ri-1x Ad-iconcolor"></i>
+                            <a href="{{route('wallpaper')}}">Settings</a>
+                        </li>
+                        <li class="flex items-center gap-8 mb-4">
                             <i class="ri-logout-box-r-line ri-1x Ad-iconcolor"></i>
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();

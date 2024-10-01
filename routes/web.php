@@ -17,6 +17,7 @@ use App\Http\Controllers\FileSharingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\SettingsController;
 use App\Jobs\ConfigClearJob;
 use Illuminate\Support\Facades\Artisan;
 
@@ -189,7 +190,7 @@ Route::middleware(['blockIP'])->group(function () {
     Route::get('showsharedetail', [FileManagerController::class, 'sharefiledetail'])->name('showsharedetail');
 
     /// Filemanager
-
+    Route::post('/filemanager/move', [FileManagerController::class, 'moveFiles'])->name('file.move');
     Route::get('filemanager/{path?}', [FileManagerController::class, 'index'])
     ->where('path', '.*')->name('filemanager')->middleware('checkPermis.fileManager');
     Route::get('createfolder', [FileManagerController::class, 'createFolder'])->name('createfolder');
@@ -221,6 +222,8 @@ Route::middleware(['blockIP'])->group(function () {
     // Route::post('sendReply', [MessageController::class, 'sendReply'])->name('sendReply');
     Route::get('getMessage', [MessageController::class, 'getMessageData'])->name('getMessageData');
     Route::get('fileExpSearch', [FileManagerController::class, 'fileExpSearch'])->name('fileExp-list');
+   
+    
 });
 
 Route::get('expire-sharing',[FileSharingController::class, 'Expire']);
@@ -237,4 +240,7 @@ Route::post('company-update/{id}', [App\Http\Controllers\CompanyController::clas
 Route::get('company-delete/{id}', [App\Http\Controllers\CompanyController::class, 'destroy'])->name('company-delete');
 
 
+Route::get('/wallpaper', [SettingsController::class, 'index'])->name('wallpaper');
+Route::post('/wallpaper/store', [SettingsController::class, 'storeWallpaper'])->name('wallpaper.store');
+Route::delete('/wallpaper/delete/{id}', [SettingsController::class, 'deleteWallpaper'])->name('wallpaper.delete');
 

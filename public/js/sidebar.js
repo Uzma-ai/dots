@@ -1,20 +1,20 @@
 
 // manage sidebar
-// const currentPath = window.location.pathname.split("/").pop() || 'dashboard';
-//     const sidebarLinks = document.querySelectorAll('.sidebar a');
-// for (let i = 0; i < sidebarLinks.length; i++) {
-//     const link = sidebarLinks[i];
-//     const linkPath = link.getAttribute('href').split("/").pop() || 'dashboard';
-//     if (linkPath === currentPath) {
-//         // console.log(currentPath, linkPath);
-//         link.classList.add('active');
-//         const dropMenu = link.closest('.drop-menu');
-//         if (dropMenu) {
-//             dropMenu.classList.add('active');
-//         }
-//         break;
-//     }
-// }
+const currentPath = window.location.pathname.split("/").pop() || 'dashboard';
+    const sidebarLinks = document.querySelectorAll('.sidebar a');
+for (let i = 0; i < sidebarLinks.length; i++) {
+    const link = sidebarLinks[i];
+    const linkPath = link.getAttribute('href').split("/").pop() || 'dashboard';
+    if (linkPath === currentPath) {
+        // console.log(currentPath, linkPath);
+        link.classList.add('active');
+        const dropMenu = link.closest('.drop-menu');
+        if (dropMenu) {
+            dropMenu.classList.add('active');
+        }
+        break;
+    }
+}
 
 function toggleDropMenu(target) {
     target.classList.toggle('active')
