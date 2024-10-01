@@ -26,7 +26,7 @@
 <!-- shows folders and files -->
 @foreach ($files as $file)
 @if($file->folder==1)
-{{$file->path}}
+
 <div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="file">
     <a href="{{url('filemanager/'.base64UrlEncode($file->path))}}" class="folders selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="app"> 
 

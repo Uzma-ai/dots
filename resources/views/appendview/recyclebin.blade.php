@@ -1,4 +1,4 @@
-@if(Auth::user()->id == 1)
+@if(Auth::user()->id == $authId && Auth::user()->cID == 0)
 
 
           <!--Main content -->
@@ -28,9 +28,10 @@
 
 @foreach ($adminFiles as $file)
 @if($file->folder==1)
-{{$file->path}}
+
 <div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="recyclebin">
-    <a href="{{url('filemanager/'.base64UrlEncode($file->path))}}" class="folders selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="app"> 
+   <a href="#" class="files openiframe selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="file" data-apptype="{{ (checkFileGroup($file->extension) !='editor') ? 'app' : 'lightapp' }}"> 
+    <!-- <a href="{{url('filemanager/'.base64UrlEncode($file->path))}}" class="folders selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="app">  -->
 
    <div class="fixed w-full app-tools absolute flex item-center gap-8 px-2 invisible showappoptions">
           <input type="checkbox" class="appcheckbox" id="checkboxfolder{{ base64UrlEncode($file->id) }}">
@@ -95,9 +96,10 @@
                     
                     @foreach ($userFiles as $file)
 @if($file->folder==1)
-{{$file->path}}
+
 <div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="recyclebin">
-    <a href="{{url('filemanager/'.base64UrlEncode($file->path))}}" class="folders selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="app"> 
+   <a href="#" class="files openiframe selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="file" data-apptype="{{ (checkFileGroup($file->extension) !='editor') ? 'app' : 'lightapp' }}"> 
+  <!--   <a href="{{url('filemanager/'.base64UrlEncode($file->path))}}" class="folders selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="app">  -->
 
    <div class="fixed w-full app-tools absolute flex item-center gap-8 px-2 invisible showappoptions">
           <input type="checkbox" class="appcheckbox" id="checkboxfolder{{ base64UrlEncode($file->id) }}">
@@ -210,10 +212,9 @@
  @else
  @foreach ($deletedByUser as $file)
 @if($file->folder==1)
-{{$file->path}}
-<div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="recyclebin">
-    <a href="{{url('filemanager/'.base64UrlEncode($file->path))}}" class="folders selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="app"> 
 
+<div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="recyclebin">
+   <a href="#" class="files openiframe selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="file" data-apptype="{{ (checkFileGroup($file->extension) !='editor') ? 'app' : 'lightapp' }}"> 
    <div class="fixed w-full app-tools absolute flex item-center gap-8 px-2 invisible showappoptions">
           <input type="checkbox" class="appcheckbox" id="checkboxfolder{{ base64UrlEncode($file->id) }}">
           <div class="ml-auto -mt-1">

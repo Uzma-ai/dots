@@ -185,6 +185,7 @@ class FileManagerController extends Controller
     public function pathfiledetail(Request $request){
         //get user name
         $user = User::find(auth()->id());
+        $authId = $user->id;
         $userName = "";
         if ($user) {  $userName = $user->name;  }
         
@@ -220,7 +221,7 @@ class FileManagerController extends Controller
             $deletedByUser = FileModel::where('status', 0)->where('created_by', auth()->id())->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])->get();
             
 
-            $html = view('appendview.recyclebin')->with('adminFiles', $adminFiles)->with('userFiles', $userFiles)->with('deletedByUser', $deletedByUser)->render();
+            $html = view('appendview.recyclebin')->with('adminFiles', $adminFiles)->with('userFiles', $userFiles)->with('deletedByUser', $deletedByUser)->with('authId', $authId)->render();
         }
         
         return response()->json(['html' => $html,'parentPath'=>$parentPath]);
@@ -463,6 +464,8 @@ class FileManagerController extends Controller
             public function deleteFile(Request $request){
          // dd($request->all());
                 $fileKey = base64UrlDecode($request->input('filekey'));
+               
+           
 
 
                 $file = FileModel::find($fileKey);
@@ -498,6 +501,7 @@ class FileManagerController extends Controller
               }
               else
               {
+
                 $file->status = 0;
                 $file->save();  
 

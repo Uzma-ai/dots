@@ -481,6 +481,7 @@ $(document).on('click', '.context-menulist .deleteFunction', function (e) {
 
 $(document).on('click', '.context-menulist .restoreFunction', function (e) {
   e.preventDefault();
+
   const filekey = $('.selectedfile').attr('data-filekey');
 
   const fileid = this.getAttribute('data-iframefile-id');
@@ -504,7 +505,7 @@ $(document).on('click', '.context-menulist .restoreFunction', function (e) {
    });*/
 
 
-$(document).on('click', '.restoreAdminFunction', function (e) {
+/*$(document).on('click', '.restoreAdminFunction', function (e) {
   e.preventDefault();
 
 
@@ -513,7 +514,7 @@ $(document).on('click', '.restoreAdminFunction', function (e) {
     method: 'GET',
     data: {},
     success: function (response) {
-      /*alert();*/
+    
       $('.loaddetails').html(response.html);
 
     },
@@ -521,7 +522,7 @@ $(document).on('click', '.restoreAdminFunction', function (e) {
       console.error(xhr.responseText);
     }
   });
-});
+});*/
 
 $(document).on('click', '.context-menulist .cutFunction', function (e) {
   e.preventDefault();

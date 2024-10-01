@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\FileSharingController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\AnaliticsController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Jobs\ConfigClearJob;
@@ -86,6 +87,8 @@ Route::middleware(['blockIP'])->group(function () {
         Route::get('read-noti/{id}',[NoticeController::class, 'ReadNoti'])->name('ReadNoti');
         Route::get('read-all',[NoticeController::class, 'ReadAll'])->name('ReadAll');
     });
+
+     Route::get('analitics', [AnaliticsController::class, 'index'])->name('analitics');
 
     //Logs
     Route::get('Graph-Data', [OverviewController::class, 'getGraphData'])->name('Graph.Data');
