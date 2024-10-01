@@ -318,18 +318,21 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                   <div class="md:col-span-2 flex items-center">
-                    <label for="password" class="block font-bold text-c-black">
+                    <label for="mdpassword" class="block font-bold text-c-black">
                       Password:<span class="text-red-500">*</span>
                     </label>
                   </div>
-                  <div class="md:col-span-8">
+                  <div class="md:col-span-8 relative">
                     <input
-                      id="password"
+                      id="mdpassword"
                       class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
                       type="password"
                       placeholder="password"
                       name="password" data-validate="password"
                     />
+                    <div class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3 pt-1 cursor-pointer" style="height: 2.35rem;">
+                                    <i class="ri-eye-line ri-xl" id="togglePassword"></i>
+                    </div>
                     <small class="text-red-500 mt-1 block"></small>
                   </div>
                 </div>
@@ -517,6 +520,22 @@ function populateTable(term='') {
         console.log('Form validation failed');
       }
     });
+
+//masteradmin addform password show snippet
+    const togglePasswordclient =
+            document.querySelector('#togglePassword');
+
+        const mdpassword = document.querySelector('#mdpassword');
+
+        togglePasswordclient.
+        addEventListener('click', function(e) {
+            // Toggle the type attribute
+            const type = mdpassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            mdpassword.setAttribute('type', type);
+
+            // Toggle the eye slash icon
+            $('#togglePassword').toggleClass('ri-eye-off-line ri-eye-line');
+        });
 </script>
 
 @endsection
