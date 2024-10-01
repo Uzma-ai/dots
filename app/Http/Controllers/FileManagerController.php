@@ -230,7 +230,7 @@ class FileManagerController extends Controller
         $user = User::find(auth()->id());
         $userName = $user ? $user->name : "";
 
-        //get auth id
+        //get auth id  
         $authId = $user->id;
 
         // Get path
