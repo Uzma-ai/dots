@@ -4,7 +4,7 @@
            <!-- Main content -->
         <div class="flex-grow border h-100 main">
           <div class="flex w-full h-full flex-col content">
-            <div class=" px-2 lg:px-5 py-6">
+            <div class=" px-9 py-3 lg:py-6 lg:px-5">
                <div class="flex items-center gap-4">
                 <i class="ri-settings-3-fill ri-xl"></i>
                 <span class="text-lg text-c-black">System settings</span>
@@ -38,9 +38,10 @@
                         </button>
                     </div>
                   </div>
-               </div>
-               <!-- searchbar in mobile-->
-              <div
+               </div>  
+            </div>
+            <!-- searchbar in mobile-->
+            <div
                 class="pl-4 pt-3 mt-3 pb-3 pr-4 w-full flex flex-row justify-between items-center bg-c-light-white-smoke md:hidden"
                 id="mobiletaskbar"
               >
@@ -61,7 +62,6 @@
                   </div>
                 </div>
               </div>
-            </div>
 
             <!-- info table -->
              <div class="p-4 relative h-full flex flex-col scroll overflow-y-scroll">
@@ -288,7 +288,7 @@
             <div
               class="sticky top-0 flex py-2 px-5 justify-between items-center border-b border-gray-3 bg-white z-10 text-c-black"
             >
-              <div class="text-lg font-normal">Add Superadmin</div>
+              <div class="text-lg font-normal">Add Masteradmin</div>
               <i
               class="ri-close-circle-fill ri-lg cursor-pointer"
               data-bs-dismiss="modal"
@@ -318,18 +318,22 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
                   <div class="md:col-span-2 flex items-center">
-                    <label for="password" class="block font-bold text-c-black">
+                    <label for="mdpassword" class="block font-bold text-c-black">
                       Password:<span class="text-red-500">*</span>
                     </label>
                   </div>
-                  <div class="md:col-span-8">
+                  <div class="md:col-span-8 relative">
                     <input
-                      id="password"
+                      id="mdpassword"
                       class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
                       type="password"
                       placeholder="password"
                       name="password" data-validate="password"
                     />
+                    <div class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3 pt-1 cursor-pointer" style="height: 2.35rem;">
+                                    <i class="ri-eye-line ri-xl" id="togglePassword"></i>
+                    </div>
+                    <small class="text-red-500 mt-1 block"></small>
                   </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
@@ -516,6 +520,22 @@ function populateTable(term='') {
         console.log('Form validation failed');
       }
     });
+
+//masteradmin addform password show snippet
+    const togglePasswordclient =
+            document.querySelector('#togglePassword');
+
+        const mdpassword = document.querySelector('#mdpassword');
+
+        togglePasswordclient.
+        addEventListener('click', function(e) {
+            // Toggle the type attribute
+            const type = mdpassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            mdpassword.setAttribute('type', type);
+
+            // Toggle the eye slash icon
+            $('#togglePassword').toggleClass('ri-eye-off-line ri-eye-line');
+        });
 </script>
 
 @endsection

@@ -13,9 +13,11 @@ use App\Models\LightApp;
 use App\Models\ContextType;
 use App\Models\App;
 use App\Models\RecycleBin;
+use App\Models\Comment;
+use App\Models\CommentReciver;
+
 use App\Helpers\PermissionHelper;
 use Illuminate\Support\Facades\DB;
-
 
 
 
@@ -131,6 +133,7 @@ class FileManagerController extends Controller
     {
         $filemanager = App::where('name', 'Filmanager')->where('status', 1)->first();;
         $parentFolder = base64UrlDecode($request->input('parentFolder'));
+
         $childFolder = 'New Folder';
         $parentFolderPath = Storage::disk('root')->path($parentFolder);
         $childFolderPath = $parentFolderPath . '/' . $childFolder;
@@ -162,11 +165,49 @@ class FileManagerController extends Controller
         $newFolder->created_by = auth()->id(); // Assuming you want to save the ID of the authenticated user
         if ($newFolder->save()) {
             File::makeDirectory($childFolderPath, 0755, true);
+            $folderSize = folderSize($childFolderPath);
+            $newFolder->size = $folderSize;
+            $newFolder->save();
         }
-
-
         return response()->json(['status' => true, 'message' => 'Folder sucessfully created', 'folderName' => basename($childFolderPath)]);
     }
+
+    // public function createFolder(Request $request){
+    //     $filemanager = App::where('name','Filmanager')->where('status',1)->first();;
+    //     $parentFolder = base64UrlDecode($request->input('parentFolder'));
+    //     $childFolder = 'New Folder';
+    //     $parentFolderPath = Storage::disk('root')->path($parentFolder);    
+    //     $childFolderPath = $parentFolderPath . '/' . $childFolder;
+    //     $actualpath = $parentFolder.'/'.$childFolder;
+    //     if (!File::exists($parentFolderPath)) {
+    //         return response()->json(['status' => false, 'message' => 'Path does not exist.']);
+    //     }
+
+    //     $counter = 1;
+    //     $originalChildFolderPath = $childFolderPath;
+
+    //     // Check if the child folder already exists and append a number if necessary
+    //     while (File::exists($childFolderPath)) {
+    //         $childFolderPath = $originalChildFolderPath . ' (' . $counter . ')';
+    //         $actualpath = $parentFolder.'/'.$childFolder. ' (' . $counter . ')';;
+    //         $counter++;
+    //     }
+
+    //     $newFolder = new FileModel();
+    //     $newFolder->folder = 1;
+    //     $newFolder->extension = 'Absolute';
+    //     $newFolder->name = basename($childFolderPath);
+    //     $newFolder->parentpath = $parentFolder;
+    //     $newFolder->path = $actualpath;
+    //     $newFolder->openwith = ($filemanager) ? $filemanager->id : '';
+    //     $newFolder->sort_order = 0; // Adjust as needed
+    //     $newFolder->status = 1; // Assuming 1 means active
+    //     $newFolder->created_by = auth()->id(); // Assuming you want to save the ID of the authenticated user
+    //     if ($newFolder->save()) {
+    //         File::makeDirectory($childFolderPath, 0755, true);
+    //     }
+    //     return response()->json(['status' => true,'message' => 'Folder sucessfully created', 'folderName' => basename($childFolderPath)]);
+    // }
 
     public function createFile(Request $request)
     {
@@ -180,53 +221,284 @@ class FileManagerController extends Controller
         }
     }
 
+
     public function pathfiledetail(Request $request)
     {
-        //get user name
+        // Get user name
         $user = User::find(auth()->id());
-        $userName = "";
-        if ($user) {
-            $userName = $user->name;
-        }
+        $userName = $user ? $user->name : "";
 
-        //file path details
+        //get auth id  
+        $authId = $user->id;
+
+        // Get path
+        $path = $request->input('path');
+        $getFFId = base64UrlDecode($request->input('encodedId'));
+
         $filepath = base64UrlDecode($request->input('path'));
         $parentPath = empty($filepath) ? '/' : $filepath;
-        $defaultfolders = array();
-        $files = array();
-        $sortby = !empty($request->input('sort_by')) ? $request->input('sort_by') : 'name';
-        $sortorder = !empty($request->input('sort_order')) ? $request->input('sort_order') : 'asc';
-        $sortsession = ['sortby' => $sortby, 'sortorder' => $sortorder];
-        Session::put('sortfiles', $sortsession);
-        $sortsessionorder = (Session::has('sortfiles')) ? Session::get('sortfiles') : ['sortby' => 'name', 'sortorder' => 'asc'];
-        if ($filepath != 'RecycleBin') {
-            $defaultfolders = App::where('parentpath', $parentPath)->where('filemanager_display', 1)->where('status', 1)->orderBy('name')->get();
-            $files = FileModel::where('parentpath', $parentPath)->where('status', 1)->where('created_by', auth()->id())->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])->get();
+        $defaultfolders = [];
+        $files = [];
+        $commentsWithReceivers = '';
+
+        // Sorting parameters
+        $sortby = $request->input('sort_by', 'name');
+        $sortorder = $request->input('sort_order', 'asc');
+        Session::put('sortfiles', ['sortby' => $sortby, 'sortorder' => $sortorder]);
+        $sortsessionorder = Session::get('sortfiles', ['sortby' => 'name', 'sortorder' => 'asc']);
+
+        if ($getFFId != "") {
+            // Get file details
+            $fileFolderDetails = FileModel::where('parentpath', $parentPath)
+                ->where('id', $getFFId)
+                ->where('status', 1)
+                ->where('created_by', auth()->id())
+                ->first();
+
+            if ($fileFolderDetails) {
+                // Fetch the comments
+                $fileFolderComments = Comment::where('file_id', $getFFId)
+                    ->where('status', 1)
+                    ->get();
+
+                // Prepare comments with receivers
+                $commentsWithReceivers = [];
+                if ($fileFolderComments->isNotEmpty()) {
+                    $fileFolderReComments = CommentReciver::whereIn('comment_id', $fileFolderComments->pluck('id'))
+                        ->get()
+                        ->map(function ($receiver) {
+                            $user = User::find($receiver->receiver_id);
+                            $receiver->userName = $user ? $user->name : "Unknown";
+                            return $receiver;
+                        });
+
+                    foreach ($fileFolderComments as $comment) {
+                        $receivers = $fileFolderReComments->where('comment_id', $comment->id);
+                        $currentUserId = auth()->id();
+                        $hasCurrentUserReceiver = $receivers->contains(function ($receiver) use ($currentUserId) {
+                            return $receiver->receiver_id == $currentUserId;
+                        });
+
+                        // Append comment and its receivers to the array
+                        $commentsWithReceivers[] = [
+                            'comment' => $comment,
+                            'receivers' => $receivers,
+                            'hasCurrentUserReceiver' => $hasCurrentUserReceiver
+                        ];
+                    }
+                }
+
+                // Convert size
+                $totalSizeFormatted = convertSizeToReadableFormat($fileFolderDetails->size);
+
+                // Render the view with all the required data
+                $html = view('appendview.detailsview')
+                    ->with('getFFId', $getFFId)
+                    ->with('path', $path)
+                    ->with('filepath', $filepath)
+                    ->with('file', $fileFolderDetails)
+                    ->with('size', $totalSizeFormatted)
+                    ->with('userName', $userName)
+                    ->with('commentsWithReceivers', $commentsWithReceivers)
+                    ->render();
+            } else {
+                // Handle case where file details are not found
+                if ($filepath == 'RecycleBin') {
+                    $fileFolderRecycleDetails = FileModel::where('id', $getFFId)
+                        ->where('status', 0)
+                        ->where('created_by', auth()->id())
+                        ->first();
+
+                    // Convert size
+                    $totalSizeFormatted = convertSizeToReadableFormat($fileFolderRecycleDetails->size);
+
+                    // Render the view with all the required data
+                    $html = view('appendview.detailsview')
+                        ->with('getFFId', $getFFId)
+                        ->with('path', $path)
+                        ->with('filepath', $filepath)
+                        ->with('file', $fileFolderRecycleDetails)
+                        ->with('size', $totalSizeFormatted)
+                        ->with('userName', $userName)
+                        ->with('commentsWithReceivers', $commentsWithReceivers)
+                        ->render();
+                } else {
+                    $html = view('appendview.detailsview');
+                }
+            }
         } else {
-            $files = FileModel::where('status', 0)->where('created_by', auth()->id())->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])->get();
-        }
+            if ($filepath != 'RecycleBin') {
 
-        // Calculate sizes for files and convert them
-        foreach ($files as $file) {
-            $file->size = convertSizeToReadableFormat($file->size); //convertSizeToReadableFormat fron config folder -> commonfunction file
-        }
+                // Retrieve files and folders (excluding recycle bin)
+                $defaultfolders = App::where('parentpath', $parentPath)
+                    ->where('filemanager_display', 1)
+                    ->where('status', 1)
+                    ->orderBy('name')
+                    ->get();
 
-        // Grouping parent paths and calculating total size
-        $parentPathSize = FileModel::select('parentpath', DB::raw('SUM(size) as total_size'))
-            ->groupBy('parentpath')
-            ->get();
+                $files = FileModel::where('parentpath', $parentPath)
+                    ->where('status', 1)
+                    ->where('created_by', auth()->id())
+                    ->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])
+                    ->get();
 
-        //check view list
-        if ($request->input('list') == 1) {
-            $html = view('appendview.listview')->with('defaultfolders', $defaultfolders)->with('files', $files)->with('userName', $userName)->with('parentPathSize', $parentPathSize)->render();
-        } elseif ($request->input('list') == 2) {
-            $html = view('appendview.detailsview')->with('defaultfolders', $defaultfolders)->with('files', $files)->with('userName', $userName)->with('parentPathSize', $parentPathSize)->render();
-        } else {
-            $html = view('appendview.pathview')->with('defaultfolders', $defaultfolders)->with('files', $files)->render();
+                foreach ($files as $file) {
+                    $file->size = convertSizeToReadableFormat($file->size);
+                }
+
+                // Calculate total file sizes
+                $totalSize = FileModel::where('status', 1)
+                    ->where('created_by', auth()->id())
+                    ->sum('size');
+
+                $allFileFolderCount = FileModel::where('status', 1)
+                    ->where('created_by', auth()->id())
+                    ->count();
+
+                $totalFileCount = FileModel::where('status', 1)->where('parentpath', $filepath)
+                    ->where('created_by', auth()->id())
+                    ->count();
+
+                // Combine file and folder counts
+                $totalItemCount = $totalFileCount;
+
+                $totalSizeFormatted = convertSizeToReadableFormat($totalSize);
+
+                // Prepare sizes for specific directories
+                $sizeMap = [
+                    'desktop' => FileModel::where('parentpath', 'Desktop')->where('status', 1)->where('created_by', auth()->id())->sum('size'),
+                    'documents' => FileModel::where('parentpath', 'Document')->where('status', 1)->where('created_by', auth()->id())->sum('size'),
+                    'recyclebin' => FileModel::where('status', 0)->where('created_by', auth()->id())->sum('size'),
+                    'downloads' => FileModel::where('parentpath', 'Download')->where('status', 1)->where('created_by', auth()->id())->sum('size')
+                ];
+
+                // Convert sizes to a readable format
+                foreach ($sizeMap as $key => $size) {
+                    $sizeMap[$key] = convertSizeToReadableFormat($size);
+                }
+
+                // Calculate size for specific directories
+                $sizeDesktop = FileModel::where('parentpath', 'Desktop')->where('status', 1)->where('created_by', auth()->id())->sum('size');
+                $sizeDocuments = FileModel::where('parentpath', 'Document')->where('status', 1)->where('created_by', auth()->id())->sum('size');
+                $sizeDownloads = FileModel::where('parentpath', 'Download')->where('status', 1)->where('created_by', auth()->id())->sum('size');
+                $sizeRecycleBin = FileModel::where('status', 0)->where('created_by', auth()->id())->sum('size');
+
+                // Total size of all specified directories
+                $totalSpecifiedSize = $sizeDesktop + $sizeDocuments + $sizeDownloads + $sizeRecycleBin;
+
+                // Convert sizes to readable format
+                $sizeDesktopFormatted = convertSizeToReadableFormat($sizeDesktop);
+                $sizeDocumentsFormatted = convertSizeToReadableFormat($sizeDocuments);
+                $sizeDownloadsFormatted = convertSizeToReadableFormat($sizeDownloads);
+                $sizeRecycleBinFormatted = convertSizeToReadableFormat($sizeRecycleBin);
+                $totalSpecifiedSizeFormatted = convertSizeToReadableFormat($totalSpecifiedSize);
+
+                // Check view type and generate HTML
+                if ($request->input('list') == 1) {
+                    $html = view('appendview.listview')
+                        ->with('defaultfolders', $defaultfolders)
+                        ->with('files', $files)
+                        ->with('userName', $userName)
+                        ->with('sizeDesktopFormatted', $sizeDesktopFormatted)
+                        ->with('sizeDocumentsFormatted', $sizeDocumentsFormatted)
+                        ->with('sizeDownloadsFormatted', $sizeDownloadsFormatted)
+                        ->with('sizeRecycleBinFormatted', $sizeRecycleBinFormatted)
+                        ->with('totalSpecifiedSizeFormatted', $totalSpecifiedSizeFormatted)
+                        ->with('totalSizeFormatted', $totalSizeFormatted)
+                        ->with('totalItemCount', $totalItemCount)
+                        ->with('allFileFolderCount', $allFileFolderCount)
+                        ->with('filepath', $filepath)
+                        ->with('path', $path)
+                        ->with('sizeMap', $sizeMap)
+                        ->with('getFFId', $getFFId)
+                        ->render();
+                } else {
+                    $html = view('appendview.pathview')
+                        ->with('defaultfolders', $defaultfolders)
+                        ->with('files', $files)
+                        ->with('sizeDesktopFormatted', $sizeDesktopFormatted)
+                        ->with('sizeDocumentsFormatted', $sizeDocumentsFormatted)
+                        ->with('sizeDownloadsFormatted', $sizeDownloadsFormatted)
+                        ->with('sizeRecycleBinFormatted', $sizeRecycleBinFormatted)
+                        ->with('totalSpecifiedSizeFormatted', $totalSpecifiedSizeFormatted)
+                        ->with('totalSizeFormatted', $totalSizeFormatted)
+                        ->with('totalItemCount', $totalItemCount)
+                        ->with('allFileFolderCount', $allFileFolderCount)
+                        ->with('filepath', $filepath)
+                        ->with('path', $path)
+                        ->with('sizeMap', $sizeMap)
+                        ->with('getFFId', $getFFId)
+                        ->render();
+                }
+            } else {
+                // Recycle bin section
+                $adminFiles = FileModel::where('status', 0)
+                    ->where('created_by', auth()->id())
+                    ->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])
+                    ->get();
+
+                $userFiles = FileModel::where('status', 2)
+                    ->where('created_by', '!=', auth()->id())
+                    ->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])
+                    ->get();
+
+                $deletedByUser = FileModel::where('status', 0)
+                    ->where('created_by', auth()->id())
+                    ->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])
+                    ->get();
+
+                foreach ($adminFiles as $file) {
+                    $file->size = convertSizeToReadableFormat($file->size);
+                }
+
+                // Total size and file count logic
+                $totalSize = FileModel::where('status', 0)
+                    ->where('created_by', auth()->id())
+                    ->sum('size');
+
+                $totalFileCount = FileModel::where('status', 0)
+                    ->where('created_by', auth()->id())
+                    ->count();
+
+                $totalSizeFormatted = convertSizeToReadableFormat($totalSize);
+
+                // Size of specific directories for RecycleBin
+                $sizeDesktop = FileModel::where('parentpath', 'Desktop')->where('status', 1)->where('created_by', auth()->id())->sum('size');
+                $sizeDocuments = FileModel::where('parentpath', 'Document')->where('status', 1)->where('created_by', auth()->id())->sum('size');
+                $sizeDownloads = FileModel::where('parentpath', 'Download')->where('status', 1)->where('created_by', auth()->id())->sum('size');
+                $sizeRecycleBin = FileModel::where('status', 0)->where('created_by', auth()->id())->sum('size');
+
+                // Total size of all specified directories
+                $totalSpecifiedSize = $sizeDesktop + $sizeDocuments + $sizeDownloads + $sizeRecycleBin;
+
+                // Convert to readable format
+                $sizeDesktopFormatted = convertSizeToReadableFormat($sizeDesktop);
+                $sizeDocumentsFormatted = convertSizeToReadableFormat($sizeDocuments);
+                $sizeDownloadsFormatted = convertSizeToReadableFormat($sizeDownloads);
+                $sizeRecycleBinFormatted = convertSizeToReadableFormat($sizeRecycleBin);
+                $totalSpecifiedSizeFormatted = convertSizeToReadableFormat($totalSpecifiedSize);
+
+
+                $html = view('appendview.recyclebin')
+                    ->with('adminFiles', $adminFiles)
+                    ->with('userFiles', $userFiles)
+                    ->with('deletedByUser', $deletedByUser)
+                    ->with('sizeDesktopFormatted', $sizeDesktopFormatted)
+                    ->with('sizeDocumentsFormatted', $sizeDocumentsFormatted)
+                    ->with('sizeDownloadsFormatted', $sizeDownloadsFormatted)
+                    ->with('sizeRecycleBinFormatted', $sizeRecycleBinFormatted)
+                    ->with('totalSpecifiedSizeFormatted', $totalSpecifiedSizeFormatted)
+                    ->with('totalSizeFormatted', $totalSizeFormatted)
+                    ->with('totalFileCount', $totalFileCount)
+                    ->with('filepath', $filepath)
+                    ->with('path', $path)
+                    ->with('getFFId', $getFFId)
+                    ->with('authId', $authId)
+                    ->render();
+            }
         }
         return response()->json(['html' => $html, 'parentPath' => $parentPath]);
     }
-
 
 
     public function upload(Request $request)
@@ -456,45 +728,108 @@ class FileManagerController extends Controller
 
     public function deleteFile(Request $request)
     {
-
+        // dd($request->all());
         $fileKey = base64UrlDecode($request->input('filekey'));
+
+
+
 
         $file = FileModel::find($fileKey);
         if (!$file) {
             return response()->json(['message' => 'File not found', 'status' => false]);
         }
 
-        $file->status = 0;
-        $file->save();
 
-        $currentPath = 'root/' . $file->path;
-        $recycleBinPath = 'root/RecycleBin/';
-        $newFileName = $fileKey . '-' . $file->name;
+        if ($file->status == '0') {
+            //MaterRecycleBin
 
-        try {
-            if (Storage::exists($currentPath)) {
-                Storage::move($currentPath, $recycleBinPath . $newFileName);
-            } else {
-                return response()->json(['message' => 'File does not exist', 'status' => false]);
+            $file->status = 2;
+            $file->save();
+            $currentPath = 'root/' . 'RecycleBin';
+
+            $materRecycleBinPath = 'root/MaterRecycleBin/';
+            $newFileName = $fileKey . '-' . $file->name;
+            $newPath = $currentPath . '/' . $newFileName;
+            /*echo $newPath;
+                 die;*/
+            try {
+                if (Storage::exists($newPath)) {
+                    Storage::move($newPath, $materRecycleBinPath . $newFileName);
+                } else {
+                    return response()->json(['message' => 'File does not exist', 'status' => false]);
+                }
+            } catch (\Exception $e) {
+                return response()->json(['message' => 'Failed to move the file: ' . $e->getMessage(), 'status' => false]);
             }
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Failed to move the file: ' . $e->getMessage(), 'status' => false]);
-        }
 
-        return response()->json(['message' => 'File moved to RecycleBin', 'status' => true]);
+            return response()->json(['message' => 'File Deleted', 'status' => true]);
+        } else {
+
+            $file->status = 0;
+            $file->save();
+
+
+            $currentPath = 'root/' . $file->path;
+            $recycleBinPath = 'root/RecycleBin/';
+            $newFileName = $fileKey . '-' . $file->name;
+
+            try {
+                if (Storage::exists($currentPath)) {
+                    Storage::move($currentPath, $recycleBinPath . $newFileName);
+                } else {
+                    return response()->json(['message' => 'File does not exist', 'status' => false]);
+                }
+            } catch (\Exception $e) {
+                return response()->json(['message' => 'Failed to move the file: ' . $e->getMessage(), 'status' => false]);
+            }
+
+            return response()->json(['message' => 'File moved to RecycleBin', 'status' => true]);
+        }
     }
 
+    public function restoreFile(Request $request)
+    {
+        $fileKey = base64UrlDecode($request->input('filekey'));
+
+        // Find the file in the database
+        $file = FileModel::find($fileKey);
+        if (!$file) {
+            return response()->json(['message' => 'File not found', 'status' => false]);
+        }
+
+        // Update the file status to active (1) or original status
+        $file->status = 1;
+        $file->save();
+
+        // Paths
+        $recycleBinPath = 'root/RecycleBin/';
+        $originalPath = 'root/' . $file->path;
+        $fileName = $fileKey . '-' . $file->name;
+
+        // Move the file back to its original location
+        try {
+            if (Storage::exists($recycleBinPath . $fileName)) {
+                Storage::move($recycleBinPath . $fileName, $originalPath);
+            } else {
+                return response()->json(['message' => 'File does not exist in RecycleBin', 'status' => false]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to restore the file: ' . $e->getMessage(), 'status' => false]);
+        }
+
+        return response()->json(['message' => 'File restored successfully', 'status' => true]);
+    }
 
 
     public function contextMenu(Request $request)
     {
         $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $clicktype = $request->input('type');
-        if ($clicktype == 'rightclick') {
+        if ($clicktype == 'rightclick' || $clicktype == 'recyclebin') {
             $contextTypes = ContextType::with(['contextOptions' => function ($query) {
                 $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
             }])
-                ->where('show_on', 'rightclick')
+                ->where('show_on', $clicktype)
                 ->orderBy('sort_order', 'asc') // Sort context types by sort_order
                 ->get();
         } else {

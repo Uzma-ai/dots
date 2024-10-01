@@ -56,6 +56,7 @@
                             <hr class="border-t-4 -mt-1 border-c-yellow rounded-full" />
                         </div>
                     </div>
+                    <span>{{ $_SERVER['SERVER_NAME'] }}</span>
                     <img class="h-24" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}" alt="Logo" />
                     <div class="flex flex-col items-center justify-center gap-6 mt-2">
                         <button class="bg-c-black text-white rounded-full px-24 py-2" type="submit"
@@ -1020,13 +1021,10 @@
                         if (recorderNumber === 1) {
                             $("#previewContainer1").empty().append(preview);
                             recorders[1].count = 1;
-                            $("#recordButton1").prop("disabled", true);
                             $('#SubmitRegister').removeClass('hidden');
-                            $(`.mic-wrapper${recorderNumber}`).find(".circle").removeClass(
-                                "has-tooltip").removeClass("cursor-pointer");
-                            $(`.mic-wrapper${recorderNumber}`).find(".mic").removeClass("ri-mic-line")
-                                .removeClass("ri-user-voice-fill").removeClass("ri-voiceprint-line")
-                                .addClass("ri-mic-off-line");
+                            $(`.mic-wrapper${recorderNumber}`).find(".mic").removeClass("ri-mic-line").addClass("ri-user-voice-fill")
+                                .removeClass("ri-voiceprint-line");
+                            $(`.mic-wrapper${recorderNumber}`).find("#voice-retake").html("Retry");
                         } else if (recorderNumber === 2) {
                             $("#previewContainer2").empty().append(preview);
                             setTimeout(() => {

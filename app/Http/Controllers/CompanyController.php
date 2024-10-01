@@ -8,6 +8,7 @@ use App\Models\Group;
 use App\Models\Permissions;
 use App\Models\Roles;
 use App\Helpers\PermissionHelper;
+use Illuminate\Support\Facades\Auth;
 
 use Validator;
 
@@ -32,9 +33,17 @@ class CompanyController extends Controller
         $input = $request->all();
         if($input['searchTerm']){
             $search = $input['searchTerm'];
-            $companies = Company::where('name', 'LIKE', '%' . $search . '%')->get();
+            $companies = Company::where('userID',Auth::id())->where('name', 'LIKE', '%' . $search . '%')->get();
         }else{
-        $companies = Company::paginate(10);
+            if(auth()->user()->cID == 0){
+                 if(auth()->user()->type == 'client'){
+                  $companies = Company::where('userID',Auth::id())->paginate(10);
+                 }else{
+                  $companies = Company::paginate(10);
+                 }
+            }else{
+                 $companies = Company::where('userID',Auth::id())->paginate(10);
+            }
         } 
         $company = view('company.companylist')->with('companies',$companies)->render();
         return response()->json($company);
@@ -61,6 +70,7 @@ class CompanyController extends Controller
 
         $input = $request->all();
         $input['name'] = preg_replace('/[^A-Za-z0-9 ]/', '', $input['name']);
+        $input['userID'] = Auth::id();
         $company = Company::create($input);
 
         //creating first group and roles for superadmin with permission

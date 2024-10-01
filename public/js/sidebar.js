@@ -1,5 +1,5 @@
 
-// manage sidebar
+//manage sidebar
 const currentPath = window.location.pathname.split("/").pop() || 'dashboard';
     const sidebarLinks = document.querySelectorAll('.sidebar a');
 for (let i = 0; i < sidebarLinks.length; i++) {

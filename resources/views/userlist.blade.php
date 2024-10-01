@@ -57,8 +57,13 @@
                 >
                   Import Users
                 </div>
-                    @endif
+                  @endif
                 </div>
+                @if (Auth::user()->cID == 0 && empty(Auth::user()->type))
+                 <button>
+                            <i class="ri-add-circle-fill ri-xl" onclick="toggleModal('newClientModal')">AddClient</i>
+                 </button>
+                 @endif
             </div>
             <!-- searchbar in mobile-->
             <div class="pl-4 pt-3 mt-3 pb-3 pr-4 w-full flex flex-row justify-between items-center bg-c-light-white-smoke md:hidden"
@@ -248,7 +253,7 @@
             <div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 10rem)">
                 <form class="flex flex-col gap-4 text-sm" id="newUser" action="{{ route('user-create') }}" method="POST">
                     @csrf
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="name" class="block font-bold text-c-black">
                                 Username:<span class="text-red-500">*</span>
@@ -262,7 +267,7 @@
                             <small class="text-red-500 mt-1 block"></small>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="nickname" class="block font-bold text-c-black">
                                 Name:
@@ -275,7 +280,7 @@
                             <small class="text-red-500 mt-1 block"></small>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="nickname" class="block font-bold text-c-black">
                                 Email:
@@ -289,7 +294,7 @@
                             <small class="text-red-500 mt-1 block"></small>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="password" class="block font-bold text-c-black">
                                 Password:<span class="text-red-500">*</span>
@@ -302,13 +307,13 @@
                                     type="password" placeholder="Please enter password" name="password" data-validate="password" />
                                 <small class="text-red-500 mt-1 block"></small>
                                 <div
-                                    class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3 pt-1 cursor-pointer">
+                                    class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3 pt-1 cursor-pointer" style="height: 2.35rem;">
                                     <i class="ri-eye-line ri-xl" id="togglePassword"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="space-size" class="block font-bold text-c-black">
                                 Space size:<span class="text-red-500">*</span>
@@ -322,7 +327,7 @@
                                     max="500" />
                                 <small class="text-red-500 mt-1 block"></small>
                                 <div
-                                    class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray-3 w-12 rounded-r-xl pl-3">
+                                    class="absolute inset-y-0 right-0 flex items-center bg-c-gray-4 border border-gray-3 w-12 rounded-r-xl pl-3" style="height: 2.35rem;">
                                     <p class="font-normal">GB</p>
                                 </div>
                             </div>
@@ -334,7 +339,7 @@
                       </div> -->
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="role" class="block font-bold text-c-black">
                                 Role:
@@ -350,7 +355,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
                         <div class="md:col-span-2 flex items-center">
                             <label for="group" class="block font-bold text-c-black">
                                 Group:
@@ -455,6 +460,95 @@
     </div>
 
     <!--import model end -->
+    <!-- Client add model start-->
+    <div id="newClientModal" role="dialog"
+        class="fixed hidden inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
+        <div class="bg-white rounded-2xl overflow-hidden shadow-lg max-w-xl w-full bg-c-lighten-gray modal-content">
+            <!-- Sticky header -->
+            <div
+                class="sticky top-0 flex py-2 px-5 justify-between items-center border-b border-gray-3 bg-white z-10 text-c-black">
+                <div class="text-lg font-normal">Add Client User</div>
+                <button type="button" id="closeModalButton" class="py-1.5 rounded-md"
+                    onclick="event.stopPropagation();toggleModal('newClientModal');">
+                    <i class="ri-close-circle-fill text-black ri-lg"></i>
+                </button>
+            </div>
+            <!-- Scrollable content -->
+            <div class="p-5 overflow-y-auto scroll" style="max-height: calc(100vh - 10rem)">
+                <form class="flex flex-col gap-4 text-sm" id="client-form" action="{{ route('client-create') }}" method="POST">
+                    @csrf
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
+                        <div class="md:col-span-2 flex items-center">
+                            <label for="name" class="block font-bold text-c-black">
+                                Username:<span class="text-red-500">*</span>
+                            </label>
+                        </div>
+                        <div class="md:col-span-8">
+                            <input id="name"
+                                class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
+                                type="text" placeholder="Please enter an username" autocomplete="name" name="name"
+                                 data-validate="name" />
+                            <small class="text-red-500 mt-1 block"></small>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
+                        <div class="md:col-span-2 flex items-center">
+                            <label for="nickname" class="block font-bold text-c-black">
+                                Name:
+                            </label>
+                        </div>
+                        <div class="md:col-span-8">
+                            <input id="nickname"
+                                class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
+                                type="text" placeholder="Please enter nickname" name="nickName" data-validate="nickname" />
+                            <small class="text-red-500 mt-1 block"></small>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
+                        <div class="md:col-span-2 flex items-center">
+                            <label for="nickname" class="block font-bold text-c-black">
+                                Email:
+                            </label>
+                        </div>
+                        <div class="md:col-span-8">
+                            <input id="nickname"
+                                class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-5"
+                                type="email" placeholder="Please enter email" autocomplete="email" name="email"
+                                data-validate="email" />
+                            <small class="text-red-500 mt-1 block"></small>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-10 gap-4 items-start">
+                        <div class="md:col-span-2 flex items-center">
+                            <label for="password" class="block font-bold text-c-black">
+                                Password:<span class="text-red-500">*</span>
+                            </label>
+                        </div>
+                        <div class="md:col-span-8 flex items-center gap-2">
+                            <div class="relative w-full">
+                                <input id="clientpassword"
+                                    class="w-full p-2 bg-c-lighten-gray border border-gray-3 rounded-xl outline-none pl-4"
+                                    type="password" placeholder="Please enter password" name="password" data-validate="password" />
+                                <small class="text-red-500 mt-1 block"></small>
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center border border-gray-3 w-12 rounded-r-xl pl-3 pt-1 cursor-pointer" style="height: 2.35rem;">
+                                    <i class="ri-eye-line ri-xl" id="clienttogglePassword"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <button type="submit"
+                            class="bg-c-black hover:bg-c-black text-white rounded-full w-32 py-2 text-sm">
+                            Create
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Client add modal end --->
 
 @endsection
 
@@ -522,6 +616,9 @@
             @endif
             @if (Session::has('super-success'))
                 toastr.success("Super User created successfully");
+            @endif
+            @if (Session::has('client-success'))
+                toastr.success("Client User created successfully");
             @endif
         });
 
@@ -721,6 +818,35 @@
         console.log('Form validation failed');
       }
     });
+
+    //client add form validation
+    document.getElementById('client-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const form = e.target;
+      if (FormValidation.validateForm(form)) {
+        console.log('Form submitted successfully');
+        document.getElementById("client-form").submit();
+      } else {
+        console.log('Form validation failed');
+      }
+    });
+
+    //client addform password show snippet
+    const togglePasswordclient =
+            document.querySelector('#clienttogglePassword');
+
+        const clientpassword = document.querySelector('#clientpassword');
+
+        togglePasswordclient.
+        addEventListener('click', function(e) {
+            // Toggle the type attribute
+            const type = clientpassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            clientpassword.setAttribute('type', type);
+
+            // Toggle the eye slash icon
+            $('#clienttogglePassword').toggleClass('ri-eye-off-line ri-eye-line');
+        });
+
     </script>
 
 @endsection

@@ -46,10 +46,23 @@
             <div class="h-full sidebar">
                 <div class="sidebar-container">
                     <div class="p-6">
+                        <!-- hide show -->
+                      @if(Session::get('iframeapp') == null)
+
+
                         <a href="{{ route('dashboard') }}">
                             <img class="w-20" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
                                 alt="Dots Logo" />
                         </a>
+
+                        @else
+                            <a href="#">
+                            <img class="w-20" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
+                                alt="Dots Logo" />
+                        </a>
+
+                        @endif
+
                     </div>
                     <div class="sidebar-content">
                         <ul class="space-y-1">
@@ -57,6 +70,14 @@
                                 <a class="w-full px-6 py-3 rounded-r-lg block flex justify-between items-center"
                                     href="{{ route('Overviews') }}">
                                     <span class="font-normal"> Overview </span>
+                                    <i
+                                        class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl big-right-arrow"></i>
+                                </a>
+                            </li>
+                             <li>
+                                <a class="w-full px-6 py-3 rounded-r-lg block flex justify-between items-center"
+                                    href="{{ route('analitics') }}">
+                                    <span class="font-normal"> Analitics </span>
                                     <i
                                         class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl big-right-arrow"></i>
                                 </a>

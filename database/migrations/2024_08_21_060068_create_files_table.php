@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('sort_order')->default(0);
             $table->tinyInteger('is_root')->default(0);
             $table->tinyInteger('is_share')->default(0);
-            $table->tinyInteger('status');
+            $table->integer('status')->comment('0=recycleBin, 1=Desktop, 2=masterRecycleBin');
             $table->foreignId('created_by')->nullable()->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });

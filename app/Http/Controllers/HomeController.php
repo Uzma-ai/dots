@@ -35,10 +35,8 @@ class HomeController extends Controller
         $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $apps = App::where('desktop_display', 1)->where('status', 1)->get();
         $lightApps = LightApp::with('category')->get();
-       $path = url();
-        //$path = $path ? urldecode($path) : '/';
+        $path = url();
         $path ='/';
-        // return view('app', compact('apps', 'lightApps','path')); 
         return view('dashboard', compact('apps', 'lightApps', 'filteredPermissions'));       
     }
 
