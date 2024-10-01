@@ -4,7 +4,7 @@
            <!-- Main content -->
         <div class="flex-grow border h-100 main">
           <div class="flex w-full h-full flex-col content">
-            <div class=" px-2 lg:px-5 py-6">
+            <div class=" px-9 py-3 lg:py-6 lg:px-5">
                <div class="flex items-center gap-4">
                 <i class="ri-settings-3-fill ri-xl"></i>
                 <span class="text-lg text-c-black">System settings</span>
@@ -288,7 +288,7 @@
             <div
               class="sticky top-0 flex py-2 px-5 justify-between items-center border-b border-gray-3 bg-white z-10 text-c-black"
             >
-              <div class="text-lg font-normal">Add Superadmin</div>
+              <div class="text-lg font-normal">Add Masteradmin</div>
               <i
               class="ri-close-circle-fill ri-lg cursor-pointer"
               data-bs-dismiss="modal"
@@ -330,6 +330,7 @@
                       placeholder="password"
                       name="password" data-validate="password"
                     />
+                    <small class="text-red-500 mt-1 block"></small>
                   </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-10 gap-4">

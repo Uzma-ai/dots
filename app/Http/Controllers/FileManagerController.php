@@ -230,6 +230,9 @@ class FileManagerController extends Controller
         $user = User::find(auth()->id());
         $userName = $user ? $user->name : "";
 
+        //get auth id
+        $authId = $user->id;
+
         // Get path
         $path = $request->input('path');
         $getFFId = base64UrlDecode($request->input('encodedId'));
@@ -430,7 +433,7 @@ class FileManagerController extends Controller
                         ->with('getFFId', $getFFId)
                         ->render();
                 }
-            } else {
+            } else { 
                 // Recycle bin section
                 $adminFiles = FileModel::where('status', 0)
                     ->where('created_by', auth()->id())
@@ -478,6 +481,7 @@ class FileManagerController extends Controller
                 $sizeRecycleBinFormatted = convertSizeToReadableFormat($sizeRecycleBin);
                 $totalSpecifiedSizeFormatted = convertSizeToReadableFormat($totalSpecifiedSize);
 
+
                 $html = view('appendview.recyclebin')
                     ->with('adminFiles', $adminFiles)
                     ->with('userFiles', $userFiles)
@@ -492,6 +496,7 @@ class FileManagerController extends Controller
                     ->with('filepath', $filepath)
                     ->with('path', $path)
                     ->with('getFFId', $getFFId)
+                    ->with('authId', $authId)
                     ->render();                    
             }
         }
@@ -734,6 +739,8 @@ class FileManagerController extends Controller
             public function deleteFile(Request $request){
          // dd($request->all());
                 $fileKey = base64UrlDecode($request->input('filekey'));
+               
+           
 
 
                 $file = FileModel::find($fileKey);
@@ -769,6 +776,7 @@ class FileManagerController extends Controller
               }
               else
               {
+
                 $file->status = 0;
                 $file->save();  
 

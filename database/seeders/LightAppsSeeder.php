@@ -70,7 +70,7 @@ class LightAppsSeeder extends Seeder
         LightApp::create([
             'id' => 4,
             'group' => 1,
-            'name' => 'Dots Chat',
+            'name' => 'Chat',
             'link' => 'https://zulip.sizaf.com/',
             'description' => NULL,
             'function' => NULL,
@@ -89,7 +89,7 @@ class LightAppsSeeder extends Seeder
         LightApp::create([
             'id' => 5,
             'group' => 1,
-            'name' => 'Dots Erp',
+            'name' => 'Erp',
             'link' => 'https://erp.sizaf.com/login#login',
             'description' => NULL,
             'function' => NULL,
@@ -108,7 +108,7 @@ class LightAppsSeeder extends Seeder
         LightApp::create([
             'id' => 6,
             'group' => 1,
-            'name' => 'Dots Mail',
+            'name' => 'Mail',
             'link' => 'https://snappymail.sizaf.com/',
             'description' => NULL,
             'function' => NULL,
@@ -127,12 +127,31 @@ class LightAppsSeeder extends Seeder
         LightApp::create([
             'id' => 7,
             'group' => 1,
-            'name' => 'Dots Social',
+            'name' => 'Social',
             'link' => 'https://social.sizaf.com/html/user/login',
             'description' => NULL,
             'function' => NULL,
             'fileextension' => NULL,
             'icon' => 'social.svg',
+            'open_type' => 1,
+            'width' => 700,
+            'height' => 700,
+            'sort_order' => 0,
+            'status' => 1,
+            'add_app' => 1,
+            'created_at' => '2024-06-02 14:27:35',
+            'updated_at' => '2024-06-02 14:27:35'
+        ]);
+
+        LightApp::create([
+            'id' => 8,
+            'group' => 1,
+            'name' => 'Documents',
+            'link' => 'https://dev-ubt-app06.dev.orientdots.net',
+            'description' => NULL,
+            'function' => NULL,
+            'fileextension' => NULL,
+            'icon' => 'help-64.png',
             'open_type' => 1,
             'width' => 700,
             'height' => 700,

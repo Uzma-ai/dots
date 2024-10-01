@@ -405,23 +405,33 @@ $(document).on('click', '.context-menulist .openFunction', function (e) {
 $(document).on('dblclick', '.allapplist .selectapp', function (e) {
   e.preventDefault();
 
-  if ($(this).hasClass('openiframe')) {
-    const appkey = this.getAttribute('data-appkey');
-    const filekey = this.getAttribute('data-filekey');
-    const filetype = this.getAttribute('data-filetype');
-    const apptype = this.getAttribute('data-apptype');
-    const originalIcon = $(this).find('.icondisplay');
-    const imgicon = $('#iframeheaders #iframeiconimage' + filetype + appkey);
-    animateIcon(imgicon, originalIcon, function () {
-      const iframedata = { appkey: appkey, filekey: filekey, filetype: filetype, apptype: apptype };
-      openiframe(iframedata);
-
-    });
-  } else {
-    let url = $(this).attr('href');
-    window.location.href = url;
+  if ($(this).hasClass('customfunction')) {
+    const customfunction = this.getAttribute('data-customfunction');
+    customfunctions();
   }
+  else {
+      if ($(this).hasClass('openiframe')) {
+        const appkey = this.getAttribute('data-appkey');
+        const filekey = this.getAttribute('data-filekey');
+        const filetype = this.getAttribute('data-filetype');
+        const apptype = this.getAttribute('data-apptype');
+        const originalIcon = $(this).find('.icondisplay');
+        const imgicon = $('#iframeheaders #iframeiconimage' + filetype + appkey);
+        animateIcon(imgicon, originalIcon, function () {
+          const iframedata = { appkey: appkey, filekey: filekey, filetype: filetype, apptype: apptype };
+          openiframe(iframedata);
+
+        });
+      } else {
+        let url = $(this).attr('href');
+        window.location.href = url;
+      }
+    }
 });
+
+function customfunctions() {
+  $('.popupiframe').removeClass('hidden').addClass('show');
+}
 
 // $(document).on('dblclick', '.dashboardefaultdapp .selectapp', function (e) {
 //     e.preventDefault();
@@ -514,7 +524,7 @@ $(document).on('click', '.context-menulist .deleteFunction', function (e) {
   const fileid = this.getAttribute('data-iframefile-id');
   const apptype = $('.selectedfile').attr('data-apptype');
 
-  // to add type dynamically 
+  // to add type dynamically
   /*let type = 'RecycleBin';*/
 
   deleteFunction(filekey, filetype);
@@ -524,6 +534,7 @@ $(document).on('click', '.context-menulist .deleteFunction', function (e) {
 
 $(document).on('click', '.context-menulist .restoreFunction', function (e) {
   e.preventDefault();
+
   const filekey = $('.selectedfile').attr('data-filekey');
 
   const fileid = this.getAttribute('data-iframefile-id');
@@ -538,16 +549,16 @@ $(document).on('click', '.context-menulist .restoreFunction', function (e) {
  e.preventDefault();
  alert('user');
      const filekey = $('.selectedfile').attr('data-filekey');
-   
+
      const fileid = this.getAttribute('data-iframefile-id');
-    
+
      restoreAdminFunction(filekey,fileid);
      closeiframe(filekey,fileid);
      $('.selectapp').removeClass('.selectedfile');
    });*/
 
 
-$(document).on('click', '.restoreAdminFunction', function (e) {
+/*$(document).on('click', '.restoreAdminFunction', function (e) {
   e.preventDefault();
 
 
@@ -556,7 +567,7 @@ $(document).on('click', '.restoreAdminFunction', function (e) {
     method: 'GET',
     data: {},
     success: function (response) {
-      /*alert();*/
+    
       $('.loaddetails').html(response.html);
 
     },
@@ -564,7 +575,7 @@ $(document).on('click', '.restoreAdminFunction', function (e) {
       console.error(xhr.responseText);
     }
   });
-});
+});*/
 
 $(document).on('click', '.context-menulist .cutFunction', function (e) {
   e.preventDefault();
@@ -1172,7 +1183,7 @@ $('html').keyup(function (e) {
     const filetype = $('.selectedfile').attr('data-filetype');
     const fileid = this.getAttribute('data-iframefile-id');
 
-    // to add type dynamically 
+    // to add type dynamically
 
 
     deleteFunction(filekey, type);
@@ -1279,10 +1290,23 @@ $(document).ready(function () {
   });
 });
 
+function checkNotifications() {
+  if ($('#ULNoti li').length > 0 && $('#ULNoti li').text().trim() !== 'No new notifications') {
+    $('#notification-icon').removeClass('icon-color').addClass('bell');
+  } else {
+    $('#notification-icon').removeClass('bell').addClass('icon-color');
+  }
+}
+
+$(document).ready(function () {
+  checkNotifications();
+});
+
+
 
 $(document).on('click', '.ReadThisNoti', function (event) {
-    event.stopPropagation(); 
-    
+    event.stopPropagation();
+
     var id = $(this).attr('data-id');
     var listItem = $(this).closest('li');
     $.ajax({
@@ -1290,7 +1314,12 @@ $(document).on('click', '.ReadThisNoti', function (event) {
         url: base_url + "/read-noti/" + id,
         success: function (response) {
             if (response.status === 'success') {
-                listItem.remove();
+              listItem.remove();
+
+              if ($('#ULNoti li').length === 0) {
+                $('#ULNoti').html(`<li class="text-center mt-16">No new notifications</li>`);
+                $('#notification-icon').removeClass('bell').addClass('icon-color');
+              }
             }
         }
     });
@@ -1301,14 +1330,38 @@ $(document).on('click', '#MarkAllRead', function (event) {
     url: base_url + "/read-all",
     success: function (response) {
       if (response.status === 'success') {
-        var html = `<li class="text-center mt-3">
+        var html = `<li class="text-center mt-16">
                                 No new notifications
                             </li>`;
+        $('#notification-icon').removeClass('bell').addClass('icon-color');
         $('#ULNoti').html(html);
       }
     }
   });
 });
+
+$(document).on('click','.dismissModel',function(){
+    var modal = $(this).closest('.previewmodal');
+    if (modal) {
+        modal.addClass('hidden');
+    }
+});
+
+$(document).on('click', '.MarkasRead', function () {
+    var modal = $(this).closest('.previewmodal');
+    var id = $(this).attr('data-id');
+    $.ajax({
+        type: "GET",
+        url: base_url + "/read-noti/" + id,
+        success: function (response) {
+            if (response.status === 'success') {
+                modal.addClass('hidden');
+                $('#ULNoti').find('li').has('span[data-id="' + id + '"]').remove();
+            }
+        }
+    });
+});
+
 $(document).on('click', function (event) {
   if (!$(event.target).closest('#NotiContainer').length) {
     $('#NotiContainer').addClass('hidden');

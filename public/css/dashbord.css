@@ -11,6 +11,10 @@
   color: var(--color-white);
 }
 
+.disable-icon-color{
+  color: var(--color-gray-2);
+}
+
 .Ad-iconcolor {
   color: var(--color-light-black);
 }

@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\FileSharingController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\AnaliticsController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Jobs\ConfigClearJob;
@@ -87,6 +88,8 @@ Route::middleware(['blockIP'])->group(function () {
         Route::get('read-all',[NoticeController::class, 'ReadAll'])->name('ReadAll');
     });
 
+     Route::get('analitics', [AnaliticsController::class, 'index'])->name('analitics');
+
     //Logs
     Route::get('Graph-Data', [OverviewController::class, 'getGraphData'])->name('Graph.Data');
     Route::get('get-data', [OverviewController::class, 'getData'])->name('get.data');
@@ -155,6 +158,8 @@ Route::middleware(['blockIP'])->group(function () {
     ->name('permissionsadmin')->middleware('checkPermis.roleManagement');
     //Superadmin routs
     Route::post('superadmin-create', [App\Http\Controllers\UserController::class, 'createSuperadmin'])->name('superadmin-create');
+    //client user route
+     Route::post('client-create', [App\Http\Controllers\UserController::class, 'createClient'])->name('client-create');
     //roles routes
     Route::get('roles', [RolesController::class, 'index'])->name('roles');
     Route::get('roles/{id}', [RolesController::class, 'index']);

@@ -42,7 +42,7 @@
         <div class="flex items-center gap-8 w-48 justify-end pr-5 relative">
             <i id="search-icon" class="ri-search-line icon-color"></i>
             <i id="pinned" class="ri-pushpin-line icon-color"></i>
-            <i id="notification-icon" class="ri-notification-3-line icon-color"></i>
+            <i id="notification-icon" class="ri-notification-3-line"></i>
             <button class="icon-trigger-dropdown cursor-default">
                 <i class="ri-question-line icon-color"></i>
             </button>
@@ -86,20 +86,20 @@
                             @php
                                 $notification = is_string($data) ? json_decode($data, true) : $data;
                             @endphp
-                            <li class="border-b-2 border-c-gray px-4 py-2.5">
+                            <li class="border-b-2 border-c-gray px-4 py-2.5 notification-item" data-id="{{ $id }}" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">
                                 <div class="flex items-start justify-between gap-20">
-                                    <p class="text-sm text-c-black font-normal notification-item" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">
+                                    <p class="text-sm text-c-black font-normal " >
                                         {{ $notification['title'] ?? 'No Title' }}
                                     </p>
                                     <i class="ri-close-circle-fill ri-1x cursor-pointer ReadThisNoti"
                                         data-id="{{ $id }}"></i>
                                 </div>
                                 <span
-                                    class="text-c-time font-normal text-sm notification-item" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">{{ \Carbon\Carbon::parse($notification['time'] ?? now())->diffForHumans(['short' => true]) }}</span>
+                                    class="text-c-time font-normal text-sm">{{ \Carbon\Carbon::parse($notification['time'] ?? now())->diffForHumans(['short' => true]) }}</span>
                             </li>
                         @endforeach
                     @else
-                        <li class="text-center mt-3">
+                        <li class="text-center mt-16">
                             No new notifications
                         </li>
                     @endif
@@ -155,6 +155,161 @@
         </div>
     </div>
 
+    <div class="draggableelement setting-box popupiframe inset-0 bg-black-900 bg-opacity-50 flex items-center justify-center rounded-lg hidden account">
+        <div class="draggable bg-opacity-70 shadow-lg w-full h-full relative">
+            <div class="flex justify-end items-center p-1 pr-2 border-b bg-c-gray-gradient">             
+                <div class="flex space-x-1">
+                    <a href="#"  class="minimizeiframe-btn"><img src="{{ asset($constants['IMAGEFILEPATH'].'minimize'.$constants['ICONEXTENSION'])}}"/></a>
+                    <a href="#" class="maximizeiframe-btn"><img src="{{ asset($constants['IMAGEFILEPATH'].'maximize'.$constants['ICONEXTENSION'])}}"/></a>
+                    <a href="#" class="closeiframe-btn"><img src="{{ asset($constants['IMAGEFILEPATH'].'close'.$constants['ICONEXTENSION'])}}"/></a>
+                </div>
+            </div>
+            <div class="h-full w-full overflow-y-scroll scroll cm">
+                <div class="px-9 lg:px-5 py-4">
+                    <div class="flex items-center gap-4">
+                    <img class="w-12" src="images/profile.png" alt="profile img" />
+                    <span class="text-lg font-normal text-c-black"
+                        >Administrator</span
+                    >
+                    </div>
+                </div>
+                <div class="taskbar bg-no-repeat bg-cover bg-center flex items-center justify-between px-5 md:px-5 lg:px-7 py-4">
+                    <div class="flex items-center gap-4 w-full md:w-1/2">
+                        <div class="flex gap-1 sm:gap-2 items-center">
+                            <span class="text-c-black font-medium">Wallpaper</span>
+                        </div>
+                    </div>
+                </div>
+                 <div class="w-full h-full px-5 md:px-5 lg:px-7">
+                    <div class="py-5 flex items-center gap-4 sm:gap-6 border-b border-gray tabs">
+                        <label for="themes" class="cursor-pointer radio-border">
+                            <input type="radio" name="type" id="themes" value="themes" />
+                            <span class="text-c-black font-normal text-xs md:text-base"
+                            >Themes</span
+                            >
+                            <div></div>
+                        </label>
+                        <label for="desktop-wallpaper" class="cursor-pointer radio-border">
+                            <input
+                            type="radio"
+                            name="type"
+                            id="desktop-wallpaper"
+                            value="desktop-wallpaper"
+                            checked
+                            />
+                            <span class="text-c-black font-normal text-xs md:text-base"
+                            >Desktop wallpaper</span
+                            >
+                            <div></div>
+                        </label>
+                        <label for="login-wallpaper" class="cursor-pointer radio-border">
+                            <input
+                            type="radio"
+                            name="type"
+                            id="login-wallpaper"
+                            value="login-wallpaper"
+                            />
+                            <span class="text-c-black font-normal text-xs md:text-base"
+                            >Login wallpaper</span
+                            >
+                            <div></div>
+                        </label>
+                    </div>
+                    <div class="py-4 h-full">
+                        <span class="text-c-black font-medium"
+                            >Choose your favourite wallpaper</span
+                        >
+                        <div class="wallpapers w-full pt-4">
+                            <div
+                            id="add-div"
+                            class="border border-c-yellow bg-c-lighten-gray flex flex-col gap-3 items-center justify-center"
+                            >
+                            <div
+                                class="w-10 h-10 bg-c-yellow rounded-full flex items-center justify-center"
+                            >
+                                <i class="ri-add-large-fill ri-lg"></i>
+                            </div>
+                            <span class="text-c-black font-medium text-sm sm:text-base"
+                                >Add new wallpaper</span
+                            >
+                            </div>
+                            <div class="wallpaper-div border border-gray overflow-hidden">
+                            <img
+                                class="w-full h-full"
+                                src=""
+                                alt="wallpaper"
+                            />
+                            </div>
+                            <div class="wallpaper-div border border-gray overflow-hidden">
+                            <img
+                                class="object-cover w-full h-full"
+                                src=""
+                                alt="wallpaper"
+                            />
+                            </div>
+                            <div class="wallpaper-div border border-gray overflow-hidden">
+                            <img
+                                class="object-cover w-full h-full"
+                                src=""
+                                alt="wallpaper"
+                            />
+                            </div>
+                            <div class="wallpaper-div border border-gray overflow-hidden">
+                            <img
+                                class="object-cover w-full h-full"
+                                src=""
+                                alt="wallpaper"
+                            />
+                            </div>
+                            <div class="wallpaper-div border border-gray overflow-hidden">
+                            <img
+                                class="object-cover w-full h-full"
+                                src=""
+                                alt="wallpaper"
+                            />
+                            </div>
+                            <div class="wallpaper-div border border-gray overflow-hidden">
+                            <img
+                                class="object-cover w-full h-full"
+                                src=""
+                                alt="wallpaper"
+                            />
+                            </div>
+                            <div class="wallpaper-div border border-gray overflow-hidden">
+                            <img
+                                class="object-cover w-full h-full"
+                                src=""
+                                alt="wallpaper"
+                            />
+                            </div>
+                            <div class="wallpaper-div border border-gray overflow-hidden">
+                            <img
+                                class="object-cover w-full h-full"
+                                src=""
+                                alt="wallpaper"
+                            />
+                            </div>
+                            <div class="wallpaper-div border border-gray overflow-hidden">
+                            <img
+                                class="object-cover w-full h-full"
+                                src=""
+                                alt="wallpaper"
+                            />
+                            </div>
+                        </div>
+                        <div class="pt-6 flex items-center justify-end pb-14">
+                            <button
+                            class="bg-c-black hover-bg-c-black text-white rounded-full w-32 py-1.5 text-lg save"
+                            >
+                            Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+
 
 
     @yield('content')
@@ -162,7 +317,7 @@
     <!--end here -->
 
     <script>
-       
+
         const desktopapp = @json(route('desktopapp'));
         const contextmenu = @json(route('contextmenu'));
         const createFolderRoute = @json(route('createfolder'));

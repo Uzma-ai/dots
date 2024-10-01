@@ -74,6 +74,14 @@
                                         class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl big-right-arrow"></i>
                                 </a>
                             </li>
+                             <li>
+                                <a class="w-full px-6 py-3 rounded-r-lg block flex justify-between items-center"
+                                    href="{{ route('analitics') }}">
+                                    <span class="font-normal"> Analitics </span>
+                                    <i
+                                        class="ri-arrow-right-s-line text-c-yellow right-arrow text-2xl big-right-arrow"></i>
+                                </a>
+                            </li>
                             @if (!empty($filteredPermissions['backendManagement']) && in_array('notice', $filteredPermissions['backendManagement']) || Auth::user()->cID == 0)
                                 <li>
                                     <div role="button" onclick="toggleDropMenu(this)"
