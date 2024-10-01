@@ -34,7 +34,7 @@
     <!-- <a href="{{url('filemanager/'.base64UrlEncode($file->path))}}" class="folders selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="app">  -->
 
    <div class="fixed w-full app-tools absolute flex item-center gap-8 px-2 invisible showappoptions">
-          <input type="checkbox" class="appcheckbox" id="checkboxfolder{{ base64UrlEncode($file->id) }}">
+          <input type="checkbox" class="appcheckbox" id="checkboxdocument{{ base64UrlEncode($file->id) }}">
           <div class="ml-auto -mt-1">
               <i class="ri-arrow-drop-down-fill ri-xl text-black"></i>
           </div>
@@ -102,7 +102,7 @@
   <!--   <a href="{{url('filemanager/'.base64UrlEncode($file->path))}}" class="folders selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="folder" data-apptype="app">  -->
 
    <div class="fixed w-full app-tools absolute flex item-center gap-8 px-2 invisible showappoptions">
-          <input type="checkbox" class="appcheckbox" id="checkboxfolder{{ base64UrlEncode($file->id) }}">
+          <input type="checkbox" class="appcheckbox" id="checkboxdocument{{ base64UrlEncode($file->id) }}">
           <div class="ml-auto -mt-1">
               <i class="ri-arrow-drop-down-fill ri-xl text-black"></i>
           </div>
@@ -216,7 +216,7 @@
 <div class="app maindesktopapp w-21 h-28 cursor-pointer relative" data-option="recyclebin">
    <a href="#" class="files openiframe selectapp" data-path =" {{ base64UrlEncode($file->path) }}" data-appkey="{{ base64UrlEncode($file->openwith) }}" data-filekey="{{ base64UrlEncode($file->id) }}" data-filetype="file" data-apptype="{{ (checkFileGroup($file->extension) !='editor') ? 'app' : 'lightapp' }}"> 
    <div class="fixed w-full app-tools absolute flex item-center gap-8 px-2 invisible showappoptions">
-          <input type="checkbox" class="appcheckbox" id="checkboxfolder{{ base64UrlEncode($file->id) }}">
+          <input type="checkbox" class="appcheckbox" id="checkboxdocument{{ base64UrlEncode($file->id) }}">
           <div class="ml-auto -mt-1">
               <i class="ri-arrow-drop-down-fill ri-xl text-black"></i>
           </div>
@@ -258,3 +258,13 @@
 @endforeach
 
 @endif
+
+
+
+
+
+<!-- start details and preview pane  -->
+<div id="detailContainer">
+    @include('appendview.detailsview')
+  </div>
+  <!-- end details and preview pane  -->

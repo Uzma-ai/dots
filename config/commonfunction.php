@@ -151,8 +151,9 @@ function convertSizeToReadableFormat($size) {
         $size = number_format($size / 1048576, 2) . ' MB';
     } elseif ($size >= 1024) {
         $size = number_format($size / 1024, 2) . ' KB';
-    } else {
-        $size = $size . ' bytes';
+    } 
+    else {
+        $size = $size . ' KB';
     }
     return $size;
 }

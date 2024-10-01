@@ -314,7 +314,6 @@ $(document).on('click', '.context-menulist .resizeFunction', function (e) {
   e.preventDefault();
   e.stopPropagation();
   let filetype = $(this).data('type');
-  // showapathdetail(path, 0);
   let sizeclasses = ['tiny', 'small', 'big', 'medium', 'oversize'];
   sizeclasses.forEach(element => {
     $('.allapplist .app').removeClass(element + '-wraper');
@@ -324,13 +323,57 @@ $(document).on('click', '.context-menulist .resizeFunction', function (e) {
   $('.allapplist .app .imagewraper').addClass(filetype);
 });
 
-
-$(document).on('click', '.context-menulist .listFunction', function (e) {
+//listview function
+$(document).on('click', '.context-menulist .listFunction', function (e) {     
   showapathdetail(path, 1);
 });
 
-$(document).on('click', '.context-menulist .detailsFunction', function (e) {
-  showapathdetail(path, 2);
+//detailsview function
+$(document).ready(function() {
+  $(document).on('click', '.context-menulist .detailsFunction', function (e) {
+      e.preventDefault(); 
+      togglePanel('detail');
+  });
+});
+
+//preview function
+$(document).ready(function() {
+  $(document).on('click', '.context-menulist .previewFunction', function (e) {
+      e.preventDefault(); 
+      togglePanel('preview');
+  });
+});
+
+
+//click on file/folder checkbox
+
+let previouslyCheckedId = null;
+$(document).on('click', '.appcheckbox', function (e) { 
+    e.stopPropagation();
+    
+    const checkboxId = $(this).attr('id');
+    const encodedId = checkboxId.replace('checkboxfolder', '').replace('checkboxdocument', '').replace('checkboxsystemapp', '');
+
+    // If a different checkbox is clicked, uncheck the previously checked one
+    if (previouslyCheckedId && previouslyCheckedId !== encodedId) {
+        // Clear the previously checked checkbox
+        $('#checkboxfolder' + previouslyCheckedId).prop('checked', false);
+        $('#checkboxdocument' + previouslyCheckedId).prop('checked', false);
+        $('#checkboxsystemapp' + previouslyCheckedId).prop('checked', false);
+        previouslyCheckedId = null;  // Reset previous checked ID
+    }
+
+    if ($(this).is(':checked')) {
+        // Checkbox is checked, send encodedId
+        previouslyCheckedId = encodedId;  // Store the checked id
+        console.log('Checked ID:', encodedId);
+        showFiledetails(path, encodedId);
+    } else {
+        // Checkbox is unchecked, send false or blank
+        console.log('Unchecked, sending blank or false');
+        showFiledetails(path, false);  
+        previouslyCheckedId = null;  // Clear id when unchecked
+    }
 });
 
 

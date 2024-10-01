@@ -1,5 +1,5 @@
 <!-- new code for details start  -->
-<!--------- get data on checkbox checked on file or folder start  ---------------------------------------->
+ <!--------- get data on checkbox checked on file or folder start  ---------------------------------------->
  @if($getFFId != "") 
  <!--panes1-->
     <div id="panel" class="resizable-sidebar  md:w-3/12 xl:w-1/5">
@@ -21,14 +21,6 @@
                         @endif  
                         
                     </div> 
-                    <!-- <div class="space-x-4">
-                        <button>
-                        <i class="ri-star-line font-size-20"></i>
-                        </button>
-                        <button>
-                        <i class="ri-pushpin-2-line font-size-20"></i>
-                        </button>
-                    </div> -->
                                     
                 </div>
             <div>                
@@ -177,10 +169,19 @@
            
             <div class="flex items-end space-x-4">
                 <div class="flex-shrink-0">                   
+                    @if(checkFileGroup($file->extension)=='image')
+                        <img class="w-16 h-16" src="{{ url(Storage::url($constants['ROOTPATH'].$file->path)) }}" alt="{{ $file->name }}"/>
                     
+                    @elseif(($file->extension)=='Absolute')
+                    <img class="w-16 h-16" src="{{ asset($constants['FILEICONPATH'].'folder.png')}}" alt="{{ $file->name }}"/>
+                    
+                    @else
+                        <img class="w-16 h-16" src="{{ checkIconExist($file->extension,'file')}}" alt="{{ $file->name }}"/>
+                    @endif 
                 </div>
                 <div class="flex flex-col justify-between">
-                    
+                    <p>Home / {{$filepath}}</p>
+                    <p>{{$size}}</p>
                 </div>               
             </div>           
 
@@ -197,32 +198,6 @@
         </div>
         <!--chat list-->
         <div class="flex-1 overflow-auto scroll">
-            @if(checkFileGroup($file->extension)=='image')
-                <img class="" src="{{ url(Storage::url($constants['ROOTPATH'].$file->path)) }}" alt="{{ $file->name }}"/>
-            
-            @elseif(($file->extension)=='Absolute') 
-            No Preview Available
-            <!-- <img class="" src="{{ asset($constants['FILEICONPATH'].'folder.png')}}" alt="{{ $file->name }}"/> -->
-            
-            @elseif(($file->extension)=='mp4')
-            No Preview Available
-
-            @else   
-                
-                <!-- <img class="" src="{{ checkIconExist($file->extension,'file')}}" alt="{{ $file->name }}"/> -->
-
-                @php
-                    $filePath = str_replace('\\', '/', $constants['ROOTPATH'].$file->path);
-                @endphp
-                <iframe
-                    src="{{ url(Storage::url($filePath)) }}"
-                    class="w-full"
-                    style="height: 55vh;"
-                    frameborder="0"
-                ></iframe>
-
-            @endif 
-            
             <!-- <iframe
             src="http://web.simmons.edu/~grovesd/comm244/notes/week2/links"
             class="w-full"
@@ -231,13 +206,13 @@
             ></iframe> -->
         </div>
     </div>
-<!--------- get data on checkbox checked on file or folder end  ---------------------------------------->
+ <!--------- get data on checkbox checked on file or folder end  ---------------------------------------->
 
 
 
 
 
-<!--------- get data on details and preview clicks start  --------------------------------------------->
+ <!--------- get data on details and preview clicks start  --------------------------------------------->
 
  @else
     <!--panes-->
@@ -720,17 +695,18 @@
     <!--preview pane-->
     <div id="previewContent"  class="absolute bottom-0 top-1 flex h-11/12 w-full flex-col hidden border-r bg-c-lighten-gray hidden font-size-14">
         <div class="sticky top-0 z-10 flex items-start justify-between border-b px-4 pb-2"  >
-          
+            @if($path == "/")
             <div class="flex items-end space-x-4">
-                <!-- <div class="flex-shrink-0">
+                <div class="flex-shrink-0">
                     <img
                     src="{{ asset($constants['IMAGEFILEPATH'] . 'Home.png') }}"
                     alt="Document Image"
                     class="w-16 h-16"
                     />
-                </div> -->
+                </div>
                 <div class="flex flex-col justify-between">
-                    <!-- <p>No Preview Available</p> -->
+                    <p>Home ({{ $allFileFolderCount }} items)</p>
+                    <p>{{ $totalSpecifiedSizeFormatted  }}</p>
                     <!-- <p>Select a single folder to get more information and share your content</p> -->
                 </div>
                 <!-- <div class="space-x-4">
@@ -742,7 +718,72 @@
                     </button>
                 </div> -->
             </div>
-                
+            @endif
+
+
+            @if($filepath == "Desktop")
+            <div class="flex items-end space-x-4">
+                <div class="flex-shrink-0">
+                    <img
+                    src="{{ asset($constants['IMAGEFILEPATH'] . 'apps/desktop.png') }}"
+                    alt="Document Image"
+                    class="w-16 h-16"
+                    />
+                </div>
+                <div class="flex flex-col justify-between">
+                    <p>Desktop ({{ $totalItemCount }} items)</p>
+                    <p>{{ $sizeDesktopFormatted  }}</p>
+                </div>                
+            </div>
+            @endif
+
+            @if($filepath == "Document")
+            <div class="flex items-end space-x-4">
+                <div class="flex-shrink-0">
+                    <img
+                    src="{{ asset($constants['IMAGEFILEPATH'] . 'apps/document.png') }}"
+                    alt="Document Image"
+                    class="w-16 h-16"
+                    />
+                </div>
+                <div class="flex flex-col justify-between">
+                    <p>Document ({{ $totalItemCount }} items)</p>
+                    <p>{{ $sizeDocumentsFormatted  }}</p>
+                </div>                
+            </div>
+            @endif
+
+            @if($filepath == "Download")
+            <div class="flex items-end space-x-4">
+                <div class="flex-shrink-0">
+                    <img
+                    src="{{ asset($constants['IMAGEFILEPATH'] . 'apps/download.png') }}"
+                    alt="Document Image"
+                    class="w-16 h-16"
+                    />
+                </div>
+                <div class="flex flex-col justify-between">
+                    <p>Download ({{ $totalItemCount }} items)</p>
+                    <p>{{ $sizeDownloadsFormatted  }}</p>
+                </div>                
+            </div>
+            @endif
+
+            @if($filepath == "RecycleBin")
+            <div class="flex items-end space-x-4">
+                <div class="flex-shrink-0">
+                    <img
+                    src="{{ asset($constants['IMAGEFILEPATH'] . 'apps/bin.png') }}"
+                    alt="Document Image"
+                    class="w-16 h-16"
+                    />
+                </div>
+                <div class="flex flex-col justify-between">
+                    <p>RecycleBin ({{ $totalFileCount }} items)</p>
+                    <p>{{ $sizeRecycleBinFormatted  }}</p>
+                </div>                
+            </div>
+            @endif
 
             <!-- close btn  -->
             <div>
@@ -757,13 +798,6 @@
         </div>
         <!--chat list-->
         <div class="flex-1 overflow-auto scroll">
-        @if($path == "/")
-            <p >No Preview Available</p>
-
-            @elseif($filepath == "Desktop" || $filepath == "Document" || $filepath == "Download" || $filepath == "RecycleBin")
-            
-            <p >Select a file to preview</p>
-            @endif
             <!-- <iframe
             src="http://web.simmons.edu/~grovesd/comm244/notes/week2/links"
             class="w-full"
