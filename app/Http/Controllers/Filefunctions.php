@@ -9,6 +9,7 @@ use App\Models\App;
 
 class Filefunctions extends Controller
 {
+
     public function createNewFile($fileatype, $destinationParentPath){
         $destinationPath = Storage::disk('root')->path($destinationParentPath);
         $sourcePath = Storage::disk('public')->path('newfile.'.$fileatype);
@@ -28,6 +29,7 @@ class Filefunctions extends Controller
         $lightapp = empty($lightapp) ? App::where('name',$checkapp)->where('status',1)->first():$lightapp;
         if (copy($sourcePath, $destinationfPath)) {
             $filetype = $this->getFiletype($destinationfPath);
+            $fileSize = getFileSize($destinationfPath);
             $newFile = new FileModel();
             $newFile->name = $newFileName;
             $newFile->extension = $fileatype;
@@ -39,6 +41,7 @@ class Filefunctions extends Controller
             $newFile->filehash = md5(date('d-M-Y H:i:s'));
             $newFile->status = 1; // Assuming 1 means active
             $newFile->created_by = auth()->id(); // Assuming you want to save the ID of the authenticated user
+            $newFile->size = $fileSize;
             $newFile->save();
             $appname =($lightapp) ? $lightapp->name :'';
             $appicon =($lightapp) ? $lightapp->icon :'';
@@ -49,6 +52,47 @@ class Filefunctions extends Controller
             return false;
         }
     }
+
+    // public function createNewFile($fileatype, $destinationParentPath){
+    //     $destinationPath = Storage::disk('root')->path($destinationParentPath);
+    //     $sourcePath = Storage::disk('public')->path('newfile.'.$fileatype);
+    //     $newFileName = 'New File.'.$fileatype;
+    //     $actualpath = $destinationParentPath.'/'.$newFileName;
+    //     $count = 1;
+    //     $destinationfPath = $destinationPath.'/'.$newFileName;
+    //     while (file_exists($destinationfPath)) {
+    //         $newFileName = 'New File('.($count).').'.$fileatype;
+    //         $destinationfPath = $destinationPath.'/'.$newFileName;
+    //         $actualpath = $destinationParentPath.'/'.$newFileName;
+    //         $count++;
+    //     }
+        
+    //     $checkapp = checkLightApp($fileatype);
+    //     $lightapp = LightApp::where('name',$checkapp)->where('status',1)->first();
+    //     $lightapp = empty($lightapp) ? App::where('name',$checkapp)->where('status',1)->first():$lightapp;
+    //     if (copy($sourcePath, $destinationfPath)) {
+    //         $filetype = $this->getFiletype($destinationfPath);
+    //         $newFile = new FileModel();
+    //         $newFile->name = $newFileName;
+    //         $newFile->extension = $fileatype;
+    //         $newFile->filetype = $filetype;
+    //         $newFile->parentpath = $destinationParentPath;
+    //         $newFile->path = $actualpath;
+    //         $newFile->openwith = ($lightapp) ? $lightapp->id : '';
+    //         $newFile->path = $actualpath;
+    //         $newFile->filehash = md5(date('d-M-Y H:i:s'));
+    //         $newFile->status = 1; // Assuming 1 means active
+    //         $newFile->created_by = auth()->id(); // Assuming you want to save the ID of the authenticated user
+    //         $newFile->save();
+    //         $appname =($lightapp) ? $lightapp->name :'';
+    //         $appicon =($lightapp) ? $lightapp->icon :'';
+    //         $returnarr = array('filekey'=> $newFile->id,'appkey'=> $newFile->openwith,'filename'=>$newFile->name,'appname'=>$appname,'appicon'=>$appicon);
+    //         return $returnarr;
+
+    //     }else{
+    //         return false;
+    //     }
+    // }
 
     public function getDocumentType($ext) {
         $ExtsDoc = array("doc", "docm", "docx", "dot", "dotm", "dotx", "epub", "fodt", "ott", "htm", "html", "mht", "odt", "pdf", "rtf", "txt", "djvu", "xps");

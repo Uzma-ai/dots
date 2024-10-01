@@ -9,7 +9,7 @@
 
 @php
 // Split the path into components
-///print_r($path);die;
+//print_r($path);die;
 $pathComponents = explode('/', base64UrlDecode($path));
 $pathComponentsNew = $pathComponents;
  
@@ -45,18 +45,8 @@ if(empty($updatedPath)){
             </div> --> 
             <!--table container -->            
             @include('layouts.columnview')
-            <!--panes-->
-            <div id="panel" class="resizable-sidebar hidden md:w-4/12 xl:w-1/5">
-              <div class="resizer"></div>
-              <!--detailpan-->
-              @include('layouts.detailpan')
-              <!--preview pane-->
-              @include('layouts.previewpan')
-            </div>
-            
-            <div class="loadDetailsViewPan">
-            </div>
-          </div>
+            <!--panes-->                      
+          </div>         
 
 
           <!--upload popup-->
@@ -308,14 +298,32 @@ if(empty($updatedPath)){
             },
             success: function (response) {
                 $('.loaddetails').html(response.html);
-                $('.loadDetailsViewPan').html(response.html);                
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
             }
         }); 
-    }     
-        
+    } 
+    
+    //for showing details of files
+    showFiledetails(path, encodedId);
+    function showFiledetails(path, encodedId = ''){
+        $.ajax({
+            url: showFileDetail,
+            method: 'GET',
+            data: {
+              path:path, 
+              encodedId:encodedId
+            },
+            success: function (response) {
+                $('#detailContainer').html(response.html);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        }); 
+    }
+
     // search functionality
     $('#searchFiles').on('keyup', function() {
       var query = $(this).val().trim();

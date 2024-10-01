@@ -174,9 +174,11 @@
     </table>
   </div>
 
-  
-
-
+  <!-- start details and preview pane  -->
+  <div id="detailContainer">
+    @include('appendview.detailsview')
+  </div>
+  <!-- end details and preview pane  -->
 
 
   

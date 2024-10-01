@@ -100,37 +100,9 @@ class SearchController extends Controller
                     
                     
                 }else if($filetype =='folder'){
-
-                            /// filemanage 
-                            $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
-                            //$path = $path ? base64UrlDecode($path) : '/';
-                            $contextTypes = ContextType::with(['contextOptions' => function($query) {
-                                $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
-                            }])
-                            ->where('display_header', 1)
-                            ->where('function','createFileFunction')
-                            ->orderBy('sort_order', 'asc') // Sort context types by sort_order
-                            ->get();
-                            $resizecontextTypes = ContextType::with(['contextOptions' => function($query) {
-                                $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
-                            }])
-                            ->where('display_header', 1)
-                            ->where('function','resizeFunction')
-                            ->orderBy('sort_order', 'asc') // Sort context types by sort_order
-                            ->get();
-                            $sortcontextTypes = ContextType::with(['contextOptions' => function($query) {
-                                $query->orderBy('sort_order', 'asc'); // Sort options by sort_order
-                            }])
-                            ->where('display_header', 1)
-                            ->where('function','sortFunction')
-                            ->orderBy('sort_order', 'asc') // Sort context types by sort_order
-                            ->get();
-                           // $path = $path ? $path : '/';
-                    /// 
-                    $iframetype = 'poup';
                     $iframeurllink = url('filemanager',['path'=>base64UrlEncode($file->path)]);
-                    $popupview = view('filemanager')->with('', $iframearray)->render();
-                }else{
+                }
+                else{
                     if($filetype =='app'){
                         if($appdet->type=='folder'){
                             $iframeurllink = url('filemanager',['path'=>base64UrlEncode($appdet->path)]);

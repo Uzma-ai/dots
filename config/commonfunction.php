@@ -153,7 +153,7 @@ function convertSizeToReadableFormat($size) {
         $size = number_format($size / 1024, 2) . ' KB';
     } 
     else {
-        $size = $size . '0 KB';
+        $size = $size . ' KB';
     }
     return $size;
 }
