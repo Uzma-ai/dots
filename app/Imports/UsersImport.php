@@ -30,6 +30,15 @@ class UsersImport
                 $exist[] = $row['email'];
                 continue;
             }
+
+            //check password pattern
+            $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/';
+
+                if (!preg_match($pattern, $row['password'])) {
+                    $exist['invalid'] = 'Invalid password!! Password must be at least 6 characters, contain 1 uppercase letter, 1 number, and 1 special character';
+                    continue;
+                } 
+
             //  return $group;exit;
             // Check if a user with the same name or email already exists
             $existingUser = User::where('name', $row['username'])->orWhere('email', $row['email'])->first();
@@ -76,7 +85,7 @@ class UsersImport
         }
         if(empty($exist))
         return true;
-        else
+        else 
         return $exist;
     }
 }
