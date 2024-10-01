@@ -835,15 +835,13 @@
     const togglePasswordclient =
             document.querySelector('#clienttogglePassword');
 
-        const clientpassword =
-            document.querySelector('#clientpassword');
+        const clientpassword = document.querySelector('#clientpassword');
 
         togglePasswordclient.
         addEventListener('click', function(e) {
             // Toggle the type attribute
-            const type = clientpassword.getAttribute(
-                'type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
+            const type = clientpassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            clientpassword.setAttribute('type', type);
 
             // Toggle the eye slash icon
             $('#clienttogglePassword').toggleClass('ri-eye-off-line ri-eye-line');
