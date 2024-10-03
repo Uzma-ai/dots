@@ -47,6 +47,7 @@ class SettingsController extends Controller
             $imagePath = $request->type == 0
                 ? asset('public/images/wallpapers/dashboard/' . $imageName)
                 : asset('public/images/wallpapers/login/' . $imageName);
+                // dd($imagePath);
             return response()->json([
                 'success' => true,
                 'message' => 'Wallpaper uploaded successfully!',

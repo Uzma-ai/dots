@@ -32,11 +32,11 @@
                     <div></div>
                 </label>
             </div>
-
+            <!-- dektop wallpaper display -->
             <div class="wallpapers w-full py-4" id="desktop-wallpapers" style="display: block;">
                 <span class="text-c-black font-medium">Choose your favourite desktop wallpaper</span>
                 <div class="wallpapers w-full pt-4" id="desktop-wallpaper-list">
-                    <div id="add-desktop" class="border border-c-yellow bg-c-lighten-gray flex flex-col gap-3 items-center cursor-pointer">
+                    <div id="add-desktop" class="border border-c-yellow bg-c-lighten-gray flex flex-col gap-3 items-center justify-center">
                         <div class="w-10 h-10 bg-c-yellow rounded-full flex items-center justify-center">
                             <i class="ri-add-large-fill ri-lg"></i>
                         </div>
@@ -47,12 +47,18 @@
                     @include('appendview.desktop_wallpapers', ['wallpaper' => $wallpaper, 'type' => 0])
                     @endforeach
                 </div>
+                <div class="pt-6 flex items-center justify-end">
+                    <button
+                        class="bg-c-black hover-bg-c-black text-white rounded-full w-32 py-1.5 text-lg save">
+                        Save
+                    </button>
+                </div>
             </div>
-
+            <!-- login wallpaper display -->
             <div class="py-4" id="login-wallpapers" style="display: none;">
                 <span class="text-c-black font-medium">Choose your favourite login wallpaper</span>
                 <div class="wallpapers w-full pt-4" id="login-wallpaper-list">
-                    <div id="add-login" class="border border-c-yellow bg-c-lighten-gray flex flex-col gap-3 items-center cursor-pointer">
+                    <div id="add-login" class="border border-c-yellow bg-c-lighten-gray flex flex-col gap-3 items-center justify-center">
                         <div class="w-10 h-10 bg-c-yellow rounded-full flex items-center justify-center">
                             <i class="ri-add-large-fill"></i>
                         </div>
@@ -62,6 +68,12 @@
                     @foreach($loginWallpapers as $wallpaper)
                     @include('appendview.desktop_wallpapers', ['wallpaper' => $wallpaper, 'type' => 1])
                     @endforeach
+                </div>
+                <div class="pt-6 flex items-center justify-end">
+                    <button
+                        class="bg-c-black hover-bg-c-black text-white rounded-full w-32 py-1.5 text-lg save">
+                        Save
+                    </button>
                 </div>
             </div>
         </div>
@@ -86,7 +98,7 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script>
     document.getElementById('add-login').addEventListener('click', function() {
         document.getElementById('wallpaperType').value = '1';
@@ -111,32 +123,30 @@
     });
 
     function getWallpaperUploadRoute() {
-    return "{{ url('/wallpaper/store') }}"; 
-}
+        return "{{ url('/wallpaper/store') }}";
+    }
 
-function uploadWallpaper() {
-    const formData = new FormData(document.getElementById('uploadForm')); 
+    function uploadWallpaper() {
+        const formData = new FormData(document.getElementById('uploadForm'));
 
-    $.ajax({
-        url: getWallpaperUploadRoute(),
-        method: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false, 
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}', 
-        },
-        success: function(response) {
-            if (response.success) {
-                let wallpaperList = document.getElementById(response.type == 0 ? 'desktop-wallpaper-list' : 'login-wallpaper-list');
-                let wallpaperDiv = document.createElement('div');
-                wallpaperDiv.className = 'relative wallpaper-div border border-gray overflow-hidden';
-
-                const timestamp = new Date().getTime();
-                const imagePathWithCacheBusting = response.image_url + '?' + timestamp;
-
-                let wallpaperImage = `
-                    <img class="object-cover w-full h-full" src="${imagePathWithCacheBusting}" data-id="${response.wallpaper_id}" />
+        $.ajax({
+            url: getWallpaperUploadRoute(),
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            success: function(response) {
+                if (response.success) {
+                    let wallpaperList = document.getElementById(response.type == 0 ? 'desktop-wallpaper-list' : 'login-wallpaper-list');
+                    let wallpaperDiv = document.createElement('div');
+                    wallpaperDiv.className = 'relative wallpaper-div border border-gray overflow-hidden';
+                    const timestamp = new Date().getTime();
+                    const imagePathWithCacheBusting = response.image + '?' + timestamp;
+                    let wallpaperImage = `
+                    <img class="object-cover w-full h-full" src="${imagePathWithCacheBusting}" data-id="${response.wallpaper_id}" alt="Wallpaper" onload="console.log('Image loaded successfully')" onerror="console.error('Failed to load image')">
                     <div class="absolute top-2 right-2">
                         <input class="c-checkbox" type="checkbox">
                     </div>
@@ -148,20 +158,30 @@ function uploadWallpaper() {
                         </form>
                     </div>
                 `;
-                wallpaperDiv.innerHTML = wallpaperImage;
-                wallpaperList.appendChild(wallpaperDiv);
-                $('#uploadModal').modal('hide');
-                toastr.success(response.message);
-            } else {
-                toastr.error(response.message || 'Failed to upload wallpaper.');
+                    wallpaperDiv.innerHTML = wallpaperImage;
+                    let addNewWallpaperDiv = wallpaperList.querySelector('#add-desktop, #add-login');
+                    if (addNewWallpaperDiv) {
+                        wallpaperList.insertBefore(wallpaperDiv, addNewWallpaperDiv.nextSibling);
+                    } else {
+                        wallpaperList.appendChild(wallpaperDiv);
+                    }
+                    wallpaperList.offsetHeight;
+                    document.getElementById('uploadModal').classList.add('hidden');
+                    toastr.success(response.message);
+                } else {
+                    toastr.error(response.message || 'Failed to upload wallpaper.');
+                }
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
+                toastr.error('An error occurred while uploading the wallpaper.');
             }
-        },
-        error: function(xhr) {
-            console.error(xhr.responseText);
-            toastr.error('An error occurred while uploading the wallpaper.');
-        }
-    });
-}
+        });
+    }
+
+
+
+
 
 
 

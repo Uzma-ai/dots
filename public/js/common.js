@@ -1441,72 +1441,73 @@ function drag(event) {
     console.log("Dragging files:", fileKeys);
     console.log("Dragging folders: ", folderKeys);
 }
-
 function drop(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const folderElement = event.target.closest('.app[data-folder="1"]');
-    const folderPath = folderElement ? folderElement.getAttribute('data-path') : null;
+  const folderElement = event.target.closest('.app[data-folder="1"]');
+  const folderPath = folderElement ? folderElement.getAttribute('data-path') : null;
 
-    if (!folderPath) {
-        console.error("Target folder not found.");
-        return;
-    }
+  if (!folderPath) {
+      console.error("Target folder not found.");
+      return;
+  }
 
-    const fileKeysString = event.dataTransfer.getData("fileKeys") || '[]';
-    const folderKeysString = event.dataTransfer.getData("folderKeys") || '[]';
-    let fileKeys = JSON.parse(fileKeysString);
-    let folderKeys = JSON.parse(folderKeysString);
+  const fileKeysString = event.dataTransfer.getData("fileKeys") || '[]';
+  const folderKeysString = event.dataTransfer.getData("folderKeys") || '[]';
+  let fileKeys = JSON.parse(fileKeysString);
+  let folderKeys = JSON.parse(folderKeysString);
 
-    if (fileKeys.length === 0 && folderKeys.length === 0) {
-        console.log("No files or folders to move.");
-        return;
-    }
+  if (fileKeys.length === 0 && folderKeys.length === 0) {
+      console.log("No files or folders to move.");
+      return;
+  }
 
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    fetch('/dots/filemanager/move', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
-        },
-        body: JSON.stringify({
-            fileKeys: fileKeys,
-            folderKeys: folderKeys,
-            targetFolder: folderPath
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status) {
-            toastr.success(data.message);
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            // Remove moved items from their current location in the DOM
-            fileKeys.forEach(key => {
-                const element = document.querySelector(`.app[data-filekey="${key}"]`);
-                if (element) {
-                    element.remove(); // Remove from the current view
-                }
-            });
-            folderKeys.forEach(key => {
-                const element = document.querySelector(`.app[data-filekey="${key}"]`);
-                if (element) {
-                    element.remove(); // Remove from the current view
-                }
-            });
+  fetch(moveUrl, {  // Use the moveUrl variable defined in the Blade template
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken
+      },
+      body: JSON.stringify({
+          fileKeys: fileKeys,
+          folderKeys: folderKeys,
+          targetFolder: folderPath
+      })
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.status) {
+          toastr.success(data.message);
 
-            // Re-render the moved items in the new folder
-            reRenderMovedItems(fileKeys, folderKeys, folderElement);
-        } else {
-            console.error('Error moving items:', data.message);
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An unexpected error occurred: ' + error.message);
-    });
+          // Remove moved items from their current location in the DOM
+          fileKeys.forEach(key => {
+              const element = document.querySelector(`.app[data-filekey="${key}"]`);
+              if (element) {
+                  element.remove(); // Remove from the current view
+              }
+          });
+          folderKeys.forEach(key => {
+              const element = document.querySelector(`.app[data-filekey="${key}"]`);
+              if (element) {
+                  element.remove(); // Remove from the current view
+              }
+          });
+
+          // Re-render the moved items in the new folder
+          reRenderMovedItems(fileKeys, folderKeys, folderElement);
+      } else {
+          console.error('Error moving items:', data.message);
+          alert('Error: ' + data.message);
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      alert('An unexpected error occurred: ' + error.message);
+  });
 }
+
 
 function reRenderMovedItems(fileKeys, folderKeys, targetFolderElement) {
     const targetFolderPath = targetFolderElement.getAttribute('data-path');

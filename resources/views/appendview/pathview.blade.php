@@ -88,6 +88,9 @@
     @endforeach
 
 </div>
+<script>
+    var moveUrl = "{{ route('file.move') }}"; // Store the route in a JavaScript variable
+</script>
 
 
 <!-- start details and preview pane  -->
