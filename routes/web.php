@@ -250,4 +250,6 @@ Route::get('company-delete/{id}', [App\Http\Controllers\CompanyController::class
 Route::get('/wallpaper', [SettingsController::class, 'index'])->name('wallpaper');
 Route::post('/wallpaper/store', [SettingsController::class, 'storeWallpaper'])->name('wallpaper.store');
 Route::delete('/wallpaper/delete/{id}', [SettingsController::class, 'deleteWallpaper'])->name('wallpaper.delete');
+Route::post('/user_wallpaper/update', [SettingsController::class, 'updateUserWallpaper'])->name('user_wallpaper.update');
+
 

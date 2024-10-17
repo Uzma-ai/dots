@@ -89,6 +89,12 @@
     /*Font Weight */
     --font-weight-400:400;
     --font-weight-500:500;
+    /* desktop wallpaper */
+    --desktop-wallpaper-1: url("../images/Wallpaper.png");
+    /* login wallpaper */
+    --login-wallpaper-1: url("../images/Wallpaper.png");
+    /* curtain wallpaper */
+    --curtain-wallpaper: url("../images/Wallpaper.png");
 }
 
 

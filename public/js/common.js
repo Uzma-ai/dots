@@ -1464,7 +1464,7 @@ function drop(event) {
 
   const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-  fetch(moveUrl, {  // Use the moveUrl variable defined in the Blade template
+  fetch(moveUrl, { 
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -1536,4 +1536,5 @@ function allowDrop(event) {
 function dragLeave(event) {
     event.currentTarget.classList.remove('hover');
 }
+
 

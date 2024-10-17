@@ -381,6 +381,7 @@
             id="WODAudio"></audio>
     </div>
 </body>
+<script src="{{ asset($constants['JSFILEPATH'] . 'wallpaper.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
@@ -1188,6 +1189,28 @@
             }
         })();
     }
+
+    
 </script>
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+    const loginWallpaper = getCookie('login_wallpaper');
+    
+    if (loginWallpaper) {
+        document.documentElement.style.setProperty('--login-wallpaper-1', `url(${loginWallpaper})`);
+        document.documentElement.style.setProperty('--curtain-wallpaper', `url(${loginWallpaper})`);
+    }
+});
+
+// Function to retrieve a cookie by name
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+</script>
+
+
 
 </html>
