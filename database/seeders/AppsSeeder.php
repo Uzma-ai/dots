@@ -75,7 +75,7 @@ class AppsSeeder extends Seeder
             'updated_at' => now()
         ]);
         App::create([
-            'id' => 6,
+            'id' => 14,
             'name' => 'User',
             'icon' => 'user.svg',
             'app_function' => NULL,
