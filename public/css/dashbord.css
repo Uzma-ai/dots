@@ -1,5 +1,5 @@
 .dashboard {
-  background-image: url("../images/Wallpaper.png");
+  background-image: var(--desktop-wallpaper-1);
   background-size: 100% 100%;
   background-position: center;
   position: relative;

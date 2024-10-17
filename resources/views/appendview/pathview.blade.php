@@ -89,7 +89,7 @@
 
 </div>
 <script>
-    var moveUrl = "{{ route('file.move') }}"; // Store the route in a JavaScript variable
+    var moveUrl = "{{ route('file.move') }}"; 
 </script>
 
 

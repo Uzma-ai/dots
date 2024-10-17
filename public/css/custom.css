@@ -652,14 +652,17 @@ input[type="search"]::-webkit-search-cancel-button {
 /* ****************** This CSS for Login page *********************** */
 
 .login .left-background {
-    background-image: url("../images/login-wallpaper.jpg");
-    border-top-right-radius: 100px;
+    background-image: var(--login-wallpaper-1) !important;
+    /* border-top-right-radius: 100px; */
 }
 
 .login .right-background {
-    background-image: url("../images/login-wallpaper.jpg");
+    background-image: var(--login-wallpaper-1) !important;
     border-top-left-radius: 100px;
 }
+
+
+
 
 .login .blur-container {
     width: 700px;
@@ -1541,13 +1544,13 @@ input[type="button"]:focus {
 }
 
 #curtain .left {
-    background-image: url("../images/desktop-left.png");
+    background-image: var(--curtain-wallpaper);
     left: 0;
     transform-origin: top right;
 }
 
 #curtain .right {
-    background-image: url("../images/desktop-right.png");
+    background-image: var(--curtain-wallpaper);
     left: 50%;
     transform-origin: top left;
 }

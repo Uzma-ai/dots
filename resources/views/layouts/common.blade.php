@@ -75,33 +75,33 @@
             <div class="h-16 border-b-2 border-c-gray py-4 px-4 flex items-center justify-between">
                 <h1 class="text-sm sm:text-lg text-c-black font-normal">Notification Center</h1>
                 @if (Auth::user()->notifications()->whereNull('read_at')->count() > 0)
-                    <h1 class="text-sm sm:text-lg text-c-yellow font-medium cursor-pointer" id="MarkAllRead">Mark all as
-                        read</h1>
+                <h1 class="text-sm sm:text-lg text-c-yellow font-medium cursor-pointer" id="MarkAllRead">Mark all as
+                    read</h1>
                 @endif
             </div>
             <div class="scrollbar-div overflow-y-auto" style="height: calc(100% - 64px);">
                 <ul id="ULNoti">
                     @if (Auth::user()->notifications()->whereNull('read_at')->count() > 0)
-                        @foreach (Auth::user()->notifications()->whereNull('read_at')->pluck('data', 'id') as $id => $data)
-                            @php
-                                $notification = is_string($data) ? json_decode($data, true) : $data;
-                            @endphp
-                            <li class="border-b-2 border-c-gray px-4 py-2.5 notification-item" data-id="{{ $id }}" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">
-                                <div class="flex items-start justify-between gap-20">
-                                    <p class="text-sm text-c-black font-normal " >
-                                        {{ $notification['title'] ?? 'No Title' }}
-                                    </p>
-                                    <i class="ri-close-circle-fill ri-1x cursor-pointer ReadThisNoti"
-                                        data-id="{{ $id }}"></i>
-                                </div>
-                                <span
-                                    class="text-c-time font-normal text-sm">{{ \Carbon\Carbon::parse($notification['time'] ?? now())->diffForHumans(['short' => true]) }}</span>
-                            </li>
-                        @endforeach
+                    @foreach (Auth::user()->notifications()->whereNull('read_at')->pluck('data', 'id') as $id => $data)
+                    @php
+                    $notification = is_string($data) ? json_decode($data, true) : $data;
+                    @endphp
+                    <li class="border-b-2 border-c-gray px-4 py-2.5 notification-item" data-id="{{ $id }}" data-title="{{ $notification['title'] }}" data-content="{{ $notification['content'] }}" data-time="{{ $notification['time'] }}">
+                        <div class="flex items-start justify-between gap-20">
+                            <p class="text-sm text-c-black font-normal ">
+                                {{ $notification['title'] ?? 'No Title' }}
+                            </p>
+                            <i class="ri-close-circle-fill ri-1x cursor-pointer ReadThisNoti"
+                                data-id="{{ $id }}"></i>
+                        </div>
+                        <span
+                            class="text-c-time font-normal text-sm">{{ \Carbon\Carbon::parse($notification['time'] ?? now())->diffForHumans(['short' => true]) }}</span>
+                    </li>
+                    @endforeach
                     @else
-                        <li class="text-center mt-16">
-                            No new notifications
-                        </li>
+                    <li class="text-center mt-16">
+                        No new notifications
+                    </li>
                     @endif
                 </ul>
             </div>
@@ -157,14 +157,15 @@
 
     <div class="draggableelement setting-box popupiframe inset-0 bg-black-900 bg-opacity-50 flex items-center justify-center rounded-lg hidden account">
         <div class="draggable bg-opacity-70 shadow-lg w-full h-full relative">
-            <div class="flex justify-end items-center p-1 pr-2 border-b bg-c-gray-gradient">             
+            <div class="flex justify-end items-center p-1 pr-2 border-b bg-c-gray-gradient">
                 <div class="flex space-x-1">
-                    <a href="#"  class="minimizeiframe-btn"><img src="{{ asset($constants['IMAGEFILEPATH'].'minimize'.$constants['ICONEXTENSION'])}}"/></a>
-                    <a href="#" class="maximizeiframe-btn"><img src="{{ asset($constants['IMAGEFILEPATH'].'maximize'.$constants['ICONEXTENSION'])}}"/></a>
+                    <!-- <a href="#" class="minimizeiframe-btn"><img src="{{ asset($constants['IMAGEFILEPATH'].'minimize'.$constants['ICONEXTENSION'])}}" /></a>
+                    <a href="#" class="maximizeiframe-btn"><img src="{{ asset($constants['IMAGEFILEPATH'].'maximize'.$constants['ICONEXTENSION'])}}" /></a> -->
                     <a href="#" class="closeiframe-btn"><img src="{{ asset($constants['IMAGEFILEPATH'].'close'.$constants['ICONEXTENSION'])}}"/></a>
                 </div>
             </div>
-            <div class="h-full w-full overflow-y-scroll scroll cm">
+            @include('wallpaper')
+            <!-- <div class="h-full w-full overflow-y-scroll scroll cm">
                 <div class="px-9 lg:px-5 py-4">
                     <div class="flex items-center gap-4">
                     <img class="w-12" src="images/profile.png" alt="profile img" />
@@ -306,7 +307,7 @@
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>     -->
         </div>
     </div>
 
@@ -317,7 +318,6 @@
     <!--end here -->
 
     <script>
-
         const desktopapp = @json(route('desktopapp'));
         const contextmenu = @json(route('contextmenu'));
         const createFolderRoute = @json(route('createfolder'));
@@ -335,7 +335,6 @@
         const leftArrowClick = @json(route('leftarrowclick'));
         const rightArrowClick = @json(route('rightarrowclick'));
         const shareRoute = @json(route('getUrl'));
-
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -418,24 +417,30 @@
     @yield('scripts')
 
     <script>
-     $('#doc-button').hover(
-                function() {
-                    $('#doc-tooltip').stop(true, true).fadeIn();
-                },
-                function() {
-                    $('#doc-tooltip').stop(true, true).fadeOut();
-                }
-            );
+        $('#doc-button').hover(
+            function() {
+                $('#doc-tooltip').stop(true, true).fadeIn();
+            },
+            function() {
+                $('#doc-tooltip').stop(true, true).fadeOut();
+            }
+        );
 
-            $('#guide-button').hover(
-                function() {
-                    $('#guide-tooltip').stop(true, true).fadeIn();
-                },
-                function() {
-                    $('#guide-tooltip').stop(true, true).fadeOut();
-                }
-            );
+        $('#guide-button').hover(
+            function() {
+                $('#guide-tooltip').stop(true, true).fadeIn();
+            },
+            function() {
+                $('#guide-tooltip').stop(true, true).fadeOut();
+            }
+        );
     </script>
+    <script>
+    $('.closeiframe-btn').on('click', function(event) {
+        event.preventDefault();
+        $('.account').addClass('hidden');
+    });
+</script>
 </body>
 
 </html>
