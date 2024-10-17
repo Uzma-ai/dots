@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             ContextTypesTableSeeder::class,
             ContextOptionsTableSeeder::class,
             UsersSeeder::class,
-            QuotesSeeder::class
+            QuotesSeeder::class,
+            WallpaperSeeder::class
         ]);
     }
 }

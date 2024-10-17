@@ -62,7 +62,7 @@ class AppsSeeder extends Seeder
             'id' => 6,
             'name' => 'Setting',
             'icon' => 'setting.svg',
-            'app_function' => NULL,
+            'app_function' => 'display_setting',
             'link' => 'useradmin',
             'type' => 'route',
             'desktop_display' => 1,
