@@ -565,7 +565,8 @@
                 // Perform additional logic if needed
                 showModal('#login', true);
             } else {
-                showModal('#login');
+                location.reload();
+                // showModal('#login');
             }
         });
     }
@@ -1190,12 +1191,12 @@
         })();
     }
 
-    
+
 </script>
 <script>
    document.addEventListener('DOMContentLoaded', function() {
     const loginWallpaper = getCookie('login_wallpaper');
-    
+
     if (loginWallpaper) {
         document.documentElement.style.setProperty('--login-wallpaper-1', `url(${loginWallpaper})`);
         document.documentElement.style.setProperty('--curtain-wallpaper', `url(${loginWallpaper})`);
