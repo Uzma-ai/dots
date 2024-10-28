@@ -17,19 +17,17 @@ use App\Jobs\CommentMailSend;
 
 class MessageController extends Controller
 {
-    public function getUsers()
+     public function getUsers()
     {
 
-            $cid = auth()->user()->cID;
-        $users = User::where('cID',$cid)->where('cID', '!=', 0)->get();
-        $groups = Group::where('cID',$cid)->where('cID', '!=', 0)->get();
-        $roles = Roles::where('cID',$cid)->where('cID', '!=', 0)->get();
+           $users = User::all();
+        $groups = Group::all();
+        $roles = Roles::all();
         return response()->json([
             'users' => $users,
             'groups' => $groups,
             'roles' => $roles,
         ]);
-
 
 
     }
