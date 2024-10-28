@@ -11,7 +11,7 @@
 
         <div class="desktopapps-div w-full overflow-x-auto">
             <div id="desktopapps"
-                class="desktop-apps  content-start allapplist gap-4 p-2 pt-3 h-full flex flex-col  flex-wrap">
+                class="desktop-apps content-start allapplist gap-4 p-2 pt-3 h-full flex flex-col flex-wrap">
 
             </div>
         </div>

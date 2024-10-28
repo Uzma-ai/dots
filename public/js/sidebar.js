@@ -4,6 +4,8 @@ const currentPath = window.location.pathname.split("/").pop() || 'dashboard';
     const sidebarLinks = document.querySelectorAll('.sidebar a');
 for (let i = 0; i < sidebarLinks.length; i++) {
     const link = sidebarLinks[i];
+    const href = link.getAttribute('href');
+if (href) {
     const linkPath = link.getAttribute('href').split("/").pop() || 'dashboard';
     if (linkPath === currentPath) {
         // console.log(currentPath, linkPath);
@@ -13,6 +15,7 @@ for (let i = 0; i < sidebarLinks.length; i++) {
             dropMenu.classList.add('active');
         }
         break;
+    }
     }
 }
 

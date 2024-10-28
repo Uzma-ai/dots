@@ -46,7 +46,7 @@
         data-filekey="{{ base64UrlEncode($file->id) }}"
         data-filetype="folder"
         data-apptype="app">
-    </a>
+   
     <div class="app-tools absolute top-0 left-1 flex items-center justify-between gap-8 py-0.5 px-1 invisible showappoptions">
         <input type="checkbox" name="option" class="appcheckbox" id="checkboxfolder{{ base64UrlEncode($file->id) }}">
         <div class="ml-auto -mt-1">
@@ -75,7 +75,7 @@
         data-filetype="file"
         data-apptype="{{ (checkFileGroup($file->extension) != 'editor') ? 'app' : 'lightapp' }}">
 
-    </a>
+  
     <div class="app-tools absolute top-0 left-1 flex items-center justify-between gap-8 py-0.5 px-1 invisible showappoptions">
         <input type="checkbox" name="option" class="appcheckbox" id="checkboxdocument{{ base64UrlEncode($file->id) }}">
         <div class="ml-auto -mt-1">

@@ -306,7 +306,7 @@ if(empty($updatedPath)){
     } 
     
     //for showing details of files
-    showFiledetails(path, encodedId);
+    //showFiledetails(path, encodedId);
     function showFiledetails(path, encodedId = ''){
         $.ajax({
             url: showFileDetail,

@@ -356,6 +356,8 @@ $(document).on('click', '.appcheckbox', function (e) {
 
     // If a different checkbox is clicked, uncheck the previously checked one
     if (previouslyCheckedId && previouslyCheckedId !== encodedId) {
+        
+        
         // Clear the previously checked checkbox
         $('#checkboxfolder' + previouslyCheckedId).prop('checked', false);
         $('#checkboxdocument' + previouslyCheckedId).prop('checked', false);
@@ -404,6 +406,7 @@ $(document).on('click', '.context-menulist .openFunction', function (e) {
 // open app by dblclick
 $(document).on('dblclick', '.allapplist .selectapp', function (e) {
   e.preventDefault();
+  console.log("test");
 
   if ($(this).hasClass('customfunction')) {
     const customfunction = this.getAttribute('data-customfunction');
@@ -740,6 +743,10 @@ $(document).on('click', '#iframeheaders .iframemainheaderpopup', function (e) {
 function animateIcon(icon, originalIcon, callback) {
   const $originalIcon = $(originalIcon);
   const $toolbar = $('#iframeheaders');
+  if (!$originalIcon.length || !$toolbar.length) {
+    console.error('Icon or toolbar not found in the DOM');
+    return; // Exit the function if elements are not found
+  }
   const rect = $originalIcon[0].getBoundingClientRect();
   const toolbarRect = $toolbar[0].getBoundingClientRect();
   const toolbarCenterX = toolbarRect.left + (toolbarRect.width / 2) - (rect.width / 2);

@@ -18,7 +18,7 @@
       <div class="flex space-x-1">
         <a href="#"  class="minimizeiframe-btn" data-iframe-id="{{$iframedetail['filetype'].$iframedetail['filekey'] }}"><img src="{{ asset($constants['IMAGEFILEPATH'].'minimize'.$constants['ICONEXTENSION'])}}"/></a>
         <a href="#" class="maximizeiframe-btn" data-iframe-id="{{$iframedetail['filetype'].$iframedetail['filekey'] }}"><img src="{{ asset($constants['IMAGEFILEPATH'].'maximize'.$constants['ICONEXTENSION'])}}"/></a>
-        <a href="#" class="closeiframe-btn" data-filekey="{{$iframedetail['filekey'] }}" data-iframe-id = "{{$iframedetail['filetype'].$iframedetail['filekey'] }}" data-appkey="{{ $iframedetail['appkey'] }}" data-filetype="{{ $iframedetail['filetype'] }}" ><img src="{{ asset($constants['IMAGEFILEPATH'].'close'.$constants['ICONEXTENSION'])}}"/></a>
+        <a href="#" class="closeiframe-btn" data-filekey="{{$iframedetail['filekey'] }}" data-iframe-id = "{{$iframedetail['filetype'].$iframedetail['filekey'] }}" data-appkey="{{ $iframedetail['appkey'] }}" data-filetype="{{ $iframedetail['filetype'] }}" data-apptype="{{ $iframedetail['apptype'] }}" ><img src="{{ asset($constants['IMAGEFILEPATH'].'close'.$constants['ICONEXTENSION'])}}"/></a>
         <input type="hidden" name="filekey" id="filekey" value="{{$iframedetail['filekey'] }}" />   
       </div>
     </div>
