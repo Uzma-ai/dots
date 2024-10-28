@@ -10,6 +10,7 @@ use App\Models\LightApp;
 use App\Models\App;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Filefunctions;
+use App\Helpers\PermissionHelper;
 
 
 class SearchController extends Controller
@@ -62,6 +63,7 @@ class SearchController extends Controller
 
     public function listalliframe(Request $request)
     {
+        $filteredPermissions = PermissionHelper::getFilteredPermissions(auth()->id());
         $iframearray = [];
         $filetype='';
         $filekey ='';
@@ -172,8 +174,8 @@ class SearchController extends Controller
         
         }
         $iframearray = Session::get('iframeapp');
-        $html = view('appendview.iframe')->with('iframeapp', $iframearray)->render();
-        $html2 = view('appendview.iframetab')->with('iframeapp', $iframearray)->render();
+        $html = view('appendview.iframe')->with('iframeapp', $iframearray)->with('filteredPermissions', $filteredPermissions)->render();
+        $html2 = view('appendview.iframetab')->with('iframeapp', $iframearray)->with('filteredPermissions', $filteredPermissions)->render();
         $iframekey = 'iframepopup' . $filetype . $filekey;
         return response()->json(['status'=>true,'html' => $html, 'html2' => $html2, 'filekey' => $iframekey]);
     }
