@@ -71,7 +71,7 @@
                                   <!--comment section-->
                                   @endif
 
-                                  <!--Iframe-->
+                                  <!--Iframe--> 
                                   <iframe id="iframe{{ $iframedetail['filetype'].$iframedetail['filekey'] }}" src="{{ $iframedetail['iframeurl'] }}" class="w-full h-full frame"></iframe>
                                   <!--chat button-->
                                   @if(!empty($filteredPermissions['fileManager']) && in_array('comments', $filteredPermissions['fileManager']) || Auth::user()->cID == "0")
