@@ -848,6 +848,7 @@ class FileManagerController extends Controller
 
     public function fileExpSearch(Request $request)
     {
+        $getFFId = 'search';
         $search = $request->input('searchFiles', null);
         $filepath = base64UrlDecode($request->input('path'));
         $parentPath = empty($filepath) ? '/' : $filepath;
@@ -884,9 +885,10 @@ class FileManagerController extends Controller
                 ->get();
         }
 
-        $html = view('appendview.pathviewSearch')
+        $html = view('appendview.pathview')
             ->with('defaultfolders', $defaultfolders)
             ->with('files', $files)
+            ->with('getFFId', $getFFId)
             ->render();
 
         return response()->json(['html' => $html, 'parentPath' => $parentPath]);
