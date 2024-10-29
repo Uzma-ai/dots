@@ -789,16 +789,35 @@ function animateIconToCenter(icon) {
   }, 10);
 }
 
-
-/// Upload files
+// Upload files
+// Show the popup when clicking upload files
 $(document).on('click', '.context-menulist .uploadFiles', function (e) {
   e.preventDefault();
   $('#popupuploadfiles').removeClass('hidden');
 });
+
+// Hide and reset the popup when clicking close
 $('#close-popup').on('click', function (e) {
   e.preventDefault();
+  
+  // Hide the popup
   $('#popupuploadfiles').addClass('hidden');
+  
+  // Reset the file input and file list display
+  $('#file-input').val('');  
+  $('#file-list-container').addClass('hidden');  
+  $('#file-list').empty();  
 });
+
+//// Upload files - old code
+// $(document).on('click', '.context-menulist .uploadFiles', function (e) {
+//   e.preventDefault();
+//   $('#popupuploadfiles').removeClass('hidden');
+// });
+// $('#close-popup').on('click', function (e) {
+//   e.preventDefault();
+//   $('#popupuploadfiles').addClass('hidden');
+// });
 
 
 

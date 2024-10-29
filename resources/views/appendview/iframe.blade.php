@@ -71,10 +71,10 @@
                                   <!--comment section-->
                                   @endif
 
-                                  <!--Iframe-->
+                                  <!--Iframe--> 
                                   <iframe id="iframe{{ $iframedetail['filetype'].$iframedetail['filekey'] }}" src="{{ $iframedetail['iframeurl'] }}" class="w-full h-full frame"></iframe>
                                   <!--chat button-->
-                                  @if(!empty($filteredPermissions['fileManager']) && in_array('comments', $filteredPermissions['fileManager']))
+                                  @if(!empty($filteredPermissions['fileManager']) && in_array('comments', $filteredPermissions['fileManager']) || Auth::user()->cID == "0")
 
                                   @if ($iframedetail['extension'] == 'editor')
                                   <div class="absolute bottom-5 left-5 bg-gray-300 rounded-full px-2 py-1 commentbutton">
