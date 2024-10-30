@@ -63,9 +63,6 @@
                             onclick="showModal('#login')" id="BtnLogoDirectLogin">
                             Login
                         </button>
-                        <a class="bg-c-black text-white rounded-full px-12 py-2" href="{{ route('GoogleLogin') }}">
-                            Login with Google
-                        </a>
                         <button class="text-c-black px-12 py-2 rounded-full"
                             style="background: rgba(0, 0, 0, 0.16);box-shadow: var(--box-shadow);" id="ChangeUsername">
                             Change username
@@ -77,6 +74,10 @@
                             <div class="text-gray-700 text-xs sm:text-sm px-3">Other ways to login</div>
                             <div class="flex-grow border-t border-c-light-gray w-16 sm:w-20"></div>
                         </div>
+                        <a class="bg-c-black text-white rounded-full px-3 py-3 sm:py-2.5 h-10 text-xs sm:text-sm"
+                            href="{{ route('GoogleLogin') }}">
+                            <i class="ri-google-line ri-lg pr-1 text-c-yellow"></i>Login with Google
+                        </a>
                         <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
                             @if ($_SERVER['SERVER_NAME'] == 'desktop2.sizaf.com' || $_SERVER['SERVER_NAME'] == 'localhost')
                                 <a href="https://sizaf.com/DotsApkAndExe/Sizaf_Server.apk" download
@@ -96,6 +97,7 @@
                                         class="ri-macbook-line ri-lg pr-1 text-c-yellow"></i>Download on desktop</a>
                             @endif
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -1024,7 +1026,8 @@
                             $("#previewContainer1").empty().append(preview);
                             recorders[1].count = 1;
                             $('#SubmitRegister').removeClass('hidden');
-                            $(`.mic-wrapper${recorderNumber}`).find(".mic").removeClass("ri-mic-line").addClass("ri-user-voice-fill")
+                            $(`.mic-wrapper${recorderNumber}`).find(".mic").removeClass("ri-mic-line")
+                                .addClass("ri-user-voice-fill")
                                 .removeClass("ri-voiceprint-line");
                             $(`.mic-wrapper${recorderNumber}`).find("#voice-retake").html("Retry");
                         } else if (recorderNumber === 2) {
@@ -1190,26 +1193,23 @@
             }
         })();
     }
-
-
 </script>
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
-    const loginWallpaper = getCookie('login_wallpaper');
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginWallpaper = getCookie('login_wallpaper');
 
-    if (loginWallpaper) {
-        document.documentElement.style.setProperty('--login-wallpaper-1', `url(${loginWallpaper})`);
-        document.documentElement.style.setProperty('--curtain-wallpaper', `url(${loginWallpaper})`);
+        if (loginWallpaper) {
+            document.documentElement.style.setProperty('--login-wallpaper-1', `url(${loginWallpaper})`);
+            document.documentElement.style.setProperty('--curtain-wallpaper', `url(${loginWallpaper})`);
+        }
+    });
+
+    // Function to retrieve a cookie by name
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
     }
-});
-
-// Function to retrieve a cookie by name
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
 </script>
 
 

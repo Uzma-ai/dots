@@ -1,6 +1,9 @@
+<!-- search file manager  -->
+@if($getFFId == "search") 
+
 <!-- new code for details start  -->
 <!--------- get data on checkbox checked on file or folder start  ---------------------------------------->
- @if($getFFId != "") 
+ @elseif($getFFId != "") 
  <!--panes1-->
     <div id="panel" class="resizable-sidebar  md:w-3/12 xl:w-1/5">
         <div class="resizer"></div>
@@ -232,9 +235,6 @@
         </div>
     </div>
 <!--------- get data on checkbox checked on file or folder end  ---------------------------------------->
-
-
-
 
 
 <!--------- get data on details and preview clicks start  --------------------------------------------->
@@ -799,4 +799,4 @@
 };
 </script>
 @endif
- <!--------- get data on details and preview clicks end  --------------------------------------------->
+<!--------- get data on details and preview clicks end  --------------------------------------------->

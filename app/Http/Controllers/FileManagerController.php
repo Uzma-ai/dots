@@ -15,6 +15,7 @@ use App\Models\App;
 use App\Models\RecycleBin;
 use App\Models\Comment;
 use App\Models\CommentReciver;
+use App\Helpers\ActivityHelper;
 
 use App\Helpers\PermissionHelper;
 use Illuminate\Support\Facades\DB;
@@ -503,6 +504,7 @@ class FileManagerController extends Controller
 
     public function upload(Request $request)
     {
+        ActivityHelper::log('Upload',  'From Desktop', 'India');
         $uploadDirectorypath = base64UrlDecode($request->header('Upload-Directory'));
 
         $uploadedFiles = [];
@@ -846,6 +848,7 @@ class FileManagerController extends Controller
 
     public function fileExpSearch(Request $request)
     {
+        $getFFId = 'search';
         $search = $request->input('searchFiles', null);
         $filepath = base64UrlDecode($request->input('path'));
         $parentPath = empty($filepath) ? '/' : $filepath;
@@ -885,6 +888,7 @@ class FileManagerController extends Controller
         $html = view('appendview.pathview')
             ->with('defaultfolders', $defaultfolders)
             ->with('files', $files)
+            ->with('getFFId', $getFFId)
             ->render();
 
         return response()->json(['html' => $html, 'parentPath' => $parentPath]);
