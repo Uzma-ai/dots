@@ -56,7 +56,7 @@
                         </a>
 
                         @else
-                            <a href="#">
+                            <a href="{{ route('dashboard') }}">
                             <img class="w-20" src="{{ asset($constants['IMAGEFILEPATH'] . 'logo.png') }}"
                                 alt="Dots Logo" />
                         </a>
