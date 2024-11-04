@@ -901,6 +901,7 @@ function closeiframe(appkey, filekey, fileid, apptype) {
       // Update the app list container with the updated list
       $('#alliframelist').html(response.html);
       $('#sortable-apps').html(response.html2);
+      $('.app').removeClass('selected');
     },
     error: function (xhr, status, error) {
       console.error(xhr.responseText);
@@ -1399,11 +1400,9 @@ let selectedItems = new Set();
 
 document.addEventListener('click', function(event) {
     const target = event.target.closest('.app'); // Identify file/folder item.
-    
-    if (target) {
+    if (target) { 
         event.preventDefault();
         const fileKey = target.getAttribute('data-filekey');
-
         // Multi-select with Ctrl/Meta key
         if (event.ctrlKey || event.metaKey) {
             // Toggle selection
