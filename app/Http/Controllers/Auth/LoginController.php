@@ -14,7 +14,9 @@ use Jenssegers\Agent\Agent;
 use Stevebauman\Location\Facades\Location;
 use App\Helpers\ActivityHelper;
 use App\Models\Quotes;
+use App\Notifications\GeneralNotification;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Notification;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
@@ -81,6 +83,9 @@ class LoginController extends Controller
                 ActivityHelper::log('Log In',  'c:/xampp/htdocs/folder', 'India');
 
                 Auth::login($user);
+
+                Notification::send($user, new GeneralNotification("Login", "New login activity from your account."));
+
                 //check face register
                 if ($user->is_support_face == 1 && $user->is_facedata == 0) {
                     return response()->json(['status' => true, 'msg' => "Login Successfull.", 'facedata' => 'Facedata not register, Get it.', 'user' => $user]);
