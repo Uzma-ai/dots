@@ -247,6 +247,7 @@ class FileManagerController extends Controller
         $sortorder = $request->input('sort_order', 'asc');
         Session::put('sortfiles', ['sortby' => $sortby, 'sortorder' => $sortorder]);
         $sortsessionorder = Session::get('sortfiles', ['sortby' => 'name', 'sortorder' => 'asc']);
+        $filetypeOrder = "FIELD(filetype, NULL, 'application', 'image', 'video', 'audio')";
 
         if ($getFFId != "") {
             // Get file details
@@ -340,6 +341,7 @@ class FileManagerController extends Controller
                 $files = FileModel::where('parentpath', $parentPath)
                     ->where('status', 1)
                     ->where('created_by', auth()->id())
+                    ->orderByRaw($filetypeOrder)
                     ->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])
                     ->get();
 
