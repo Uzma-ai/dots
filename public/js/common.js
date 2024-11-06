@@ -1092,11 +1092,17 @@ $(document).ready(function () {
     handleFiles(e.originalEvent.dataTransfer.files);
   });
 
+  //------------------------------ upload file handling start-------------------------------------------------
   function handleFiles(files) {
     if (files.length > 0) {
       $('#file-list-container').removeClass('hidden');
     }
     $('#file-list').empty();
+
+    // Track total files and completed uploads
+    let totalFiles = files.length;
+    let completedUploads = 0;
+
     for (let i = 0; i < files.length; i++) {
       let file = files[i];
       let fileSize = (file.size / 1024 / 1024).toFixed(2) + ' MB';
@@ -1108,15 +1114,19 @@ $(document).ready(function () {
       progressBarContainer.append(progressBar);
       fileRow.append(progressBarContainer);
       $('#file-list').append(fileRow);
-
-      uploadFile(file, progressBar);
+      
+      uploadFile(file, progressBar, () => {
+        completedUploads++;
+        if (completedUploads === totalFiles) {
+          toastr.success('All files uploaded successfully!');
+        }
+      });
     }
   }
 
-  function uploadFile(file, progressBar) {
+  function uploadFile(file, progressBar, onSuccessCallback) {
     let formData = new FormData();
     formData.append('files[]', file);
-
     $.ajax({
       url: uploadRoute,
       type: 'POST',
@@ -1142,6 +1152,7 @@ $(document).ready(function () {
         progressBar.find('i').removeClass('hidden');
         desktoplightapp();
         showapathdetail(path);
+        onSuccessCallback(); 
       },
       error: function (error) {
         console.error('Error uploading file:', error);
@@ -1150,7 +1161,70 @@ $(document).ready(function () {
   }
 });
 
-// upload code end
+//------------------------------ upload file handling end-------------------------------------------------
+
+
+
+//old code-----------------------------------
+//   function handleFiles(files) {
+//     if (files.length > 0) {
+//       $('#file-list-container').removeClass('hidden');
+//     }
+//     $('#file-list').empty();
+//     for (let i = 0; i < files.length; i++) {
+//       let file = files[i];
+//       let fileSize = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+//       let fileRow = $('<tr class="bg-gray-50"></tr>');
+//       fileRow.append('<td class="py-2 px-4">' + file.name + '</td>');
+//       fileRow.append('<td class="py-2 px-4">' + fileSize + '</td>');
+//       let progressBarContainer = $('<td class="py-2 px-4"></td>');
+//       let progressBar = $('<div class="w-full bg-gray-200 rounded-full h-2.5 relative"><div class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div></div>');
+//       progressBarContainer.append(progressBar);
+//       fileRow.append(progressBarContainer);
+//       $('#file-list').append(fileRow);
+
+//       uploadFile(file, progressBar);
+//     }
+//   }
+
+//   function uploadFile(file, progressBar) {
+//     let formData = new FormData();
+//     formData.append('files[]', file);
+
+//     $.ajax({
+//       url: uploadRoute,
+//       type: 'POST',
+//       data: formData,
+//       contentType: false,
+//       processData: false,
+//       headers: {
+//         'Upload-Directory': path,
+//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Specify the directory name here
+//       },
+//       xhr: function () {
+//         let xhr = new window.XMLHttpRequest();
+//         xhr.upload.addEventListener('progress', function (e) {
+//           if (e.lengthComputable) {
+//             let percentComplete = (e.loaded / e.total) * 100;
+//             progressBar.find('div').css('width', percentComplete + '%');
+//           }
+//         }, false);
+//         return xhr;
+//       },
+//       success: function (response) {
+//         progressBar.find('div').css('background-color', 'green');
+//         progressBar.find('i').removeClass('hidden');
+//         desktoplightapp();
+//         showapathdetail(path);
+//       },
+//       error: function (error) {
+//         console.error('Error uploading file:', error);
+//       }
+//     });
+//   }
+// });
+
+// // upload code end
 
 
 // close all popup
