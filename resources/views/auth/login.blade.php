@@ -1210,6 +1210,14 @@
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) return parts.pop().split(';').shift();
     }
+
+    //enter to submit
+    $(document).on('keydown', '#password-input', function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            $('#LoginForm').submit();
+        }
+    });
 </script>
 
 
