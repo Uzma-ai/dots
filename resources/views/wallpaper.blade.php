@@ -68,12 +68,12 @@
                         @include('appendview.desktop_wallpapers', ['wallpaper' => $wallpaper, 'type' => 1])
                         @endforeach
                     </div>
-                    <div class="pt-6 flex items-center justify-end">
+                    <!-- <div class="pt-6 flex items-center justify-end">
                         <button
                             class="bg-c-black hover-bg-c-black text-white rounded-full w-32 py-1.5 text-lg save">
                             Save
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -105,17 +105,15 @@
     const updateWallpaperUrl = "{{ route('user_wallpaper.update') }}"; // For updating wallpaper
     const uploadWallpaperUrl = "{{ route('wallpaper.store') }}"; // For uploading wallpaper
     const deleteWallpaperUrl = "{{ route('wallpaper.delete', ':id') }}"; // For deleting wallpaper (with placeholder for ID)
-    const currentDesktopWallpaper = "{{ asset($constants['IMAGEFILEPATH'] . 'wallpapers/dashboard/' . ($userWallpaper->dashboard_display ?? 'Wallpaper.png')) }}"; // Current desktop wallpaper
-    const currentLoginWallpaper = "{{ asset($constants['IMAGEFILEPATH'] . 'wallpapers/login/' . ($userWallpaper->login_display ?? 'Wallpaper.png')) }}"; // Current login wallpaper
+    const currentDesktopWallpaper = "{{ asset($constants['IMAGEFILEPATH'] . 'wallpapers/dashboard/' . ($userWallpaper->dashboard_display ?? 'Wallpaper.png')) }}";
+const currentLoginWallpaper = "{{ asset($constants['IMAGEFILEPATH'] . 'wallpapers/login/' . ($userWallpaper->login_display ?? 'Wallpaper.png')) }}";
+
     var defaultDesktopWallpaper = "{{ asset($constants['IMAGEFILEPATH'] . 'wallpapers/dashboard/Wallpaper.png') }}";
     // Set cookies dynamically based on the server-side variables
     document.addEventListener('DOMContentLoaded', function() {
         // Set the cookies
         setCookie('auth_id', authId, 7); // Store for 7 days
         setCookie('login_wallpaper', loginWallpaperUrl, 7); // Store for 7 days
-
-        console.log('Stored Auth ID..............:', authId);
-        console.log('Stored Login Wallpaper.................:', loginWallpaperUrl);
     });
 
     function setCookie(name, value, days) {
@@ -128,6 +126,6 @@
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 </script>
-
 <script src="{{ asset($constants['JSFILEPATH'].'wallpaper.js') }}"></script>
+
 

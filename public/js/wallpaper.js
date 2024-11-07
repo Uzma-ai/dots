@@ -1,24 +1,35 @@
-document.getElementById('add-login').addEventListener('click', function() {
-    document.getElementById('wallpaperType').value = '1';
-    document.getElementById('uploadModal').classList.remove('hidden');
-});
+document.addEventListener('DOMContentLoaded', function() {
+    const addLoginButton = document.getElementById('add-login');
+    const addDesktopButton = document.getElementById('add-desktop');
+    const closeModalButton = document.getElementById('closeModal');
+    if (addLoginButton) {
+        addLoginButton.addEventListener('click', function() {
+            document.getElementById('wallpaperType').value = '1';
+            document.getElementById('uploadModal').classList.remove('hidden');
+        });
+    }
 
-document.getElementById('add-desktop').addEventListener('click', function() {
-    document.getElementById('wallpaperType').value = '0';
-    document.getElementById('uploadModal').classList.remove('hidden');
-});
+    if (addDesktopButton) {
+        addDesktopButton.addEventListener('click', function() {
+            document.getElementById('wallpaperType').value = '0';
+            document.getElementById('uploadModal').classList.remove('hidden');
+        });
+    }
 
-document.getElementById('closeModal').addEventListener('click', function() {
-    document.getElementById('uploadModal').classList.add('hidden');
-});
-
-document.querySelectorAll('input[name="type"]').forEach(function(radio) {
-    radio.addEventListener('change', function() {
-        let selectedType = this.value;
-        document.getElementById('desktop-wallpapers').style.display = (selectedType == "0") ? 'block' : 'none';
-        document.getElementById('login-wallpapers').style.display = (selectedType == "1") ? 'block' : 'none';
+    if (closeModalButton) {
+        closeModalButton.addEventListener('click', function() {
+            document.getElementById('uploadModal').classList.add('hidden');
+        });
+    }
+    document.querySelectorAll('input[name="type"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            let selectedType = this.value;
+            document.getElementById('desktop-wallpapers').style.display = (selectedType == "0") ? 'block' : 'none';
+            document.getElementById('login-wallpapers').style.display = (selectedType == "1") ? 'block' : 'none';
+        });
     });
 });
+
 
 function getWallpaperUploadRoute() {
     return uploadWallpaperUrl;
@@ -86,20 +97,23 @@ function deleteWallpaper(wallpaperId) {
         url: getWallpaperDeleteRoute(wallpaperId),
         method: 'DELETE',
         data: {
-            _token: csrfToken // Laravel CSRF token for secure request
+            _token: csrfToken 
         },
         success: function(response) {
             if (response.success) {
                 toastr.success(response.message);
-                console.log(defaultDesktopWallpaper);
+                
                 const wallpaperElement = document.querySelector(`img[data-id="${wallpaperId}"]`);
                 if (wallpaperElement) {
                     wallpaperElement.closest('.wallpaper-div').remove();
                 }
-                document.documentElement.style.setProperty('--desktop-wallpaper-1', `url(${defaultDesktopWallpaper})`);
-
-                console.log('Desktop wallpaper updated to default.');
-
+                const currentDesktopWallpaperUrl = getComputedStyle(document.documentElement).getPropertyValue('--desktop-wallpaper-1').trim();
+                const wallpaperUrlToDelete = wallpaperElement.getAttribute('src').split('?')[0]; // Ignore cache-busting query param
+                if (currentDesktopWallpaperUrl.includes(wallpaperUrlToDelete)) {
+                    document.documentElement.style.setProperty('--desktop-wallpaper-1', `url(${defaultDesktopWallpaper})`);
+                    console.log('Desktop wallpaper updated to default.');
+                }
+                
             } else {
                 toastr.error(response.message || 'Failed to delete wallpaper.');
             }
@@ -110,9 +124,6 @@ function deleteWallpaper(wallpaperId) {
         }
     });
 }
-
-
-
 
 function updateUserWallpaper(wallpaperId, type) {
     $.ajax({
@@ -153,16 +164,10 @@ function updateUserWallpaper(wallpaperId, type) {
 document.querySelectorAll('.c-checkbox').forEach(function(checkbox) {
     checkbox.addEventListener('change', function() {
         let wallpaperId = this.getAttribute('data-id');
-        // Determine wallpaper type (0 for desktop, 1 for login)
         let wallpaperType = this.closest('.wallpapers').getAttribute('id') === 'desktop-wallpaper-list' ? 0 : 1;
-
         if (this.checked) {
-            // Update the wallpaper via AJAX
             updateUserWallpaper(wallpaperId, wallpaperType);
-
-            // Uncheck other checkboxes of the same wallpaper type
             document.querySelectorAll('.c-checkbox').forEach(function(otherCheckbox) {
-                // Only uncheck if it's the same wallpaper type
                 let otherWallpaperType = otherCheckbox.closest('.wallpapers').getAttribute('id') === 'desktop-wallpaper-list' ? 0 : 1;
                 if (otherWallpaperType === wallpaperType && otherCheckbox.getAttribute('data-id') !== wallpaperId) {
                     otherCheckbox.checked = false;
@@ -172,14 +177,12 @@ document.querySelectorAll('.c-checkbox').forEach(function(checkbox) {
     });
 });
 
-
-
-
-
+const desktopWallpaper = typeof currentDesktopWallpaper !== 'undefined' ? currentDesktopWallpaper : '/path/to/default/desktop/wallpaper.jpg';
+const loginWallpaper = typeof currentLoginWallpaper !== 'undefined' ? currentLoginWallpaper : '/path/to/default/login/wallpaper.jpg';
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.documentElement.style.setProperty('--desktop-wallpaper-1', `url(${currentDesktopWallpaper})`);
-    document.documentElement.style.setProperty('--login-wallpaper-1', `url(${currentLoginWallpaper})`);
+    document.documentElement.style.setProperty('--desktop-wallpaper-1', `url(${desktopWallpaper})`);
+    document.documentElement.style.setProperty('--login-wallpaper-1', `url(${loginWallpaper})`);
 });
 
 
