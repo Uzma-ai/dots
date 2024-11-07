@@ -12,6 +12,12 @@
 
 <!-- pathview  -->
 <div class="flex flex-wrap gap-4 p-6 ">
+    <!-- Check if both $defaultfolders and $files are empty and display a message -->
+    @if($defaultfolders->isEmpty() && $files->isEmpty())
+    <div class="text-center w-full">
+        <p class="text-gray-500">No folders or files found.</p>
+    </div>
+    @else
     <!-- shows default folders; desktop, document, download, recyclebin -->
     @foreach ($defaultfolders as $dfolder)
 
@@ -86,10 +92,11 @@
     </div>
     @endif
     @endforeach
+    @endif
 
 </div>
 <script>
-    var moveUrl = "{{ route('file.move') }}"; 
+    var moveUrl = "{{ route('file.move') }}";
 </script>
 
 
