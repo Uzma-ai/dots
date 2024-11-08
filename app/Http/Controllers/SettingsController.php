@@ -7,7 +7,8 @@ use App\Models\Wallpaper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-
+use App\Notifications\GeneralNotification;
+use Illuminate\Support\Facades\Notification;
 class SettingsController extends Controller
 {
     public function index()
@@ -23,23 +24,14 @@ class SettingsController extends Controller
             ->where('created_by', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
-
         $userWallpaper = UserWallpaper::where('user_id', Auth::id())->first();
-
         if ($userWallpaper) {
             $desktopWallpaper = Wallpaper::find($userWallpaper->dashboard_display);
             $loginWallpaper = Wallpaper::find($userWallpaper->login_display);
-
-            // Set the image filename directly to the userWallpaper properties
             $user = $userWallpaper->dashboard_display = $desktopWallpaper ? $desktopWallpaper->image : 'Wallpaper.png';
             $login = $userWallpaper->login_display = $loginWallpaper ? $loginWallpaper->image : 'Wallpaper.png';
             // dd($user);
         }
-
-
-
-
-        // Pass the constant for image path to the view
         return view('dashboard', compact('desktopWallpapers', 'loginWallpapers', 'user', 'login'));
     }
 
@@ -52,10 +44,13 @@ class SettingsController extends Controller
             $destinationPath = $request->type == 0
                 ? public_path('images/wallpapers/dashboard')
                 : public_path('images/wallpapers/login');
+    
             if (!File::exists($destinationPath)) {
                 File::makeDirectory($destinationPath, 0777, true, true);
             }
+    
             $image->move($destinationPath, $imageName);
+            
             $wallpaper = Wallpaper::create([
                 'image' => $imageName,
                 'type' => $request->type,
@@ -63,10 +58,14 @@ class SettingsController extends Controller
                 'created_by' => Auth::id(),
                 'default' => 0
             ]);
+    
             $imagePath = $request->type == 0
                 ? asset('public/images/wallpapers/dashboard/' . $imageName)
                 : asset('public/images/wallpapers/login/' . $imageName);
-            // dd($imagePath);
+    
+            $user = Auth::user();
+            Notification::send($user, new GeneralNotification("Wallpaper Upload", "A new wallpaper has been uploaded."));
+    
             return response()->json([
                 'success' => true,
                 'message' => 'Wallpaper uploaded successfully!',
@@ -84,25 +83,19 @@ class SettingsController extends Controller
     public function deleteWallpaper($id)
     {
         $wallpaper = Wallpaper::find($id);
-    
         if (!$wallpaper) {
             return response()->json([
                 'success' => false,
                 'message' => 'Wallpaper not found.'
             ]);
         }
-    
-        // Set the wallpaper as inactive
         $wallpaper->status = 0;
         $wallpaper->save();
-    
-        // Check if any users have this wallpaper as their dashboard or login wallpaper
         $userWallpapers = UserWallpaper::where('dashboard_display', $wallpaper->id)
                             ->orWhere('login_display', $wallpaper->id)
                             ->get();
     
-        $defaultWallpaper = 'Wallpaper.png'; // Default wallpaper filename
-    
+        $defaultWallpaper = 'Wallpaper.png'; 
         foreach ($userWallpapers as $userWallpaper) {
             if ($userWallpaper->dashboard_display == $wallpaper->id) {
                 $userWallpaper->dashboard_display = $defaultWallpaper;
@@ -112,6 +105,8 @@ class SettingsController extends Controller
             }
             $userWallpaper->save();
         }
+        $user = Auth::user();
+        Notification::send($user, new GeneralNotification("Wallpaper Deleted", "A wallpaper has been removed from your account."));
     
         return response()->json([
             'success' => true,
@@ -124,14 +119,8 @@ class SettingsController extends Controller
         $userId = Auth::id();
         $type = $request->input('type');
         $wallpaperId = $request->input('wallpaper_id');
-    
-        // Default wallpaper filename (adjust this to the correct default wallpaper filename)
         $defaultWallpaper = 'Wallpaper.png';
-    
-        // Find the wallpaper by its ID (ensure it exists)
         $wallpaper = Wallpaper::find($wallpaperId);
-    
-        // If no wallpaper is found, set it to the default wallpaper
         if (!$wallpaper) {
             $wallpaperId = $defaultWallpaper;
             $imagePath = $type == 0
@@ -142,8 +131,7 @@ class SettingsController extends Controller
                 ? asset('public/images/wallpapers/dashboard/' . $wallpaper->image)
                 : asset('public/images/wallpapers/login/' . $wallpaper->image);
         }
-    
-        // Update or create the user wallpaper record
+        
         $userWallpaper = UserWallpaper::updateOrCreate(
             ['user_id' => $userId],
             [
@@ -152,14 +140,16 @@ class SettingsController extends Controller
             ]
         );
     
-        // Return success response with the new or default wallpaper URL
+        $user = Auth::user();
+        $wallpaperType = $type == 0 ? "Dashboard" : "Login";
+        Notification::send($user, new GeneralNotification("Wallpaper Set", "Your $wallpaperType wallpaper has been updated."));
+    
         return response()->json([
             'success' => true,
             'message' => 'Wallpaper updated successfully.',
-            'image' => $imagePath // Return the new wallpaper URL to update on frontend
+            'image' => $imagePath 
         ]);
     }
-    
     public function showLoginPage()
     {
         $userWallpaper = UserWallpaper::where('user_id', Auth::id())->first();
