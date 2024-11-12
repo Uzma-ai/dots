@@ -21,9 +21,9 @@ class LightAppController extends Controller
     public function index()
     {
         $categories = LightAppCategory::all();
-        return view('lightapp',compact('categories'));
+        return view('lightapp', compact('categories'));
     }
-    
+
     public function updateLightApp(Request $request)
     {
         $lightAppId = $request->input('light_app_id');
@@ -52,41 +52,41 @@ class LightAppController extends Controller
 
     public function alladdedapps(Request $request)
     {
-        // Define the sorting order for `filetype`
         $filetypeOrder = "FIELD(filetype, NULL, 'application', 'image', 'video', 'audio')";
-
-        $parentPath = 'Desktop'; 
+        $parentPath = 'Desktop';
         $sortby = !empty($request->input('sort_by')) ? $request->input('sort_by') : 'id';
         $sortorder = !empty($request->input('sort_order')) ? $request->input('sort_order') : 'asc';
-
-        // Get files sorted by filetype and then by other criteria
-        $files = FileModel::where('parentpath', $parentPath)
-            ->where('status', 1)
-            ->where('created_by', auth()->id())
-            ->orderByRaw($filetypeOrder) // Custom order for `filetype`
-            ->orderBy($sortby, $sortorder) // Additional sorting by specified field
-            ->get();
-
-        // Get light apps and render the view
+        if ($sortby == "id") {
+            $files = FileModel::where('parentpath', $parentPath)
+                ->where('status', 1)
+                ->where('created_by', auth()->id())
+                ->orderByRaw($filetypeOrder) 
+                ->orderBy($sortby, $sortorder) 
+                ->get();
+        } else {
+            $files = FileModel::where('parentpath', $parentPath)
+                ->where('status', 1)
+                ->where('created_by', auth()->id())
+                ->orderBy($sortby, $sortorder) 
+                ->get();
+        }
         $lightApps = LightApp::where('add_app', 1)->get();
         $html = view('appendview.lightappdashboard')
             ->with('lightApps', $lightApps)
             ->with('files', $files)
             ->render();
-
         return response()->json(['html' => $html]);
     }
 
 
-    public function allLightApps(Request $request){
+    public function allLightApps(Request $request)
+    {
         $categoryId = $request->input('category_id');
         $lightApps = LightApp::where('group', $categoryId)->get();
-        if(empty($categoryId)){
+        if (empty($categoryId)) {
             $lightApps = LightApp::all();
         }
         $html = view('appendview.lightapp')->with('lightApps', $lightApps)->render();
         return response()->json(['html' => $html]);
     }
-    
 }
-?>
