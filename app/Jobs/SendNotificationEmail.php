@@ -29,9 +29,9 @@ class SendNotificationEmail implements ShouldQueue
         $data = $this->data;
         $notifiable = $this->notifiable;
         $email = $this->email;
-        // Mail::send('mail-templates.notice',compact('email','data','notifiable'), function ($message) use ($email,$data) {
-        //     $message->to($email);
-        //     $message->subject($data->title);
-        // });
+        Mail::send('mail-templates.notice',compact('email','data','notifiable'), function ($message) use ($email,$data) {
+            $message->to($email);
+            $message->subject($data->title);
+        });
     }
 }

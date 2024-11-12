@@ -10,8 +10,8 @@
 }
 </style>
 @foreach ($lightApps as $lightApp)
-<div class="app maindesktopapp  w-20 h-32 cursor-pointer relative showappoptions" data-option="app">
-    <a href="#" class="openiframe showappoptions selectapp" data-appkey="{{ base64UrlEncode($lightApp->id)}}" data-filekey="{{ base64UrlEncode($lightApp->id)}}" data-filetype="lightapp" data-apptype="lightapp">
+<div class="app maindesktopapp  w-20 h-32 cursor-pointer relative showappoptions" data-option="app" data-filekey="{{ base64UrlEncode($lightApp->id)}}">
+<a href="#" class="openiframe showappoptions selectapp" data-appkey="{{ base64UrlEncode($lightApp->id)}}" data-filekey="{{ base64UrlEncode($lightApp->id)}}" data-filetype="lightapp" data-apptype="lightapp">
 
         <div class="app-tools absolute top-0 left-1 flex items-center justify-between gap-8 py-0.5 px-1 invisible showappoptions">
             <input type="checkbox" name="option" class="appcheckbox" id="checkboxlightapp{{ base64UrlEncode($lightApp->id) }}">

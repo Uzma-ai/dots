@@ -18,7 +18,7 @@
 
 <body class="w-full h-screen">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- <header id="iframeheaders" class="transparent p-2 text-white flex justify-center items-center fixed top-0 left-0 right-0 mainiframeiconheader mainscreen"> -->
+    <header id="iframeheaders" class="transparent p-2 text-white flex justify-center items-center fixed top-0 left-0 right-0 mainiframeiconheader mainscreen">
 
     <!--///// iframe -->
     <div id="alliframelist">
