@@ -1109,3 +1109,31 @@ body .cm {
   cursor: pointer;
   border-radius: 5px;
 }
+
+
+.tiny-wraper{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:4rem;
+}
+.tiny-wraper .tiny{
+  width:2rem;
+  font-size:0.6rem;
+}
+
+.small-wraper{
+  height:6rem;
+}
+
+.small-wraper .small{
+  width:3.3rem;
+  font-size: 0.9rem;
+}
+
+.medium-wraper{
+  height: 8rem;
+}
+.medium-wraper .medium{
+  font-size: 1rem;
+}
