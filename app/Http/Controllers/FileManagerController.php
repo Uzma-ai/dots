@@ -338,12 +338,21 @@ class FileManagerController extends Controller
                     ->orderBy('name')
                     ->get();
 
-                $files = FileModel::where('parentpath', $parentPath)
-                    ->where('status', 1)
-                    ->where('created_by', auth()->id())
-                    ->orderByRaw($filetypeOrder)
-                    ->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])
-                    ->get();
+                if ($sortby == "") {
+                    $files = FileModel::where('parentpath', $parentPath)
+                        ->where('status', 1)
+                        ->where('created_by', auth()->id())
+                        ->orderByRaw($filetypeOrder)
+                        ->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])
+                        ->get();
+                } else {
+                    $files = FileModel::where('parentpath', $parentPath)
+                        ->where('status', 1)
+                        ->where('created_by', auth()->id())
+                        ->orderBy($sortsessionorder['sortby'], $sortsessionorder['sortorder'])
+                        ->get();
+                }
+
 
                 foreach ($files as $file) {
                     $file->size = convertSizeToReadableFormat($file->size);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -19,7 +20,9 @@
 <body class="w-full h-screen">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <header id="iframeheaders" class="transparent p-2 text-white flex justify-center items-center fixed top-0 left-0 right-0 mainiframeiconheader mainscreen">
-
+        <div class="flex space-x-4" id="sortable-apps">
+        </div>
+    </header>
     <!--///// iframe -->
     <div id="alliframelist">
 
@@ -90,7 +93,6 @@
         const searchFileExploreRoute = @json(route('fileExp-list'));
         const shareRoute = @json(route('getUrl'));
         const restoreAdminRoute = @json(route('restoreAdmin'));
-
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -109,7 +111,7 @@
     <div id="shareFilesFolderModal"></div>
 
     <script>
-        $(document).ready(function() {            
+        $(document).ready(function() {
             //For Share Model
             $(document).on('change', '#Users, #Groups, #Roles', function() {
                 const targetId = $(this).attr('id');
