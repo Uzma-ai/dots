@@ -226,7 +226,7 @@ function desktoplightapp(sort_by = null, sort_order = null) {
 
 
 }
-function showapathdetail(path, sort_by = null, sort_order = null) {
+function showapathdetailNew(path, sort_by = null, sort_order = null) {
   const data = {};
   data.path = path
   if (sort_by) {
@@ -307,7 +307,7 @@ $(document).on('click', '.context-menulist .sortFunction', function (e) {
   let filetype = $(this).data('type');
   filetypearr = filetype.split('-');
   desktoplightapp(filetypearr[0], filetypearr[1]);
-  showapathdetail(path, filetypearr[0], filetypearr[1]);
+  showapathdetailNew(path, filetypearr[0], filetypearr[1]);
 });
 
 $(document).on('click', '.context-menulist .resizeFunction', function (e) {
@@ -834,7 +834,7 @@ function createFolderFunction() {
         toastr.error(response.message);
       }
       desktoplightapp();
-      showapathdetail(path);
+      showapathdetailNew(path);
     },
     error: function (xhr, status, error) {
       console.error(xhr.responseText);
@@ -854,7 +854,7 @@ function createFileFunction(filetype) {
         toastr.error(response.message);
       }
       desktoplightapp();
-      showapathdetail(path);
+      showapathdetailNew(path);
     },
     error: function (xhr, status, error) {
       console.error(xhr.responseText);
@@ -922,7 +922,7 @@ function copyFunction(filepath, type, filetype, filekey) {
         toastr.error(response.message);
       }
       desktoplightapp();
-      showapathdetail(path);
+      showapathdetailNew(path);
 
     },
     error: function (xhr, status, error) {
@@ -944,7 +944,7 @@ function renameFunction(filekey, filetype, name) {
         toastr.error(response.message);
       }
       desktoplightapp();
-      showapathdetail(path);
+      showapathdetailNew(path);
 
     },
     error: function (xhr, status, error) {
@@ -989,7 +989,7 @@ function deleteFunction(filekey, filetype) {
     success: function (response) {
       if (response.status) {
         desktoplightapp();
-        showapathdetail(path);
+        showapathdetailNew(path);
         toastr.success(response.message);
 
 
@@ -1014,7 +1014,7 @@ function restoreFunction(filekey, fileid) {
     success: function (response) {
       if (response.status) {
         desktoplightapp();
-        showapathdetail(path);
+        showapathdetailNew(path);
         toastr.success(response.message);
         parent.location.reload();
 
@@ -1052,7 +1052,7 @@ function pasteFunction(filepath) {
         toastr.error(response.message);
       }
       desktoplightapp();
-      showapathdetail(path);
+      showapathdetailNew(path);
 
     },
     error: function (xhr, status, error) {
@@ -1151,7 +1151,7 @@ $(document).ready(function () {
         progressBar.find('div').css('background-color', 'green');
         progressBar.find('i').removeClass('hidden');
         desktoplightapp();
-        showapathdetail(path);
+        showapathdetailNew(path);
         onSuccessCallback(); 
       },
       error: function (error) {
