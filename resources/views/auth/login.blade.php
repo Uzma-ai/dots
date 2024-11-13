@@ -962,9 +962,12 @@
         $(id).find("#photo1, #photo2, #photo3").addClass("hidden");
         $(id).find("#photo1, #photo2, #photo3").attr("src", "");
         photoCount=0
+        RegisterFormdata.delete("photo1");
+        RegisterFormdata.delete("photo2");
+        RegisterFormdata.delete("photo3");
         switchCamera("user", id);
     }
-    
+
     /*** Audio Functionality ***/
 
     // Recorders object to store recorder instances and streams
