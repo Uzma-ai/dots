@@ -82,11 +82,21 @@ function uploadWallpaper() {
             }
         },
         error: function(xhr) {
+            if (xhr.status === 422) {
+                const errors = xhr.responseJSON.errors;
+                if (errors && errors.image && errors.image[0]) {
+                    toastr.error(errors.image[0]);  
+                } else {
+                    toastr.error('An error occurred while uploading the wallpaper.');
+                }
+            } else {
+                toastr.error('An error occurred while uploading the wallpaper.');
+            }
             console.error(xhr.responseText);
-            toastr.error('An error occurred while uploading the wallpaper.');
         }
     });
 }
+
 
 function getWallpaperDeleteRoute(id) {
     return deleteWallpaperUrl.replace(':id', id);

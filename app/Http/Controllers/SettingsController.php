@@ -38,6 +38,12 @@ class SettingsController extends Controller
 
     public function storeWallpaper(Request $request)
     {
+        $request->validate([
+            'image' => 'required|image|max:1024',
+        ], [
+            'image.max' => 'The image may not be greater than 1 MB.',
+        ]);
+    
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -50,7 +56,7 @@ class SettingsController extends Controller
             }
     
             $image->move($destinationPath, $imageName);
-            
+    
             $wallpaper = Wallpaper::create([
                 'image' => $imageName,
                 'type' => $request->type,
@@ -60,8 +66,8 @@ class SettingsController extends Controller
             ]);
     
             $imagePath = $request->type == 0
-                ? asset('public/images/wallpapers/dashboard/' . $imageName)
-                : asset('public/images/wallpapers/login/' . $imageName);
+                ? url('public/images/wallpapers/dashboard/' . $imageName)
+                : url('public/images/wallpapers/login/' . $imageName);
     
             $user = Auth::user();
             Notification::send($user, new GeneralNotification("Wallpaper Upload", "A new wallpaper has been uploaded."));
@@ -80,6 +86,7 @@ class SettingsController extends Controller
             ]);
         }
     }
+    
     public function deleteWallpaper($id)
     {
         $wallpaper = Wallpaper::find($id);
@@ -124,12 +131,12 @@ class SettingsController extends Controller
         if (!$wallpaper) {
             $wallpaperId = $defaultWallpaper;
             $imagePath = $type == 0
-                ? asset('public/images/wallpapers/dashboard/' . $defaultWallpaper)
-                : asset('public/images/wallpapers/login/' . $defaultWallpaper);
+                ? url('public/images/wallpapers/dashboard/' . $defaultWallpaper)
+                : url('public/images/wallpapers/login/' . $defaultWallpaper);
         } else {
             $imagePath = $type == 0
-                ? asset('public/images/wallpapers/dashboard/' . $wallpaper->image)
-                : asset('public/images/wallpapers/login/' . $wallpaper->image);
+                ? url('public/images/wallpapers/dashboard/' . $wallpaper->image)
+                : url('public/images/wallpapers/login/' . $wallpaper->image);
         }
         
         $userWallpaper = UserWallpaper::updateOrCreate(
@@ -153,24 +160,31 @@ class SettingsController extends Controller
     public function showLoginPage()
     {
         $userWallpaper = UserWallpaper::where('user_id', Auth::id())->first();
-        $loginWallpaper = $userWallpaper ? asset('images/wallpapers/login/' . $userWallpaper->login_display) : asset('images/wallpapers/login/Wallpaper.png');
+        $loginWallpaper = $userWallpaper ? url('images/wallpapers/login/' . $userWallpaper->login_display) : url('images/wallpapers/login/Wallpaper.png');
 
         return view('auth.login', compact('loginWallpaper'));
     }
-    public function getWallpaper($id)
-{
-    $wallpaper = Wallpaper::find($id);
-
-    if (!$wallpaper) {
-        return response()->json(['success' => false, 'message' => 'Wallpaper not found.']);
+    public function getWallpapers(Request $request)
+    {
+        dd($request);
+        $type = $request->query('type');
+        $userId = Auth::id();
+    
+        if ($type === 'desktop') {
+            $desktopWallpapers = Wallpaper::where('type', 0)
+                ->where('status', 1)
+                ->where('created_by', $userId)
+                ->get(['id', 'image']);
+            return response()->json(['desktopWallpapers' => $desktopWallpapers]);
+        } elseif ($type === 'login') {
+            $loginWallpapers = Wallpaper::where('type', 1)
+                ->where('status', 1)
+                ->where('created_by', $userId)
+                ->get(['id', 'image']);
+            return response()->json(['loginWallpapers' => $loginWallpapers]);
+        }
+    
+        return response()->json(['error' => 'Invalid type'], 400);
     }
-
-    $imagePath = asset('images/wallpapers/' . ($wallpaper->type == 0 ? 'dashboard' : 'login') . '/' . $wallpaper->image);
-
-    return response()->json([
-        'success' => true,
-        'image' => $imagePath,
-    ]);
-}
 
 }

@@ -3,11 +3,6 @@
         border: 2px blue;
         background-color: rgba(173, 216, 230, 0.5);
     }
-
-    .app[data-option="all"]:hover {
-        border: 2px blue;
-        background-color: rgba(173, 216, 230, 0.5);
-    }
 </style>
 
 <!-- pathview  -->
