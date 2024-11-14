@@ -210,6 +210,7 @@
  
 <!-- user data -->
  @else
+ <div class="flex flex-wrap gap-4 p-6 ">
  @foreach ($deletedByUser as $file)
 @if($file->folder==1)
 
@@ -256,7 +257,7 @@
 </div>   
  @endif
 @endforeach
-
+    </div>
 @endif
 
 

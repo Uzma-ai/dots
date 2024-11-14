@@ -24,6 +24,9 @@ use Illuminate\Support\Facades\Artisan;
 
 date_default_timezone_set('Asia/Calcutta');
 
+Route::get('/test', function () {
+    return view('test');
+});
 Route::get('/', function () {
     return redirect(route('dashboard'));
 });
@@ -229,8 +232,8 @@ Route::middleware(['blockIP'])->group(function () {
     // Route::post('sendReply', [MessageController::class, 'sendReply'])->name('sendReply');
     Route::get('getMessage', [MessageController::class, 'getMessageData'])->name('getMessageData');
     Route::get('fileExpSearch', [FileManagerController::class, 'fileExpSearch'])->name('fileExp-list');
-   
-    
+
+
 });
 
 Route::get('expire-sharing',[FileSharingController::class, 'Expire']);

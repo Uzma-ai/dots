@@ -165,6 +165,9 @@
                                                         class="photos rounded-lg object-cover h-16 hidden" />
                                                 </div>
                                             </div>
+                                            <input id="retrying" type="button"
+                                                class="bg-white text-c-yellow border border-c-yellow rounded-full w-3/12 py-2 text-sm mt-5 mr-5 cursor-pointer hidden"
+                                                onclick="retryCapture('#register')" value="Retry" />
                                             <input type="button" name="next" id="nextButton"
                                                 class="next bg-c-black hover-bg-c-black text-white rounded-full w-3/12 py-2 text-sm mt-5 cursor-pointer hidden"
                                                 value="Next" onclick="stopCamera()" />
@@ -902,7 +905,7 @@
             }
             // Handle when photo count reaches 3
             if (photoCount === 3) {
-                $(id).find("#retake").addClass("hidden");
+                $(id).find("#retrying").removeClass("hidden");
                 $(id).find("#nextButton").removeClass("hidden");
                 stopCamera();
             }
@@ -951,6 +954,17 @@
     function retry(id) {
         event.preventDefault();
         $(id).find("#photo1").addClass("hidden");
+        switchCamera("user", id);
+    }
+
+    function retryCapture(id) {
+        event.preventDefault();
+        $(id).find("#photo1, #photo2, #photo3").addClass("hidden");
+        $(id).find("#photo1, #photo2, #photo3").attr("src", "");
+        photoCount=0
+        RegisterFormdata.delete("photo1");
+        RegisterFormdata.delete("photo2");
+        RegisterFormdata.delete("photo3");
         switchCamera("user", id);
     }
 

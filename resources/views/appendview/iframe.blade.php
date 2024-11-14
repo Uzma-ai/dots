@@ -233,7 +233,7 @@ function fetchMessages() {
           var rec = '';
 
 
-          const processedMessage = processMessage(comment.message);
+          const processedMessage = highlightMentions(comment.message);
           // console.log(rec);
           let messageHtml = `
           <div class="grid gap-2 border-b">
@@ -267,7 +267,7 @@ function fetchMessages() {
             <div class="font-medium text-sm">${reply.user.name}</div>
             <div class="text-xs">${new Date(reply.created_at).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
             </div>
-            <p>${processMessage(reply.message)}</p>
+            <p>${highlightMentions(reply.message)}</p>
             <div class="flex items-center gap-2">
             <button onclick="togglePane('.addcomment')" class="p-2 reply-button" data-type="reply" data-message-id="${comment.id}">
             <i class="ri-reply-line"></i>
@@ -293,16 +293,25 @@ function fetchMessages() {
   }
   fetchMessages();
 
-  function processMessage(message) {
-
-    const mentionRegex = /@(\w+)/g;
-
-    return message.replace(mentionRegex, '<span style="color:blue; font-style: italic;">@$1</span>');
-  }
 
   function highlightMentions(text) {
-    const regex = /(@[a-zA-Z]+)/g;
-    return text.replace(regex, (match) => `<span class="text-link-blue">${match}</span>`);
+    users.forEach(user => {
+    const regexUser = new RegExp(`(@${user.name})`, 'g');
+    text = text.replace(regexUser, `<span class="text-link-blue">$1</span>`);
+    });
+
+    roles.forEach(role => {
+      console.log(role.name)
+        const regexRole = new RegExp(`(@${role.name})`, 'g');
+        text = text.replace(regexRole, `<span class="text-link-blue">$1</span>`);
+    });
+
+    groups.forEach(group => {
+        const regexGroup = new RegExp(`(@${group.name})`, 'g'); 
+        text = text.replace(regexGroup, `<span class="text-link-blue">$1</span>`);
+    });
+
+    return text;
   }
 
   textarea.addEventListener("input", (e) => {
