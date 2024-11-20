@@ -653,11 +653,15 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .login .left-background {
     background-image: var(--login-wallpaper-1) !important;
+    background-size: 200% 100%; 
+    background-position: left; 
     border-top-right-radius: 100px;
 }
 
 .login .right-background {
     background-image: var(--login-wallpaper-1) !important;
+    background-size: 200% 100%; 
+    background-position: right; 
     border-top-left-radius: 100px;
 }
 
@@ -1538,22 +1542,24 @@ input[type="button"]:focus {
     top: 0;
     width: 50%;
     height: 100%;
-    background-size: cover;
+    background-size: 200% 100%; 
     background-repeat: no-repeat;
-    background-position: center;
 }
 
 #curtain .left {
     background-image: var(--curtain-wallpaper);
+    background-position: left; 
     left: 0;
     transform-origin: top right;
 }
 
 #curtain .right {
     background-image: var(--curtain-wallpaper);
+    background-position: right;
     left: 50%;
     transform-origin: top left;
 }
+
 
 /* **********
       opening
